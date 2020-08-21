@@ -1,0 +1,56 @@
+<div class="calendar-page">
+   <div class="container">
+      <h2>Календарь</h2>
+      <div class="calendar-wrapper">
+         <app-calendar-block [inputSchedule]="userData.myData.daysShedule"></app-calendar-block>
+         <div class="time-block" *ngIf="userData.myData.userType == 'doctor'">
+            <div class="profile-time-setting">
+               <div class="settings-title">
+                  Настройка моего графика
+               </div>
+               <div class="days-of-week">
+                  <ul>
+                     <li class="day-of-week" *ngFor="let day of daysOfWeek">
+                        <label><input type="checkbox" class="day-selector">{{day}}</label>
+                     </li>
+                  </ul>
+               </div>
+               <div class="period">
+                  <p>Выбрать свободные часы (диапазон: {{workHoursFrom}} - {{workHoursTo}})</p>
+                  <label><span>От </span><input type="number" id="startTime" (input)="setTimeStart($event)" [min]="workHoursFrom" [max]="workHoursTo" [value]="userTimeStart" ></label>
+                  <label><span>До </span><input type="number" id="endTime" (input)="setTimeEnd($event)" [min]="workHoursFrom" [max]="workHoursTo" [value]="userTimeEnd"></label>
+               </div>
+               <div class="duration-setting">
+                  <p>Продолжительность занятий</p>
+                  <label>40 минут <input type="radio" name="duration" value="40" [checked]="!userData.myData.daysShedule || !userData.myData.daysShedule.lessonDuration || (userData.myData.daysShedule && userData.myData.daysShedule.lessonDuration == 40) || (userData.myData.daysShedule && userData.myData.daysShedule.lessonDuration == 30)"></label>
+                  <!-- <label>1 час <input type="radio" name="duration" value="60" [checked]="userData.myData.daysShedule && userData.myData.daysShedule.lessonDuration  == 60"></label> -->
+               </div>
+               <button (click)="sendTimeData()">изменить данные </button>
+               <button (click)="clearTimeData()">очистить выделенные дни</button>
+            </div>
+            <div class="my-schedule-wrapper">
+               <div class="my-schedule-not-found" *ngIf="!userData.myData.daysShedule" >
+                  Выберите дни и часы работы (каждый день можно настроить отдельно)
+               </div>
+               <div class="my-shedule-found" *ngIf="userData.myData.daysShedule">
+                  <div class="my-time" >
+                     <div class="my-day" *ngFor="let day of daysOfWeek; index as i">
+                        <p *ngIf="userData.myData.daysShedule[i]">
+                           {{day}}: {{userData.myData.daysShedule[i][0]}}:00 - {{userData.myData.daysShedule[i][1]}}:00
+                        </p>
+                        <p *ngIf="!userData.myData.daysShedule[i]">
+                           {{day}}: не задано
+                        </p>
+                        
+                     </div>
+                     <p class="duration">
+                        Продолжительность занятий: <span>{{userData.myData.daysShedule.lessonDuration}}</span> минут
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- *ngIf="userData.myData.userType == 'doctor'" -->

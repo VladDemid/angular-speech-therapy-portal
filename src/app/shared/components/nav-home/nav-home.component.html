@@ -1,0 +1,19 @@
+<header>
+   <div class="container">
+      <nav>
+         <div class="logo">
+            <a [routerLink]="['/']">
+               <img src="#" alt="logo">
+            </a>
+         </div>
+         <div class="menu">
+            <ul>
+               <li><a href="#">Врачи</a></li>
+               <li><a href="#">FAQ</a></li>
+               <li><a href="#">Контакты</a></li>
+               <li><button class="login" id="login" (click)="popupService.toggleLoginPopup()">Войти</button></li>
+            </ul>
+         </div>
+      </nav>
+   </div>
+</header>

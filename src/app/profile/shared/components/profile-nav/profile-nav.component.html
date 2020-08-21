@@ -1,0 +1,30 @@
+<div class="navigation">
+   <div class="container">
+      <div class="logo">
+         <a [routerLink]="['/']">
+            <img src="#" alt="logo">
+         </a>
+      </div>
+      <div class="profile-menu">
+         <div class="profile-navigation">
+            <div class="dropdown">
+               <span>{{userData.myData.name}}</span>
+               <div class="dropdown-content">
+                  <ul>
+                     <li [routerLink]="['/profile/menu']" routerLinkActive="link-active">Личный кабинет</li>
+                     <li>Календарь</li>
+                     <li>Сообщения</li>
+                     <li [routerLink]="['/profile/edit']" routerLinkActive="link-active" >Редактировать <br/> личные данные</li>
+                     <li *ngIf="userData.myData.userType === 'doctor' ">Мои клиенты</li>
+                     <li (click)="exitProfile()">Выход</li>
+                  </ul>
+               </div>
+             </div>
+         </div>
+         <div class="profile-notifications">
+            notif
+         </div>
+      </div>
+   </div>
+   
+</div>

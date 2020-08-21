@@ -1,0 +1,13 @@
+<div class="specialist-card" #cardEl 
+[ngClass]="{'card_active': active}">
+   <div class="specialist-card__image_wrapper">
+      <img *ngIf="card.avatarUrl" class="specialist-card__photo" [src]="card.avatarUrl" alt="person photo">
+      <img *ngIf="!card.avatarUrl" class="specialist-card__photo" [src]="defaultAvatarUrl" alt="person photo">
+   </div>
+   <div class="specialist-card__name">{{card.name}}</div>
+   <div class="specialist-card__specialization">Специализация</div>
+   <div class="specialist-card__experience">{{card.experience}}</div>
+   <div class="specialist-card__schedule">
+      <a [routerLink]="['/doctor']" [queryParams]='{id: encryptedId}'>Подробнее ></a>
+   </div>
+</div>

@@ -1,0 +1,23 @@
+
+<div class="profile-menu">
+   <div class="container">
+      <div class="user-type-icon">
+         <span *ngIf="userData.myData.userType == 'doctor'">doctor 🏥</span>
+         <span *ngIf="userData.myData.userType == 'client'">client 🏠</span>
+      </div>
+      <div class="menu-list">
+         <div *ngFor="let item of menuItems" class="menu-item" [routerLink]="['/profile', item.link]" >
+                                                         <!-- [routerLink]="['/details', data.id]" -->
+            <div class="icon">
+               <span class="{{item.icon}}"></span>
+            </div>
+            <div class="description-wrapper">
+               <p class="description">{{item.name}}</p>
+            </div>
+         </div>
+      </div>
+      <div class="exit">
+         <button (click)="exitProfile()">Выход</button>
+      </div>
+   </div>
+</div>

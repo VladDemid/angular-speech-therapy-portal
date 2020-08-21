@@ -1,0 +1,48 @@
+<div class="login-popup" *ngIf="popupService.homePageLoginPopup">
+   <app-login-popup></app-login-popup>
+</div>
+<div class="password-recovery" *ngIf="popupService.homePagePassRecoveryPopup">
+   <app-password-recovery></app-password-recovery>
+</div>
+
+
+<app-nav-home></app-nav-home>
+
+<div class="container">
+
+   <div class="promo">
+      <div class="container">
+         <h1 class="promo_header">
+            Инклюзив - дефектологическая 
+            онлайн-консультация 
+            в удобное для вас время</h1>
+            <p class="promo_descr">Опытные специалисты в сфере коррекционно-развивающего обучения <br>
+               и реабилитации ответят на вопросы, связанные с детским развитием <br>
+               и преодолением речевых, познавательных, психо-эмоциональных <br>
+               и других особенностей</p>
+               <div class="button_wrapper">
+                  <button class="sign_up">Записаться</button>
+               </div>
+      </div>
+   </div>
+
+   <app-our-specialists
+      [firebaseDoctors]="doctors"
+   ></app-our-specialists>
+
+   <div class="recomendation">
+      <div class="container">
+         <h2>Рекомендуем</h2>
+         <div class="recomendation__our-game our-game">
+            <img class="our-game__img" src="./assets/img/our-game/our-game.png" alt="" class="our-game__img">
+            <p class="our-game__descr">
+               <span>CatZu</span> - это детская мобильная игра, содержащая базовый комплекс упражнений для развития артикуляционной моторики и советы для родителей от профессионалов
+            </p>
+            <a href="#more" id="more" class="our-game__more">Узнать больше ></a>
+         </div>
+      </div>
+   </div>
+
+   <app-faq></app-faq>
+   <app-footer-home></app-footer-home>
+</div>

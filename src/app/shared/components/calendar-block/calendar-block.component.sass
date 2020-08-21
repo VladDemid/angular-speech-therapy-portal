@@ -1,0 +1,109 @@
+@import "../../../../assets/styles/_variables"
+
+
+.calendar
+   margin-top: 20px
+   display: flex
+   justify-content: space-between
+   .calendar-wrapper
+      width: 55vw
+      .calendar-header
+         display: flex
+         justify-content: space-around
+         width: 100%
+         margin-bottom: 12px
+         // border: 1px solid #000
+         .month
+            width: 130px
+            // border: 1px solid #000
+            text-align: center
+         .arrow
+            position: relative
+            display: inline-block
+            // padding: 5px
+            // margin: 0 5px
+            // background-color: $blue_common
+            // border: 1px solid #000
+            cursor: pointer
+            width: 18px
+            height: 18px
+            &::after
+               top: -1px
+               // background-color: #ccc
+               // border: 1px solid #000
+         .arrow-left
+            &::after
+               content: ''
+               position: absolute
+               left: -1px
+               border: 9px solid transparent
+               border-left: 0px solid transparent
+               border-right: 14px solid $blue_common
+         .arrow-right
+            &::after
+               content: ''
+               position: absolute
+               right: -1px
+               border: 9px solid transparent
+               border-right: 0px solid transparent
+               border-left: 14px solid $blue_common
+      .calendar-body
+         text-align: center
+         font-size: 24px
+         .days-of-week
+            display: flex
+            justify-content: flex-start
+            flex-wrap: wrap
+            .day-of-week
+               width: calc(100% / 7 - 4px)
+               // border: 1px solid #000
+               margin: 2px
+         .days
+            display: flex
+            justify-content: flex-start
+            flex-wrap: wrap
+            height: 30vw
+            .day
+               width: calc(100% / 7 - 4px)
+               margin: 2px
+               cursor: pointer
+               user-select: none
+               transition: 0.2s
+               &:hover
+                  background-color: $orange_common
+                  transform: scale(1.05)
+               // &:nth-child(1)
+               //    margin-left: calc(200% / 7 + 2px)
+   .time-aside
+      width: calc(45vw - 30px)
+      .time-row
+         &:nth-child(2n)
+            background-color: #ccc
+      .time-row-inner
+         cursor: pointer
+         user-select: none
+         padding: 3px 10px 2px
+         &:hover
+            background-color: $orange_common
+      .time-blocker
+         position: relative
+         .example
+            p
+               padding-left: 20px
+            .color-example 
+              position: absolute
+              width: 16px
+              height: 16px
+              border: 1px solid #000
+            .not-working-color
+               background-color: $grey
+            .working-color
+               background-color: #fff
+            .choosen-day-color
+               background-color: $orange_common
+
+// /deep/ .time-row
+//    &:nth-child(2)
+//       background-color: #ccc
+
+            

@@ -1,0 +1,225 @@
+<div class="rules-popup" *ngIf="popupService.registrTermsOfUsePopup">
+   <app-terms-of-use-popup></app-terms-of-use-popup>
+</div>
+
+<div class="registration-block">
+   <div class="login-registration_tabs">
+      <div class="registration-tab active">Регистрация</div>
+      <div class="login-tab" [routerLink]="['/']" (click)="popupService.homePageLoginPopup = true">Вход</div>
+   </div>
+   <div class="container">
+      <div class="registration-type">
+         <label>
+            <input required checked type="radio" name="registration-type" value="client">
+            <span class="type-text" (click)="showClientForm()">Присоединиться как пациент</span>
+         </label>
+         <label>
+            <input required  type="radio" name="registration-type" value="professional">
+            <span class="type-text" (click)="showDoctorForm()">Присоединиться как специалист</span>
+         </label>
+      </div>
+
+      <form class="client-form"
+         *ngIf="ClientFormDisplay"
+         [formGroup]="clientRegistrationForm"
+         (ngSubmit) = "sendClientForm()"
+      >
+         <div class="inputs-wrapper">
+            <label><span>Имя</span><input required name="name" type="text" formControlName="name" ></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('name').invalid && clientRegistrationForm.get('name').touched || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('name').errors && clientRegistrationForm.get('name').errors.required">
+                     Необходимо ввести <span>имя</span></small>
+            </div>   
+            <label><span>Фамилия</span><input required name="surname" type="text" formControlName="surname"></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('surname').invalid && clientRegistrationForm.get('surname').touched || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('surname').errors && clientRegistrationForm.get('surname').errors.required">
+                     Необходимо ввести <span>фамилию</span></small>
+            </div> 
+            <label><span>Отчество</span><input required name="patronymic" type="text" formControlName="patronymic"></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('patronymic').invalid && clientRegistrationForm.get('patronymic').touched || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('patronymic').errors && clientRegistrationForm.get('patronymic').errors.required">
+                     Необходимо ввести <span>отчество</span></small>
+            </div> 
+            <label><span class="narrow">Диагноз ребенка</span><input required name="childDiagnosis" type="text" formControlName="childDiagnosis"></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('childDiagnosis').invalid && clientRegistrationForm.get('childDiagnosis').touched || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('childDiagnosis').errors && clientRegistrationForm.get('childDiagnosis').errors.required">
+                     Необходимо ввести <span>диагноз</span></small>
+            </div> 
+            
+            <label><span>Email</span><input required name="email" type="text" formControlName="email"></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('email').invalid && clientRegistrationForm.get('email').touched || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('email').errors && clientRegistrationForm.get('email').errors.required">
+                     Необходимо ввести <span>email</span></small>
+               <small class="error" *ngIf="clientRegistrationForm.get('email').errors && clientRegistrationForm.get('email').errors.email">
+                     Необходимо ввести корректный email</small>
+            </div> 
+            <label><span>Пароль</span><input required name="password" type="password" formControlName="password"></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('password').invalid && clientRegistrationForm.get('password').touched || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('password').errors && clientRegistrationForm.get('password').errors.required">
+                     Необходимо придумать <span>пароль</span></small>
+               <small class="error" *ngIf="clientRegistrationForm.get('password').errors && clientRegistrationForm.get('password').errors.minlength">
+                     Пароль должен быть минимум {{passwordMinLength}} символов</small>
+            </div> 
+            <label><span class="narrow">Повторите пароль</span><input required name="passwordRepeat"  type="password" formControlName="passwordRepeat"></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('passwordRepeat').invalid && clientRegistrationForm.get('passwordRepeat').touched  || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('passwordRepeat').errors && clientRegistrationForm.get('passwordRepeat').errors.required">
+                     Необходимо <span>повторить пароль</span></small>
+            </div>
+            <small class="error" *ngIf="showPassRepeatErrorMsg">
+                  Пароли должны <span>совпадать</span></small>
+         </div>
+         <div class="rules">
+            <div class="terms-of-use">
+               <label>
+                  <input name="termsOfUse"  type="checkbox" formControlName="termsOfUse">
+                  <span>Я подтверждаю, что ознакомлен и согласен с условиями <a class="show-rules" (click)="popupService.toggleTermsOfUsePopup()">Пользовательского соглашения</a></span>
+               </label>
+               <div class="validation-errors" *ngIf="clientRegistrationForm.get('termsOfUse').invalid && (clientRegistrationForm.get('termsOfUse').touched || showRulesRequired)">
+                  <small class="error" *ngIf="clientRegistrationForm.get('termsOfUse').errors.required">
+                        Необходимо подтвердить согласие с <span>правилами</span> сервиса</small>
+               </div>
+            </div>
+            <div class="news-subscription">
+               <label>
+                  <input name="newsSubscription"  type="checkbox" formControlName="newsSubscription">
+                  <span>Я хочу получать последние новости об обновлениях сервиса</span>
+               </label>
+            </div>
+         </div>
+         <div class="serverErrorMessage" *ngIf="serverErrMessage" >{{serverErrMessage}}</div>
+         <button class="submit" type="submit">Зарегистрироваться</button>
+      </form>
+      
+      
+
+      <form class="doctor-form"
+         *ngIf="DoctorFormDisplay"
+         [formGroup]="doctorRegistrationForm"
+         (ngSubmit) = "sendDoctorForm()"
+      >
+         <div class="inputs-wrapper">
+            <label><span>Имя</span><input required name="name" type="text" formControlName="name"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('name').invalid && doctorRegistrationForm.get('name').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('name').errors && doctorRegistrationForm.get('name').errors.required">
+                     Необходимо ввести <span>имя</span></small>
+            </div> 
+            <label><span>Фамилия</span><input required name="surname"  type="text" formControlName="surname"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('surname').invalid && doctorRegistrationForm.get('surname').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('surname').errors && doctorRegistrationForm.get('surname').errors.required">
+                     Необходимо ввести <span>фамилию</span></small>
+            </div>
+            <label><span>Отчество</span><input required name="patronymic"  type="text" formControlName="patronymic"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('patronymic').invalid && doctorRegistrationForm.get('patronymic').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('patronymic').errors && doctorRegistrationForm.get('patronymic').errors.required">
+                     Необходимо ввести <span>отчество</span></small>
+            </div> 
+            <label><span>Вуз</span><input required name="university"  type="text" formControlName="university"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('university').invalid && doctorRegistrationForm.get('university').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('university').errors && doctorRegistrationForm.get('university').errors.required">
+                     Необходимо ввести ваш <span>вуз</span></small>
+            </div> 
+            <div class="double-input-row">
+               <label><span>Факультет</span><input required name="faculty"  type="text" formControlName="faculty"></label>
+               <label><span>Год выпуска</span><input required name="year"  type="text" formControlName="year"></label>
+            </div>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('faculty').invalid && doctorRegistrationForm.get('faculty').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('faculty').errors && doctorRegistrationForm.get('faculty').errors.required">
+                     Необходимо ввести <span>факультет</span></small>
+            </div>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('year').invalid && doctorRegistrationForm.get('year').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('year').errors && doctorRegistrationForm.get('year').errors.required">
+                     Необходимо ввести <span>год выпуска</span></small>
+               <small class="error" *ngIf="doctorRegistrationForm.get('year').errors && doctorRegistrationForm.get('year').errors.minlength">
+                     Необходимо ввести <span>полный год выпуска</span></small>
+            </div>
+            <!-- <label><span>Стаж</span><input required name="experience" id="experience"  type="text" formControlName="experience"></label> -->
+            <label><span>Стаж</span>
+               <div class="select" 
+                  (mouseenter)="toggleSelectBody($event)"
+                  (mouseleave)="toggleSelectBody($event)"
+                  >
+                  <div class="select__header" >
+                     <span class="select__current" id="currentExperiense">{{experienceStages[0]}}</span>
+                     <!-- <div class="select__icon">&times;</div> -->
+                  </div>
+                  
+                  <div class="select select__body">
+                     <div class="select__item" 
+                     *ngFor="let stage of experienceStages"
+                     (click)="setExperience($event)"
+                     >
+                        {{stage}}
+                     </div>
+                  </div>
+               </div>
+            </label>
+
+
+
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('experience').invalid && doctorRegistrationForm.get('experience').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('experience').errors && doctorRegistrationForm.get('experience').errors.required">
+                     Необходимо ввести <span>стаж</span></small>
+            </div>
+            <label><span class="narrow">Актуальное место работы</span><input required name="workPlace"  type="text" formControlName="workPlace"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('workPlace').invalid && doctorRegistrationForm.get('workPlace').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('workPlace').errors && doctorRegistrationForm.get('workPlace').errors.required">
+                     Необходимо ввести <span>место работы</span></small>
+            </div>
+            <label><span class="narrow">Сертификаты, документы</span> <input class="upload_documents" name="documents" type="file" formControlName="documents" id="sertificates" multiple></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('documents').invalid && doctorRegistrationForm.get('documents').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('documents').errors && doctorRegistrationForm.get('documents').errors.required">
+                     Необходимо загрузить <span>документы</span></small>
+            </div>
+            <label><span>Email</span><input required name="email"  type="text" formControlName="email"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('email').invalid && doctorRegistrationForm.get('email').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('email').errors && doctorRegistrationForm.get('email').errors.required">
+                     Необходимо ввести <span>email</span></small>
+               <small class="error" *ngIf="doctorRegistrationForm.get('email').errors && doctorRegistrationForm.get('email').errors.email">
+                     Необходимо ввести корректный email</small>
+            </div> 
+            <label><span>Пароль</span><input required name="password"  type="password" formControlName="password"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('password').invalid && doctorRegistrationForm.get('password').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('password').errors && doctorRegistrationForm.get('password').errors.required">
+                     Необходимо придумать <span>пароль</span></small>
+               <small class="error" *ngIf="doctorRegistrationForm.get('password').errors && doctorRegistrationForm.get('password').errors.minlength">
+                  Пароль должен быть минимум {{passwordMinLength}} символов</small>
+            </div>
+            <label><span class="narrow">Повторите пароль</span><input required name="passwordRepeat"  type="password" formControlName="passwordRepeat"></label>
+            <div class="validation-errors" *ngIf="doctorRegistrationForm.get('passwordRepeat').invalid && doctorRegistrationForm.get('passwordRepeat').touched || showRulesRequired">
+               <small class="error" *ngIf="doctorRegistrationForm.get('passwordRepeat').errors && doctorRegistrationForm.get('passwordRepeat').errors.required">
+                     Необходимо <span>повторить пароль</span></small>
+            </div>
+            <small class="error" *ngIf="showPassRepeatErrorMsg">
+                  Пароли должны <span>совпадать</span></small>
+         </div>
+         <div class="rules">
+            <div class="terms-of-use">
+               <label>
+                  <input name="termsOfUse"   type="checkbox" formControlName="termsOfUse">
+                  <span>Я подтверждаю, что ознакомлен и согласен с условиями <a class="show-rules" (click)="popupService.toggleTermsOfUsePopup()">Пользовательского соглашения</a></span>
+               </label>
+               <div class="validation-errors" *ngIf="doctorRegistrationForm.get('termsOfUse').invalid && (doctorRegistrationForm.get('termsOfUse').touched || showRulesRequired)">
+                  <small class="error" *ngIf="doctorRegistrationForm.get('termsOfUse').errors.required">
+                        Необходимо подтвердить согласие с <span>правилами</span> сервиса</small>
+               </div>
+            </div>
+            <div class="news-subscription">
+               <label>
+                  <input name="newsSubscription"  type="checkbox" formControlName="newsSubscription">
+                  <span>Я хочу получать последние новости об обновлениях сервиса</span>
+               </label>
+            </div>
+         </div>
+         <div class="serverErrorMessage" *ngIf="serverErrMessage" >{{serverErrMessage}}</div>
+         <button class="submit" type="submit">Зарегистрироваться</button>
+         <button type="button" (click)="checkExperience()">проверить опыт</button>
+      </form>
+      <div class="success-registration-sign" *ngIf="showSuccessReg">
+         Вы успешно зарегистрировались!
+      </div>
+
+      <!-- <button (click)="uploadSertificates()">загрузить сертификаты</button> -->
+      
+      
+   </div>
+</div>

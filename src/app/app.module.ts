@@ -1,18 +1,65 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule, Provider } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { NavHomeComponent } from './shared/components/nav-home/nav-home.component';
+import { FooterHomeComponent } from './shared/components/footer-home/footer-home.component';
+import { OurSpecialistsComponent } from './shared/components/our-specialists/our-specialists.component';
+import { SpecialistCardComponent } from './shared/components/specialist-card/specialist-card.component';
+import { FaqComponent } from './shared/components/faq/faq.component';
+import { FaqItemComponent } from './shared/components/faq-item/faq-item.component';
+import { SpecialistFilterPipe } from './shared/pipes/specialist-filter.pipe';
+import { LoginPopupComponent } from './shared/components/login-popup/login-popup.component';
+import { PasswordRecoveryComponent } from './shared/components/password-recovery/password-recovery.component';
+import { TermsOfUsePopupComponent } from './shared/components/terms-of-use-popup/terms-of-use-popup.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './shared/auth.interceptor';
+import { ProfileGuard } from './profile/shared/services/profile.guard';
+import { SpecialistPageComponent } from './shared/components/specialist-page/specialist-page.component';
+import { SharedModule } from './shared/shared.module';
+
+
+const INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  multi: true,
+  useClass: AuthInterceptor
+}
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent,
+    RegistrationPageComponent,
+    NavHomeComponent,
+    FooterHomeComponent,
+    OurSpecialistsComponent,
+    SpecialistCardComponent,
+    FaqComponent,
+    FaqItemComponent,
+    SpecialistFilterPipe,
+    LoginPopupComponent,
+    PasswordRecoveryComponent,
+    TermsOfUsePopupComponent,
+    SpecialistPageComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    SharedModule
+    
   ],
-  providers: [],
+  exports: [
+    HttpClientModule
+  ],
+  providers: [
+    INTERCEPTOR_PROVIDER
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

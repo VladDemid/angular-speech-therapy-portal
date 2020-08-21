@@ -1,0 +1,18 @@
+<div *ngIf="doctorInfo" class="doctor-card">
+   <div class="container">
+      <div class="user-data">
+         <div class="user-image">
+            <img *ngIf="doctorInfo.avatarUrl" [src]="doctorInfo.avatarUrl" alt="person photo">
+            <img *ngIf="!doctorInfo.avatarUrl" [src]="defaultAvatarUrl" alt="person photo">
+         </div>
+         <div class="user-description">
+            <p class="name"><span>{{doctorInfo.name}} {{doctorInfo.surname}}</span></p>
+            <p><span>Специализация : </span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa aliquid facilis cum quod repellat laboriosam nesciunt vel eligendi, omnis deserunt.</p>
+            <p><span>Стаж и опыт работы : </span>Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
+            <p class="detailed-description"></p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque sequi maiores tenetur, nemo sit fugit doloribus nulla architecto unde esse vel dignissimos et quas quisquam quibusdam. Quidem quae pariatur accusamus!</p>
+         </div>
+      </div>
+      <app-calendar-block [inputSchedule]="doctorInfo.daysShedule"></app-calendar-block>
+   </div>
+</div>

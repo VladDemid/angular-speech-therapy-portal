@@ -1,0 +1,75 @@
+@import '../../../../../assets/styles/_variables'
+
+.navigation
+   margin-top: 40px
+   .container
+      display: flex
+      justify-content: space-between
+
+
+.logo
+   display: inline-block
+   width: 170px
+   height: 75px
+   a
+      // display: inline-block
+      img
+         display: block
+         width: 100%
+         max-height: 100%
+
+.profile-menu 
+   display: flex
+   justify-content: space-between
+
+   .dropdown
+      position: relative
+      display: inline-block
+      &:hover span::after
+         transform: rotate(180deg)
+      span
+         padding: 5px 25px
+         position: relative
+         cursor: default
+         &::after
+            content: ""
+            position: absolute
+            top: 11px
+            right: 12px
+            border-style: solid
+            border-width: 8px 4px 0px 4px
+            border-color: $blue_common transparent transparent transparent
+            transition: 0.3s
+
+   .dropdown-content
+      display: none
+      position: absolute
+      right: -20px
+      min-width: 160px
+      background-color: #fff
+      // box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2)
+      box-shadow: 0 7px 10px -5px
+      border: 1px solid #000
+      z-index: 10
+      li
+         text-align: center
+         font-size: 18px
+         font-weight: 400
+         width: 250px
+         padding: 5px 
+         cursor: pointer
+         // height: 37px
+         border-bottom: 1px solid #000
+         &:focus
+            outline: none
+         &.link-active
+            background-color: $orange_common
+         &:hover
+            background-color: #ddd
+         &:nth-last-child(2)
+            margin-bottom: 10px
+         &:last-child
+            border: none
+         //    margin-top: 10px
+   .dropdown:hover .dropdown-content
+      display: block

@@ -1,0 +1,65 @@
+@import "../../../assets/styles/_variables"
+   
+.profile-menu
+   .menu-list
+      display: flex
+      justify-content: space-around
+      flex-wrap: wrap
+      .menu-item
+         border: 2px solid $yellow_common
+         min-width: 120px
+         margin: 10px 5px
+         &:hover
+            box-shadow: 0 7px 10px -5px
+            transition: 0.3s
+            cursor: pointer
+            background-color: $yellow_common
+            .icon span
+               font-size: 77px
+               transition: 0.3s
+               // text-shadow: -1px -1px #ccc
+         &:active
+            background-color: $orange_common
+            outline: none
+            .icon span
+               font-size: 70px
+               transition: 0.3s
+         .icon
+            position: relative
+            height: 100px
+            span
+               position: absolute
+               display: inline-block
+               // background-color: rgba(0,0,0,.3)
+               font-size: 70px
+               left: 50%
+               transform: translateX(-50%)
+               margin: 10px auto
+               color: #000
+               transition: 0.3s
+         .description-wrapper
+            .description
+               text-align: center
+               padding: 10px
+               padding-top: 0
+               font-size: 18px
+               max-width: 170px
+            
+.exit
+   margin-top: 30px
+   display: flex
+   justify-content: flex-end
+
+@keyframes icon-animation 
+   15% 
+      transform: translateY(5px)
+   30% 
+      transform: translateY(-5px)
+   50% 
+      transform: translateY(3px)
+   65% 
+      transform: translateY(-3px)
+   80% 
+      transform: translateY(2px)
+   100% 
+      transform: translateY(0)

@@ -1,0 +1,75 @@
+<div class="edit-profile">
+   <div class="container">
+      <!-- форма для клиента -->
+      <form 
+      [formGroup]="clientForm"
+      class="user-edit-form"
+      (ngSubmit)="clientChangeData()"
+      *ngIf="userData.myData.userType === 'client' "
+      >
+         <div class="inputs-wrapper">
+            <label><span>Фото</span><input required class="upload_documents" name="photo" type="file" id="clientPhoto" (change)="changeMyImage()"></label>
+            <label><span>Имя</span><input required name="name" type="text" formControlName="name" [placeholder]="userData.myData.name"></label>
+            <label><span>Фамилия</span><input required name="surname" type="text" formControlName="surname" [placeholder]="userData.myData.surname"></label>
+            <label><span>Отчество</span><input required name="patronymic" type="text" formControlName="patronymic" [placeholder]="userData.myData.patronymic"></label>
+            <label><span class="narrow">Диагноз ребенка</span><input required name="childDiagnosis" type="text" formControlName="childDiagnosis" [placeholder]="userData.myData.childDiagnosis"></label>
+            <button class="submit" type="submit">Изменить</button>
+            <div class="update-success" *ngIf="showUpdate">
+               Информация обновлена!
+            </div>
+         </div>
+      </form>
+
+      <!-- форма для доктора -->
+      <form  
+      [formGroup]="doctorForm"
+      class="doctor-edit-form"
+      *ngIf="userData.myData.userType === 'doctor' "
+      (ngSubmit)="doctorChangeData()"
+      >
+      <div class="inputs-wrapper">
+            <div class="photo-update">
+               <div class="profile-photo">
+                  <img src="{{userData.myData.avatarUrl}}" alt="profile avatar">
+               </div>
+               <div class="photo-preview">photo</div>
+               <input class="upload-avatar" name="avatar" type="file" id="newAvatar">
+               <button class="button" (click)="updateAvatar()">изменить фото</button>
+            </div>
+            <label><span>Имя</span><input required name="name" type="text"  [placeholder]="userData.myData.name" formControlName="name"></label>
+            <label><span>Фамилия</span><input required name="surname" type="text"  [placeholder]="userData.myData.surname" formControlName="surname"></label>
+            <label><span>Отчество</span><input required name="patronymic" type="text"  [placeholder]="userData.myData.patronymic" formControlName="patronymic"></label>
+            <label><span>Вуз</span><input required name="university" type="text"  [placeholder]="userData.myData.university" formControlName="university"></label>
+            <div class="double-input-row">
+               <label><span>Факультет</span><input required name="faculty"  type="text" [placeholder]="userData.myData.faculty" formControlName="faculty"></label>
+               <label><span>Год выпуска</span><input required name="year"  type="text" [placeholder]="userData.myData.year" formControlName="year"></label>
+            </div>
+            <label><span>Стаж</span><input required name="experience"  type="text" [placeholder]="userData.myData.experience" formControlName="experience"></label>
+            <label><span class="narrow">Актуальное место работы</span><input required name="workPlace"  type="text" [placeholder]="userData.myData.workPlace" formControlName="workPlace"></label>
+            <button class="submit" type="submit">Изменить</button>
+            <div class="update-success" *ngIf="showUpdate">
+               Информация обновлена!
+            </div>
+         </div>
+      </form>
+      <div class="sertificates" *ngIf="userData.myData.userType === 'doctor'">
+         <h3>Мои сертификаты</h3>
+         <!-- {{userData.myData.sertificatesNames | json}} -->
+         <div class="sertif-list" *ngIf="userData.myData.sertificatesLinks">
+            <div class="sertif-item" *ngFor="let item of userData.myData.sertificatesLinks; let i = index">
+               <div class="img-wrapper">
+                  <img class="sertif-img" src={{item}} alt="sertificate">
+                  <div class="sertif-delete" (click)="deleteSertificate(i)">&#10006;</div>
+               </div>
+               <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span>
+            </div>
+         </div>
+         <form class="new-sertificates" id="newSertificatesForm">
+            <div class="inputs-wrapper">
+               <label><span class="narrow">Добавить сертификаты</span> <input class="upload_documents" name="documents" type="file" id="newSertificates" multiple></label>
+               <button class="upload-sertrificates" (click)="addNewSertificates()">загрузить</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

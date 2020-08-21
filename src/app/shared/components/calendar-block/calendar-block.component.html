@@ -1,0 +1,52 @@
+<div class="calendar">
+   <div class="calendar-wrapper">
+      <div class="calendar-header">
+         <div class="arrow arrow-left" id="prev-month-arrow" (click)="decreaseMonth()"></div>
+         <div class="month">{{monthName}} {{year}}</div>
+         <div class="arrow arrow-right" id="next-month-arrow" (click)="increaseMonth()"></div>
+      </div>
+      <div class="calendar-body">
+         <div class="days-of-week">
+            <div *ngFor="let dayName of daysOfWeek" class="day-of-week">
+               {{dayName}}
+            </div>
+         </div>
+         <div class="days">
+            <div *ngFor="let dayIndex of daysArr; index as i"
+               
+               class="day">
+               <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" [currentYear]="currentYear" [selectedDay]="selectedDay" [doctorSchedule]="inputSchedule" (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
+            </div>
+         </div>
+         month: {{month}} <br>
+         начало месяца с: {{currentFirstDay}} <br>
+         выбранный день: {{selectedDay}}
+      </div>
+   </div>
+   <div class="time-aside">
+      <div class="time-blocker" *ngIf="choosenDayWorkHours.length == 0">
+         День не выбран, либо доктор не работает в выбранный день
+         <div class="example">
+            <div class="not-working-color color-example"></div>
+            <p> - не рабочие дни доктора</p>
+         </div>
+         <div class="example">
+            <div class="working-color color-example"></div>
+            <p> - рабочие дни доктора</p>
+         </div>
+         <div class="example">
+            <div class="choosen-day-color color-example"></div>
+            <p> - выбранный день</p>
+         </div>
+      </div>
+      <div class="time-selection" *ngIf="choosenDayWorkHours.length != 0">
+         <div class="time-row"
+         *ngFor="let time of choosenDayWorkHours; index as i" >
+            <div class="time-row-inner" (click)="onClickTimeRow(time)" *ngIf="time">
+               {{time | timeRow}}
+            </div>
+         </div>
+         <button>записаться</button>
+      </div>
+   </div>
+</div>

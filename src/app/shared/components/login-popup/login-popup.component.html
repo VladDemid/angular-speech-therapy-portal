@@ -1,0 +1,25 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleLoginPopup()"></div>
+   <div class="popup">
+
+      <div class="login-registration_tabs">
+         <div class="registration-tab" [routerLink]="['/registration']" >Регистрация</div>
+         <div class="login-tab active">Вход</div>
+      </div>
+      
+      <div class="popup-container">
+         <form [formGroup]="form" (ngSubmit)="logIn()">
+            <div class="inputs-wrapper">
+               <label><span>Email</span><input name="email"  type="text" formControlName="email"></label>
+               <label><span>Пароль</span><input name="password"  type="password" formControlName="password"></label>
+               <div class="foggot-pass-wrapper">
+                  <a class="foggot-pass-link" href="#" (click)="popupService.toggleLoginAndPass()">Забыли пароль?</a> 
+               </div>
+            </div>
+            <div class="serverErrorMessage" *ngIf="serverErrMessage" >{{serverErrMessage}}</div>
+            <div class="serverErrorMessage" *ngIf="accessErrMessage" >{{accessErrMessage}}</div>
+            <button [disabled]="loggingIn" class="login" type="submit">Войти</button>
+         </form>
+      </div>
+   </div>
+</div>

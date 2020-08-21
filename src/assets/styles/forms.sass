@@ -1,0 +1,349 @@
+.login-registration_tabs
+   display: flex
+   justify-content: space-between
+   color: #000
+   max-width: 1300px
+   margin: 0 auto
+   div
+      text-align: center
+      line-height: 70px
+      width: 49%
+      border: 2px solid #fff
+      height: 70px
+      cursor: pointer
+      font-size: 22px
+      font-weight: 500
+      transition: all 0.15s
+      &:hover
+         border: 2px solid $yellow_common
+         background-color: rgba(255, 183, 1, 0.5)
+      &:active
+         border: 2px solid $orange_common
+      &.active
+         // background-color: $orange_common
+         border: 2px solid $orange_common
+
+.registration-type
+   display: flex
+   justify-content: space-between
+   margin-top: 40px
+   label
+      position: relative
+      color: #000
+      width: 49%
+      // margin: 0 10px
+      
+      span
+         display: block
+         border: 2px solid rgba(69, 74, 74, 0.2)
+         text-align: center
+         height: 54px
+         line-height: 54px
+         cursor: pointer
+         transition: all 0.15s
+         &:hover
+            border: 2px solid $yellow_common
+
+      input
+         position: absolute
+         opacity: 0%
+      input:checked ~ .type-text
+         border: 2px solid $orange_common
+
+.show-rules
+   cursor: pointer
+
+
+
+form
+   button
+      display: block
+      margin: 0 auto
+      &.login
+         margin-top: 50px
+         width: 254px
+         height: 52px
+   .inputs-wrapper
+      max-width: 824px
+      margin: 0 auto
+      label
+         display: flex
+         justify-content: space-between
+         margin-top: 34px
+         transition: all 0.15s
+         input
+            width: 540px
+            border: 2px solid #CACACA
+            height: 56px
+            border-radius: 9px
+            outline: none
+            padding: 0 20px
+            transition: all 0.15s
+            &:focus
+               border: 2px solid $yellow_common
+            &.ng-touched.ng-dirty.ng-invalid
+               border: 2px solid #F74342
+            &.upload_documents
+               padding-top: 11px
+               color: #454A4A
+               font-size: 20px
+
+         .select
+            position: relative
+            &.is-active 
+               .select__body
+                  display: block
+               .select__header
+                  &::after
+                     // transform: rotate(120deg)
+                     transform: translateY(15px)
+
+            .select__header
+               width: 540px
+               border: 2px solid #CACACA
+               height: 56px
+               border-radius: 9px
+               outline: none
+               padding: 0 20px
+               transition: all 0.15s
+               cursor: pointer
+               display: flex
+               position: relative
+               &::after
+                  content: ""
+                  position: absolute
+                  top: calc( 50% - 4px )
+                  right: 20px
+                  border-style: solid
+                  border-width: 8px 4px 0px 4px
+                  border-color: $blue_common transparent transparent transparent
+                  transition: 0.3s
+               span
+                  color: #000
+               .select__current
+                  font-size: 18px
+                  padding: 0px
+                  // line-height: 56px 
+                  // padding: 8px
+
+               // .select__icon
+               //    align-items: center
+               //    display: flex
+               //    flex-shrink: 0
+               //    justify-content: center
+               //    height: 40px
+               //    margin-left: auto
+               //    text-align: center
+               //    width: 40px
+
+            .select__body
+               border: 2px solid #cccccc
+               background-color: #fff
+               border-top: 0
+               border-radius: 0 0 9px 9px
+               display: none
+               left: 0
+               position: absolute
+               right: 0
+               top: 85%
+
+            .select__item
+               cursor: pointer
+               font-size: 16px
+               line-height: 24px
+               padding: 8px
+               border-top: 1px solid #cccccc
+               &:hover
+                  background-color: #f2f2f2
+         
+               
+
+         span
+            color: #454A4A
+            font-size: 22px
+            font-weight: 400
+            line-height: 56px
+            max-width: 218px
+            padding-right: 15px
+            transition: all 0.15s
+            &.narrow
+               line-height: 28px 
+               // font-size: 22px
+               padding-right: 0
+               max-width: 166px
+               background-color: rgba(0,0,0,.1)
+      .double-input-row
+         display: flex
+         justify-content: space-between
+         label
+            // display: inline-block
+            display: flex
+            justify-content: space-between
+            &:nth-child(1)
+               width: calc(100% - 300px)
+               span
+                  // margin-right: 154px
+                  // width: calc(100% - 211px)
+               input
+                  width: 240px
+
+            &:nth-child(2)
+               justify-content: flex-end
+               width: 300px
+               span
+                  margin: 0px 20px
+                  padding-right: 0
+               input
+                  width: 121px
+               
+         
+
+      
+.error
+   font-size: 14px
+   border-bottom: 3px solid red
+   border-radius: 3px
+   span
+      color: red
+      // text-decoration: underline
+      font-size: 1.2em
+.serverErrorMessage
+   display: block
+   margin: 0 auto
+   text-align: center
+   width: 300px
+   font-size: 22px
+   color: red
+   text-decoration: underline
+.rules
+   margin: 0 auto
+   width: 80%
+   display: flex
+   flex-direction: column
+   justify-content: flex-start
+   font-size: 16px
+
+   label
+      display: block
+      margin-top: 0
+      padding: 5px 0 5px 30px
+      span
+         position: relative
+         line-height: 1em
+   div
+      // position: relative
+      margin-top: 20px
+      input
+         position: absolute
+         margin-right: 20px
+         width: 10px
+         height: 10px
+         opacity: 0%
+         &:checked + span:after
+            position: absolute
+            content: "\01F5F8"
+            width: 10px
+            top: 3px
+            height: 12px
+            color: #219EBC
+            font-size: 20px
+            font-weight: bold
+            left: -22px
+            // bottom: 8px
+         &:checked + span::before
+            border: 2px solid #748B91
+         &:hover + span::before
+            border: 2px solid #96AFB8
+         &:active + span::before
+            border: 2px solid #334A52
+
+
+         & + span::before
+            position: absolute
+            content: ''
+            width: 16px
+            height: 16px
+            left: -24px
+            top: 3px
+            border: 2px solid #C9C9C9
+   a
+      color: #019393
+      text-decoration: underline
+
+
+   
+
+@media screen and (max-width: 790px) 
+   form .inputs-wrapper label span
+      max-width: 180px
+@media screen and (max-width: 900px)
+   .registration-block form
+      .inputs-wrapper
+         label
+            input, .select__header
+               width: 480px
+            span
+         .double-input-row
+            label
+               &:nth-child(1)
+                  width: calc(100% - 234px)
+                  span
+                  input
+                     width: 246px
+               &:nth-child(2)
+                  width: 234px
+                  span
+                     line-height: 28px
+                  input
+                     width: 100px
+@media screen and (max-width: 750px) 
+   form
+      .inputs-wrapper
+         label
+            margin-top: 20px
+            flex-direction: column
+            align-items: center
+            input
+               width: 100% !important
+               text-align: center
+            .select
+               width: 100%
+               .select__header
+                  width: 100%
+                  justify-content: center
+                  .select__current
+                     line-height: 52px
+               .select__body
+                  .select__item
+                     text-align: center
+            span
+               line-height: 30px
+               max-width: 100%
+               &.narrow
+                  line-height: 40px
+                  max-width: 100% 
+                  
+                  // width: 187px
+         .double-input-row
+            label
+               &:nth-child(1)
+                  width: calc(100% - 180px) !important
+                  span
+                  input
+                     width: 246px 
+               &:nth-child(2)
+                  width: 180px !important
+                  span
+                     line-height: 28px
+                     font-size: 22px
+                  input
+                     width: 100px
+
+@media screen and (max-width: 650px) 
+   .registration-type 
+      label 
+         span
+            padding-top: 3px
+            font-size: 3vw
+            line-height: 22px
+      

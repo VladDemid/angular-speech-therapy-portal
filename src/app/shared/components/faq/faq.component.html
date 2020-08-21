@@ -1,0 +1,14 @@
+<div class="faq">
+   <div class="container">
+      <h2>FAQ</h2>
+      <ul class="faq__list">
+         <app-faq-item
+            *ngFor="let tabItem of faqTabsContent; let tabIndex = index"
+            [tabIndex] = "tabIndex"
+            [tabItem] = "tabItem"
+            (newTabIndex) = "changeCurrentFaq($event)"
+            [currentFaq] = "currentFaq"
+         ></app-faq-item>
+      </ul>
+   </div>
+</div>
