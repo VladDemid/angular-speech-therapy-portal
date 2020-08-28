@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupService } from '../shared/services/popup.service';
 import { FirebaseService } from '../shared/services/firebase.service';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-home-page',
@@ -8,6 +9,9 @@ import { FirebaseService } from '../shared/services/firebase.service';
   styleUrls: ['./home-page.component.sass']
 })
 export class HomePageComponent implements OnInit {
+
+  doctors = []
+  
 
   constructor(
     public popupService: PopupService,
@@ -17,8 +21,6 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.getAllDoctors()
   }
-
-  doctors = []
 
   getAllDoctors() {
     this.firebase.getDoctorsInfo()
@@ -44,5 +46,7 @@ export class HomePageComponent implements OnInit {
     
 
   }
+
+  
   
 }

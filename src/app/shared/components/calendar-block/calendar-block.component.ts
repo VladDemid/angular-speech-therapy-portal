@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { log } from 'console';
+import { UserDoctor } from '../../interfaces';
+import { UserData } from 'src/app/profile/shared/services/user-data.service';
 
 @Component({
   selector: 'app-calendar-block',
@@ -8,9 +10,11 @@ import { log } from 'console';
 })
 export class CalendarBlockComponent implements OnInit {
 
-  @Input() inputSchedule: string;
+  @Input() inputDoctorInfo: UserDoctor;
 
-  constructor() { }
+  constructor(
+    public userData: UserData
+  ) { }
 
 
   ngOnInit(): void {
@@ -86,16 +90,8 @@ export class CalendarBlockComponent implements OnInit {
     this.selectedDay = dayIndex - 1
   }
 
-  onOutDay(dayOfWeekChoosen) {
+  onOutDay(dayOfWeekChoosen) { //ouput из отдельного дня
     console.log("выбран ", dayOfWeekChoosen);
-    // this.choosenDayWorkHours = this.inputSchedule[dayOfWeekChoosen]
-    console.log(this.inputSchedule[dayOfWeekChoosen]);
-    this.choosenDayWorkHours = []
-    if (this.inputSchedule[dayOfWeekChoosen]) {
-      for (let i = +this.inputSchedule[dayOfWeekChoosen][0]; i <= +this.inputSchedule[dayOfWeekChoosen][1]; i++) {
-        this.choosenDayWorkHours[i] = i
-      }
-    }
   }
 
   onClickTimeRow(lessonTime) {

@@ -1,3 +1,4 @@
-<div class="day-inner " [ngClass]="{'today': (todayDay == dayIndex && month == currentMonth && year == currentYear), 'work-day': doctorSchedule && doctorSchedule[thisDayOfWeek], 'day-choosen': selectedDay == dayIndex - 1 }" (click)="outputDay()">
+<div class="day-inner" [ngClass]="{'today': (todayDay == dayIndex && month == currentMonth && year == currentYear), 'work-day': false, 'day-choosen': selectedDay == dayIndex - 1 }" (click)="outputDay()">
    <span>{{dayIndex}}</span>
 </div>
+<!-- work-day убраны временно -->

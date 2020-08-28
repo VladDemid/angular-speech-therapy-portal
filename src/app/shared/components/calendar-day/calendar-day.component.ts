@@ -16,7 +16,7 @@ export class CalendarDayComponent implements OnInit {
   @Input() dayIndex: any; //номер дня (1-31)
   @Input() currentFirstDay: any; //день недели начала месяца (1-7)
   @Input() selectedDay: number;
-  @Input() doctorSchedule: any;
+  // @Input() inputDoctorInfo: any; //вся инфа про доктора (этот пользователь или при просмотре на specialist-page )
   @Output() outDay = new EventEmitter<any>();
   
   thisDayOfWeek: number //день недели для каждого дня
@@ -43,7 +43,6 @@ export class CalendarDayComponent implements OnInit {
     --this.thisDayOfWeek //чтобы Пн=0 Вс=6
   }
 
-  // currentFirstDay+dayIndex-1)%7
   setDayOfWeek() { //высчитать день недели для каждого дня месяца
     let currentDayOfWeek = this.currentFirstDay
     

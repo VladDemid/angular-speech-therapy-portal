@@ -8,11 +8,16 @@ import { PopupService } from '../../services/popup.service';
 })
 export class NavHomeComponent implements OnInit {
 
+  isAuthenticated = false
 
   constructor(public popupService: PopupService) { }
 
   ngOnInit(): void {
+    this.checkAuthentication()
   }
 
+  checkAuthentication() {
+    this.isAuthenticated = localStorage.getItem('token-Id') ? true : false
+  }
   
 }

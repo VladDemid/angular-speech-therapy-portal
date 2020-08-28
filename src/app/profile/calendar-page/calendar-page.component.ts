@@ -7,6 +7,16 @@ import { UserData } from '../shared/services/user-data.service';
   styleUrls: ['./calendar-page.component.sass']
 })
 export class CalendarPageComponent implements OnInit {
+  
+  daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+  daysOfWeekFlagged = {0: false, 1: false, 2: false, 3: false, 4: false, 5: false, 6: false }
+  testVar = false
+  formData = {}
+  workHoursFrom = 8
+  workHoursTo = 22
+  userTimeStart = 8
+  userTimeEnd = 20
+  myDuration: number
 
   constructor(
     public userData: UserData
@@ -16,15 +26,24 @@ export class CalendarPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-  formData = {}
-  workHoursFrom = 8
-  workHoursTo = 22
-  userTimeStart = 8
-  userTimeEnd = 20
-  myDuration: number
+
+
   
 
+  flagDayOfWeek(i) {
+    // каждый клик по чекбоксу дня недели массив заново переопределятеся. 
+    // работает криво зато работает (по 2 раза за каждый клик и скан по всем чекбоксам)
+    // по 2 раза хз почему (можно было сделать через eventListener пожалуй)
+    
+    const daysList = document.querySelectorAll('input.day-selector')
+    for (let dayItem in daysList) {
+      if ((<HTMLInputElement>daysList[dayItem]).checked) { 
+        this.daysOfWeekFlagged[dayItem] = true             
+      } else {
+        this.daysOfWeekFlagged[dayItem] = false
+      }
+    }
+  }
 
   sendTimeData() {
     console.log("start create data to send");

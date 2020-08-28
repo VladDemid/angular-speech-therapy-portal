@@ -2,16 +2,20 @@
    <div class="container">
       <h2>Календарь</h2>
       <div class="calendar-wrapper">
-         <app-calendar-block [inputSchedule]="userData.myData.daysShedule"></app-calendar-block>
-         <div class="time-block" *ngIf="userData.myData.userType == 'doctor'">
+         <app-calendar-block [inputDoctorInfo]="userData.myData"></app-calendar-block>
+         
+         <!-- <div class="time-block" *ngIf="userData.myData.userType == 'doctor'">
             <div class="profile-time-setting">
                <div class="settings-title">
                   Настройка моего графика
                </div>
                <div class="days-of-week">
                   <ul>
-                     <li class="day-of-week" *ngFor="let day of daysOfWeek">
-                        <label><input type="checkbox" class="day-selector">{{day}}</label>
+                     <li class="day-of-week" *ngFor="let day of daysOfWeek; index as i" >
+                        <label [ngClass]="{'checked-day': daysOfWeekFlagged[i]}" (click)="flagDayOfWeek(i)">
+                           <input type="checkbox" class="day-selector" >
+                           {{day}}
+                        </label>
                      </li>
                   </ul>
                </div>
@@ -19,11 +23,40 @@
                   <p>Выбрать свободные часы (диапазон: {{workHoursFrom}} - {{workHoursTo}})</p>
                   <label><span>От </span><input type="number" id="startTime" (input)="setTimeStart($event)" [min]="workHoursFrom" [max]="workHoursTo" [value]="userTimeStart" ></label>
                   <label><span>До </span><input type="number" id="endTime" (input)="setTimeEnd($event)" [min]="workHoursFrom" [max]="workHoursTo" [value]="userTimeEnd"></label>
+                  <div class="period-visual">
+                     <div class="from">
+                        <div class="title">
+                           от
+                        </div>
+                        <div class="controls">
+                           <div class="number">
+                              {{userTimeStart}}
+                           </div>
+                           <div class="control-buttons">
+                              <div class="increase-button"></div>
+                              <div class="decrease-button"></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="to">
+                        <div class="title">
+                           до
+                        </div>
+                        <div class="controls">
+                           <div class="number">
+                              {{userTimeEnd}}
+                           </div>
+                           <div class="control-buttons">
+                              <div class="increase-button"></div>
+                              <div class="decrease-button"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
                <div class="duration-setting">
                   <p>Продолжительность занятий</p>
                   <label>40 минут <input type="radio" name="duration" value="40" [checked]="!userData.myData.daysShedule || !userData.myData.daysShedule.lessonDuration || (userData.myData.daysShedule && userData.myData.daysShedule.lessonDuration == 40) || (userData.myData.daysShedule && userData.myData.daysShedule.lessonDuration == 30)"></label>
-                  <!-- <label>1 час <input type="radio" name="duration" value="60" [checked]="userData.myData.daysShedule && userData.myData.daysShedule.lessonDuration  == 60"></label> -->
                </div>
                <button (click)="sendTimeData()">изменить данные </button>
                <button (click)="clearTimeData()">очистить выделенные дни</button>
@@ -49,7 +82,7 @@
                   </div>
                </div>
             </div>
-         </div>
+         </div> -->
       </div>
    </div>
 </div>

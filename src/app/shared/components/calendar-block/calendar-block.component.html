@@ -15,7 +15,7 @@
             <div *ngFor="let dayIndex of daysArr; index as i"
                
                class="day">
-               <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" [currentYear]="currentYear" [selectedDay]="selectedDay" [doctorSchedule]="inputSchedule" (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
+               <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" [currentYear]="currentYear" [selectedDay]="selectedDay"  (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
             </div>
          </div>
          month: {{month}} <br>
@@ -23,7 +23,7 @@
          выбранный день: {{selectedDay}}
       </div>
    </div>
-   <div class="time-aside">
+   <div class="time-aside client" *ngIf="userData.myData.userType == 'client' ">
       <div class="time-blocker" *ngIf="choosenDayWorkHours.length == 0">
          День не выбран, либо доктор не работает в выбранный день
          <div class="example">
