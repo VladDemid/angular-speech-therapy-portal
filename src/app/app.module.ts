@@ -20,6 +20,7 @@ import { AuthInterceptor } from './shared/auth.interceptor';
 import { ProfileGuard } from './profile/shared/services/profile.guard';
 import { SpecialistPageComponent } from './shared/components/specialist-page/specialist-page.component';
 import { SharedModule } from './shared/shared.module';
+import { UserData } from './profile/shared/services/user-data.service';
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -35,11 +36,11 @@ const INTERCEPTOR_PROVIDER: Provider = {
     RegistrationPageComponent,
     NavHomeComponent,
     FooterHomeComponent,
-    OurSpecialistsComponent,
-    SpecialistCardComponent,
+    // OurSpecialistsComponent,
+    // SpecialistCardComponent,
     FaqComponent,
     FaqItemComponent,
-    SpecialistFilterPipe,
+    // SpecialistFilterPipe,
     LoginPopupComponent,
     PasswordRecoveryComponent,
     TermsOfUsePopupComponent,
@@ -58,6 +59,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     HttpClientModule
   ],
   providers: [
+    UserData,
     INTERCEPTOR_PROVIDER
   ],
   bootstrap: [AppComponent]

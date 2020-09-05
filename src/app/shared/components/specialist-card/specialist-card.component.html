@@ -8,6 +8,6 @@
    <div class="specialist-card__specialization">Специализация</div>
    <div class="specialist-card__experience">{{card.experience}}</div>
    <div class="specialist-card__schedule">
-      <a [routerLink]="['/doctor']" [queryParams]='{id: encryptedId}'>Подробнее ></a>
+      <a [routerLink]="['/doctor']" [queryParams]='{id: encryptedId, returnToProfileModule: isProfileModule}' >Подробнее ></a>
    </div>
 </div>

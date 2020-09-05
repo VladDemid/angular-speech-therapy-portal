@@ -19,24 +19,24 @@ export class MenuComponent implements OnInit {
       icon: "icon-calendar"
     },
     {
-      name: "Видеочат",
-      link: "videochat",
-      icon: "icon-video-conference"
+      name: "Выбрать доктора",
+      link: "doctors",
+      icon: "icon-doctor"
     },
-    {
-      name: "Записи консультаций",
-      link: "records",
-      icon: "icon-film-roll"
-    },
-    {
-      name: "Безопасность",
-      link: "security",
-      icon: "icon-padlock"
-    },
+    // {
+    //   name: "Записи консультаций",
+    //   link: "multimedia",
+    //   icon: "icon-multimedia"
+    // },
+    // {
+    //   name: "Безопасность",
+    //   link: "security",
+    //   icon: "icon-security"
+    // },
     {
       name: "Редактировать личные данные",
       link: "edit",
-      icon: "icon-resume"
+      icon: "icon-edit"
     }
   ]
   

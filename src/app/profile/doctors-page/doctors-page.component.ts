@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { PopupService } from '../shared/services/popup.service';
-import { FirebaseService } from '../shared/services/firebase.service';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.sass']
+  selector: 'app-doctors-page',
+  templateUrl: './doctors-page.component.html',
+  styleUrls: ['./doctors-page.component.sass']
 })
-export class HomePageComponent implements OnInit {
+export class DoctorsPageComponent implements OnInit {
 
   doctors = []
 
-
   constructor(
-    public popupService: PopupService,
     private firebase: FirebaseService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getAllDoctors()
@@ -43,10 +39,6 @@ export class HomePageComponent implements OnInit {
       }
     }
     console.log("доктора: ", this.doctors);
-    
-
   }
 
-  
-  
 }

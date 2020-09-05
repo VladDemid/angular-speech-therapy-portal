@@ -10,6 +10,7 @@ import { CrypterService } from '../../services/crypter.service';
 export class SpecialistCardComponent implements OnInit {
 
   @Input() card: UserDbInfo
+  @Input() isProfileModule: boolean
   active = false
   defaultAvatarUrl="https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
   encryptedId: string

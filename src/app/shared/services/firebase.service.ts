@@ -126,4 +126,17 @@ export class FirebaseService implements OnInit {
     return this.http.get(`${environment.FbDbUrl}/users/${id}.json`)
   }
 
+  changeWorkHourBoolean(id, year, month, day, hour, hourSettings) {
+    return this.http.put(`${environment.FbDbUrl}/doctorsSchedule/${id}/${year}/${month}/${day}/${hour}.json`, hourSettings)
+  }
+
+
+  getDoctorShedule(id) {
+    return this.http.get(`${environment.FbDbUrl}/doctorsSchedule/${id}.json`)
+  }
+
+  makeALesson(time, doctor, client) {
+    return this.http.put(`${environment.FbDbUrl}/lessons/${doctor.id}/${time.year}/${time.month}/${time.day}/${time.hour}.json`, client)
+  }
+
 }

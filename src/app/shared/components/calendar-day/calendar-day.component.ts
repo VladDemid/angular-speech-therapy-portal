@@ -16,7 +16,7 @@ export class CalendarDayComponent implements OnInit {
   @Input() dayIndex: any; //номер дня (1-31)
   @Input() currentFirstDay: any; //день недели начала месяца (1-7)
   @Input() selectedDay: number;
-  // @Input() inputDoctorInfo: any; //вся инфа про доктора (этот пользователь или при просмотре на specialist-page )
+  @Input() doctorShedule: object;
   @Output() outDay = new EventEmitter<any>();
   
   thisDayOfWeek: number //день недели для каждого дня
@@ -54,10 +54,9 @@ export class CalendarDayComponent implements OnInit {
   }
 
   outputDay() {
-    this.outDay.emit(this.thisDayOfWeek)
+    // this.outDay.emit(this.thisDayOfWeek)
     // this.daySent = true
   }
-  
   
   launchListenersForFirstDay() {
     document.getElementById("prev-month-arrow").addEventListener("click", () => {

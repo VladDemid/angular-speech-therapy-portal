@@ -8,6 +8,8 @@ import { UserDbInfo } from '../../interfaces';
 })
 export class OurSpecialistsComponent implements OnInit {
   @Input() firebaseDoctors: UserDbInfo[]
+  @Input() isProfileModule: boolean
+
   activeSpecialists: string = ""
 
 

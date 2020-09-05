@@ -17,6 +17,7 @@ export class CalendarPageComponent implements OnInit {
   userTimeStart = 8
   userTimeEnd = 20
   myDuration: number
+  myId: string //для инжект в календарь
 
   constructor(
     public userData: UserData
@@ -24,6 +25,7 @@ export class CalendarPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.myId = localStorage.getItem('user-Id')
   }
 
 
@@ -45,97 +47,97 @@ export class CalendarPageComponent implements OnInit {
     }
   }
 
-  sendTimeData() {
-    console.log("start create data to send");
+  // sendTimeData() {
+  //   console.log("start create data to send");
     
-    let daysSchedule = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]};
+  //   let daysSchedule = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]};
     
-    if (this.userData.myData.daysShedule) { //сканирование расписания с БД
-      for (let key in this.userData.myData.daysShedule) {
-        if (typeof this.userData.myData.daysShedule[key] != "number") {
-          daysSchedule[key] = this.userData.myData.daysShedule[key]
-        }
-      }
-    }
+  //   if (this.userData.myData.daysShedule) { //сканирование расписания с БД
+  //     for (let key in this.userData.myData.daysShedule) {
+  //       if (typeof this.userData.myData.daysShedule[key] != "number") {
+  //         daysSchedule[key] = this.userData.myData.daysShedule[key]
+  //       }
+  //     }
+  //   }
     
-    const daysList = document.querySelectorAll('input.day-selector')
-    for (let dayItem in daysList) {
-      if ((<HTMLInputElement>daysList[dayItem]).checked) { // добавление\изменение дней
-        console.log("запись ",this.daysOfWeek[dayItem] ); // -------удалить--------
-        daysSchedule[dayItem] = []
-        daysSchedule[dayItem][0] = +this.userTimeStart
-        daysSchedule[dayItem][1] = +this.userTimeEnd
-      }
-    }
+  //   const daysList = document.querySelectorAll('input.day-selector')
+  //   for (let dayItem in daysList) {
+  //     if ((<HTMLInputElement>daysList[dayItem]).checked) { // добавление\изменение дней
+  //       console.log("запись ",this.daysOfWeek[dayItem] ); // -------удалить--------
+  //       daysSchedule[dayItem] = []
+  //       daysSchedule[dayItem][0] = +this.userTimeStart
+  //       daysSchedule[dayItem][1] = +this.userTimeEnd
+  //     }
+  //   }
     
-    const durations = document.querySelectorAll("input[name='duration']") //продолжительность
-    for (let input in durations) {
-      if ((<HTMLInputElement>durations[input]).checked) { // поиск отмеченной продолжительности
-        this.myDuration = +(<HTMLInputElement>durations[input]).value
-      }
-    }
+  //   const durations = document.querySelectorAll("input[name='duration']") //продолжительность
+  //   for (let input in durations) {
+  //     if ((<HTMLInputElement>durations[input]).checked) { // поиск отмеченной продолжительности
+  //       this.myDuration = +(<HTMLInputElement>durations[input]).value
+  //     }
+  //   }
     
-    daysSchedule["lessonDuration"] = this.myDuration // добавление продолжительности в объект расписания
+  //   daysSchedule["lessonDuration"] = this.myDuration // добавление продолжительности в объект расписания
 
-    const DataToSend = { // создание объекта с подобъектом для отправления в БД
-      daysShedule: this.scheduleDataTrimmer(daysSchedule), 
-    }
+  //   const DataToSend = { // создание объекта с подобъектом для отправления в БД
+  //     daysShedule: this.scheduleDataTrimmer(daysSchedule), 
+  //   }
 
-    // console.log(DataToSend);
+  //   // console.log(DataToSend);
     
-    this.userData.sendMyDataChanges(DataToSend)
-    .subscribe((resp) => {
-      console.log("часы обновлены");
-      this.userData.initialization()
-    }),
-    (err) => {
-      console.log("ошибка обновления расписания: ", err);
-    }
+  //   this.userData.sendMyDataChanges(DataToSend)
+  //   .subscribe((resp) => {
+  //     console.log("часы обновлены");
+  //     this.userData.initialization()
+  //   }),
+  //   (err) => {
+  //     console.log("ошибка обновления расписания: ", err);
+  //   }
     
-  }
+  // }
 
-  clearTimeData() {
-    let daysSchedule = {0: [],1: [],2: [],3: [],4: [],5: [],6: []}
+  // clearTimeData() {
+  //   let daysSchedule = {0: [],1: [],2: [],3: [],4: [],5: [],6: []}
 
-    if (this.userData.myData.daysShedule) { //сканирование расписания с БД
-      for (let key in this.userData.myData.daysShedule) {
-        if (typeof this.userData.myData.daysShedule[key] != "number")
-        daysSchedule[key] = this.userData.myData.daysShedule[key]
-      }
-    }
+  //   if (this.userData.myData.daysShedule) { //сканирование расписания с БД
+  //     for (let key in this.userData.myData.daysShedule) {
+  //       if (typeof this.userData.myData.daysShedule[key] != "number")
+  //       daysSchedule[key] = this.userData.myData.daysShedule[key]
+  //     }
+  //   }
 
-    const daysList = document.querySelectorAll('input.day-selector')
-    for (let dayItem in daysList) {
-      if ((<HTMLInputElement>daysList[dayItem]).checked) { // добавление\изменение дней
-        daysSchedule[dayItem] = []
-        // daysSchedule[dayItem][0] = null
-        // daysSchedule[dayItem][1] = null
-      }
-    }
-
-    
-    const durations = document.querySelectorAll("input[name='duration']") //продолжительность
-    for (let input in durations) {
-      if ((<HTMLInputElement>durations[input]).checked) { // поиск отмеченной продолжительности
-        this.myDuration = +(<HTMLInputElement>durations[input]).value
-      }
-    }
-    daysSchedule["lessonDuration"] = this.myDuration // добавление продолжительности в объект расписания
-    
-    const DataToSend = { // создание объекта с подобъектом для отправления в БД
-      daysShedule: this.scheduleDataTrimmer(daysSchedule), 
-    }
+  //   const daysList = document.querySelectorAll('input.day-selector')
+  //   for (let dayItem in daysList) {
+  //     if ((<HTMLInputElement>daysList[dayItem]).checked) { // добавление\изменение дней
+  //       daysSchedule[dayItem] = []
+  //       // daysSchedule[dayItem][0] = null
+  //       // daysSchedule[dayItem][1] = null
+  //     }
+  //   }
 
     
-    this.userData.sendMyDataChanges(DataToSend)
-    .subscribe((resp) => {
-      console.log("выделенные дни очищены");
-      this.userData.initialization()
-    }),
-    (err) => {
-      console.log("ошибка обновления расписания: ", err);
-    }
-  }
+  //   const durations = document.querySelectorAll("input[name='duration']") //продолжительность
+  //   for (let input in durations) {
+  //     if ((<HTMLInputElement>durations[input]).checked) { // поиск отмеченной продолжительности
+  //       this.myDuration = +(<HTMLInputElement>durations[input]).value
+  //     }
+  //   }
+  //   daysSchedule["lessonDuration"] = this.myDuration // добавление продолжительности в объект расписания
+    
+  //   const DataToSend = { // создание объекта с подобъектом для отправления в БД
+  //     daysShedule: this.scheduleDataTrimmer(daysSchedule), 
+  //   }
+
+    
+  //   this.userData.sendMyDataChanges(DataToSend)
+  //   .subscribe((resp) => {
+  //     console.log("выделенные дни очищены");
+  //     this.userData.initialization()
+  //   }),
+  //   (err) => {
+  //     console.log("ошибка обновления расписания: ", err);
+  //   }
+  // }
 
   
   scheduleDataTrimmer(schedule: Object) {

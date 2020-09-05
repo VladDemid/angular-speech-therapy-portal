@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupService } from '../../services/popup.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-nav-home',
@@ -10,14 +11,17 @@ export class NavHomeComponent implements OnInit {
 
   isAuthenticated = false
 
-  constructor(public popupService: PopupService) { }
+  constructor(
+    public popupService: PopupService,
+    private auth: AuthService
+    ) { }
 
   ngOnInit(): void {
     this.checkAuthentication()
   }
 
   checkAuthentication() {
-    this.isAuthenticated = localStorage.getItem('token-Id') ? true : false
+    this.isAuthenticated = this.auth.isAuthenticated()
   }
   
 }

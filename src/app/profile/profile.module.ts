@@ -11,6 +11,7 @@ import { ProfileGuard } from './shared/services/profile.guard';
 import { SharedModule } from '../shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { DoctorsPageComponent } from './doctors-page/doctors-page.component';
 
 
 @NgModule({
@@ -18,8 +19,9 @@ import { CommonModule } from '@angular/common';
       MenuComponent,
       CalendarPageComponent,
       EditProfileComponent,
-      ProfileNavComponent,
-      ProfileLayoutComponent
+      // ProfileNavComponent,
+      ProfileLayoutComponent,
+      DoctorsPageComponent
    ],
    imports: [
       // CommonModule,
@@ -33,6 +35,7 @@ import { CommonModule } from '@angular/common';
             {path: "menu", component: MenuComponent, canActivate: [ProfileGuard] },
             {path: "calendar", component: CalendarPageComponent, canActivate: [ProfileGuard] },
             {path: "edit", component: EditProfileComponent, canActivate: [ProfileGuard] },
+            {path: "doctors", component: DoctorsPageComponent, canActivate: [ProfileGuard] },
             {path:"**", redirectTo: "menu"}
          ]
       },
@@ -41,7 +44,7 @@ import { CommonModule } from '@angular/common';
    ],
    exports: [],
    providers:[
-      UserData,
+      // UserData,
       ProfileGuard
    ]
 })

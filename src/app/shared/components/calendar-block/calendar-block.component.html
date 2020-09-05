@@ -15,38 +15,66 @@
             <div *ngFor="let dayIndex of daysArr; index as i"
                
                class="day">
-               <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" [currentYear]="currentYear" [selectedDay]="selectedDay"  (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
+               <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" [currentYear]="currentYear" [selectedDay]="selectedDay"  [doctorShedule]="doctorShedule"  (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
             </div>
          </div>
          month: {{month}} <br>
          начало месяца с: {{currentFirstDay}} <br>
-         выбранный день: {{selectedDay}}
+         выбранный день: {{selectedDay+1}} <br>
+         выбранный час: {{selectedHourForLesson}}
       </div>
    </div>
-   <div class="time-aside client" *ngIf="userData.myData.userType == 'client' ">
-      <div class="time-blocker" *ngIf="choosenDayWorkHours.length == 0">
-         День не выбран, либо доктор не работает в выбранный день
-         <div class="example">
-            <div class="not-working-color color-example"></div>
-            <p> - не рабочие дни доктора</p>
-         </div>
-         <div class="example">
-            <div class="working-color color-example"></div>
-            <p> - рабочие дни доктора</p>
-         </div>
-         <div class="example">
-            <div class="choosen-day-color color-example"></div>
-            <p> - выбранный день</p>
-         </div>
-      </div>
-      <div class="time-selection" *ngIf="choosenDayWorkHours.length != 0">
-         <div class="time-row"
-         *ngFor="let time of choosenDayWorkHours; index as i" >
-            <div class="time-row-inner" (click)="onClickTimeRow(time)" *ngIf="time">
-               {{time | timeRow}}
+   <!-- для страницы просмотра доктора клиентом -->
+   <div class="time-aside time-aside-view" *ngIf="!isEditPage">
+      <div class="day-not-chosen-sign" *ngIf="selectedDay == -1">
+         для просмотра
+         <div class="time-blocker">
+            День не выбран, либо доктор не работает в выбранный день
+            <div class="example">
+               <div class="not-working-color color-example"></div>
+               <p> - не рабочие дни доктора</p>
+            </div>
+            <div class="example">
+               <div class="working-color color-example"></div>
+               <p> - рабочие дни доктора</p>
+            </div>
+            <div class="example">
+               <div class="choosen-day-color color-example"></div>
+               <p> - выбранный день</p>
             </div>
          </div>
-         <button>записаться</button>
+      </div>
+      <div class="day-chosen" *ngIf="selectedDay != -1">
+         <div class="time-selection">
+            <div class="time-row" [ngClass]="{'work-hour': doctorShedule && doctorShedule[year] && doctorShedule[year][month] && doctorShedule[year][month][selectedDay+1] && doctorShedule[year][month][selectedDay+1][time] && doctorShedule[year][month][selectedDay+1][time]['workTime'] == true, 'selected-hour': selectedHourForLesson == time}"
+            *ngFor="let time of workHoursArray; index as i" >
+               <div class="time-row-inner" (click)="onClickTimeRow(time)">
+                  {{time | timeRow}}
+               </div>
+            </div>
+         </div>
+         <button [routerLink]="['/profile/doctors']" *ngIf='isInProfileModule == "false"'>Перейти в личный кабинет для записи</button>
+         <button [disabled]="selectedHourForLesson == -1" (click)="makeAnAppointment(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true"'>Записаться</button>
+      </div>
+   </div>
+   <!-- для страницы доктора -->
+   <div class="time-aside time-aside-edit" *ngIf="isEditPage" [ngClass]="{'downloading': updatingdWorkHourData}">
+      <div class="day-not-chosen-sign" *ngIf="selectedDay == -1">
+         Пожалуйста выберите день
+      </div>
+      <div class="day-chosen" *ngIf="selectedDay != -1">
+         Мои часы работы:
+         <div class="time-selection">
+            <div class="time-row" [ngClass]="{'work-hour': doctorShedule && doctorShedule[year] && doctorShedule[year][month] && doctorShedule[year][month][selectedDay+1] && doctorShedule[year][month][selectedDay+1][time] && doctorShedule[year][month][selectedDay+1][time]['workTime'] == true}"
+            *ngFor="let time of workHoursArray; index as i" >
+               <div class="time-row-inner" (click)="onClickTimeRow(time)">
+                  {{time | timeRow}}
+               </div>
+            </div>
+         </div>
+         *чтобы выбрать часы работы - выберите любую строчку
       </div>
    </div>
 </div>
+<!-- UPDATING: {{updatingdWorkHourData}} -->
+<!-- {{doctorShedule | json}} -->

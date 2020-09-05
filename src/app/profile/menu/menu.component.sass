@@ -15,9 +15,11 @@
             cursor: pointer
             background-color: $yellow_common
             .icon span
-               font-size: 77px
+               font-size: 77px !important
                transition: 0.3s
-               // text-shadow: -1px -1px #ccc
+            .icon span.icon-videochat
+               font-size: 83px !important
+               transition: 0.3s
          &:active
             background-color: $orange_common
             outline: none
@@ -35,8 +37,10 @@
                left: 50%
                transform: translateX(-50%)
                margin: 10px auto
-               color: #000
+               // color: #000
                transition: 0.3s
+               &.icon-videochat
+                  font-size: 76px
          .description-wrapper
             .description
                text-align: center

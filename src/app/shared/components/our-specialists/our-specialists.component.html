@@ -25,6 +25,7 @@
          <app-specialist-card
          *ngFor="let card of firebaseDoctors | specialistFilter:activeSpecialists"
          [card]="card"
+         [isProfileModule]="isProfileModule"
          ></app-specialist-card>
       </div>
       <!-- <div class="new__catalog">
