@@ -37,6 +37,8 @@ export class CalendarBlockComponent implements OnInit {
   workEnd = 22
   workHoursArray = []
   doctorShedule = {}
+  doctorsLessons = {}
+  doctorAlertSign: string
 
   constructor(
     private firebase: FirebaseService,
@@ -50,17 +52,28 @@ export class CalendarBlockComponent implements OnInit {
     this.setMonthName()
     this.showDays()
     this.makeHoursArray()
+    // if (this.userData.myData.userType == "doctor") {
     this.downloadSheduleInfo()
+    // }
   }
 
-  downloadSheduleInfo() {
-    this.firebase.getDoctorShedule(this.calendarUserId)
+  downloadSheduleInfo() { //скан рабочих часов + занятых уроков 
+    this.firebase.getDoctorShedule(this.calendarUserId) 
     .subscribe((resp) => {
       console.log("расписание доктора скачано: ", resp);
       this.doctorShedule = resp
     },
     (err) => {
       console.log("ошибка при скачивании расписании доктора: ", err);
+    })
+
+    this.firebase.getDoctorLessons(this.calendarUserId) 
+    .subscribe((resp) => {
+      console.log("занятые часы(купленные) доктора скачано: ", resp);
+      this.doctorsLessons = resp
+    },
+    (err) => {
+      console.log("ошибка при скачивании занятых часов(купленных): ", err);
     })
   }
 
@@ -173,7 +186,7 @@ export class CalendarBlockComponent implements OnInit {
   }
 
   makeAnAppointment(year, month, day, hour) { 
-    if (this.auth.isAuthenticated()) {
+    if (this.auth.isAuthenticated() && this.userData.myData.userType == 'client') {
 
       const timeData = {
         year: year,
@@ -183,7 +196,9 @@ export class CalendarBlockComponent implements OnInit {
       }
 
       const doctorData = {
-        id: this.calendarUserId
+        id: this.calendarUserId,
+        name: `${this.inputDoctorInfo.name} ${this.inputDoctorInfo.surname}`,
+        description: "описание проблемы...",
       }
 
       const clientData = {
@@ -193,15 +208,10 @@ export class CalendarBlockComponent implements OnInit {
       }
 
       
-      this.firebase.makeALesson(timeData, doctorData, clientData)
-      .subscribe((resp)=>{
-        console.log("клиент записан: ", resp);
-      },
-      (err) => {
-        console.log("ошибка записи к доктору: ", err);
-      })
+      this.firebase.makeALesson(timeData, doctorData, clientData) 
+      
       // console.log(`запись: \n клиент: ${year} ${month} ${day} ${hour} \n ${clientData.name} \n ${clientData.id} \n доктор:`);
-    } else {
+    } else if (!this.auth.isAuthenticated()) {
       console.log("надо залогиниться!");
       this.popupService.toggleLoginPopup()
       this.router.navigate(["/"], {
@@ -209,6 +219,8 @@ export class CalendarBlockComponent implements OnInit {
             needLoginToMakeAnAppointment: true
         }
       })
+    } else if (this.userData.myData.userType != 'client') {
+      this.doctorAlertSign = "Вы как доктор не можете записаться к доктору. Пожалуйста создайте аккаунт как пациент!"
     }
   }
 

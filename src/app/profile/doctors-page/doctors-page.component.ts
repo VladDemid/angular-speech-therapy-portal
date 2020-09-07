@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
+import { UserData } from '../shared/services/user-data.service';
 
 @Component({
   selector: 'app-doctors-page',
@@ -9,13 +10,16 @@ import { FirebaseService } from 'src/app/shared/services/firebase.service';
 export class DoctorsPageComponent implements OnInit {
 
   doctors = []
+  userType: string
 
   constructor(
-    private firebase: FirebaseService
+    private firebase: FirebaseService,
+    private userData: UserData
   ) { }
 
   ngOnInit(): void {
     this.getAllDoctors()
+    this.userType = this.userData.myData.userType
   }
 
   getAllDoctors() {

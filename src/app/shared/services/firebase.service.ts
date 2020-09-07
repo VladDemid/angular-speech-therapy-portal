@@ -135,8 +135,32 @@ export class FirebaseService implements OnInit {
     return this.http.get(`${environment.FbDbUrl}/doctorsSchedule/${id}.json`)
   }
 
-  makeALesson(time, doctor, client) {
-    return this.http.put(`${environment.FbDbUrl}/lessons/${doctor.id}/${time.year}/${time.month}/${time.day}/${time.hour}.json`, client)
+  getDoctorLessons(id) {
+    return this.http.get(`${environment.FbDbUrl}/lessons/${id}.json`)
+  }
+
+  makeALesson(time, doctorData, clientData) {
+    //запись для доктора в lessons/doctorId
+    this.http.put(`${environment.FbDbUrl}/lessons/${doctorData.id}/${time.year}/${time.month}/${time.day}/${time.hour}.json`, clientData)
+    .subscribe((resp)=>{
+      console.log("клиент записан: ", resp);
+    },
+    (err) => {
+      console.log("ошибка записи к доктору (запись информации доктору): ", err);
+    })
+    
+    //запись для доктора в user/userId
+    this.http.put(`${environment.FbDbUrl}/users/${clientData.id}/lessons/${time.year}/${time.month}/${time.day}/${time.hour}.json`, doctorData)
+    .subscribe((resp)=>{
+      console.log("информация о посещении доктора записана себе: ", resp);
+    },
+    (err) => {
+      console.log("ошибка записи к доктору (запись информации клиенту): ", err);
+    })
+  }
+
+  getDoctorlessons(id) {
+    return this.http.get(`${environment.FbDbUrl}/lessons/${id}.json`)
   }
 
 }

@@ -38,7 +38,8 @@ export class SpecialistPageComponent implements OnInit {
       this.firebase.getDoctorInfo(this.crypter.decrypt(params.id))
       .subscribe((doctorInfo: UserDoctor) => {
         this.doctorInfo = doctorInfo
-        console.log(doctorInfo);
+        // console.log(doctorInfo);
+        console.log("данные доктора загружены");
       })
     })
   }

@@ -17,6 +17,7 @@ export class CalendarDayComponent implements OnInit {
   @Input() currentFirstDay: any; //день недели начала месяца (1-7)
   @Input() selectedDay: number;
   @Input() doctorShedule: object;
+  @Input() doctorsLessons: object;
   @Output() outDay = new EventEmitter<any>();
   
   thisDayOfWeek: number //день недели для каждого дня

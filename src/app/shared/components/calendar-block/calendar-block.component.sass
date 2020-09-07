@@ -104,14 +104,23 @@
             // background-color: #ccc
          &.work-hour
             background-color: $orange_common
+         &.lesson-appointed
+            background-color: $blue_light
          &.selected-hour
             background-color: green
             &:hover
                background-color: rgb(0,200,0)
       .time-row-inner
+         position: relative
          cursor: pointer
          user-select: none
          padding: 3px 10px 2px
+         &>div
+            display: inline-block
+         .patient
+            position: absolute
+            margin-left: 15px
+            left: 120px
       .time-blocker
          position: relative
          .example

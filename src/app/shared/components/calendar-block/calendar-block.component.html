@@ -15,7 +15,7 @@
             <div *ngFor="let dayIndex of daysArr; index as i"
                
                class="day">
-               <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" [currentYear]="currentYear" [selectedDay]="selectedDay"  [doctorShedule]="doctorShedule"  (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
+               <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" [currentYear]="currentYear" [selectedDay]="selectedDay"  [doctorShedule]="doctorShedule" [doctorsLessons]="doctorsLessons"  (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
             </div>
          </div>
          month: {{month}} <br>
@@ -24,7 +24,7 @@
          выбранный час: {{selectedHourForLesson}}
       </div>
    </div>
-   <!-- для страницы просмотра доктора клиентом -->
+   <!-- для страницы просмотра доктора клиентом (или доктор лазиет в разделе поиска докторов) -->
    <div class="time-aside time-aside-view" *ngIf="!isEditPage">
       <div class="day-not-chosen-sign" *ngIf="selectedDay == -1">
          для просмотра
@@ -55,6 +55,9 @@
          </div>
          <button [routerLink]="['/profile/doctors']" *ngIf='isInProfileModule == "false"'>Перейти в личный кабинет для записи</button>
          <button [disabled]="selectedHourForLesson == -1" (click)="makeAnAppointment(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true"'>Записаться</button>
+         <div class="doctor-alert">
+            {{doctorAlertSign}}
+         </div>
       </div>
    </div>
    <!-- для страницы доктора -->
@@ -65,10 +68,15 @@
       <div class="day-chosen" *ngIf="selectedDay != -1">
          Мои часы работы:
          <div class="time-selection">
-            <div class="time-row" [ngClass]="{'work-hour': doctorShedule && doctorShedule[year] && doctorShedule[year][month] && doctorShedule[year][month][selectedDay+1] && doctorShedule[year][month][selectedDay+1][time] && doctorShedule[year][month][selectedDay+1][time]['workTime'] == true}"
+            <div class="time-row" [ngClass]="{'work-hour': doctorShedule && doctorShedule[year] && doctorShedule[year][month] && doctorShedule[year][month][selectedDay+1] && doctorShedule[year][month][selectedDay+1][time] && doctorShedule[year][month][selectedDay+1][time]['workTime'] == true, 'lesson-appointed': doctorsLessons[year] && doctorsLessons[year][month] && doctorsLessons[year][month][selectedDay+1] && doctorsLessons[year][month][selectedDay+1][time]}"
             *ngFor="let time of workHoursArray; index as i" >
                <div class="time-row-inner" (click)="onClickTimeRow(time)">
-                  {{time | timeRow}}
+                  <div class="period">
+                     {{time | timeRow}} 
+                  </div>
+                  <div class="patient" *ngIf="doctorsLessons[year] && doctorsLessons[year][month] && doctorsLessons[year][month][selectedDay+1] && doctorsLessons[year][month][selectedDay+1][time]">
+                     {{doctorsLessons[year][month][selectedDay+1][time].name}}
+                  </div>
                </div>
             </div>
          </div>

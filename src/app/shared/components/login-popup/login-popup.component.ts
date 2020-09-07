@@ -32,7 +32,7 @@ export class LoginPopupComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params["needLogin"]) {
-        this.accessErrMessage = "Для доступа к профилю необходимо войти в аккаунт"
+        this.accessErrMessage = "Для доступа в личный кабинет необходимо войти в аккаунт"
       } else if (params["needLoginToMakeAnAppointment"]) {
         this.accessErrMessage = "Чтобы записаться к доктору нужно, нужно сначала зайти в профиль"
       }
