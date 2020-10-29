@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }
          })
       } else {
-         this.helper.toConsole("user is not authenticated")
+         this.helper.toConsole("user is not authenticated (interceptor)")
       }
 
       return next.handle(req)

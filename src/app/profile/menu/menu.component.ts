@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserData } from '../shared/services/user-data.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Component({
   selector: 'app-menu',
@@ -28,23 +29,30 @@ export class MenuComponent implements OnInit {
     //   link: "multimedia",
     //   icon: "icon-multimedia"
     // },
-    // {
-    //   name: "Безопасность",
-    //   link: "security",
-    //   icon: "icon-security"
-    // },
+    {
+      name: "Безопасность",
+      link: "security",
+      icon: "icon-security"
+    },
     {
       name: "Редактировать личные данные",
       link: "edit",
       icon: "icon-edit"
-    }
+    },
+    {
+      name: "Справка",
+      link: "help",
+      icon: "icon-admin_control"
+    },
+
   ]
   
 
   constructor(
     public userData: UserData,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    public popupService: PopupService
   ) {}
 
     

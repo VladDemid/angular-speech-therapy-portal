@@ -41,7 +41,7 @@ export interface UserDbInfo {
    //client keys
    childDiagnosis?: string
    babyLessons?: any[]
-   
+   email?: string
    //doctor keys
    university?: string
    faculty?: string
@@ -55,6 +55,8 @@ export interface UserDbInfo {
    //service keys
    id?: string
    daysShedule?: any
+   lessons?: any
+   emailVerified?: boolean
 }
 
 export interface UserClient {

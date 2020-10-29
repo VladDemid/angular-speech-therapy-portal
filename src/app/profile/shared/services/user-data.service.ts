@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { DebugHelper } from 'protractor/built/debugger';
 import { DevelopHelp } from 'src/app/shared/services/develop-help.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Injectable()
 
@@ -27,7 +28,8 @@ export class UserData {
       private helper: DevelopHelp,
       private auth: AuthService,
       private http: HttpClient,
-      private firebase: FirebaseService
+      private firebase: FirebaseService,
+      private popupService: PopupService
    ) {}
 
 
@@ -58,10 +60,10 @@ export class UserData {
          this.saveSertificatesNames(files.items)
          
 
-            
+         
          this.firebase.getDownloadLinks(files.items)
          .then((links) => {
-            console.log("полученные ссылки на скачку: ", links)
+            // console.log("полученные ссылки на скачку: ", links)
             this.myData.sertificatesLinks = links
          })
            
@@ -73,7 +75,7 @@ export class UserData {
       this.myData.sertificatesNames = []
       for (let file in sertificates) {
          if (!isNaN(+file)) {
-            console.log("добавление ", sertificates[file].name);
+            // console.log("добавление ", sertificates[file].name);
             
             this.myData.sertificatesNames[file] = (sertificates[file].name)
          }
@@ -84,6 +86,28 @@ export class UserData {
    changeMyLocalData(userData: UserDbInfo) {
       this.myData = userData
    }
+
+   // checkEmailVerify() {
+   //    // console.log(this.myData.emailVerified);
+   //    if (this.myData.emailVerified === undefined) {
+   //       console.log("myData.emailVerified не найдено");
+   //       this.myData.emailVerified = false
+   //       const newData = {
+   //          emailVerified: false,
+   //       }
+   //       this.sendMyDataChanges(newData)
+   //       .subscribe((resp) => {
+   //          console.log("добавлено поле emailVerified = false")
+   //          this.popupService.emailVerifyPopup = true
+   //       })
+   //    } else if (this.myData.emailVerified === false) {
+   //       console.log("myData.emailVerified: false");
+   //       this.popupService.emailVerifyPopup = true
+   //    } else if (this.myData.emailVerified === true) {
+   //       console.log("myData.emailVerified: true");
+   //       this.popupService.emailVerifyPopup = false
+   //    }
+   // }
 
    sendMyDataChanges(newUserData) {
       return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`, newUserData)

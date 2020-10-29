@@ -1,0 +1,13 @@
+<div class="security-page">
+   <div class="container">
+      <h2>смена Пароля</h2>
+      <form>
+         <div class="inputs-wrapper">
+            <label><span>email</span><input [(ngModel)]="email"  name="email"  type="text"></label>
+            <label><span>старый пароль</span><input [(ngModel)]="oldPassword"  name="oldPassword"  type="password"></label>
+            <label><span>новый пароль</span><input [(ngModel)]="newPassword"  name="email"  type="password"></label>
+         </div>
+         <button class="login" (click)="changePassword()">изменить</button>
+      </form>
+   </div>
+</div>

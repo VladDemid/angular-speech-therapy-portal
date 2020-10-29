@@ -139,7 +139,8 @@ export class RegistrationPageComponent implements OnInit {
       childDiagnosis: this.clientRegistrationForm.value.childDiagnosis,
       email: this.clientRegistrationForm.value.email,
       newsSubscription: this.doctorRegistrationForm.value.newsSubscription,
-      userType: "client"
+      userType: "client",
+      emailVerified: false
     }
     
     const registrationData = {
@@ -192,7 +193,8 @@ export class RegistrationPageComponent implements OnInit {
       workPlace: this.doctorRegistrationForm.value.workPlace,        
       email: this.doctorRegistrationForm.value.email, 
       newsSubscription: this.doctorRegistrationForm.value.newsSubscription,
-      userType: "doctor"
+      userType: "doctor",
+      emailVerified: false
     }
     
     const registrationData = {

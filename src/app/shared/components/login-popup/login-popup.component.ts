@@ -20,10 +20,10 @@ export class LoginPopupComponent implements OnInit {
   accessErrMessage = ""
 
   constructor(
-    private firebase: FirebaseService,
     private helper: DevelopHelp,
     public popupService: PopupService,
     private authServise: AuthService,
+    private firebase: FirebaseService,
     private router: Router,
     private activatedRoute: ActivatedRoute
     ) { }
@@ -61,22 +61,22 @@ export class LoginPopupComponent implements OnInit {
     }
     this.loggingIn = true
     
-    // this.firebase.signInWithPass(user)
-    //   .then((result) => {
-    //     console.log(result);
-    //     console.log("вход вроде выполнен");
-    //     this.loggingIn = false
-    //   })
-    //   .catch((err) => {
-    //     this.loggingIn = false
-    //     console.log("ошибка входа чз firebase: ", err);
-    //   })
+    this.firebase.signInWithPass(user)
+      .then((result) => {
+        console.log(result);
+        console.log("вход выполнен (currentUser)");
+        // this.loggingIn = false
+      })
+      .catch((err) => {
+        // this.loggingIn = false
+        console.log("ошибка входа чз firebase: ", err);
+      })
     
     this.authServise.login(user).subscribe((response) => {
       this.form.reset()
       this.loggingIn = false
       this.popupService.toggleLoginPopup()
-      this.helper.toConsole("При входе был получен ответ: ",response)
+      this.helper.toConsole("При логине был получен ответ: ",response)
       this.router.navigate(['/profile'])
 
     },

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserData } from '../shared/services/user-data.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -18,7 +19,8 @@ export class EditProfileComponent implements OnInit {
 
   constructor(
     public userData:UserData,
-    private firebase: FirebaseService
+    private firebase: FirebaseService,
+    public popupService: PopupService
     ) { }
 
   ngOnInit(): void {

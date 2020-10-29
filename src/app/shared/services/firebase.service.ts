@@ -8,23 +8,95 @@ import { HttpClient } from '@angular/common/http';
 import { DevelopHelp } from './develop-help.service';
 import { User } from 'src/app/shared/interfaces'
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
+import { UserData } from 'src/app/profile/shared/services/user-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService implements OnInit {
 
+  signedIn = false
+  actionCode: string
 
   constructor(
     private helper: DevelopHelp,
-    private http: HttpClient) 
-    {
+    private http: HttpClient,
+    private activatedRoute: ActivatedRoute,
+    // private userData: UserData
+    ) {
       firebase.initializeApp(firebaseConfig)
+      // this.userObserver()
     }
 
   ngOnInit(): void {
     console.log("auth = ",firebase.auth);
+    
   }
+
+  userObserver() {
+    firebase.auth().onAuthStateChanged((user) =>{
+      if(user){
+        console.log("User is signed in (userObserver)", user);
+        this.signedIn = true
+        return user
+      }else{
+        console.log("User is signed out")
+      }
+    })
+  }
+  
+  checkUser() {
+    const user = firebase.auth().currentUser
+    return user ? true : false
+  }
+
+  getUser() {
+    return firebase.auth().currentUser
+  }
+  
+  
+
+  signOutCurrentUser() {
+    this.signedIn = false
+    return firebase.auth().signOut()
+  }
+
+  applyActionCode() {
+    console.log("ОТПРАВКА КОДА: ", this.actionCode);
+    return firebase.auth().applyActionCode(this.actionCode)
+  }
+
+  // checkActionCode() {
+  //   console.log("checking action code: ", this.actionCode);
+  //   firebase.auth().checkActionCode(this.actionCode)
+  //     .then((resp) => {
+  //       console.log("successfull: ", resp)
+  //       this.applyActionCode()
+  //     })
+  //     .catch((err) => console.log("ERROR: ", err))
+  // }
+
+
+  sendVerificationEmail() {
+    const user = firebase.auth().currentUser
+    console.log(`отправка письма для подтверждения на почту (новое) ${user.email}`)
+    var actionCodeSettings = {
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be whitelisted in the Firebase Console.
+      url: 'http://localhost:4200/profile/menu',
+      // This must be true.
+      handleCodeInApp: true,
+      
+      // dynamicLinkDomain: 'http://localhost:4200/profile/menu'
+    }
+
+    return firebase.auth().currentUser.sendEmailVerification(actionCodeSettings)
+  }
+
+  
+
+  
   
   registrNewUser(newUser) {
     this.helper.toConsole("Try to create new user: ", newUser)
@@ -40,8 +112,39 @@ export class FirebaseService implements OnInit {
 
 
   signInWithPass(user: User) {
+    // this.userObserver()
     this.helper.toConsole("вход в систему через firebase...")
     return firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+  }
+
+  passwordReset(email) {
+    return firebase.auth().sendPasswordResetEmail(email)
+  }
+
+  passwordChange(newPassword) {
+    let user = firebase.auth().currentUser;
+    return user.updatePassword(newPassword)
+  }
+
+  reauthenticateWithCredential(token) {
+    let user = firebase.auth().currentUser
+    user.reauthenticateWithCredential(token)
+    .then(() => {
+      console.log("reauthenticate success!");
+    })
+    .catch((err) => {
+      console.log("reauthenticate error: ", err);
+    })
+  }
+
+  getCurrentUser() {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("User is signed in");
+      } else {
+        console.log("No user is signed in");
+      }
+    });
   }
 
   uploadImage(image, type) {
@@ -91,7 +194,7 @@ export class FirebaseService implements OnInit {
       if (!isNaN(+file)) {
         const storageRef = firebase.storage().ref()
         const storageImg = storageRef.child(`users/${localStorage.getItem("user-Id")}/sertificates/${files[file].name}`)
-        console.log("скачивание сертификата ", storageImg.name);
+        // console.log("скачивание сертификата ", storageImg.name);
         
         await storageImg.getDownloadURL()
           .then((link) => {
@@ -162,5 +265,7 @@ export class FirebaseService implements OnInit {
   getDoctorlessons(id) {
     return this.http.get(`${environment.FbDbUrl}/lessons/${id}.json`)
   }
+
+  
 
 }

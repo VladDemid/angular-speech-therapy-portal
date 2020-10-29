@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UserData } from 'src/app/profile/shared/services/user-data.service';
 
 @Component({
   selector: 'app-calendar-day',
@@ -18,12 +19,15 @@ export class CalendarDayComponent implements OnInit {
   @Input() selectedDay: number;
   @Input() doctorShedule: object;
   @Input() doctorsLessons: object;
+  @Input() isCalendarPage: object;
   @Output() outDay = new EventEmitter<any>();
   
   thisDayOfWeek: number //день недели для каждого дня
   daySent = false
 
-  constructor() { }
+  constructor(
+    public userData: UserData
+  ) { }
   
   
   ngOnInit(): void {

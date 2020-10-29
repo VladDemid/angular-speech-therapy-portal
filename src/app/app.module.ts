@@ -22,7 +22,6 @@ import { SpecialistPageComponent } from './shared/components/specialist-page/spe
 import { SharedModule } from './shared/shared.module';
 import { UserData } from './profile/shared/services/user-data.service';
 
-
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   multi: true,
@@ -45,6 +44,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     PasswordRecoveryComponent,
     TermsOfUsePopupComponent,
     SpecialistPageComponent,
+    
   ],
   imports: [
     BrowserModule,

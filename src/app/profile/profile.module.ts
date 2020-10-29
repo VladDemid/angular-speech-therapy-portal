@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, OnInit } from "@angular/core";
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
 import { CalendarPageComponent } from './calendar-page/calendar-page.component';
@@ -12,6 +12,10 @@ import { SharedModule } from '../shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { DoctorsPageComponent } from './doctors-page/doctors-page.component';
+import { SecurityPageComponent } from './security-page/security-page.component';
+import { HelpPageComponent } from './help-page/help-page.component';
+import { EmailVerifyPopupComponent } from './shared/components/email-verify-popup/email-verify-popup.component';
+import { FirebaseService } from '../shared/services/firebase.service';
 
 
 @NgModule({
@@ -21,7 +25,10 @@ import { DoctorsPageComponent } from './doctors-page/doctors-page.component';
       EditProfileComponent,
       // ProfileNavComponent,
       ProfileLayoutComponent,
-      DoctorsPageComponent
+      DoctorsPageComponent,
+      SecurityPageComponent,
+      HelpPageComponent,
+      EmailVerifyPopupComponent
    ],
    imports: [
       // CommonModule,
@@ -36,6 +43,8 @@ import { DoctorsPageComponent } from './doctors-page/doctors-page.component';
             {path: "calendar", component: CalendarPageComponent, canActivate: [ProfileGuard] },
             {path: "edit", component: EditProfileComponent, canActivate: [ProfileGuard] },
             {path: "doctors", component: DoctorsPageComponent, canActivate: [ProfileGuard] },
+            {path: "security", component: SecurityPageComponent, canActivate: [ProfileGuard] },
+            {path: "help", component: HelpPageComponent, canActivate: [ProfileGuard] },
             {path:"**", redirectTo: "menu"}
          ]
       },
@@ -49,6 +58,6 @@ import { DoctorsPageComponent } from './doctors-page/doctors-page.component';
    ]
 })
 
-export class ProfileModule {
-
+export class ProfileModule{
+   
 }

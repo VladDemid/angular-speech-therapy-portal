@@ -12,6 +12,9 @@ import { SpecialistFilterPipe } from './pipes/specialist-filter.pipe';
 import { RouterModule } from '@angular/router';
 import { NavHomeComponent } from './components/nav-home/nav-home.component';
 import { ProfileNavComponent } from '../profile/shared/components/profile-nav/profile-nav.component';
+import { LessonsViewPipe } from './pipes/lessons-view.pipe';
+import { NameRowPipe } from './pipes/name-row.pipe';
+import { ImgPopupComponent } from './components/img-popup/img-popup.component';
 
 
 @NgModule({
@@ -27,6 +30,7 @@ import { ProfileNavComponent } from '../profile/shared/components/profile-nav/pr
       OurSpecialistsComponent,
       SpecialistCardComponent,
       ProfileNavComponent,
+      ImgPopupComponent
       // RouterModule
    ],
    declarations: [
@@ -40,6 +44,9 @@ import { ProfileNavComponent } from '../profile/shared/components/profile-nav/pr
       CalendarDayOfWeekPipe,
       TimeRowPipe,
       SpecialistFilterPipe,
+      LessonsViewPipe,
+      NameRowPipe,
+      ImgPopupComponent,
    ],
    providers: [],
 })

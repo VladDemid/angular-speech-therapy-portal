@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PopupService } from '../shared/services/popup.service';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -15,12 +16,29 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     public popupService: PopupService,
-    private firebase: FirebaseService
+    private firebase: FirebaseService,
+    private activatedRoute: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
     this.getAllDoctors()
+    // this.checkQuerry()
   }
+
+  // checkQuerry() {
+  //   this.activatedRoute.queryParams.subscribe((params: Params) => {
+  //     if (params["oobCode"] ) {
+  //       this.firebase.applyActionCode(params["oobCode"])
+  //     } 
+  //   })
+  // }
+
+  // testSignIn() {
+  //   const user = {
+  //     email: "test5@mail.ru",
+  //     password: "123456"}
+  //   this.firebase.signInWithPass(user)
+  // }
 
   getAllDoctors() {
     this.firebase.getDoctorsInfo()
