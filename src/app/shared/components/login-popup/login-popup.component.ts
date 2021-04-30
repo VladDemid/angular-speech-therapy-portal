@@ -32,18 +32,18 @@ export class LoginPopupComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params["needLogin"]) {
-        this.accessErrMessage = "Для доступа в личный кабинет необходимо войти в аккаунт"
+        this.accessErrMessage = "Время сессии вышло. Для доступа в личный кабинет необходимо заново войти в аккаунт"
       } else if (params["needLoginToMakeAnAppointment"]) {
         this.accessErrMessage = "Чтобы записаться к доктору нужно, нужно сначала зайти в профиль"
       }
     })
 
     this.form = new FormGroup({
-      email: new FormControl(null, [
+      email: new FormControl("test5@gmail.com", [
         Validators.required,
         Validators.email
       ]),
-      password: new FormControl(null, [
+      password: new FormControl("123456", [
         Validators.required,
         Validators.minLength(this.passwordMinLength)
       ])

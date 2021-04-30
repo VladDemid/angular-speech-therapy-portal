@@ -19,7 +19,7 @@ export class FaqItemComponent implements OnInit {
   }
 
   onClick() {
-    console.log("внутри дочернего компонента",this.tabIndex);
+    // console.log("внутри дочернего компонента",this.tabIndex);
     this.newTabIndex.emit(this.tabIndex)
   }
 

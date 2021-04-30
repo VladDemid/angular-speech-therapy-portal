@@ -1,13 +1,35 @@
 <div class="security-page">
    <div class="container">
-      <h2>смена Пароля</h2>
-      <form>
-         <div class="inputs-wrapper">
-            <label><span>email</span><input [(ngModel)]="email"  name="email"  type="text"></label>
-            <label><span>старый пароль</span><input [(ngModel)]="oldPassword"  name="oldPassword"  type="password"></label>
-            <label><span>новый пароль</span><input [(ngModel)]="newPassword"  name="email"  type="password"></label>
+      <div class="change-password">
+         <h2>Изменение пароля</h2>
+         <form>
+            <div class="inputs-wrapper">
+               <label><span>Ваш email</span><input [(ngModel)]="email"  name="email"  type="text"></label>
+            </div>
+            <button class="login" (click)="passwordRecovery()">изменить пароль</button>
+         </form>
+         <div class="signs">
+            <div class="message successful-message" *ngIf="passwordChangeSuccessfulMessage" >{{passwordChangeSuccessfulMessage}}</div>
+            <div class="message error-message" *ngIf="passwordChangeErrMessage" >{{passwordChangeErrMessage}}</div>
          </div>
-         <button class="login" (click)="changePassword()">изменить</button>
-      </form>
+      </div>
+      <div class="change-email">
+         <h2>Смена Почты</h2> 
+         <form>
+            <div class="inputs-wrapper">
+               <label><span>Новый email*</span><input [(ngModel)]="newEmail"  name="newEmail"  type="text"></label>
+            </div>
+            <button class="login" (click)="changeEmail()">изменить почту</button>
+         </form>
+         <div class="signs">
+            <div class="message successful-message" *ngIf="emailChangeSuccessfulMessage" >{{emailChangeSuccessfulMessage}}</div>
+            <div class="message error-message" *ngIf="emailChangeErrMessage" >{{emailChangeErrMessage}}</div>
+         </div>
+         <div class="note">
+            <p>*На вашу старую почту будет отправлена ссылка, по которой вы сможете восстановить её в случае ошибки.</p>
+            <p>Если не появилось сообщение об изменении почты, попробуйте перезайти в свой аккаунт. </p>
+         </div>
+      </div>
+      <!-- <button (click)="alert()">test alert</button> -->
    </div>
 </div>

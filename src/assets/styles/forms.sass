@@ -1,3 +1,4 @@
+
 .login-registration_tabs
    display: flex
    justify-content: space-between
@@ -34,21 +35,46 @@
       // margin: 0 10px
       
       span
+         position: relative
          display: block
-         border: 2px solid rgba(69, 74, 74, 0.2)
+         // border: 2px solid rgba(69, 74, 74, 0.2)
          text-align: center
+         padding-left: 30px
          height: 54px
          line-height: 54px
          cursor: pointer
          transition: all 0.15s
+         // background-color: red
+         border: 1px solid #000
          &:hover
             border: 2px solid $yellow_common
+         &::after
+            content: ''
+            position: absolute
+            left: 5px
+            top: calc(50% - 10px)
+            width: 20px
+            height: 20px
+            border-radius: 50%
+            border: 2px solid  rgba(69, 74, 74, 0.5)
 
       input
          position: absolute
          opacity: 0%
       input:checked ~ .type-text
-         border: 2px solid $orange_common
+         // border: 2px solid $orange_common
+         &::after
+            border: 2px solid  $orange_common
+         &::before
+            content: ''
+            position: absolute
+            left: 11px
+            top: calc(50% - 4px)
+            width: 8px
+            height: 8px
+            border-radius: 50%
+            // border: 2px solid  $orange_common
+            background-color: $orange_common
 
 .show-rules
    cursor: pointer
@@ -60,7 +86,7 @@ form
       display: block
       margin: 0 auto
       &.login
-         margin-top: 50px
+         margin: 50px auto 30px
          width: 254px
          height: 52px
    .inputs-wrapper
@@ -71,13 +97,13 @@ form
          justify-content: space-between
          margin-top: 34px
          transition: all 0.15s
-         input
+         input, textarea
             width: 540px
             border: 2px solid #CACACA
             height: 56px
             border-radius: 9px
             outline: none
-            padding: 0 20px
+            padding: 20px
             transition: all 0.15s
             &:focus
                border: 2px solid $yellow_common
@@ -87,7 +113,10 @@ form
                padding-top: 11px
                color: #454A4A
                font-size: 20px
-
+         textarea
+               height: 100%
+               resize: none
+               
          .select
             position: relative
             &.is-active 
@@ -172,6 +201,62 @@ form
                padding-right: 0
                max-width: 166px
                // background-color: rgba(0,0,0,.1)
+      .educations
+         .education
+            &:nth-child(n+2)
+               label span
+                  position: relative
+                  &::after
+                     content: '(доп)'
+                     position: absolute
+                     top: -20px
+                     right: 10px
+                     font-size: 12px
+                     color: #999
+                     width: 0px
+                     height: 0px
+                  
+         .education_buttons
+            position: relative
+            cursor: pointer
+            display: inline-block
+            // border: 1px solid #000
+            // width: 30px
+            // height: 30px
+            padding-left: 30px
+            font-size: 20px
+            font-weight: 400
+            margin: 20px 20px 0 0 
+            display: flex
+            // justify-content: flex-start
+            // &::after
+            //    content: ''
+            //    position: absolute
+            //    top: calc(50% - 2px)
+            //    left: 10px
+            //    width: 20px
+            //    height: 4px
+            //    background-color: $blue_common
+            // &::before
+            //    content: ''
+            //    position: absolute
+            //    top: calc(50% - 10px)
+            //    left: 18px
+            //    width: 4px
+            //    height: 20px
+            //    background-color: $blue_common
+            button
+               // display: block
+               padding: 5px 5px
+               height: 70px
+               width: 160px
+               
+         .educations_decr
+            &::before
+               display: none
+
+            
+
       .double-input-row
          display: flex
          justify-content: space-between
@@ -195,9 +280,82 @@ form
                   padding-right: 0
                input
                   width: 121px
-               
-         
-
+      .specializations, .specialization-main
+         position: relative
+         // display: flex
+         // justify-content: space-between
+         margin-top: 34px
+         & > label
+            position: absolute
+            top: 50%
+            // border: 1px solid #000
+            margin-top: -28px
+            max-width: 200px
+            display: inline-block
+         .specializations-list
+            display: flex
+            justify-content: space-between
+            flex-wrap: wrap
+            margin-left: 34%
+            width: 70%
+            .specialization-item
+               // border: 1px dashed #000
+               width: 50%
+               height: 24px
+               label
+                  // border: 1px solid #000
+                  position: relative
+                  display: block
+                  margin-top: 0
+                  padding-left: 30px
+                  cursor: pointer
+                  user-select: none
+                  &::after
+                     content: ''
+                     position: absolute
+                     width: 20px
+                     height: 20px
+                     top: calc(50% - 10px)
+                     left: 5px
+                     border: 2px solid #CACACA
+                     border-radius: 3px
+                  &.specialization_selected
+                     &::after
+                        border: 2px solid $orange_common
+                     &::before
+                        content: ''
+                        position: absolute
+                        width: 10px
+                        height: 10px
+                        top: calc(50% - 5px)
+                        left: 10px
+                        border: 2px solid $orange_common
+                        border-radius: 3px
+               label.radio
+                  &::after
+                     border-radius: 10px
+                  &.main_specialization_selected
+                     &::after
+                        border: 2px solid $orange_common
+                     &::before
+                        content: ''
+                        position: absolute
+                        width: 10px
+                        height: 10px
+                        top: calc(50% - 5px)
+                        left: 10px
+                        border: 2px solid $orange_common
+                        border-radius: 10px
+               input 
+                  width: 0px
+                  height: 0px
+                  opacity: 0%
+   .update-success
+      margin: 30px auto 20px
+      width: 250px
+      font-weight: bold
+      color: $orange_common
+      text-decoration: underline
       
 .error
    font-size: 14px
@@ -209,7 +367,7 @@ form
       font-size: 1.2em
 .serverErrorMessage
    display: block
-   margin: 0 auto
+   margin: 10px auto
    text-align: center
    width: 300px
    font-size: 22px
@@ -302,10 +460,12 @@ form
          label
             margin-top: 20px
             flex-direction: column
-            align-items: center
-            input
-               width: 100% !important
-               text-align: center
+            align-items: left
+            & > input, & > textarea
+               width: 100% 
+               text-align: left
+            span 
+               margin: 0 0 5px 20px
             .select
                width: 100%
                .select__header
@@ -330,15 +490,35 @@ form
                   width: calc(100% - 180px) !important
                   span
                   input
-                     width: 246px 
+                     width: 100% 
                &:nth-child(2)
                   width: 180px !important
                   span
                      line-height: 28px
                      font-size: 22px
                   input
-                     width: 100px
+                     width: 100%
+         .specializations, .specialization-main
+            display: flex
+            flex-direction: column
+            align-items: center
+            margin: 60px 0 30px 
+            
+            label
+               position: relative
+               max-width: 100%
+            .specializations-list
+               position: relative
+               width: 86%
+               margin-top: 20px
+               margin-left: 0px 
+               .specialization-item
+                  // border: 1px solid #000
+                  input
+                     width: 0px !important
 
+   
+   
 @media screen and (max-width: 650px) 
    .registration-type 
       label 

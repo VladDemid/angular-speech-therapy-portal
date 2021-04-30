@@ -15,6 +15,9 @@ import { ProfileNavComponent } from '../profile/shared/components/profile-nav/pr
 import { LessonsViewPipe } from './pipes/lessons-view.pipe';
 import { NameRowPipe } from './pipes/name-row.pipe';
 import { ImgPopupComponent } from './components/img-popup/img-popup.component';
+import { SpecializationsListPipe } from './pipes/specializations-list.pipe';
+import { FbSecurityPopupComponent } from './components/fb-security-popup/fb-security-popup.component';
+// import { FaqNewComponent } from './components/faq-new/faq-new.component';
 
 
 @NgModule({
@@ -30,8 +33,9 @@ import { ImgPopupComponent } from './components/img-popup/img-popup.component';
       OurSpecialistsComponent,
       SpecialistCardComponent,
       ProfileNavComponent,
-      ImgPopupComponent
+      ImgPopupComponent,
       // RouterModule
+      SpecializationsListPipe,
    ],
    declarations: [
       CalendarBlockComponent,
@@ -47,6 +51,9 @@ import { ImgPopupComponent } from './components/img-popup/img-popup.component';
       LessonsViewPipe,
       NameRowPipe,
       ImgPopupComponent,
+      SpecializationsListPipe,
+      // FaqNewComponent,
+      // FbSecurityPopupComponent,
    ],
    providers: [],
 })

@@ -1,58 +1,97 @@
 @import "../../../assets/styles/_variables"
    
 .profile-menu
+   margin-top: 50px
+   .help
+      margin-top: 20px
+      span
+         font-weight: 500
    .menu-list
+      margin-top: 58px
       display: flex
       justify-content: space-around
       flex-wrap: wrap
       .menu-item
          border: 2px solid $yellow_common
-         min-width: 120px
+         width: 214px
+         height: 200px
          margin: 10px 5px
+         border-radius: 9px
          &:hover
             box-shadow: 0 7px 10px -5px
             transition: 0.3s
             cursor: pointer
             background-color: $yellow_common
-            .icon span
-               font-size: 77px !important
-               transition: 0.3s
-            .icon span.icon-videochat
-               font-size: 83px !important
-               transition: 0.3s
+            .icon-wrapper 
+               margin-top: 46px
+               .icon
+                  transition: 0.2s   
+                  width: 86px
+                  height: 86px
+                  background-size: cover
          &:active
             background-color: $orange_common
             outline: none
-            .icon span
-               font-size: 70px
-               transition: 0.3s
-         .icon
-            position: relative
-            height: 100px
-            span
-               position: absolute
-               display: inline-block
-               // background-color: rgba(0,0,0,.3)
-               font-size: 70px
-               left: 50%
-               transform: translateX(-50%)
-               margin: 10px auto
-               // color: #000
-               transition: 0.3s
-               &.icon-videochat
-                  font-size: 76px
+
+         .icon-wrapper
+            // border: 1px solid #000
+            margin: 50px 0 10px
+            .icon
+               // border: 1px solid #000
+               width: 82px
+               height: 82px
+               margin: 0 auto
+               background-image: url(../../../assets/icons/menu/icons_list.png)
+         &:nth-child(2)
+            .icon-wrapper .icon
+               background-position: 25% 0px 
+         &:nth-child(3)
+            .icon-wrapper .icon
+               background-position: 50% 0px 
+         &:nth-child(4)
+            .icon-wrapper .icon
+               background-position: 75% 0px 
+         &:nth-child(5)
+            .icon-wrapper .icon
+               background-position: -25% 0px 
+
          .description-wrapper
+            // border: 1px solid #000
             .description
                text-align: center
-               padding: 10px
+               // padding: 10px
                padding-top: 0
                font-size: 18px
-               max-width: 170px
+               max-width: 200px
+               // max-width: 170px
+
+
+
             
-.exit
+.exit-block
    margin-top: 30px
    display: flex
    justify-content: flex-end
+   .exit-button
+      cursor: pointer
+      display: inline-block
+      // max-width: 80px
+      // border: 1px solid #000
+      padding: 4px
+      img
+         width: 63px
+         height: 63px
+         padding-left: 4px
+            // box-shadow: 0 7px 10px -5px
+      span
+         display: block
+         margin-top: 10px
+         font-size: 18px
+      &:hover
+         span
+            transition: 0.2s
+            color: $blue_dark
+            font-weight: 500
 
 @keyframes icon-animation 
    15% 

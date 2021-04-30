@@ -22,16 +22,21 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllDoctors()
-    // this.checkQuerry()
+    this.checkQuerry()
   }
 
-  // checkQuerry() {
-  //   this.activatedRoute.queryParams.subscribe((params: Params) => {
-  //     if (params["oobCode"] ) {
-  //       this.firebase.applyActionCode(params["oobCode"])
-  //     } 
-  //   })
-  // }
+  checkQuerry() {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      if (params["mode"] ) {
+        // this.firebase.applyActionCode(params["oobCode"])
+        // console.log(`dectected: ${params["mode"]} mode`);
+        // this.applyFirebaseCodes(params["mode"], params["oobCode"], params["apiKey"])
+        this.popupService.toggleFbSecurityPopup()
+      } 
+    })
+  }
+
+  
 
   // testSignIn() {
   //   const user = {

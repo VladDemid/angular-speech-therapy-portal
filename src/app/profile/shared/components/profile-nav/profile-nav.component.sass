@@ -1,7 +1,7 @@
 @import '../../../../../assets/styles/_variables'
 
 .navigation
-   margin-top: 40px
+   margin-top: 12px
    .container
       display: flex
       justify-content: space-between
@@ -9,67 +9,91 @@
 
 .logo
    display: inline-block
-   width: 170px
-   height: 75px
+   width: 119px
+   // height: 88px
+   // border: 1px solid #000
    a
       // display: inline-block
       img
          display: block
-         width: 100%
-         max-height: 100%
+         // width: 100%
+         // max-height: 100%
 
 .profile-menu 
    display: flex
    justify-content: space-between
 
+
    .dropdown
+      margin-top: 65px
       position: relative
       display: inline-block
       &:hover span::after
          transform: rotate(180deg)
-      span
+      span.user-name
+         font-size: 22px
+         font-weight: 500
          padding: 5px 25px
          position: relative
          cursor: default
+         color: $orange_501
          &::after
             content: ""
             position: absolute
-            top: 11px
+            top: 16px
             right: 12px
             border-style: solid
             border-width: 8px 4px 0px 4px
             border-color: $blue_common transparent transparent transparent
             transition: 0.3s
+        
 
    .dropdown-content
       display: none
       position: absolute
       right: -20px
       min-width: 160px
-      background-color: #fff
+      padding-top: 15px
       // box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2)
-      box-shadow: 0 7px 10px -5px
-      border: 1px solid #000
+      // box-shadow: 0 7px 10px -5px
+      // border: 1px solid #000
+      background-color: rgba(255,255,255,0.8)
       z-index: 10
       li
+         position: relative
          text-align: center
          font-size: 18px
          font-weight: 400
          width: 250px
+         height: 37px
          padding: 5px 
+         border-radius: 10px
          cursor: pointer
+         background-color: #fff
          // height: 37px
-         border-bottom: 1px solid #000
+         border: 1px solid #000
+         margin-bottom: 5px
+         span.inner
+            position: absolute
+            top: 50%
+            right: 50%
+            transform: translate(50%, -50%)
+            
+            width: 100%
          &:focus
             outline: none
          &.link-active
             background-color: $orange_common
          &:hover
             background-color: #ddd
-         &:nth-last-child(2)
-            margin-bottom: 10px
-         &:last-child
-            border: none
+         &:nth-last-child(1)
+            // padding: 10px 0
          //    margin-top: 10px
    .dropdown:hover .dropdown-content
       display: block
+   .profile-notifications
+      width: 10px
+      height: 10px
+      // background-color: #999
+      // background-image: url(./bell.png)
+      border-radius: 50%

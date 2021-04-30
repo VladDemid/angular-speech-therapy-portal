@@ -3,16 +3,16 @@
       <nav>
          <div class="logo">
             <a [routerLink]="['/']">
-               <img src="#" alt="logo">
+               <img class="logo_img" src="./assets/icons/logo.png" alt="logo">
             </a>
          </div>
          <div class="menu">
             <ul>
-               <li><a href="#">Специалисты</a></li>
-               <li><a href="#">FAQ</a></li>
-               <li><a href="#">Контакты</a></li>
-               <li><button class="login" *ngIf="!isAuthenticated" id="login" (click)="popupService.toggleLoginPopup()">Войти</button></li>
-               <li><button class="login" *ngIf="isAuthenticated" [routerLink]="['/profile']" >В личный кабинет</button></li>
+               <li><a href="http://localhost:4200/#specialists">Специалисты</a></li>
+               <li><a href="http://localhost:4200/#faq">FAQ</a></li>
+               <li><a href="http://localhost:4200/">Контакты</a></li>
+               <li><button class="login" *ngIf="!isAuthenticated" id="login" [routerLink]="['/']" (click)="popupService.toggleLoginPopup()">Войти</button></li>
+               <li><button class="login" *ngIf="isAuthenticated" [routerLink]="['/profile']" >в кабинет</button></li>
             </ul>
          </div>
       </nav>

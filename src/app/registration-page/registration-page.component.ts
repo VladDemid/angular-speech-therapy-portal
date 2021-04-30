@@ -20,6 +20,7 @@ export class RegistrationPageComponent implements OnInit {
   showRulesRequired = false
   showSuccessReg = false
   serverErrMessage = ""
+  isSendingData = false
 
   experienceStages = [
     "Менее года",
@@ -65,10 +66,10 @@ export class RegistrationPageComponent implements OnInit {
         Validators.required,
         Validators.minLength(this.passwordMinLength)
       ]),
-      passwordRepeat: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(this.passwordMinLength)
-      ]),
+      // passwordRepeat: new FormControl(null, [
+      //   Validators.required,
+      //   Validators.minLength(this.passwordMinLength)
+      // ]),
       termsOfUse: new FormControl(null, [
         Validators.required,
         Validators.requiredTrue
@@ -83,19 +84,12 @@ export class RegistrationPageComponent implements OnInit {
         Validators.required),
       patronymic: new FormControl(null,
         Validators.required),
-      university: new FormControl(null,
-        Validators.required),
-      faculty: new FormControl(null,
-        Validators.required),
-      year: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(4)]),
-      experience: new FormControl(null),
-      workPlace: new FormControl(null,
-        Validators.required),
-      documents: new FormControl(null,
-        Validators.required),
+      // university: new FormControl(null),
+      // faculty: new FormControl(null),
+      // year: new FormControl(null),
+      // experience: new FormControl(null),
+      // workPlace: new FormControl(null),
+      // documents: new FormControl(null),
       email: new FormControl(null, [
         Validators.required,
         Validators.email
@@ -104,10 +98,7 @@ export class RegistrationPageComponent implements OnInit {
         Validators.required,
         Validators.minLength(this.passwordMinLength)
       ]),
-      passwordRepeat: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(this.passwordMinLength)
-      ]),
+      // passwordRepeat: new FormControl(null),
       termsOfUse: new FormControl(false, [
         Validators.required,
         Validators.requiredTrue
@@ -123,11 +114,14 @@ export class RegistrationPageComponent implements OnInit {
 
   sendClientForm() {
     
-    const pass1 = this.clientRegistrationForm.value.password 
-    const pass2 = this.clientRegistrationForm.value.passwordRepeat 
+    // const pass1 = this.clientRegistrationForm.value.password 
+    // const pass2 = this.clientRegistrationForm.value.passwordRepeat 
 
-    if (this.clientRegistrationForm.invalid || !this.checkPassIdentical(pass1, pass2)) {
+    this.isSendingData = true
+
+    if (this.clientRegistrationForm.invalid) {
       this.showRulesRequired = true
+      this.isSendingData = false
       return
     }
     this.showRulesRequired = false 
@@ -156,16 +150,19 @@ export class RegistrationPageComponent implements OnInit {
       this.auth.login(registrationData).subscribe(() => {  
         this.firebase.createNewUserDataObject(newClientData, res)
           .subscribe(() => {
+            this.isSendingData = false
             this.helper.toConsole("ячейка данных создана")
             this.clientRegistrationForm.reset()
             this.successfulRegistrationAlert() //может не нада
             this.router.navigate(['/profile'])
           }, (err) => {
+            this.isSendingData = false
             console.log("Ошибка создания ячейки данных: ", err);
           })
       }) 
     
     },(err) => {
+      this.isSendingData = false
       console.log("Ошибка регистрации: ", err.code, err);
       this.errorHandler(err.code)
     })
@@ -173,10 +170,13 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   sendDoctorForm() {
-    
-    const pass1 = this.doctorRegistrationForm.value.password 
-    const pass2 = this.doctorRegistrationForm.value.passwordRepeat 
-    if (this.doctorRegistrationForm.invalid || !this.checkPassIdentical(pass1, pass2)) {
+    // const pass1 = this.doctorRegistrationForm.value.password 
+    // const pass2 = this.doctorRegistrationForm.value.passwordRepeat 
+
+    this.isSendingData = true
+
+    if (this.doctorRegistrationForm.invalid) {
+      this.isSendingData = false
       this.showRulesRequired = true
       return
     }
@@ -186,11 +186,11 @@ export class RegistrationPageComponent implements OnInit {
       name: this.doctorRegistrationForm.value.name,
       surname: this.doctorRegistrationForm.value.surname,
       patronymic: this.doctorRegistrationForm.value.patronymic,
-      university: this.doctorRegistrationForm.value.university,        
-      faculty: this.doctorRegistrationForm.value.faculty,        
-      year: this.doctorRegistrationForm.value.year,        
-      experience: document.getElementById("currentExperiense").innerText,       
-      workPlace: this.doctorRegistrationForm.value.workPlace,        
+      // university: this.doctorRegistrationForm.value.university,        
+      // faculty: this.doctorRegistrationForm.value.faculty,        
+      // year: this.doctorRegistrationForm.value.year,        
+      // experience: document.getElementById("currentExperiense").innerText,       
+      // workPlace: this.doctorRegistrationForm.value.workPlace,        
       email: this.doctorRegistrationForm.value.email, 
       newsSubscription: this.doctorRegistrationForm.value.newsSubscription,
       userType: "doctor",
@@ -209,27 +209,30 @@ export class RegistrationPageComponent implements OnInit {
 
       //после регистрации залогиниться в акк, чтобы записать данные (правило БД)
       this.auth.login(registrationData).subscribe(() => {  
-        this.uploadSertificates()
-        .then(() => {
-          this.firebase.createNewUserDataObject(newDoctorData, res)
-            .subscribe(() => {
-              this.helper.toConsole("ячейка данных создана")
-              this.doctorRegistrationForm.reset()
-              this.successfulRegistrationAlert() //может не нада
-              this.router.navigate(['/profile'])
-            }, (err) => {
-              console.log("Ошибка создания ячейки данных: ", err);
-            })
-        })
-        .catch(err => {
-          console.log("ошибка при загрузке файлов: ", err);
+        // this.uploadSertificates()
+        // .then(() => {
+        this.firebase.createNewUserDataObject(newDoctorData, res) // что записать и куда
+          .subscribe(() => {
+            this.isSendingData = false
+            this.helper.toConsole("ячейка данных создана")
+            this.doctorRegistrationForm.reset()
+            // this.successfulRegistrationAlert() 
+            this.router.navigate(['/profile'])
+          }, (err) => {
+            this.isSendingData = false
+            console.log("Ошибка создания ячейки данных: ", err);
+          })
+        // })
+        // .catch(err => {
+        //   console.log("ошибка при загрузке файлов: ", err);
           
-        })
+        // })
       }) 
 
 
 
     },(err) => {
+      this.isSendingData = false
       console.log("Ошибка регистрации: ", err.code, err);
       this.errorHandler(err.code)
     })
@@ -328,35 +331,35 @@ export class RegistrationPageComponent implements OnInit {
 
 // }
 
-toggleSelectBody(event) {
-  event.target.classList.toggle('is-active')
-}
-
-setExperience(event) {
-  // console.log(event.target.innerText);
-  // document.querySelector("#experience").nodeValue = event.target.innerText
-  // (<HTMLInputElement>document.querySelector("#experience")).innerText = event.target.innerText
-  // (<HTMLInputElement>document.getElementById("experience")).value = event.target.innerText
-  // (<HTMLDivElement>document.getElementById("currentExperiense")).innerText = event.target.innerText
-  document.getElementById("currentExperiense").innerText = event.target.innerText
-  
-}
-
-checkExperience() {
-  const newDoctorData = {
-    name: this.doctorRegistrationForm.value.name,
-    surname: this.doctorRegistrationForm.value.surname,
-    patronymic: this.doctorRegistrationForm.value.patronymic,
-    university: this.doctorRegistrationForm.value.university,        
-    faculty: this.doctorRegistrationForm.value.faculty,        
-    year: this.doctorRegistrationForm.value.year,        
-    experience: document.getElementById("currentExperiense").innerText,        
-    workPlace: this.doctorRegistrationForm.value.workPlace,        
-    email: this.doctorRegistrationForm.value.email, 
-    newsSubscription: this.doctorRegistrationForm.value.newsSubscription,
-    userType: "doctor"
+  toggleSelectBody(event) {
+    event.target.classList.toggle('is-active')
   }
-  console.log(newDoctorData);
-}
+
+  setExperience(event) {
+    // console.log(event.target.innerText);
+    // document.querySelector("#experience").nodeValue = event.target.innerText
+    // (<HTMLInputElement>document.querySelector("#experience")).innerText = event.target.innerText
+    // (<HTMLInputElement>document.getElementById("experience")).value = event.target.innerText
+    // (<HTMLDivElement>document.getElementById("currentExperiense")).innerText = event.target.innerText
+    document.getElementById("currentExperiense").innerText = event.target.innerText
+    
+  }
+
+  // checkExperience() {
+  //   const newDoctorData = {
+  //     name: this.doctorRegistrationForm.value.name,
+  //     surname: this.doctorRegistrationForm.value.surname,
+  //     patronymic: this.doctorRegistrationForm.value.patronymic,
+  //     university: this.doctorRegistrationForm.value.university,        
+  //     faculty: this.doctorRegistrationForm.value.faculty,        
+  //     year: this.doctorRegistrationForm.value.year,        
+  //     experience: document.getElementById("currentExperiense").innerText,        
+  //     workPlace: this.doctorRegistrationForm.value.workPlace,        
+  //     email: this.doctorRegistrationForm.value.email, 
+  //     newsSubscription: this.doctorRegistrationForm.value.newsSubscription,
+  //     userType: "doctor"
+  //   }
+  //   console.log(newDoctorData);
+  // }
 
 }

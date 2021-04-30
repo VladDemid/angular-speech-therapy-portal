@@ -10,6 +10,8 @@ import { FirebaseService } from '../../services/firebase.service';
 export class PasswordRecoveryComponent implements OnInit {
 
   email = ""
+  errMessage = ""
+  message = ""
   
   constructor(
     public popupService: PopupService,
@@ -22,12 +24,14 @@ export class PasswordRecoveryComponent implements OnInit {
   
 
   passwordRecovery() {
-    this.firebase.passwordReset(this.email)
+    this.firebase.sendPasswordResetEmail(this.email)
     .then(() => {
       console.log("email sent");
+      this.message = "На вашу почту было отправлено письмо"
     })
     .catch((err) => {
       console.log("email sent ERROR", err);
+      this.errMessage = `Ошибка отправки письма на почту: ${err}`
     })
 
   }

@@ -2,26 +2,78 @@
 
 
 form 
+   position: relative
    // display: flex
    // flex-direction: row
    // justify-content: start
    .photo-update
       position: absolute
-      right: -240px
+      right: -0px
       width: 222px
+      min-height: 100px
       // order: 1
       // width: 250px
       // background-color: #ccc
-   .upload-avatar
-      width: 100%
-      border: 2px solid #CACACA
-      height: 56px
-      border-radius: 9px
-      outline: none
-      padding: 0 20px
-      padding-top: 11px
-      color: #454A4A
-      font-size: 20px
+      img
+         border: 2px solid $orange_common
+         border-radius: 4px
+         display: block
+         width: 90%
+         margin: 20px auto 60px
+
+      .input-avatar-wrapper
+         position: relative
+         display: block
+         margin: -40px auto 0
+         border-radius: 50px
+         border: 2px solid $orange_common
+         display: block
+         margin-bottom: 10px
+         // padding: 10px
+         width: 175px
+         height: 45px
+         text-align: center
+         cursor: pointer
+         transition: all 0.2s
+         &:hover
+            border: 2px solid $button_hover
+            background-color: $button_hover
+            outline: none
+         &:active
+            border: 2px solid $button_active
+            background-color: $button_active
+            outline: none
+            transition: all 0.1s
+         &:focus
+            outline: none
+               
+         span
+            position: absolute
+            display: block
+            text-align: center
+            width: 175px
+            left: -2px
+            top: calc(50% - 10px)
+            height: 20px
+            font-weight: 500
+            max-height: 100% 
+            overflow: hidden
+            &.success
+               color: $button_active
+
+         .upload-avatar
+            visibility: hidden
+            width: 100%
+            border: 2px solid #CACACA
+            height: 56px
+            border-radius: 9px
+            outline: none
+            padding: 0 20px
+            padding-top: 11px
+            color: #454A4A
+            font-size: 20px
+            overflow: hidden
+
    .inputs-wrapper
       position: relative
       margin: 0
@@ -94,3 +146,35 @@ form
       border-top: 2px dashed $orange_common
       .upload-sertrificates
          margin-top: 15px
+
+
+@media screen and (max-width: 1150px) 
+   form
+      display: flex
+      justify-content: space-around
+      align-items: center
+      flex-direction: column
+      .photo-update
+         position: relative
+         display: flex
+         justify-content: space-around
+         width: 400px
+         &>*
+            // border: 1px solid #000
+         .profile-photo
+            width: 66%
+            
+         .avatar-buttons-wrapper
+            position: relative
+            padding-left: 20px
+            // width: 150px
+            // min-height: 100px
+            // border: 1px solid #000
+            .input-avatar-wrapper
+               position: absolute
+               top: 40%
+            .button
+               position: absolute
+               top: 55%
+               left: 30px
+            

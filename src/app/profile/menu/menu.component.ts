@@ -15,35 +15,37 @@ export class MenuComponent implements OnInit {
 
   menuItems = [
     {
-      name: "Календарь приемов",
+      name: "Календарь",
       link: "calendar",
-      icon: "icon-calendar"
     },
     {
-      name: "Выбрать доктора",
-      link: "doctors",
-      icon: "icon-doctor"
+      name: "Видеочат",
+      link: "videochat",
+    },
+    {
+      name: "Записи консультаций",
+      link: "records",
     },
     // {
-    //   name: "Записи консультаций",
-    //   link: "multimedia",
-    //   icon: "icon-multimedia"
-    // },
-    {
-      name: "Безопасность",
-      link: "security",
-      icon: "icon-security"
-    },
-    {
-      name: "Редактировать личные данные",
-      link: "edit",
-      icon: "icon-edit"
-    },
-    {
-      name: "Справка",
-      link: "help",
-      icon: "icon-admin_control"
-    },
+      //   name: "Записи консультаций",
+      //   link: "multimedia",
+      // },
+      {
+        name: "Редактировать личные данные",
+        link: "edit",
+      },
+      {
+        name: "Безопасность",
+        link: "security",
+      },
+      {
+        name: "Доктора",
+        link: "doctors",
+      },
+      {
+        name: "Помощь",
+        link: "help",
+      },
 
   ]
   

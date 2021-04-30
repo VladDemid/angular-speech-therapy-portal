@@ -1,0 +1,81 @@
+.faq
+   margin-bottom: 400px
+
+h2
+   margin-bottom: 55px
+.faq-list
+   // border: 2px solid #000
+
+.faq-item
+   cursor: pointer
+   user-select: none
+   margin-top: -1px
+   // border: 1px solid #000
+   
+   .faq-item-header
+      position: relative
+      min-height: 90px
+      // border: 1px solid #000
+      border: 1px solid #000
+      border-radius: 10px
+      display: flex
+      justify-content: center
+      align-items: center
+      color: #209EBB
+      h3
+         width: 80%
+         display: block
+         font-size: 24px
+         font-weight: 500
+         line-height: 1.2em
+         margin-right: 15px
+      .arrow   
+         width: 0px
+         height: 0px
+         // background-color: #000
+         border-top: 16px solid #209EBB
+         border-right: 9px solid transparent
+         border-left: 9px solid transparent
+         transition: 0.2s
+   &-descr
+      // display: none
+      // opacity: 0%
+      // height: 0px
+      overflow: hidden
+      transition: 0.15s
+      max-height: 0px
+      border-bottom: 1px solid #000
+      background-color: #F2F2F2
+      border-radius: 10px
+      color: #9C9C9C
+      // margin: 50px 100px
+      &:last-child
+         border-bottom: none
+         
+      p
+         // display: none
+         font-size: 21px
+         line-height: 1.75em
+         // font-weight: 400
+   &.active
+      .faq-item-descr
+         // display: block
+         font-size: 21px
+         // opacity: 100%
+         max-height: 600px
+         padding: 50px 100px
+      .arrow
+         transform: rotate(180deg)
+
+
+@media screen and (max-width: 900px) 
+   .faq-list .faq-item
+      &-header
+         min-height: 50px
+         height: 10vw
+         h3
+            font-size: 2.6vw
+         .arrow   
+            border-top: 1.8vw solid #000
+            border-right: 0.9vw solid transparent
+            border-left: 0.9vw solid transparent

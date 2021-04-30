@@ -2,28 +2,34 @@
    <div class="container">
       <div class="logo">
          <a [routerLink]="['/']">
-            <img src="#" alt="logo">
+            <img class="logo_img" src="./assets/icons/logo_invert.png" alt="logo">
          </a>
       </div>
       <div class="profile-menu">
          <div class="profile-navigation">
             <div class="dropdown">
-               <span>{{userData.myData.name}}</span>
+               <span class="user-name">{{userData.myData.name}} {{userData.myData.surname}}</span>
                <div class="dropdown-content">
                   <ul>
-                     <li [routerLink]="['/profile/menu']" routerLinkActive="link-active">Личный кабинет</li>
-                     <li>Календарь</li>
-                     <li>Сообщения</li>
-                     <li [routerLink]="['/profile/edit']" routerLinkActive="link-active" >Редактировать <br/> личные данные</li>
-                     <li *ngIf="userData.myData.userType === 'doctor' ">Мои клиенты</li>
-                     <li (click)="exitProfile()">Выход</li>
+                     <li [routerLink]="['/profile/calendar']" routerLinkActive="link-active">
+                        <span class="inner">Календарь</span></li>
+                     <li [routerLink]="['/profile/menu']" routerLinkActive="link-active">
+                        <span class="inner">Личный кабинет</span></li>
+                     <li>
+                        <span class="inner">Сообщения</span></li>
+                     <li [routerLink]="['/profile/security']" routerLinkActive="link-active" >
+                        <span class="inner">Безопасность</span></li>
+                     <li [routerLink]="['/profile/edit']" routerLinkActive="link-active" >
+                        <span class="inner">Личная информация</span></li>
+                     <li *ngIf="userData.myData.userType === 'doctor' ">
+                        <span class="inner">Мои клиенты</span></li>
+                     <li (click)="exitProfile()">
+                        <span class="inner">Выход</span></li>
                   </ul>
                </div>
              </div>
          </div>
-         <div class="profile-notifications">
-            notif
-         </div>
+         <div class="profile-notifications"></div>
       </div>
    </div>
    

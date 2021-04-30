@@ -62,9 +62,9 @@ export class FirebaseService implements OnInit {
     return firebase.auth().signOut()
   }
 
-  applyActionCode() {
-    console.log("ОТПРАВКА КОДА: ", this.actionCode);
-    return firebase.auth().applyActionCode(this.actionCode)
+  applyActionCode(code) {
+    console.log("ОТПРАВКА КОДА: ", code);
+    return firebase.auth().applyActionCode(code)
   }
 
   // checkActionCode() {
@@ -94,7 +94,9 @@ export class FirebaseService implements OnInit {
     return firebase.auth().currentUser.sendEmailVerification(actionCodeSettings)
   }
 
-  
+  checkActionCode(code) {
+    return firebase.auth().checkActionCode(code)
+  }
 
   
   
@@ -117,8 +119,16 @@ export class FirebaseService implements OnInit {
     return firebase.auth().signInWithEmailAndPassword(user.email, user.password)
   }
 
-  passwordReset(email) {
+  sendPasswordResetEmail(email) {
     return firebase.auth().sendPasswordResetEmail(email)
+  }
+
+  changeEmail(newEmail) {
+    return firebase.auth().currentUser.updateEmail(newEmail)
+  }
+
+  resetPassword(oobCode, newPassword) {
+    return firebase.auth().confirmPasswordReset(oobCode, newPassword)
   }
 
   passwordChange(newPassword) {
@@ -233,9 +243,13 @@ export class FirebaseService implements OnInit {
     return this.http.put(`${environment.FbDbUrl}/doctorsSchedule/${id}/${year}/${month}/${day}/${hour}.json`, hourSettings)
   }
 
+  changeShedule(id, newShedule) {
+    return this.http.put(`${environment.FbDbUrl}/doctorsDaysOfWeekSchedule/${id}.json`, newShedule)
+  }
+
 
   getDoctorShedule(id) {
-    return this.http.get(`${environment.FbDbUrl}/doctorsSchedule/${id}.json`)
+    return this.http.get(`${environment.FbDbUrl}/doctorsDaysOfWeekSchedule/${id}.json`)
   }
 
   getDoctorLessons(id) {

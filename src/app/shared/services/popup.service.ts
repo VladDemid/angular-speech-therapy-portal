@@ -9,6 +9,7 @@ export class PopupService {
   imgPopup = false
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
+  homePageFbSecurityPopup = false
   registrTermsOfUsePopup = false
   emailVerifyPopup = false
 
@@ -32,6 +33,10 @@ export class PopupService {
 
   togglePassRecoveryPopup() {
     this.homePagePassRecoveryPopup = !this.homePagePassRecoveryPopup
+  }
+
+  toggleFbSecurityPopup() {
+    this.homePageFbSecurityPopup = !this.homePageFbSecurityPopup
   }
   
   toggleTermsOfUsePopup() {

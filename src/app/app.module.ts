@@ -7,11 +7,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { NavHomeComponent } from './shared/components/nav-home/nav-home.component';
 import { FooterHomeComponent } from './shared/components/footer-home/footer-home.component';
-import { OurSpecialistsComponent } from './shared/components/our-specialists/our-specialists.component';
-import { SpecialistCardComponent } from './shared/components/specialist-card/specialist-card.component';
 import { FaqComponent } from './shared/components/faq/faq.component';
 import { FaqItemComponent } from './shared/components/faq-item/faq-item.component';
-import { SpecialistFilterPipe } from './shared/pipes/specialist-filter.pipe';
 import { LoginPopupComponent } from './shared/components/login-popup/login-popup.component';
 import { PasswordRecoveryComponent } from './shared/components/password-recovery/password-recovery.component';
 import { TermsOfUsePopupComponent } from './shared/components/terms-of-use-popup/terms-of-use-popup.component';
@@ -21,6 +18,9 @@ import { ProfileGuard } from './profile/shared/services/profile.guard';
 import { SpecialistPageComponent } from './shared/components/specialist-page/specialist-page.component';
 import { SharedModule } from './shared/shared.module';
 import { UserData } from './profile/shared/services/user-data.service';
+import { SpecializationsListPipe } from './shared/pipes/specializations-list.pipe';
+import { FbSecurityPopupComponent } from './shared/components/fb-security-popup/fb-security-popup.component';
+import { FaqNewComponent } from './shared/components/faq-new/faq-new.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -39,12 +39,13 @@ const INTERCEPTOR_PROVIDER: Provider = {
     // SpecialistCardComponent,
     FaqComponent,
     FaqItemComponent,
-    // SpecialistFilterPipe,
+    FaqNewComponent,
     LoginPopupComponent,
     PasswordRecoveryComponent,
+    FbSecurityPopupComponent,
     TermsOfUsePopupComponent,
     SpecialistPageComponent,
-    
+    // SpecializationsListPipe
   ],
   imports: [
     BrowserModule,

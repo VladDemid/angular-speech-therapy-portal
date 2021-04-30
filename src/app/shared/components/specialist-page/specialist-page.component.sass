@@ -1,26 +1,65 @@
+@import "../../../../assets/styles/_variables"
+
 .doctor-card
    margin-top: 20px
-   .user-data
+   .user-data, .about-me
       font-size: 21px
       display: flex
       justify-content: space-between
       &>div
          width: 50%
       span
-         font-weight: 500
+         // font-weight: 500
       .user-image
          position: relative
+         height: 300px
          // background-color: rgba(0,0,0,0.1)
          img
             position: absolute
             top: 50%
-            left: 50% 
+            left: 50%
             transform: translate3d(-50%, -50%, 0)
-            min-width: 50%
+            // min-width: 50%
             max-width: 100%
-            max-height: 430px
+            max-height: 100%
+            border: 2px solid $yellow_common
+            border-radius: 4px 
+   
       .user-description
-         p
+         margin-left: 10px
+         div
             margin-bottom: 10px
-            span
+            span 
                font-weight: 500
+         .name
+            font-size: 24px
+            font-weight: 500
+         .specializations-list
+            li
+               display: block
+               position: relative
+               // text-transform: capitalize
+               margin: 5px 20px 0
+               &::before
+                  content: ''
+                  position: absolute
+                  width: 10px
+                  height: 10px
+                  border-radius: 50%
+                  top: calc(50% - 5px)
+                  left: -15px
+                  background-color: $blue_common
+                  
+
+   .about-me
+      width: 90%
+      // max-height: 700px
+      // overflow-y: scroll
+      margin: 40px auto
+      padding-bottom: 20px
+      border-bottom: 1px solid #bbb
+      p
+         white-space: pre-wrap
+      span 
+         font-weight: 500
+               

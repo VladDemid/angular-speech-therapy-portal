@@ -34,8 +34,7 @@ export class UserData {
 
 
    initialization() {
-      this.getMyData()
-      .subscribe(
+      this.getMyData().subscribe(
          (response: UserDbInfo) => {
             this.helper.toConsole("Инициализация пользователя: ",response)
             this.changeMyLocalData(response)
@@ -48,27 +47,31 @@ export class UserData {
          })
    }
 
+
    getMyData() {
       return this.http.get(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`)
    }
 
    getSertificates() {
       this.firebase.getSertificatesList()
-      .then((files) => {
-         console.log("мои файлы", files.items)
+         .then((files) => {
+            console.log("мои файлы", files.items)
 
-         this.saveSertificatesNames(files.items)
-         
+            this.saveSertificatesNames(files.items)
+            
 
-         
-         this.firebase.getDownloadLinks(files.items)
-         .then((links) => {
-            // console.log("полученные ссылки на скачку: ", links)
-            this.myData.sertificatesLinks = links
+            
+            this.firebase.getDownloadLinks(files.items)
+            .then((links) => {
+               // console.log("полученные ссылки на скачку: ", links)
+               this.myData.sertificatesLinks = links
+            })
+            
+            
          })
-           
-         
-      })
+         .catch((err) => {
+            console.log("мои файлы не найдены: ", err);
+         })
    }
 
    saveSertificatesNames(sertificates) {

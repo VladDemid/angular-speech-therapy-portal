@@ -11,7 +11,7 @@
       <div class="registration-type">
          <label>
             <input required checked type="radio" name="registration-type" value="client">
-            <span class="type-text" (click)="showClientForm()">Присоединиться как пациент</span>
+            <span class="type-text" (click)="showClientForm()">Присоединиться как клиент</span>
          </label>
          <label>
             <input required  type="radio" name="registration-type" value="professional">
@@ -60,13 +60,13 @@
                <small class="error" *ngIf="clientRegistrationForm.get('password').errors && clientRegistrationForm.get('password').errors.minlength">
                      Пароль должен быть минимум {{passwordMinLength}} символов</small>
             </div> 
-            <label><span class="narrow">Повторите пароль</span><input required name="passwordRepeat"  type="password" formControlName="passwordRepeat"></label>
+            <!-- <label><span class="narrow">Повторите пароль</span><input required name="passwordRepeat"  type="password" formControlName="passwordRepeat"></label>
             <div class="validation-errors" *ngIf="clientRegistrationForm.get('passwordRepeat').invalid && clientRegistrationForm.get('passwordRepeat').touched  || showRulesRequired">
                <small class="error" *ngIf="clientRegistrationForm.get('passwordRepeat').errors && clientRegistrationForm.get('passwordRepeat').errors.required">
                      Необходимо <span>повторить пароль</span></small>
-            </div>
-            <small class="error" *ngIf="showPassRepeatErrorMsg">
-                  Пароли должны <span>совпадать</span></small>
+               <small class="error" *ngIf="showPassRepeatErrorMsg">
+                     Пароли должны <span>совпадать</span></small>
+            </div> -->
          </div>
          <div class="rules">
             <div class="terms-of-use">
@@ -87,7 +87,7 @@
             </div>
          </div>
          <div class="serverErrorMessage" *ngIf="serverErrMessage" >{{serverErrMessage}}</div>
-         <button class="submit" type="submit">Зарегистрироваться</button>
+         <button class="submit" [disabled]="isSendingData" type="submit">Зарегистрироваться</button>
       </form>
       
       
@@ -113,7 +113,7 @@
                <small class="error" *ngIf="doctorRegistrationForm.get('patronymic').errors && doctorRegistrationForm.get('patronymic').errors.required">
                      Необходимо ввести <span>отчество</span></small>
             </div> 
-            <label><span>Вуз</span><input required name="university"  type="text" formControlName="university"></label>
+            <!-- <label><span>Вуз</span><input required name="university"  type="text" formControlName="university"></label>
             <div class="validation-errors" *ngIf="doctorRegistrationForm.get('university').invalid && doctorRegistrationForm.get('university').touched || showRulesRequired">
                <small class="error" *ngIf="doctorRegistrationForm.get('university').errors && doctorRegistrationForm.get('university').errors.required">
                      Необходимо ввести ваш <span>вуз</span></small>
@@ -132,15 +132,13 @@
                <small class="error" *ngIf="doctorRegistrationForm.get('year').errors && doctorRegistrationForm.get('year').errors.minlength">
                      Необходимо ввести <span>полный год выпуска</span></small>
             </div>
-            <!-- <label><span>Стаж</span><input required name="experience" id="experience"  type="text" formControlName="experience"></label> -->
-            <label><span>Стаж</span>
+            <label><span>Стаж (лет)</span>
                <div class="select" 
                   (mouseenter)="toggleSelectBody($event)"
                   (mouseleave)="toggleSelectBody($event)"
                   >
                   <div class="select__header" >
                      <span class="select__current" id="currentExperiense">{{experienceStages[0]}}</span>
-                     <!-- <div class="select__icon">&times;</div> -->
                   </div>
                   
                   <div class="select select__body">
@@ -169,7 +167,7 @@
             <div class="validation-errors" *ngIf="doctorRegistrationForm.get('documents').invalid && doctorRegistrationForm.get('documents').touched || showRulesRequired">
                <small class="error" *ngIf="doctorRegistrationForm.get('documents').errors && doctorRegistrationForm.get('documents').errors.required">
                      Необходимо загрузить <span>документы</span></small>
-            </div>
+            </div> -->
             <label><span>Email</span><input required name="email"  type="text" formControlName="email"></label>
             <div class="validation-errors" *ngIf="doctorRegistrationForm.get('email').invalid && doctorRegistrationForm.get('email').touched || showRulesRequired">
                <small class="error" *ngIf="doctorRegistrationForm.get('email').errors && doctorRegistrationForm.get('email').errors.required">
@@ -184,13 +182,13 @@
                <small class="error" *ngIf="doctorRegistrationForm.get('password').errors && doctorRegistrationForm.get('password').errors.minlength">
                   Пароль должен быть минимум {{passwordMinLength}} символов</small>
             </div>
-            <label><span class="narrow">Повторите пароль</span><input required name="passwordRepeat"  type="password" formControlName="passwordRepeat"></label>
+            <!-- <label><span class="narrow">Повторите пароль</span><input required name="passwordRepeat"  type="password" formControlName="passwordRepeat"></label>
             <div class="validation-errors" *ngIf="doctorRegistrationForm.get('passwordRepeat').invalid && doctorRegistrationForm.get('passwordRepeat').touched || showRulesRequired">
                <small class="error" *ngIf="doctorRegistrationForm.get('passwordRepeat').errors && doctorRegistrationForm.get('passwordRepeat').errors.required">
                      Необходимо <span>повторить пароль</span></small>
             </div>
             <small class="error" *ngIf="showPassRepeatErrorMsg">
-                  Пароли должны <span>совпадать</span></small>
+                  Пароли должны <span>совпадать</span></small> -->
          </div>
          <div class="rules">
             <div class="terms-of-use">
@@ -211,7 +209,7 @@
             </div>
          </div>
          <div class="serverErrorMessage" *ngIf="serverErrMessage" >{{serverErrMessage}}</div>
-         <button class="submit" type="submit">Зарегистрироваться</button>
+         <button class="submit" [disabled]="isSendingData" type="submit">Зарегистрироваться</button>
          <!-- <button type="button" (click)="checkExperience()">проверить опыт</button> -->
       </form>
       <div class="success-registration-sign" *ngIf="showSuccessReg">

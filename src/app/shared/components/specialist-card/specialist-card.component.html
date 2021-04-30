@@ -5,8 +5,8 @@
       <img *ngIf="!card.avatarUrl" class="specialist-card__photo" [src]="defaultAvatarUrl" alt="person photo">
    </div>
    <div class="specialist-card__name">{{card.name}}</div>
-   <div class="specialist-card__specialization">Специализация</div>
-   <div class="specialist-card__experience">{{card.experience}}</div>
+   <div class="specialist-card__specialization">{{card.mainSpecialization}}</div>
+   <div class="specialist-card__experience">Стаж (лет): {{card.experience}}</div>
    <div class="specialist-card__schedule">
       <a [routerLink]="['/doctor']" [queryParams]='{id: encryptedId, returnToProfileModule: isProfileModule}' >Подробнее ></a>
    </div>

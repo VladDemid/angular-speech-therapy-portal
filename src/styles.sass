@@ -3,7 +3,6 @@
 @import "assets/styles/variables"
 @import "assets/styles/forms"
 @import "assets/styles/popups"
-@import "assets/styles/fonts.css"
 
 
 *
@@ -15,26 +14,155 @@ body
    position: relative
 
 a
-   color: #000
+   color: #fff
    text-decoration: none
 
 h2 
-   font-size: 24px
+   font-size: 32px
    margin-top: 20px
-   font-weight: 500
+   font-weight: 700
+   color: $orange_501
+   &.profile-in
+      font-size: 24px
+
+.blue
+   color: $blue_common
+
+.breadcrumb
+   padding: 6px 0 0 25px
+   margin-top: 30px
+   display: inline-block
+   // border: 1px solid #000
+   font-size: 12px
+   height: 26px
+   position: relative
+   cursor: pointer
+   transition: 0.2s
+   &::before
+      content: ''
+      position: absolute
+      left: 0px
+      top: 3px
+      border: 9px solid transparent
+      border-left: 0px solid transparent
+      border-right: 14px solid $blue_common
+   &:hover
+      transition: 0.2s
+      color: $blue_common
+      &::before
+         animation: test 1s 1 ease-out
+
+.user-type-icon
+   margin-top: 20px
+   span
+      font-weight: 500
 
 .container
    max-width: 1170px
    padding: 0 15px
    margin: 0 auto
 
+.preloader
+   // border: 3px dashed #000
+   display: flex
+   // display: none
+   justify-content: center
+   align-items: center
+   height: 100vh
+   width: 100vw
+   top: 0px
+   overflow: hidden
+   position: absolute
+   background-color: #fff
+.circle
+   width: 20px
+   height: 20px
+   border-radius: 50%
+   margin: 7px
+   display: flex
+   justify-content: center
+   align-items: center
+   // display: none
+   &:before
+      content: ""
+      width: 20px
+      height: 20px
+      border-radius: 50%
+      opacity: 0.7
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02)
+.circle-1
+  background-color: $preloader_circle-1
+  &:before
+    background-color: $preloader_circle-1
+    animation-delay: 200ms
+.circle-2
+  background-color:$preloader_circle-2
+  &:before
+    background-color:$preloader_circle-2
+    animation-delay: 400ms
+.circle-3
+  background-color: $preloader_circle-3
+  &:before
+    background-color: $preloader_circle-3
+    animation-delay: 600ms
+.circle-4
+  background-color: $preloader_circle-4
+  &:before
+    background-color: $preloader_circle-4
+    animation-delay: 800ms
+.circle-5
+  background-color: $preloader_circle-5
+  &:before
+    background-color: $preloader_circle-5
+    animation-delay: 1000ms
 
+@keyframes scale
+   0%
+      transform: scale(1)
+
+   50%, 75%
+      transform: scale(2.5)
+
+   78%, 100%
+      opacity: 0
+
+.main
+   position: relative
+   // color: #fff
+   section
+      margin-top: 30px
+      // border-bottom: 2px dashed #777
+      &:nth-child(2)
+         margin-top: 0px
+         
+   .our-specialists
+      ul
+         margin-left: 20px
+         li 
+            margin-top: 20px
+            .name
+               font-size: 18px
+               margin-left: 20px
+               font-weight: bold
+   .faq
+      ul li
+         margin-top: 15px
+         h3
+            font-weight: bold
+            margin-left: 40px
+         .answer
+            margin-left: 10px
+            padding-top: 5px
 
 button
    // background-color: $orange_common
-   border: 2px $orange_common solid
+   // color: transparent
+   // background-clip: text
+   // background-image: linear-gradient(to right, $text_color_purple, $text_color_blue)
+   color: $text_color_mid_purple
    outline: none  
    cursor: pointer
+   @include box-shadow($shadows_logo)
    // padding: 0px 20px
    width: 155px
    height: 45px
@@ -43,11 +171,12 @@ button
    background-color: #fff
    border-radius: 30px
    &:hover
-      border: 2px solid $button_hover
+      // border: 2px solid $button_hover
       background-color: $button_hover
       outline: none
    &:active
-      border: 2px solid $button_active
+      // @include box-shadow($shadows_logo_active)
+      // border: 2px solid $button_active
       background-color: $button_active
       outline: none
       transition: all 0.1s

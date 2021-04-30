@@ -1,0 +1,34 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleFbSecurityPopup()"></div>
+   <div class="popup">
+
+      
+      <div class="popup-container">
+         <div class="mode" *ngIf="resetPasswordMode">
+            <div class="title">Восстановление пароля</div>
+            <form>
+               <div class="inputs-wrapper">
+                  <label><span class="narrow">Новый пароль</span><input  [(ngModel)]="newPassword" name="newPassword"  type="password"></label>
+               </div>
+               <button class="login" type="submit" (click)="passwordRecovery()">Восстановить</button>
+            </form>
+            <div class="signs">
+               <div class="message error-message" *ngIf="errMessage" >{{errMessage}}</div>
+               <div class="message successful-message" *ngIf="true" >{{message}}</div>
+            </div>
+         </div>
+         <div class="mode" *ngIf="verifyEmailMode">
+            <div class="title">Подтверждение Email</div>
+            ..........
+         </div>
+         <div class="mode" *ngIf="recoverEmailMode">
+            <div class="title">Восстановление почты</div>
+            <div class="signs">
+               <div class="message error-message" *ngIf="errMessage" >{{errMessage}}</div>
+               <div class="message successful-message" *ngIf="true" >{{message}}</div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+</div>

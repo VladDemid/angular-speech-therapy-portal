@@ -16,6 +16,88 @@
          option
             color: #000
 
+   .custom_selector
+      position: relative
+      display: inline-block
+      margin-right: 30px
+      user-select: none
+      cursor: pointer
+      width: 270px
+      color: #9C9C9C
+      &_title
+         position: relative
+         border: 1px solid #9C9C9C
+         padding: 6px 30px 6px 10px
+         height: 34px
+         // width: 80%
+         border-radius: 10px
+         font-size: 19px
+         span
+            display: block
+            // max-width: 90%
+            overflow: hidden
+            white-space: nowrap
+         &::after
+            content: ''
+            position: absolute
+            right: 10px
+            top: 9px
+            // transform: translateY(-50%)
+            width: 10px
+            height: 10px
+            // background-color: #209EBB
+            transition: 0.2s
+            border-style: solid
+            border-width: 0 6px 12px 6px
+            border-color: transparent transparent #209EBB transparent
+         &.active
+            &::after
+               transition: 0.2s
+               transform: rotate(180deg)
+         &::before
+            content: ''
+            position: absolute
+            right: 0
+            top: 0
+            width: 40px
+            height: 100%
+            background: gradient(left, rgba(255,204,0, 0.2), #fc0 100%)
+      &_list
+         position: absolute
+         top: 26px
+         z-index: 2
+         background-color: #fff
+         width: 100%
+         border: 1px solid #000
+         border-top: none
+         border-radius: 0 0 10px 10px
+         .custom_selector_item
+            transition: 0.1s
+            padding: 2px 7px 2px
+            &:first-child
+               margin-top: 10px
+            &:last-child
+               padding-bottom: 6px
+               border-radius: 0 0 10px 10px
+            &:hover
+               background-color: #D6D6D6
+               transition: 0.1s
+            &.active
+               background-color: #FB8501
+               color: #fff
+
+   .name_input
+      .name
+         border: 1px solid #9C9C9C
+         width: 570px
+         height: 34px
+         border-radius: 10px
+         margin-top: 9px
+         outline: none
+         font-size: 19px
+         padding: 6px 30px 6px 10px
+   
+   
    .specialists__catalog
       min-height: 300px
    .specialists__catalog

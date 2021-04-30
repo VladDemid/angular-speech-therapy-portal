@@ -1,5 +1,9 @@
 <li class="faq__item"  [ngClass]="{'active': currentFaq == tabIndex}">
-   <div class="faq__item__title " (click) = "onClick()">{{tabItem.title}}
+   <div class="faq__item__title " (click) = "onClick()">
+      <div class="title">
+         {{tabItem.title}}
+
+      </div>
       <div class="arrow">&#x25BA;</div>
    </div>
    <div class="descr-wrap" >

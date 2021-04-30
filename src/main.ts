@@ -10,3 +10,9 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
+
+
+const trap = document.getElementById("trap")
+trap.parentNode.removeChild(trap);
+
+// console.log("TRAP: ", trap);

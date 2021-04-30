@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { rejects } from 'assert';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Component({
@@ -21,6 +21,7 @@ export class ProfileLayoutComponent implements OnInit {
     private firebase: FirebaseService,
     private activatedRoute: ActivatedRoute,
     private popupService: PopupService
+    
   ) { }
 
   ngOnInit(): void {
@@ -38,26 +39,27 @@ export class ProfileLayoutComponent implements OnInit {
         const user = this.firebase.getUser()
         if (user.emailVerified === false && !this.userData.myData.emailVerified) {
           this.popupService.emailVerifyPopup = true
-          this.activatedRoute.queryParams.subscribe((params: Params) => {
-            if (params["oobCode"] ) {
-              this.firebase.actionCode = params["oobCode"]
-              this.firebase.applyActionCode()
-                .then(() => {
-                  console.log("email verified successfully")
-                  this.popupService.emailVerifyPopup = false
-                  const newUserData = this.userData.myData
-                  newUserData.emailVerified = true
-                  this.userData.changeMyLocalData(newUserData) //обновление локальных данных 
-                  this.userData.sendMyDataChanges(newUserData) //обновление данных на серваке
-                    .subscribe(() => console.log("база даных обновлена для пользователя"))
-                })
-                .catch((err) => {console.log("code send error: ", err)})
-            } else if (!params["oobCode"] ) {
-              this.firebase.sendVerificationEmail()
-                .then(() => console.log("письмо отправлено"))
-                .catch((err) => console.log("ошибка отправления письма: ", err))
-            }
-          })
+          // this.activatedRoute.queryParams.subscribe((params: Params) => {
+          //   if (params["oobCode"] ) {
+          //     this.firebase.actionCode = params["oobCode"]
+          //     this.firebase.applyActionCode()
+          //       .then(() => {
+          //         console.log("email verified successfully")
+          //         this.popupService.emailVerifyPopup = false
+          //         const newUserData = this.userData.myData
+          //         newUserData.emailVerified = true
+          //         this.userData.changeMyLocalData(newUserData) //обновление локальных данных 
+          //         this.userData.sendMyDataChanges(newUserData) //обновление данных на серваке
+          //           .subscribe(() => console.log("база даных обновлена для пользователя"))
+          //       })
+          //       .catch((err) => {console.log("code send error: ", err)})
+          //   } else if (!params["oobCode"] ) {
+          //     console.log("отправка письма заблокирована");
+          this.firebase.sendVerificationEmail()
+            .then(() => console.log("письмо отправлено"))
+            .catch((err) => console.log("ошибка отправления письма: ", err))
+          //   }
+          // })
         }
       }
     }, 500)

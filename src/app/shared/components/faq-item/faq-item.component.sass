@@ -1,5 +1,8 @@
 .faq__item 
    // position: relative
+   border: 1px solid #000
+   border-bottom: 0px
+   margin-top: -1px  
    .arrow
       position: absolute
       content: ''
@@ -16,14 +19,15 @@
       user-select: none 
    &__title
       position: relative
-      border: 1px solid #000
-      margin-top: -1px  
       padding: 25px
       padding-left: 30px
       font-size: 24px
       font-weight: 500
       cursor: pointer
       user-select: none 
+      .title
+         max-width: 90%
+         
    &__descr
       font-size: 21px
       font-weight: 400
@@ -32,7 +36,8 @@
       overflow: hidden
       height: 0px
       background-color: #f2f2f2
-      border: 1px solid #000
+      // border: 1px solid #000
+      border-top: 1px solid #000
       margin-top: -1px
       .faq__item__descr
          max-width: 80%

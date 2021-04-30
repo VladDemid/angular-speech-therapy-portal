@@ -21,6 +21,7 @@ export class CalendarBlockComponent implements OnInit {
   
   currentHour = new Date().getHours()
   selectedDay = -1 //номер дня (-1\ 1-31)
+  selectedDayOfWeek = -1
   day = new Date().getDate()
   month = new Date().getMonth() + 1 //меняется при листании календаря
   currentMonth = new Date().getMonth() + 1 //1 = январь, 12 = декабрь (не меняется)
@@ -32,8 +33,8 @@ export class CalendarBlockComponent implements OnInit {
   monthsNamesWhomCase = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"]
   monthName = ""
   daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пн", "Сб", "Вс"]
-  currentFirstDay: number
-  selectedHourForLesson = -1 //выбранное клиентом время записи (8-22 часа)
+  currentFirstDay: number //день недели 1-го числа месяца месяца (1-7)
+  selectedHourForLesson = -1 //выбранное клиентом время записи (8-22 часа workStart-workEnd)
   updatingdWorkHourData = false //чтобы при каждом клике подряд не скачивать инфу
   workStart = 8
   workEnd = 22
@@ -41,6 +42,9 @@ export class CalendarBlockComponent implements OnInit {
   doctorShedule = {}
   doctorsLessons = {}
   doctorAlertSign: string
+
+  daysOfWeekShedule = {}
+  newDaysOfWeekShedule = {}
 
   constructor(
     private firebase: FirebaseService,
@@ -55,16 +59,39 @@ export class CalendarBlockComponent implements OnInit {
     this.showDays()
     this.makeHoursArray()
     // if (this.userData.myData.userType == "doctor") {
-    this.downloadSheduleInfo()
+    
+    this.waitForInfo() //после подгрузки инфы грузить все
     // }
   }
+
+  waitForInfo() { //ждать подгрузки инфы (в случае F5 на странице календаря например)
+    const infoFound = setInterval(() => {
+      if (this.userData.myData.name != "") {
+        clearInterval(infoFound)
+        this.downloadSheduleInfo()
+      }
+    }, 100)
+  }
+
+  // writeShedules(shedule) {
+  //   console.log("изменение данных");
+  //   this.daysOfWeekShedule = shedule;
+  //   this.newDaysOfWeekShedule = shedule
+  //   this.testDaysOfWeekShedule = shedule
+  // }
 
   downloadSheduleInfo() { //скан рабочих часов + занятых уроков 
     if ((this.userData.myData.userType == 'doctor' && this.isCalendarPage) || !this.isCalendarPage) {
       this.firebase.getDoctorShedule(this.calendarUserId) 
       .subscribe((resp) => {
         console.log("расписание доктора скачано: ", resp);
-        this.doctorShedule = resp
+        // this.writeShedules(resp)
+        // Object.assign(this.daysOfWeekShedule, resp)
+        this.daysOfWeekShedule = resp;
+        for(let i = 0; i<=6; i++) { //для работы Object.assign(). заполнить пустые ключи 
+          if(!this.daysOfWeekShedule[i]) {this.daysOfWeekShedule[i] = null}
+        }
+        Object.assign(this.newDaysOfWeekShedule, this.daysOfWeekShedule)
       },
       (err) => {
         console.log("ошибка при скачивании расписании доктора: ", err);
@@ -142,14 +169,20 @@ export class CalendarBlockComponent implements OnInit {
   onDayClick(dayIndex) { //номер дня (1-31)
     // console.log(this.year, this.month, dayIndex);
     this.selectedDay = dayIndex - 1
+    this.selectedDayOfWeek = (this.currentFirstDay + this.selectedDay - 1)%7
 
+    // this.thisDayOfWeek = (this.currentFirstDay + this.dayIndex - 1)%7 //номер первого дня недели (1-7) + номер дня (1-31) -1 %7
+    // if (this.thisDayOfWeek == 0) {
+    //   this.thisDayOfWeek = 7
+    // }
+    // --this.thisDayOfWeek //чтобы Пн=0 Вс=6
   }
 
   onOutDay(dayOfWeekChoosen) { //ouput из отдельного дня
     console.log("выбран ", dayOfWeekChoosen);
   }
 
-  onClickTimeRow(lessonTime) {
+  onClickTimeRow(lessonTime) { //(устарело) почасовоее изменение расписания
     // console.log(lessonTime);
     if (this.isCalendarPage) {         //для страницы редактирования своего календаря
       let hourSettings = {workTime: true, isEngaged: false}
@@ -177,6 +210,8 @@ export class CalendarBlockComponent implements OnInit {
     }
   }
 
+
+
   updateLocalsheduleData() { //обновление инфы по часам (отправка по клику, а скачивание не чаще заданного интервала)
     if (!this.updatingdWorkHourData) {
       this.updatingdWorkHourData = true
@@ -185,7 +220,14 @@ export class CalendarBlockComponent implements OnInit {
         this.updatingdWorkHourData = false
       }).bind(this), 1500) //интервал = 1.5 сек, после которого начинается скачка
     }
-    
+  }
+
+  changeActiveDaysOfWeek(index) {
+    if (this.newDaysOfWeekShedule[index]) { // если день записан, то удалить
+      delete this.newDaysOfWeekShedule[index]
+    } else this.newDaysOfWeekShedule[index] = [this.workStart, this.workEnd]
+
+    // this.newDaysOfWeekShedule[index] = [Math.floor(Math.random()*10)+10,21]
     
   }
 
@@ -233,6 +275,40 @@ export class CalendarBlockComponent implements OnInit {
     } else if (this.doctorsLessons[year][month][day][hour].name) {
       this.doctorAlertSign = "Это время уже занято. Пожалуйста выберите другой час."
     }
+  }
+
+  changeWorkHour(value, day, side) {
+    const x = this.newDaysOfWeekShedule[day][side]
+    let workPeriodCheck = true
+    if (side == 0 && value == 1 && this.newDaysOfWeekShedule[day][0] + 1 >= this.newDaysOfWeekShedule[day][1]) {
+      workPeriodCheck = false
+    } else if (side == 1 && value == -1 && this.newDaysOfWeekShedule[day][1] - 1 <= this.newDaysOfWeekShedule[day][0]) {
+      workPeriodCheck = false
+    }
+    // this.newDaysOfWeekShedule[day][0] < this.newDaysOfWeekShedule[day][1]
+    if (workPeriodCheck && x && x + value >= this.workStart && x + value <= this.workEnd) {
+      this.newDaysOfWeekShedule[day][side] = this.newDaysOfWeekShedule[day][side] + value;
+    } else {console.log(x, x + value >= this.workStart, x + value <= this.workEnd)} 
+    // console.log(x + value >= this.workEnd);
+  }
+
+  sendNewShedule() {
+    console.log("записываю расписание", this.calendarUserId);
+    this.firebase.changeShedule(this.calendarUserId, this.newDaysOfWeekShedule)
+      .subscribe((resp) => {
+        // console.log("все пользователи: ", resp);
+        console.log("Расписание изменено");
+        this.updateLocalsheduleData() ///!!!!!!!!!!!!!!!!!!!!!!
+      },
+      (err) => {
+        console.log("ошибка при изменении расписания доктора ", err);
+      })
+  }
+
+  cancelNewShedule() {
+    console.log('123')
+    Object.assign(this.newDaysOfWeekShedule, this.daysOfWeekShedule)
+    
   }
 
 }

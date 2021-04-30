@@ -10,12 +10,23 @@
             <img *ngIf="!doctorInfo.avatarUrl" [src]="defaultAvatarUrl" alt="person photo">
          </div>
          <div class="user-description">
-            <p class="name"><span>{{doctorInfo.name}} {{doctorInfo.surname}}</span></p>
-            <p><span>Специализация : </span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa aliquid facilis cum quod repellat laboriosam nesciunt vel eligendi, omnis deserunt.</p>
-            <p><span>Стаж и опыт работы : </span>{{doctorInfo.experience}}. Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
-            <p class="detailed-description"></p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque sequi maiores tenetur, nemo sit fugit doloribus nulla architecto unde esse vel dignissimos et quas quisquam quibusdam. Quidem quae pariatur accusamus!</p>
+            <div class="name"><span>{{doctorInfo.surname}} {{doctorInfo.name}} {{doctorInfo.patronymic}}</span></div>
+            <div class="specializations"><span>Специализация : </span>
+               <!-- {{doctorInfo.mainSpecialization | specializationsList:doctorInfo.specializations}} -->
+               <ul class="specializations-list">
+                  <li *ngFor="let item of doctorInfo.mainSpecialization | specializationsList:doctorInfo.specializations">
+                     {{item}}
+                  </li>
+               </ul>
+            </div>
+            <div *ngIf="doctorInfo.experience"><span>Стаж (лет): </span>{{doctorInfo.experience}}</div>
+            <div *ngIf="doctorInfo.university"><span>Образование: </span>{{doctorInfo.university}} {{doctorInfo.faculty}} ({{doctorInfo.year}} г.)</div>
+            <div *ngIf="doctorInfo.university2 && doctorInfo.educationsCount > 1"><span>Образование 2: </span>{{doctorInfo.university2}} {{doctorInfo.faculty2}} ({{doctorInfo.year2}} г.)</div>
+            <div *ngIf="doctorInfo.university2 && doctorInfo.educationsCount > 2"><span>Образование 3: </span>{{doctorInfo.university3}} {{doctorInfo.faculty3}} ({{doctorInfo.year3}} г.)</div>
          </div>
+      </div>
+      <div class="about-me">
+         <p class="detailed-description"><span>О себе: </span>{{doctorInfo.aboutMe}}</p>
       </div>
       <app-calendar-block [inputDoctorInfo]="doctorInfo" [isCalendarPage]="false" [calendarUserId]="doctorId" [isInProfileModule]="isInProfileModule"></app-calendar-block>
    </div>

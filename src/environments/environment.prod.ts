@@ -1,15 +1,15 @@
 export const environment = {
   production: true,
-  apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
-  FbDbUrl: "https://inclusive-test.firebaseio.com/"
+  apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
+  FbDbUrl: "https://verbaland.firebaseio.com/"
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
-  authDomain: "inclusive-test.firebaseapp.com",
-  databaseURL: "https://inclusive-test.firebaseio.com",
-  projectId: "inclusive-test",
-  storageBucket: "inclusive-test.appspot.com",
-  messagingSenderId: "441293072662",
-  appId: "1:441293072662:web:679ec4fe7378d9b9c04837"
-}
+  apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
+  authDomain: "verbaland.firebaseapp.com",
+  databaseURL: "https://verbaland.firebaseio.com",
+  projectId: "verbaland",
+  storageBucket: "verbaland.appspot.com",
+  messagingSenderId: "725914811248",
+  appId: "1:725914811248:web:aed51fdbbd11a5558fedb5"
+};

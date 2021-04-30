@@ -31,29 +31,90 @@
       *ngIf="userData.myData.userType === 'doctor' "
       (ngSubmit)="doctorChangeData()"
       >
-      <div class="inputs-wrapper">
-            <div class="photo-update">
-               <div class="profile-photo">
-                  <img src="{{userData.myData.avatarUrl}}" alt="profile avatar">
-               </div>
-               <div class="photo-preview">photo</div>
-               <input class="upload-avatar" name="avatar" type="file" id="newAvatar">
-               <button class="button" (click)="updateAvatar()">изменить фото</button>
+         <div class="photo-update">
+            <div class="profile-photo">
+               <img src="{{userData.myData.avatarUrl}}" alt="Фото не загружено">
             </div>
+            <!-- <div class="photo-preview">photo</div> -->
+            <div class="avatar-buttons-wrapper">
+               <label class="input-avatar-wrapper" for="avatar-upload-button">
+                  <span *ngIf="!avatarPrefireName" >выберите аватар</span>
+                  <span *ngIf="avatarPrefireName" class="success">файл выбран</span>
+                  <input class="upload-avatar" (click)="scanAvatarName()" name="avatar" type="file" id="avatar-upload-button">
+               </label>
+               <button class="button" (click)="updateAvatar()">загрузить фото</button>
+            </div>
+         </div>
+         <div class="inputs-wrapper">
             <label><span>Имя</span><input required name="name" type="text"  [placeholder]="userData.myData.name" formControlName="name"></label>
             <label><span>Фамилия</span><input required name="surname" type="text"  [placeholder]="userData.myData.surname" formControlName="surname"></label>
             <label><span>Отчество</span><input required name="patronymic" type="text"  [placeholder]="userData.myData.patronymic" formControlName="patronymic"></label>
-            <label><span>Вуз</span><input required name="university" type="text"  [placeholder]="userData.myData.university" formControlName="university"></label>
-            <div class="double-input-row">
-               <label><span>Факультет</span><input required name="faculty"  type="text" [placeholder]="userData.myData.faculty" formControlName="faculty"></label>
-               <label><span>Год выпуска</span><input required name="year"  type="text" [placeholder]="userData.myData.year" formControlName="year"></label>
+            <div class="educations">
+               <div class="education">
+                  <label><span>Вуз</span><input required name="university" type="text"  [placeholder]="userData.myData.university" formControlName="university"></label>
+                  <div class="double-input-row">
+                     <label><span>Факультет</span><input required name="faculty"  type="text" [placeholder]="userData.myData.faculty" formControlName="faculty"></label>
+                     <label><span>Год выпуска</span><input required name="year"  type="text" [placeholder]="userData.myData.year" formControlName="year"></label>
+                  </div>
+               </div>
+               <div class="education" *ngIf="educationsCount > 1">
+                  <label><span>Вуз</span><input required name="university2" type="text"  [placeholder]="userData.myData.university2" formControlName="university2"></label>
+                  <div class="double-input-row">
+                     <label><span>Факультет</span><input required name="faculty2"  type="text" [placeholder]="userData.myData.faculty2" formControlName="faculty2"></label>
+                     <label><span>Год выпуска</span><input required name="year2"  type="text" [placeholder]="userData.myData.year2" formControlName="year2"></label>
+                  </div>
+               </div>
+               <div class="education" *ngIf="educationsCount > 2">
+                  <label><span>Вуз</span><input required name="university3" type="text"  [placeholder]="userData.myData.university3" formControlName="university3"></label>
+                  <div class="double-input-row">
+                     <label><span>Факультет</span><input required name="faculty3"  type="text" [placeholder]="userData.myData.faculty3" formControlName="faculty3"></label>
+                     <label><span>Год выпуска</span><input required name="year3"  type="text" [placeholder]="userData.myData.year3" formControlName="year3"></label>
+                  </div>
+               </div>
+               <div class="education_buttons">
+                  <button type="button" (click)="incrEducation()">Добавить образование</button>
+                  <button type="button" (click)="decrEducation()">Удалить образование</button>
+               </div>
+               <!-- <div class="educations_incr" (click)="incrEducation()">
+               </div>
+               <div class="educations_decr" (click)="decrEducation()">
+               </div> -->
+               
             </div>
-            <label><span>Стаж</span><input required name="experience"  type="text" [placeholder]="userData.myData.experience" formControlName="experience"></label>
+            <div class="specializations">
+               <label><span>Специализации</span></label>
+               <ul class="specializations-list">
+                  <li class="specialization-item" *ngFor="let item of specializations" >
+                     <label class="checkbox-label" (click)="selectSpecialization(item)" [ngClass]="{specialization_selected: specializationsData.specializationsSelected && specializationsData.specializationsSelected.indexOf(item) != -1}"><input type="checkbox" >{{item}}</label>
+                  </li>
+               </ul>
+            </div>
+            
+            <div class="specialization-main">
+               <label><span class="narrow">Главная специализация</span></label>
+               <ul class="specializations-list">
+                  <div class="select-sign" *ngIf="!specializationsData.specializationsSelected || (specializationsData.specializationsSelected && !specializationsData.specializationsSelected[0])">Сначала выберите ваши специализации выше</div>
+                  <li class="specialization-item" *ngFor="let item of specializationsData.specializationsSelected; first as isFirst" >
+                     <label class="radio" [ngClass]="{'main_specialization_selected': (item === specializationsData.mainSpecializationSelected) || (specializationsData.mainSpecializationSelected === '' && isFirst)}" (click)="selectMainSpecialization(item)">
+                        <input class="specializaion-radio" type="radio" name="specialization-main" [value]="item">{{item}}
+                        <!-- (item === specializationsData.mainSpecializationSelected) || (specializationsData.mainSpecializationSelected === '' && isFirst) -->
+                     </label>
+                  </li>
+                  <!-- {{specializationsData.specializationsSelected}}
+                     {{specializationsData.mainSpecializationSelected}} -->
+                  </ul>
+               </div>
+               <!-- {{specializationsData.mainSpecializationSelected}}
+               {{specializationsData.specializationsSelected}} -->
+
+            <label><span>Стаж (лет)</span><input required name="experience"  type="text" [placeholder]="userData.myData.experience" formControlName="experience"></label>
             <label><span class="narrow">Актуальное место работы</span><input required name="workPlace"  type="text" [placeholder]="userData.myData.workPlace" formControlName="workPlace"></label>
-            <button class="submit" type="submit">Изменить</button>
+            <label><span>О себе</span><textarea id="aboutMe" name="aboutMe" rows="10" [(innerHTML)]="userData.myData.aboutMe"  formControlName="aboutMe">4576</textarea></label>
+            <!-- [(ngModel)] = "userData.myData.aboutMe" -->
             <div class="update-success" *ngIf="showUpdate">
                Информация обновлена!
             </div>
+            <button class="submit" type="submit">Сохранить изменения</button>
          </div>
       </form>
       <div class="sertificates" *ngIf="userData.myData.userType === 'doctor'">
@@ -65,13 +126,13 @@
                   <img class="sertif-img" src={{item}} alt="sertificate" (click)="popupService.showImgPopup(item, userData.myData.sertificatesNames[i])">
                   <div class="sertif-delete" (click)="deleteSertificate(i)">&#10006;</div>
                </div>
-               <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span>
+               <!-- <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span> -->
             </div>
          </div>
          <form class="new-sertificates" id="newSertificatesForm">
             <div class="inputs-wrapper">
                <label><span class="narrow">Добавить сертификаты</span> <input class="upload_documents" name="documents" type="file" id="newSertificates" multiple></label>
-               <button class="upload-sertrificates" (click)="addNewSertificates()">загрузить</button>
+               <button class="upload-sertrificates" (click)="addNewSertificates()">Загрузить сертификаты</button>
             </div>
          </form>
       </div>
