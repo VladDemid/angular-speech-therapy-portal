@@ -11,7 +11,7 @@
       <div class="registration-type">
          <label>
             <input required checked type="radio" name="registration-type" value="client">
-            <span class="type-text" (click)="showClientForm()">Присоединиться как клиент</span>
+            <span class="type-text" (click)="showClientForm()">Присоединиться как пациент</span>
          </label>
          <label>
             <input required  type="radio" name="registration-type" value="professional">
@@ -40,11 +40,11 @@
                <small class="error" *ngIf="clientRegistrationForm.get('patronymic').errors && clientRegistrationForm.get('patronymic').errors.required">
                      Необходимо ввести <span>отчество</span></small>
             </div> 
-            <label><span class="narrow">Диагноз ребенка</span><input required name="childDiagnosis" type="text" formControlName="childDiagnosis"></label>
+            <!-- <label><span class="narrow">Диагноз ребенка</span><input required name="childDiagnosis" type="text" formControlName="childDiagnosis"></label>
             <div class="validation-errors" *ngIf="clientRegistrationForm.get('childDiagnosis').invalid && clientRegistrationForm.get('childDiagnosis').touched || showRulesRequired">
                <small class="error" *ngIf="clientRegistrationForm.get('childDiagnosis').errors && clientRegistrationForm.get('childDiagnosis').errors.required">
                      Необходимо ввести <span>диагноз</span></small>
-            </div> 
+            </div>  -->
             
             <label><span>Email</span><input required name="email" type="text" formControlName="email"></label>
             <div class="validation-errors" *ngIf="clientRegistrationForm.get('email').invalid && clientRegistrationForm.get('email').touched || showRulesRequired">

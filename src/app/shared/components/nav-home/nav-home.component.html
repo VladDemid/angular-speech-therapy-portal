@@ -1,4 +1,4 @@
-<header>
+<header id="home-nav">
    <div class="container">
       <nav>
          <div class="logo">
@@ -8,9 +8,9 @@
          </div>
          <div class="menu">
             <ul>
-               <li><a href="http://localhost:4200/#specialists">Специалисты</a></li>
-               <li><a href="http://localhost:4200/#faq">FAQ</a></li>
-               <li><a href="http://localhost:4200/">Контакты</a></li>
+               <li><a [routerLink]="['/']" [fragment]="'specialists'">Специалисты</a></li>
+               <li><a [routerLink]="['/']" [fragment]="'faq'">FAQ</a></li>
+               <li><a [routerLink]="['/']" [fragment]="''">Контакты</a></li>
                <li><button class="login" *ngIf="!isAuthenticated" id="login" [routerLink]="['/']" (click)="popupService.toggleLoginPopup()">Войти</button></li>
                <li><button class="login" *ngIf="isAuthenticated" [routerLink]="['/profile']" >в кабинет</button></li>
             </ul>

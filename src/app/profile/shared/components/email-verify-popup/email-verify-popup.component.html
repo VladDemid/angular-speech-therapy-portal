@@ -6,9 +6,14 @@
          <div class="title">Подтверждение почты</div>
          <div class="description">
             <p>Для подтверждения почты мы выслали на неё письмо. Пожалуйста найдите наше письмо.</p>
+            <div class="email-sign-wrapper">
+               <span class="blue" *ngIf="emailSendSuccess == 1">(письмо успешно отправлено)</span>
+               <span class="orange" *ngIf="emailSendSuccess == 0">(ошибка отправления письма)</span>
+               <span *ngIf="emailSendSuccess == 0">  попробуйте через 15 секунд</span>
+            </div>
             <p>Если вы уже перешли по ссылке из письма и это окно не убирается, перезагрузите страницу (F5) </p>
          </div>
-         <button class="emailVerificationButton" (click)="pageReload()">я уже подтвердил</button>
+         <button class="emailVerificationButton" (click)="pageReload()">я уже подтвердил (перезагрузить)</button>
          <button class="emailVerificationButton" (click)="logOut()">выйти из аккаунта</button>
          <!-- <button (click)="manuallyCheck()">test</button> -->
       </div>

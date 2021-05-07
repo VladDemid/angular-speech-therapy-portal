@@ -34,7 +34,8 @@ export class UserData {
 
 
    initialization() {
-      this.getMyData().subscribe(
+      this.getMyData()
+      .subscribe(
          (response: UserDbInfo) => {
             this.helper.toConsole("Инициализация пользователя: ",response)
             this.changeMyLocalData(response)
@@ -49,6 +50,17 @@ export class UserData {
 
 
    getMyData() {
+      // if (!userType) {
+      //    this.http.get(`${environment.FbDbUrl}/users.json`)
+      //    .subscribe((resp) => {
+      //       console.log("!!!!!!!!!!!!!",resp)
+      //    },
+      //    (err) => {
+      //       console.log('!!!!!!!!!!!!ошибка скачивания инфы по пользователю', err)
+      //    })
+      // } 
+
+      // this.http.get(`${environment.FbDbUrl}/users/doctors/${localStorage.getItem("user-Id")}.json`)
       return this.http.get(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`)
    }
 
@@ -113,9 +125,11 @@ export class UserData {
    // }
 
    sendMyDataChanges(newUserData) {
+      // let firebaseUserType
+      // if (userType == "client") firebaseUserType = "patients"
+      // else firebaseUserType = "doctors"
       return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`, newUserData)
    }
-
 
 
 }

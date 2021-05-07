@@ -13,7 +13,7 @@ export class SpecializationsListPipe implements PipeTransform {
     // for (let i = 0; i < (specs.length - 1); ++i) {
     //   specs[i] += ","
     // }
-    console.log("11111111111", specs);
+    // console.log("11111111111", specs);
     return specs
   }
 

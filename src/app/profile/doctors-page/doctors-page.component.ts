@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
+import { DevelopHelp } from 'src/app/shared/services/develop-help.service';
 import { UserData } from '../shared/services/user-data.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class DoctorsPageComponent implements OnInit {
 
   constructor(
     private firebase: FirebaseService,
-    private userData: UserData
+    private userData: UserData,
+    private helper: DevelopHelp
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +27,7 @@ export class DoctorsPageComponent implements OnInit {
   getAllDoctors() {
     this.firebase.getDoctorsInfo()
     .subscribe((resp) => {
-      // console.log("все пользователи: ", resp);
+      if (this.helper.DEBUG) {console.log("все пользователи: ", resp)}
       this.sortDoctors(resp)
     },
     (err) => {

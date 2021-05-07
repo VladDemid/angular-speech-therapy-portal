@@ -55,8 +55,8 @@ export class RegistrationPageComponent implements OnInit {
         Validators.required),
       patronymic: new FormControl(null,
         Validators.required),
-      childDiagnosis: new FormControl(null,
-        Validators.required),
+      // childDiagnosis: new FormControl(null,
+      //   Validators.required),
       // photo: new FormControl(null),
       email: new FormControl(null, [
         Validators.required,
@@ -151,7 +151,7 @@ export class RegistrationPageComponent implements OnInit {
         this.firebase.createNewUserDataObject(newClientData, res)
           .subscribe(() => {
             this.isSendingData = false
-            this.helper.toConsole("ячейка данных создана")
+            this.helper.toConsole("объект пользователя создан")
             this.clientRegistrationForm.reset()
             this.successfulRegistrationAlert() //может не нада
             this.router.navigate(['/profile'])
@@ -214,7 +214,7 @@ export class RegistrationPageComponent implements OnInit {
         this.firebase.createNewUserDataObject(newDoctorData, res) // что записать и куда
           .subscribe(() => {
             this.isSendingData = false
-            this.helper.toConsole("ячейка данных создана")
+            this.helper.toConsole("объект доктора создан")
             this.doctorRegistrationForm.reset()
             // this.successfulRegistrationAlert() 
             this.router.navigate(['/profile'])

@@ -10,8 +10,8 @@ export class OurSpecialistsComponent implements OnInit {
   @Input() firebaseDoctors: UserDbInfo[]
   @Input() isProfileModule: boolean
 
-  activeSpecialists: string = ""
-  activeProblems: string = ""
+  selectedSpecialisation: string = ""
+  selectedProblem: string = ""
 
   specialist_selector = {
     active: false,
@@ -26,39 +26,39 @@ export class OurSpecialistsComponent implements OnInit {
   }
 
   diagnose: ProfessionOptions[] = [
-    {title: "Логопед", value: "speech-therapist"},
-    {title: "Логопед (ранний возраст)", value: "speech-therapist-early-age"},
-    {title: "Учитель-дефектолог", value: "teacher-defectologist"},
-    {title: "Специалист по РАС", value: "asd-specialist"},
-    {title: "Специалист по запуску речи", value: "speech-start-spec"},
-    {title: "Сурдопедагог", value: "deaf-teacher"},
-    {title: "Нейропсихолог", value: "neuropsychologist"},
-    {title: "Дошкольный психолог", value: "preschool-psychologist"},
-    {title: "Психолог", value: "psychologist"},
-    {title: "Семейный психолог", value: "family-psychologist"},
-    {title: "Детский психолог", value: ""},
-    {title: "Арт-терапевт", value: ""},
-    {title: "Психоаналитик", value: ""},
-    {title: "Гештальт-терапевт", value: ""},
-    {title: "Тифлопедагог", value: ""},
+    {title: "логопед", value: "speech-therapist"},
+    {title: "логопед (ранний возраст)", value: "speech-therapist-early-age"},
+    {title: "учитель-дефектолог", value: "teacher-defectologist"},
+    {title: "специалист по РАС", value: "asd-specialist"},
+    {title: "специалист по запуску речи", value: "speech-start-spec"},
+    {title: "сурдопедагог", value: "deaf-teacher"},
+    {title: "нейропсихолог", value: "neuropsychologist"},
+    {title: "дошкольный психолог", value: "preschool-psychologist"},
+    {title: "психолог", value: "psychologist"},
+    {title: "семейный психолог", value: "family-psychologist"},
+    {title: "детский психолог", value: ""},
+    {title: "арт-терапевт", value: ""},
+    {title: "психоаналитик", value: ""},
+    {title: "гештальт-терапевт", value: ""},
+    {title: "тифлопедагог", value: ""},
   ]
 
     
 
   problems: ProfessionOptions[] = [
-    {title: "Нарушение звукопроизношения", value: ""},
-    {title: "Отсутствие речи", value: ""},
+    {title: "нарушение звукопроизношения", value: ""},
+    {title: "отсутствие речи", value: ""},
     {title: "ОНР", value: ""},
-    {title: "Дизартрия", value: ""},
-    {title: "Заикание", value: ""},
-    {title: "Расщелина неба", value: ""},
-    {title: "Алалия", value: ""},
-    {title: "Задержка психо-моторного развития", value: ""},
+    {title: "дизартрия", value: ""},
+    {title: "заикание", value: ""},
+    {title: "расщелина неба", value: ""},
+    {title: "алалия", value: ""},
+    {title: "задержка психо-моторного развития", value: ""},
     {title: "ДЦП", value: ""},
-    {title: "Задержка познавательного (психического) развития", value: ""},
-    {title: "Нарушение слуха", value: ""},
-    {title: "Кохлеарная имплантация", value: ""},
-    {title: "Нарушение зрения", value: ""},
+    {title: "задержка познавательного (психического) развития", value: ""},
+    {title: "нарушение слуха", value: ""},
+    {title: "кохлеарная имплантация", value: ""},
+    {title: "нарушение зрения", value: ""},
     {title: "РАС", value: ""},
   ]
 
@@ -67,9 +67,9 @@ export class OurSpecialistsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSpecializationChange(selector) {
-    this.activeSpecialists = selector.value
-  }
+  // onSpecializationChange(selector) {
+  //   this.selectedSpecialisation = selector.value
+  // }
 
   toggleSpecialistSelector() {
     this.specialist_selector.active = !this.specialist_selector.active

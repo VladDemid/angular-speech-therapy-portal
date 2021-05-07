@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
@@ -11,6 +11,8 @@ import { UserData } from '../../services/user-data.service';
   styleUrls: ['./email-verify-popup.component.sass']
 })
 export class EmailVerifyPopupComponent implements OnInit {
+
+  @Input() emailSendSuccess = -1
 
   constructor(
     public popupService: PopupService,
@@ -87,3 +89,7 @@ export class EmailVerifyPopupComponent implements OnInit {
   }
 
 }
+function input() {
+  throw new Error('Function not implemented.');
+}
+

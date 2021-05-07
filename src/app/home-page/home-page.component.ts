@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupService } from '../shared/services/popup.service';
 import { FirebaseService } from '../shared/services/firebase.service';
+
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { ActivatedRoute, Params } from '@angular/router';
 

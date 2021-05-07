@@ -4,7 +4,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileGuard } from './profile/shared/services/profile.guard';
-import { SpecialistPageComponent } from './shared/components/specialist-page/specialist-page.component';
+import { SpecialistPageComponent } from './specialist-page/specialist-page.component';
 
 
 const routes: Routes = [
@@ -17,6 +17,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'enabled',
+    anchorScrolling: 'enabled',
+    scrollOffset: [0, 25],
     preloadingStrategy: PreloadAllModules
   })],
   exports: [RouterModule]

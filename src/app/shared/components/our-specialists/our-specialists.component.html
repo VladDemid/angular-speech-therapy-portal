@@ -3,7 +3,8 @@
       <h2 class="specialists__header">Наши специалисты</h2>
       <div class="specialists__filters">
          <div class="filters_title">Фильтры</div>
-
+         <!-- selectedSpecialisation = "{{selectedSpecialisation}}"<br>
+         {{specialist_selector | json}} -->
          <div class="custom_selector" (click)="toggleSpecialistSelector()" (mouseleave)="closeLists()">
             <div class="custom_selector_title" [ngClass]="{active: specialist_selector.active}">
                <span>{{specialist_selector.selected}}</span>
@@ -52,7 +53,7 @@
       </div>
       <div class="specialists__catalog">
          <app-specialist-card
-         *ngFor="let card of firebaseDoctors | specialistFilter:activeSpecialists"
+         *ngFor="let card of firebaseDoctors | specialistFilter:specialist_selector.selected"
          [card]="card"
          [isProfileModule]="isProfileModule"
          ></app-specialist-card>

@@ -42,12 +42,12 @@ export interface UserDbInfo {
    surname: string
    patronymic: string
    userType: "client" | "doctor"
-   description: string
+   email?: string
+   description?: string
    //client keys
    childDiagnosis?: string
-   babyLessons?: any[]
-   email?: string
    //doctor keys
+   weeklySchedule?: []
    educationsCount?: number
    university?: string
    faculty?: string
@@ -81,7 +81,6 @@ export interface UserClient {
    userType: "client"
    description: string
    childDiagnosis: string
-   babyLessons: any[]
 }
 
 export interface UserDoctor {
@@ -89,6 +88,7 @@ export interface UserDoctor {
    surname: string
    patronymic: string
    userType: "doctor"
+   weeklySchedule?: []
    description: string
    university: string
    faculty: string

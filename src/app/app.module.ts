@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { SpecialistPageComponent } from './specialist-page/specialist-page.component';
 import { NavHomeComponent } from './shared/components/nav-home/nav-home.component';
 import { FooterHomeComponent } from './shared/components/footer-home/footer-home.component';
 import { FaqComponent } from './shared/components/faq/faq.component';
@@ -15,7 +16,6 @@ import { TermsOfUsePopupComponent } from './shared/components/terms-of-use-popup
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { ProfileGuard } from './profile/shared/services/profile.guard';
-import { SpecialistPageComponent } from './shared/components/specialist-page/specialist-page.component';
 import { SharedModule } from './shared/shared.module';
 import { UserData } from './profile/shared/services/user-data.service';
 import { SpecializationsListPipe } from './shared/pipes/specializations-list.pipe';

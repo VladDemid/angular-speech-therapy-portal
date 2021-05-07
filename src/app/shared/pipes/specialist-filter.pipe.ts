@@ -6,13 +6,15 @@ import { SpecialistCard, UserDbInfo } from '../interfaces';
 })
 export class SpecialistFilterPipe implements PipeTransform {
 
-  transform(array: UserDbInfo[], activeSpecialists: string) {
-    if (!activeSpecialists || !array) {
+  transform(array: UserDbInfo[], selectedSpecialisation: string) {
+    console.log("!!!!!!!!!!!!",selectedSpecialisation,array)
+    if (!selectedSpecialisation || selectedSpecialisation == "Специализация" || !array) {
       return array
     }
-    console.log(activeSpecialists, "...пока сортировка отключена");
-    return array
-    // return array.filter(spec => spec.specialization == activeSpecialists)
+    // console.log(selectedSpecialisation, "...пока сортировка отключена");
+    // return array
+    let specialistsOnly = array.filter(spec => spec.mainSpecialization)
+    return specialistsOnly.filter(spec => spec.mainSpecialization.toLowerCase() == selectedSpecialisation.toLowerCase())
   }
 
 }

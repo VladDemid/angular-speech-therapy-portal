@@ -2,7 +2,7 @@
    <app-nav-home *ngIf="isInProfileModule + '' == 'false'"></app-nav-home>
    <app-profile-nav *ngIf="isInProfileModule + '' == 'true'"></app-profile-nav>
 </div>
-<div *ngIf="doctorInfo" class="doctor-card">
+<div class="doctor-card" *ngIf="doctorInfo" [ngClass]="{'in-profile': isInProfileModule == 'true'}">
    <div class="container">
       <div class="user-data">
          <div class="user-image">
@@ -19,6 +19,10 @@
                   </li>
                </ul>
             </div>
+            <!-- <div class="error-msg" *ngIf="helper.DEBUG && isInProfileModule && !userData?.myData?.name" style="font-weight: bold;">
+               ---------------ERROR MSG----------------<br>
+               isInProfileModule: {{isInProfileModule}}
+            </div> -->
             <div *ngIf="doctorInfo.experience"><span>Стаж (лет): </span>{{doctorInfo.experience}}</div>
             <div *ngIf="doctorInfo.university"><span>Образование: </span>{{doctorInfo.university}} {{doctorInfo.faculty}} ({{doctorInfo.year}} г.)</div>
             <div *ngIf="doctorInfo.university2 && doctorInfo.educationsCount > 1"><span>Образование 2: </span>{{doctorInfo.university2}} {{doctorInfo.faculty2}} ({{doctorInfo.year2}} г.)</div>

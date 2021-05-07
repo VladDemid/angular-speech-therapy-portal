@@ -1,10 +1,25 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class DevelopHelp {
-   constructor() { }
    
    DEBUG = true
+
+   
+   
+   
+   
+   constructor() { }
+   
+   ngOnInit(): void {
+      
+      if (environment.production == true) {
+         this.DEBUG = false
+         //   enableProdMode();
+      }
+   }
+ 
 
    toConsole(value, value2?, value3?) {
       if (this.DEBUG) {

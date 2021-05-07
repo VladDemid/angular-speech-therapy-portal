@@ -105,10 +105,24 @@ export class FirebaseService implements OnInit {
     return firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
   }
 
-  createNewUserDataObject(user, result) {
+  createNewUserDataObject(user, result) { //больше не используется ((((
     this.helper.toConsole("инфа для заполнения пользователя: ", user)
     this.helper.toConsole("Id нового пользователя: ", result.user.uid)
     return this.http.put(`${environment.FbDbUrl}/users/${result.user.uid}.json`, user)
+    
+  }
+
+  createNewPatientDataObject(user, result) {
+    this.helper.toConsole("инфа для заполнения пациента: ", user)
+    this.helper.toConsole("Id нового пациента: ", result.user.uid)
+    return this.http.put(`${environment.FbDbUrl}/users/patients/${result.user.uid}.json`, user)
+    
+  }
+
+  createNewDoctorDataObject(user, result) {
+    this.helper.toConsole("инфа для заполнения пациента: ", user)
+    this.helper.toConsole("Id нового пациента: ", result.user.uid)
+    return this.http.put(`${environment.FbDbUrl}/users/doctors/${result.user.uid}.json`, user)
     
   }
 
@@ -252,8 +266,14 @@ export class FirebaseService implements OnInit {
     return this.http.get(`${environment.FbDbUrl}/doctorsDaysOfWeekSchedule/${id}.json`)
   }
 
+
+
   getDoctorLessons(id) {
     return this.http.get(`${environment.FbDbUrl}/lessons/${id}.json`)
+  }
+
+  getDoctorLessonsTest(id) {
+    return this.http.get(`${environment.FbDbUrl}/lessons.json`)
   }
 
   makeALesson(time, doctorData, clientData) {

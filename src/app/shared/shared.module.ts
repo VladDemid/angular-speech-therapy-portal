@@ -17,6 +17,7 @@ import { NameRowPipe } from './pipes/name-row.pipe';
 import { ImgPopupComponent } from './components/img-popup/img-popup.component';
 import { SpecializationsListPipe } from './pipes/specializations-list.pipe';
 import { FbSecurityPopupComponent } from './components/fb-security-popup/fb-security-popup.component';
+import { TextCutterPipe } from './pipes/text-cutter.pipe';
 // import { FaqNewComponent } from './components/faq-new/faq-new.component';
 
 
@@ -52,6 +53,7 @@ import { FbSecurityPopupComponent } from './components/fb-security-popup/fb-secu
       NameRowPipe,
       ImgPopupComponent,
       SpecializationsListPipe,
+      TextCutterPipe
       // FaqNewComponent,
       // FbSecurityPopupComponent,
    ],

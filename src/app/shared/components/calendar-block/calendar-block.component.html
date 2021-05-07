@@ -1,12 +1,16 @@
-<div class="debug-block" *ngIf="true">
+<div class="debug-block" *ngIf="true && helper.DEBUG">
    <p>selectedDay: {{selectedDay}}</p>
    <p>currentFirstDay: {{currentFirstDay}}</p>
    <p>selectedDayOfWeek: {{selectedDayOfWeek}}</p>
    <p>daysOfWeekShedule: {{daysOfWeekShedule | json}}</p>
+   <p>selectedHourForLesson: {{selectedHourForLesson}}</p>
+   <!-- <p>weeklySchedule: {{inputDoctorInfo.weeklySchedule | json}}</p> -->
 </div>
 <div class="calendar">
+   <button (click)="test()">test</button>
    <div class="calendar-wrapper">
       <div class="calendar-header">
+         
          <div class="arrow arrow-left" id="prev-month-arrow" (click)="decreaseMonth()"></div>
          <div class="month">{{monthName}} {{year}}</div>
          <div class="arrow arrow-right" id="next-month-arrow" (click)="increaseMonth()"></div>
@@ -24,7 +28,7 @@
                <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" 
                [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" 
                [currentYear]="currentYear" [selectedDay]="selectedDay" 
-               [doctorShedule]="doctorShedule" [daysOfWeekShedule]="daysOfWeekShedule" 
+               [doctorShedule]="doctorShedule" [daysOfWeekShedule]="inputDoctorInfo.weeklySchedule" 
                [doctorsLessons]="doctorsLessons" [isCalendarPage]="isCalendarPage"  
                (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
             </div>
@@ -36,11 +40,12 @@
          выбранный час: {{selectedHourForLesson}} -->
       </div>
    </div>
-   <!-- для страницы карточки специалиста (не календарь) -->
+   <!--aside для страницы карточки специалиста (не календарь) -->
    <div class="time-aside time-aside-view" *ngIf="!isCalendarPage">
-      <span class="go-to-account-sign" *ngIf='isInProfileModule == "false"'>Для записи к специалисту воспользуйтесь <span class="link" [routerLink]="['/profile/doctors']">личным кабинетом</span></span> 
-      <div class="day-not-chosen-sign" *ngIf="selectedDay == -1 || (selectedDay != -1 && !doctorShedule[year][month][selectedDay+1])">
-         <div class="time-blocker">
+      <span class="go-to-account-sign" *ngIf='isInProfileModule == "false"'>Для записи к специалисту необзодимо войти в <span class="link" [routerLink]="['/profile/doctors']">личный кабинет</span></span> 
+      <div class="day-not-chosen-sign" *ngIf="selectedDay == -1 || !daysOfWeekShedule[selectedDayOfWeek]">
+         <!-- день не выбран -->
+         <div class="time-blocker"> 
             Выберите рабочий день специалиста
             <div class="example">
                <div class="not-working-color color-example"></div>
@@ -54,13 +59,18 @@
                <div class="choosen-day-color color-example"></div>
                <p> - выбранный день</p>
             </div>
+            <div class="example">
+               <div class="today-day-color color-example"></div>
+               <p> - сегодняшний день</p>
+            </div>
          </div>
       </div>
       <!-- карточка доктора-->
-      <div class="day-chosen" *ngIf="selectedDay != -1 && doctorShedule && doctorShedule[year] && doctorShedule[year][month] && doctorShedule[year][month][selectedDay+1]">
+         <!-- рабочий день выбран -->
+      <div class="day-chosen" *ngIf="selectedDay != -1 && daysOfWeekShedule[selectedDayOfWeek]">
          <div class="time-selection">
             <div class="time-row" 
-            [ngClass]="{'work-hour': doctorShedule && doctorShedule[selectedDayOfWeek], 
+            [ngClass]="{'work-hour': daysOfWeekShedule && daysOfWeekShedule[selectedDayOfWeek] && time >= daysOfWeekShedule[selectedDayOfWeek][0] && daysOfWeekShedule[selectedDayOfWeek][1] >= time, 
                         'selected-hour': selectedHourForLesson == time}"
             *ngFor="let time of workHoursArray; index as i" >
                <div class="time-row-inner" (click)="onClickTimeRow(time)">
@@ -87,6 +97,7 @@
       </div>
    </div>
    <!-- для страницы календаря (profile/calendar) -->
+      <!-- день не выбран -->
    <div class="time-aside time-aside-edit" *ngIf="isCalendarPage" [ngClass]="{'downloading': updatingdWorkHourData}">
       <div class="time-aside-doctor" *ngIf="userData.myData.userType == 'doctor'" [ngClass]="{'downloading': updatingdWorkHourData}">
          <div class="day-not-chosen-sign" *ngIf="selectedDay == -1">
@@ -104,9 +115,14 @@
                   <div class="choosen-day-color color-example"></div>
                   <p> - выбранный день</p>
                </div>
+               <div class="example">
+                  <div class="today-day-color color-example"></div>
+                  <p> - сегодняшний день</p>
+               </div>
             </div>
          </div>
          <!-- календарь доктора -->
+            <!-- рабочий день выбран -->
          <div class="time-of-day-chosen" *ngIf="selectedDay != -1">
             Мои часы работы (по Москве):
             <div class="time-selection">
@@ -124,7 +140,6 @@
                   </div>
                </div>
             </div>
-            *чтобы выбрать часы работы - выберите любую строчку
          </div>
       </div>
       <div class="time-aside-client" *ngIf="userData.myData.userType == 'client'">
@@ -145,10 +160,11 @@
    </div>
 </div>
 
-<div class="change-shedule-block">
-   <div class="debug" *ngIf="true">
-      <div class="">daysOfWeekShedule:_____{{daysOfWeekShedule | json}}</div>
+<div class="change-shedule-block" *ngIf="isCalendarPage">
+   <div class="debug" *ngIf="true && helper.DEBUG">
+      <div class="">daysOfWeekShedule:{{daysOfWeekShedule | json}}</div>
       <div class="">newDaysOfWeekShedule: {{newDaysOfWeekShedule | json}}</div>
+
    </div>
    <h3>Настройка моего графика</h3>
    <div class="days-selection-wrapper">

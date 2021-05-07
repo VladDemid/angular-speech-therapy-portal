@@ -39,7 +39,7 @@ export class LoginPopupComponent implements OnInit {
     })
 
     this.form = new FormGroup({
-      email: new FormControl("test5@gmail.com", [
+      email: new FormControl("test7@gmail.com", [
         Validators.required,
         Validators.email
       ]),

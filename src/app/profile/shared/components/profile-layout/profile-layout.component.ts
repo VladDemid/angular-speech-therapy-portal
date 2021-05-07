@@ -16,6 +16,8 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 export class ProfileLayoutComponent implements OnInit {
 
 
+  emailSendSuccess = -1
+
   constructor(
     public userData: UserData,
     private firebase: FirebaseService,
@@ -26,18 +28,29 @@ export class ProfileLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.userData.initialization()
-    
+    // this.UserTypeUpdate()
     this.fbUserObserver()
   }
 
   fbUserObserver() {
     this.firebase.userObserver()
 
-    let timerUserCheck = setInterval(() => { //чекать к.500мс пока не найдет юзера
+    let timerUserCheck = setInterval(() => { //чекать к.200мс пока не найдет юзера
       if (this.firebase.checkUser()) { //юзер найден
         clearInterval(timerUserCheck)
         const user = this.firebase.getUser()
-        if (user.emailVerified === false && !this.userData.myData.emailVerified) {
+
+        // user.updateProfile({
+        //   displayName: this.userData.myData.userType
+        // }).then(()=> {
+        //   console.log('userTypeUpdate Success')
+        // }).catch((err) => {
+        //   console.log('userTypeUpdate ERROR: ', err)
+        // })
+
+        // this.UserTypeUpdate(user)
+        //если юзер не подтвердил почту и в 
+        if (user.emailVerified === false && this.userData.myData.emailVerified == false) {
           this.popupService.emailVerifyPopup = true
           // this.activatedRoute.queryParams.subscribe((params: Params) => {
           //   if (params["oobCode"] ) {
@@ -56,14 +69,40 @@ export class ProfileLayoutComponent implements OnInit {
           //   } else if (!params["oobCode"] ) {
           //     console.log("отправка письма заблокирована");
           this.firebase.sendVerificationEmail()
-            .then(() => console.log("письмо отправлено"))
-            .catch((err) => console.log("ошибка отправления письма: ", err))
+            .then(() => {
+              this.emailSendSuccess = 1
+              console.log("письмо отправлено", this.emailSendSuccess)
+            })
+            .catch((err) => {
+              this.emailSendSuccess = 0
+              console.log("ошибка отправления письма: ", err, this.emailSendSuccess)
+
+          })
           //   }
           // })
+        } else if (user.emailVerified == true) { //после подтверждения
+          this.popupService.emailVerifyPopup = false
+          if(!this.userData.myData.emailVerified) {
+            const emailVerifyUpdate = {emailVerified: true}
+            
+            this.userData.sendMyDataChanges(emailVerifyUpdate)
+            .subscribe((resp) => {
+              console.log('верификация почты обновлена!', resp)
+              window.location.reload()
+            },
+            (err) => {
+              console.log('ошибка обновления верификации почты')
+            })
+          }
         }
       }
-    }, 500)
+    }, 200)
     // timerUserCheck
   }
+
+  // UserTypeUpdate(user) {
+  //   user.updateProfile({userType: this.userData.myData.userType})
+    
+  // }
 
 }

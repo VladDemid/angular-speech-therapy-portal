@@ -1,7 +1,5 @@
 @import "../../../../assets/styles/_variables"
 
-
-
 .calendar
    margin: 20px 0 100px
    display: flex
@@ -23,10 +21,6 @@
          .arrow
             position: relative
             display: inline-block
-            // padding: 5px
-            // margin: 0 5px
-            // background-color: $blue_common
-            // border: 1px solid #000
             cursor: pointer
             width: 18px
             height: 18px
@@ -65,9 +59,12 @@
             display: flex
             justify-content: flex-start
             flex-wrap: wrap
-            height: 30vw
+            // height: 30vw
+            // height: 380px
             .day
                width: calc(100% / 7 - 4px)
+               // height: 74px
+               height: 62px
                margin: 2px
                cursor: pointer
                user-select: none
@@ -91,20 +88,6 @@
             cursor: pointer
       &-sign
          text-align: center
-      // &:after
-      //    position: absolute
-      //    content: ''
-      //    bottom: 0px
-      //    height: 4px
-      //    background-color: $orange_common
-      //    // background: repeating-linear-gradient(-45deg,$orange_common,$orange_common 10px,transparent 10px,transparent 20px)
-      //    border-radius: 2px
-      //    width: 0%
-      //    // border-bottom: 0px solid #000
-      // &.downloading
-      //    &:after
-      //       width: 100%
-      //       transition: 0.6s width
       &-doctor
          position: relative
          &::after
@@ -122,15 +105,17 @@
                width: 100%
                transition: 2s width
       .time-row
-         border-bottom: 1px dashed #000
+         // border-bottom: 1px dashed #000
+         color: #ccc
          &:hover
             background-color: $orange_common
          &:nth-child(1)
-            border-top: 1px dashed #000
+            // border-top: 1px dashed #000
          &:nth-child(2n)
-            // background-color: #ccc
+            background-color: $grey_E6
          &.work-hour
             background-color: $orange_common
+            color: #000
          &.lesson-appointed
             background-color: $blue_light
          &.selected-hour
@@ -152,6 +137,7 @@
       .time-blocker
          position: relative
          .example
+            margin: 2px 6px
             p
                padding-left: 20px
             .color-example 
@@ -166,14 +152,13 @@
                background-color: #fff
             .choosen-day-color
                background-color: $orange_common
+            .today-day-color
+               border: 2px solid $orange_common
       .time-aside-client
          .lesson-card
             border: 1px solid #000
             margin-top: 5px
             padding: 3px
-// /deep/ .time-row
-//    &:nth-child(2)
-//       background-color: #ccc
 
             
 .change-shedule-block
@@ -305,23 +290,9 @@
       width: 100%
       background-color: rgba(251, 133, 1, 0.0)
 
-
 .debug-block
    margin: 30px
    p 
       max-width: 200px
       margin-top: 5px
       border-bottom: 1px dashed #ccc
-
-      // &::after
-      //       position: absolute
-      //       content: ''
-      //       bottom: 0px
-      //       height: 4px
-      //       background-color: $orange_common
-      //       border-radius: 2px
-      //       width: 0%
-      //    &.downloading
-      //       &:after
-      //          width: 100%
-      //          transition: 2s width

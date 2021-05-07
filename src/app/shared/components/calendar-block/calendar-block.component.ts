@@ -6,6 +6,8 @@ import { PopupService } from '../../services/popup.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserData } from 'src/app/profile/shared/services/user-data.service';
+import { DebugHelper } from 'protractor/built/debugger';
+import { DevelopHelp } from '../../services/develop-help.service';
 
 @Component({
   selector: 'app-calendar-block',
@@ -17,7 +19,7 @@ export class CalendarBlockComponent implements OnInit {
   @Input() inputDoctorInfo: UserDoctor;
   @Input() isCalendarPage: boolean;
   @Input() calendarUserId: string;
-  @Input() isInProfileModule: string;
+  @Input() isInProfileModule: boolean | string; // string|boolean
   
   currentHour = new Date().getHours()
   selectedDay = -1 //номер дня (-1\ 1-31)
@@ -51,7 +53,8 @@ export class CalendarBlockComponent implements OnInit {
     private popupService: PopupService,
     private router: Router,
     private auth: AuthService,
-    public userData: UserData
+    public userData: UserData,
+    public helper: DevelopHelp
   ) { }
 
   ngOnInit(): void {
@@ -64,21 +67,33 @@ export class CalendarBlockComponent implements OnInit {
     // }
   }
 
-  waitForInfo() { //ждать подгрузки инфы (в случае F5 на странице календаря например)
-    const infoFound = setInterval(() => {
-      if (this.userData.myData.name != "") {
-        clearInterval(infoFound)
-        this.downloadSheduleInfo()
-      }
-    }, 100)
+  waitForInfo() { //ждать подгрузки инфы себя (в профиле) (в случае F5 на странице календаря например)
+    if (this.isInProfileModule == true && this.userData.myData.name == "") {
+      const infoFound = setInterval(() => {
+        console.log('waiting for user info')
+        if (this.userData.myData.name != "") {
+          clearInterval(infoFound)
+          this.checkShedule()
+        }
+      }, 100)
+    } else this.checkShedule()
+    
+
   }
 
-  // writeShedules(shedule) {
-  //   console.log("изменение данных");
-  //   this.daysOfWeekShedule = shedule;
-  //   this.newDaysOfWeekShedule = shedule
-  //   this.testDaysOfWeekShedule = shedule
-  // }
+  checkShedule() {
+    if (!this.userData.myData.weeklySchedule) { //если нет расписания заполняем нуллами
+      this.daysOfWeekShedule = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null}
+      this.newDaysOfWeekShedule = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null}
+    } else { //заполняем расписание если есть
+      this.daysOfWeekShedule = JSON.parse(JSON.stringify(this.userData.myData.weeklySchedule))
+      for(let i = 0; i<=6; i++) { //для работы Object.assign(). заполнить пустые ключи 
+        if(!this.daysOfWeekShedule[i]) {this.daysOfWeekShedule[i] = null}
+      }
+      // Object.assign(this.newDaysOfWeekShedule, this.daysOfWeekShedule)
+      this.newDaysOfWeekShedule = JSON.parse(JSON.stringify(this.daysOfWeekShedule))
+    }
+  }
 
   downloadSheduleInfo() { //скан рабочих часов + занятых уроков 
     if ((this.userData.myData.userType == 'doctor' && this.isCalendarPage) || !this.isCalendarPage) {
@@ -87,11 +102,18 @@ export class CalendarBlockComponent implements OnInit {
         console.log("расписание доктора скачано: ", resp);
         // this.writeShedules(resp)
         // Object.assign(this.daysOfWeekShedule, resp)
-        this.daysOfWeekShedule = resp;
-        for(let i = 0; i<=6; i++) { //для работы Object.assign(). заполнить пустые ключи 
-          if(!this.daysOfWeekShedule[i]) {this.daysOfWeekShedule[i] = null}
+        // this.daysOfWeekShedule = resp;
+        // Object.assign(this.daysOfWeekShedule, resp)
+        this.daysOfWeekShedule = JSON.parse(JSON.stringify(resp))
+        if (this.daysOfWeekShedule != null) { //если доктор заполнил расписание 
+          for(let i = 0; i<=6; i++) { //для работы Object.assign(). заполнить пустые ключи 
+            if(!this.daysOfWeekShedule[i]) {this.daysOfWeekShedule[i] = null}
+          }
+          // Object.assign(this.newDaysOfWeekShedule, this.daysOfWeekShedule)
+          this.newDaysOfWeekShedule = JSON.parse(JSON.stringify(this.daysOfWeekShedule))
+        } else {
+          this.daysOfWeekShedule = {1: null, 2: null, 3:null, 4:null, 5: null, 6: null, 7: null}
         }
-        Object.assign(this.newDaysOfWeekShedule, this.daysOfWeekShedule)
       },
       (err) => {
         console.log("ошибка при скачивании расписании доктора: ", err);
@@ -204,8 +226,9 @@ export class CalendarBlockComponent implements OnInit {
       (err) => {
         console.log("ошибка при изменении рабочего часа ", err);
       })
-    } else if (!this.isCalendarPage) {       //для страницы просмотра и записи к доктору например
-      if (this.doctorShedule[this.year][this.month][this.selectedDay+1][lessonTime]) 
+      //для страницы просмотра и записи к доктору
+    } else if (!this.isCalendarPage) {       
+      if (this.daysOfWeekShedule[this.selectedDayOfWeek]) 
       this.selectedHourForLesson = lessonTime
     }
   }
@@ -225,10 +248,26 @@ export class CalendarBlockComponent implements OnInit {
   changeActiveDaysOfWeek(index) {
     if (this.newDaysOfWeekShedule[index]) { // если день записан, то удалить
       delete this.newDaysOfWeekShedule[index]
-    } else this.newDaysOfWeekShedule[index] = [this.workStart, this.workEnd]
+    } else {
+      if (this.daysOfWeekShedule[index]) {
+        this.newDaysOfWeekShedule[index] = this.daysOfWeekShedule[index]
+      } else {
+        this.newDaysOfWeekShedule[index] = [this.workStart, this.workEnd]
+      }
+    }
 
     // this.newDaysOfWeekShedule[index] = [Math.floor(Math.random()*10)+10,21]
     
+  }
+
+  test() {
+    this.firebase.getDoctorLessonsTest( this.calendarUserId)
+    .subscribe((resp) => {
+      console.log(resp)
+    },
+    (err) => {
+      console.log('error test')
+    })
   }
 
   makeAnAppointment(year, month, day, hour) { 
@@ -253,7 +292,7 @@ export class CalendarBlockComponent implements OnInit {
 
       const clientData = {
         userType: "client",
-        id: localStorage.getItem("user-Id"),
+        clientId: localStorage.getItem("user-Id"),
         name: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
         description: "описание проблемы...",
       }
@@ -287,21 +326,30 @@ export class CalendarBlockComponent implements OnInit {
     }
     // this.newDaysOfWeekShedule[day][0] < this.newDaysOfWeekShedule[day][1]
     if (workPeriodCheck && x && x + value >= this.workStart && x + value <= this.workEnd) {
-      this.newDaysOfWeekShedule[day][side] = this.newDaysOfWeekShedule[day][side] + value;
+      this.newDaysOfWeekShedule[day][side] += value;
+      // console.log(this.daysOfWeekShedule[day][side], this.newDaysOfWeekShedule[day][side])
     } else {console.log(x, x + value >= this.workStart, x + value <= this.workEnd)} 
     // console.log(x + value >= this.workEnd);
   }
 
   sendNewShedule() {
     console.log("записываю расписание", this.calendarUserId);
-    this.firebase.changeShedule(this.calendarUserId, this.newDaysOfWeekShedule)
+    // this.firebase.changeShedule(this.calendarUserId, this.newDaysOfWeekShedule)
+    //   .subscribe((resp) => {
+    //     // console.log("все пользователи: ", resp);
+    //     console.log("Расписание изменено");
+    //     this.updateLocalsheduleData() ///!!!!!!!!!!!!!!!!!!!!!!
+    //   },
+    //   (err) => {
+    //     console.log("ошибка при изменении расписания доктора ", err);
+    //   })
+    const newShedule = {weeklySchedule: this.newDaysOfWeekShedule}
+    this.userData.sendMyDataChanges(newShedule)
       .subscribe((resp) => {
-        // console.log("все пользователи: ", resp);
-        console.log("Расписание изменено");
-        this.updateLocalsheduleData() ///!!!!!!!!!!!!!!!!!!!!!!
+        console.log('расписание изменено: ', resp)
       },
       (err) => {
-        console.log("ошибка при изменении расписания доктора ", err);
+        console.log('Ошибка изменения расписания: ', err)
       })
   }
 
