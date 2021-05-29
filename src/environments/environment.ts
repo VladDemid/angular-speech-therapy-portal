@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
-  FbDbUrl: "https://inclusive-test.firebaseio.com/"
+  FbDbUrl: "https://inclusive-test.firebaseio.com/",
+  defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
 };
 
 export const firebaseConfig = {
@@ -16,6 +17,27 @@ export const firebaseConfig = {
   storageBucket: "inclusive-test.appspot.com",
   messagingSenderId: "441293072662",
   appId: "1:441293072662:web:679ec4fe7378d9b9c04837"
+}
+
+export const telegramConfig = {
+  botToken: "1872651080:AAEw6lNr2WaRKXo_00Zn2WoXnxxODnUMIqI",
+  logobotChatId: "-554014625"
+}
+
+export const zoomConfig = {
+  signatureEndpoint: 'https://logogo.herokuapp.com/',
+  apiKey: 'sSYzyR3TSBWM_EGy7z3qcw',
+  meetingNumber: "9560652469",
+  password: '3UFsKR',
+  role: "0",
+  leaveUrl: 'http://localhost:4200/profile/calendar',
+  userName: 'webClient',
+  userEmail: 'test@gmail.com',
+  apiSecret: 'G8FrZOqyODmzmW904hlkN93dHtiaUOlYu7IY',
+  JWTToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6InNTWXp5UjNUU0JXTV9FR3k3ejNxY3ciLCJleHAiOjE2MjExMDEyMjQsImlhdCI6MTYyMTA5NTgzOH0.1WnrB8C-Nsd8WpK7yhGlAKCCnPRWOMe7-CSCNoPcfFI',
+  allTimeMeetingLink: "https://us04web.zoom.us/j/9560652469?pwd=ODdONGhHYzkwanRCaUs4WS9YNW5qdz09",
+  allTimeMeetingId: "9560652469",
+  allTimeMeetingPass: "3UFsKR"
 }
 
 /*

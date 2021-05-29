@@ -4,8 +4,8 @@ import { environment } from '../../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class DevelopHelp {
    
-   DEBUG = true
-
+   DEBUG = !environment.production
+   environmentVar = environment.production
    
    
    
@@ -14,10 +14,6 @@ export class DevelopHelp {
    
    ngOnInit(): void {
       
-      if (environment.production == true) {
-         this.DEBUG = false
-         //   enableProdMode();
-      }
    }
  
 

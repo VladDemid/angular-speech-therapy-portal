@@ -22,6 +22,6 @@ const routes: Routes = [
     scrollOffset: [0, 25],
     preloadingStrategy: PreloadAllModules
   })],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

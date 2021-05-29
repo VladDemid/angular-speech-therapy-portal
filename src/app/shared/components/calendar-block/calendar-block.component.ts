@@ -8,6 +8,8 @@ import { AuthService } from '../../services/auth.service';
 import { UserData } from 'src/app/profile/shared/services/user-data.service';
 import { DebugHelper } from 'protractor/built/debugger';
 import { DevelopHelp } from '../../services/develop-help.service';
+import { zoomConfig } from 'src/environments/environment';
+import { TelegramBotService } from '../../services/telegram-bot.service';
 
 @Component({
   selector: 'app-calendar-block',
@@ -50,11 +52,12 @@ export class CalendarBlockComponent implements OnInit {
 
   constructor(
     private firebase: FirebaseService,
-    private popupService: PopupService,
+    public popupService: PopupService,
     private router: Router,
     private auth: AuthService,
     public userData: UserData,
-    public helper: DevelopHelp
+    public helper: DevelopHelp,
+    private telegram: TelegramBotService
   ) { }
 
   ngOnInit(): void {
@@ -205,7 +208,7 @@ export class CalendarBlockComponent implements OnInit {
   }
 
   onClickTimeRow(lessonTime) { //(устарело) почасовоее изменение расписания
-    // console.log(lessonTime);
+    console.log(lessonTime);
     if (this.isCalendarPage) {         //для страницы редактирования своего календаря
       let hourSettings = {workTime: true, isEngaged: false}
       if (this.doctorShedule && //если час уже настроен (включен), то выключить его
@@ -228,7 +231,7 @@ export class CalendarBlockComponent implements OnInit {
       })
       //для страницы просмотра и записи к доктору
     } else if (!this.isCalendarPage) {       
-      if (this.daysOfWeekShedule[this.selectedDayOfWeek]) 
+      if (this.inputDoctorInfo.weeklySchedule[this.selectedDayOfWeek]) 
       this.selectedHourForLesson = lessonTime
     }
   }
@@ -260,15 +263,6 @@ export class CalendarBlockComponent implements OnInit {
     
   }
 
-  test() {
-    this.firebase.getDoctorLessonsTest( this.calendarUserId)
-    .subscribe((resp) => {
-      console.log(resp)
-    },
-    (err) => {
-      console.log('error test')
-    })
-  }
 
   makeAnAppointment(year, month, day, hour) { 
     //записывать если пользователь авторизирован ,является клиентом и час не занят (пустое расписание или конкретно свободный час)
@@ -276,30 +270,71 @@ export class CalendarBlockComponent implements OnInit {
     && (!this.doctorsLessons || !this.doctorsLessons[year] || !this.doctorsLessons[year][month] 
         || !this.doctorsLessons[year][month][day] || !this.doctorsLessons[year][month][day][hour] )) {
 
-      const timeData = {
-        year: year,
-        month: month,
-        day: day,
-        hour: hour
+      // const timeData = {
+      //   year: year,
+      //   month: month,
+      //   day: day,
+      //   hour: hour
+      // }
+
+      // const doctorData = {
+      //   userType: "doctor",
+      //   id: this.calendarUserId,
+      //   name: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
+      //   description: "описание проблемы...",
+      // }
+
+      // const clientData = {
+      //   userType: "client",
+      //   clientId: localStorage.getItem("user-Id"),
+      //   name: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
+      //   description: "описание проблемы...",
+      // }
+
+      const eventLesson = {
+        date: {
+          year: year,
+          month: month,
+          day: day
+        },
+        time: hour,
+        patientId: localStorage.getItem("user-Id"),
+        patientName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
+        problemDescription: "описание проблемы...",
+        doctorId: this.calendarUserId,
+        doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
+        doctorsConfirmation: false,
+        zoom:{ 
+          link: zoomConfig.allTimeMeetingLink,
+          password: zoomConfig.allTimeMeetingPass,
+          id: zoomConfig.allTimeMeetingId
+        }
       }
 
-      const doctorData = {
-        userType: "doctor",
-        id: this.calendarUserId,
-        name: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
-        description: "описание проблемы...",
-      }
+      const eventId = `${eventLesson.date.year}_${eventLesson.date.month}_${eventLesson.date.day}_${eventLesson.time}_${eventLesson.doctorId}`
 
-      const clientData = {
-        userType: "client",
-        clientId: localStorage.getItem("user-Id"),
-        name: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
-        description: "описание проблемы...",
-      }
+      this.firebase.checkLessonEngage(eventId)
+      .subscribe((resp) => {
+        if (resp == null) { //проверка на занятость часа
+          this.firebase.makeALesson(eventLesson, eventId) 
+            .subscribe((resp)=>{
+              console.log("клиент записан: ", resp);
+              this.telegram.sendNewLessonMessage(eventLesson)
+              //найти уроки и записать в себя
+              this.uploadNewEvent(eventLesson, eventId)
+            },
+            (err) => {
+              console.log("ошибка записи к доктору (запись информации доктору): ", err);
+            })
+        } else {
+          console.log("данный час занят")
+        }
+      },
+      (err) => {
+        console.log("не удалось проверить данный час на занятость", err)
+      })
 
-      
-      this.firebase.makeALesson(timeData, doctorData, clientData) 
-      
+
       // console.log(`запись: \n клиент: ${year} ${month} ${day} ${hour} \n ${clientData.name} \n ${clientData.id} \n доктор:`);
     } else if (!this.auth.isAuthenticated() && !this.doctorsLessons[year][month][day][hour]) {
       console.log("надо залогиниться!");
@@ -314,6 +349,24 @@ export class CalendarBlockComponent implements OnInit {
     } else if (this.doctorsLessons[year][month][day][hour].name) {
       this.doctorAlertSign = "Это время уже занято. Пожалуйста выберите другой час."
     }
+  }
+
+
+
+  uploadNewEvent(eventLesson, eventId) {
+    let myNewLessonData = {}
+    myNewLessonData[eventId] = JSON.parse(JSON.stringify(eventLesson))
+    delete myNewLessonData[eventId].daysLeft
+    console.log(myNewLessonData)
+    // myNewLessonData.lessons.lessonId = eventId
+    this.userData.sendMyLessonsDataChanges(myNewLessonData)
+      .subscribe((resp) => {
+        console.log("урок добавлен в ячейку пользователя", resp)
+        
+      },
+      (err) => {
+        console.log("Ошибка добавления в ячейку пользователя", err)
+      })
   }
 
   changeWorkHour(value, day, side) {
@@ -356,7 +409,24 @@ export class CalendarBlockComponent implements OnInit {
   cancelNewShedule() {
     console.log('123')
     Object.assign(this.newDaysOfWeekShedule, this.daysOfWeekShedule)
+  }
+
+  unselectDay() {
+    this.selectedDay = -1
+  }
+
+  confirmEvent(eventName) {
+    this.userData.myData.events[eventName].doctorsConfirmation = true
+    console.log(this.userData.myData.events[eventName])
     
+    this.uploadNewEvent(this.userData.myData.events[eventName], eventName)
+    this.firebase.updateEvent(this.userData.myData.events[eventName], eventName)
+      .subscribe((resp) => {
+        console.log(resp)
+      },
+      (err) => {
+        console.log("ОШИБКА подтверждения занятия: ", err)
+      })
   }
 
 }

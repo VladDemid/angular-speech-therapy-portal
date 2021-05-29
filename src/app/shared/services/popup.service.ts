@@ -7,11 +7,13 @@ export class PopupService {
   imgName = ""
   imgUrl = "https://storiavoce.com/wp-content/plugins/lightbox/images/No-image-found.jpg"
   imgPopup = false
+  eventDetails = { "date": { "day": 0, "month": 0, "year": 0 }, "doctorId": "", "doctorName": "0", "doctorsConfirmation": false, "patientId": "", "patientName": "", "problemDescription": "описание проблемы...", "time": 0, "zoom": { "id": "", "link": "", "password": "" }, "daysLeft": 0 }
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
   homePageFbSecurityPopup = false
   registrTermsOfUsePopup = false
   emailVerifyPopup = false
+  eventDetailsPopup = false
 
   constructor() { }
 
@@ -45,6 +47,10 @@ export class PopupService {
 
   toggleEmailVerifyPopup() {
     this.emailVerifyPopup = !this.emailVerifyPopup
+  }
+
+  toggleEventDetailsPopup() {
+    this.eventDetailsPopup = !this.eventDetailsPopup
   }
 
   toggleLoginAndPass() {

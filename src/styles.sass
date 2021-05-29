@@ -1,9 +1,19 @@
+
 @import "assets/styles/normlize.min"
 @import "assets/styles/light-reset.min"
 @import "assets/styles/variables"
 @import "assets/styles/forms"
 @import "assets/styles/popups"
 
+div
+   &#zmmtg-root
+      display: none
+      z-index: 10
+      // width: 50% !important
+      // height: 50% !important
+      // background-color: rgba(0,0,0,.2) !important
+   &#aria-notify-area
+      // display: none
 
 *
    font-family: 'Montserrat', sans-serif
@@ -12,6 +22,12 @@
 
 body 
    position: relative
+   overflow: auto !important // zoom переопределяет стили в js файле O_o
+
+html
+   overflow: auto !important
+
+
 
 a
    color: #fff
@@ -159,7 +175,22 @@ h2
             margin-left: 10px
             padding-top: 5px
 
-button
+.loading
+   &::after
+      content: ''
+      position: absolute
+      transition: 2s
+      bottom: 0px
+      background-color: rgba(251, 133, 1, 0.5)
+      left: 0px
+      height: 100%
+      border-radius: 2px
+      width:0%
+      border-radius: 22px
+      // border: 3px solid #000
+      // animation: updating 1.5s 1 ease
+
+button, .btn
    // background-color: $orange_common
    // color: transparent
    // background-clip: text
@@ -191,12 +222,16 @@ button
       &:hover
          background-color: #fff
    
-// .popup
-//    position: absolute
-//    padding-top: 30px
-//    width: 100%
-//    .container
-//       position: relative
-//       max-width: 1130px
-//       padding: 0
-   
+@keyframes updating
+   0%
+      width: 15%
+      background-color: rgba(251, 133, 1, 0.0)
+   // 30%
+   //    width: 25%
+   //    background-color: rgba(251, 133, 1, 0.5)
+   80%
+      width: 100%
+      background-color: rgba(251, 133, 1, 0.7)
+   100%
+      width: 100%
+      background-color: rgba(251, 133, 1, 0.0)   

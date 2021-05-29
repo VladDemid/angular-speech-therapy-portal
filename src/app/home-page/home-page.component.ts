@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { PopupService } from '../shared/services/popup.service';
 import { FirebaseService } from '../shared/services/firebase.service';
 
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { ActivatedRoute, Params } from '@angular/router';
+import { DevelopHelp } from '../shared/services/develop-help.service';
+import { ZoomService } from '../shared/services/zoom.service';
+import { zoomConfig } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
@@ -15,10 +20,12 @@ export class HomePageComponent implements OnInit {
   doctors = []
 
 
+
   constructor(
     public popupService: PopupService,
     private firebase: FirebaseService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public helper: DevelopHelp,
     ) { }
 
   ngOnInit(): void {
@@ -67,10 +74,8 @@ export class HomePageComponent implements OnInit {
       }
     }
     console.log("доктора: ", this.doctors);
-    
-
   }
 
-  
+
   
 }

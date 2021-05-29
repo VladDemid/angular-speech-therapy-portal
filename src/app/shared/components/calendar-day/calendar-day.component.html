@@ -2,10 +2,8 @@
 [ngClass]="{'today': (todayDay == dayIndex && month == currentMonth && year == currentYear), 
             'work-day': (isCalendarPage && userData.myData.userType == 'client') || (daysOfWeekShedule && daysOfWeekShedule[thisDayOfWeek] ), 
             'day-choosen': selectedDay == dayIndex - 1, 
-            'lesson-appointed': (isCalendarPage && doctorsLessons && doctorsLessons[year] && doctorsLessons[year][month] && doctorsLessons[year][month][dayIndex]) ||
-                                (isCalendarPage && userData.myData.userType == 'client' && userData.myData.lessons && userData.myData.lessons[year] && userData.myData.lessons[year][month] && userData.myData.lessons[year][month][dayIndex]), 
-            'lesson-appointed-past': (isCalendarPage && doctorsLessons && doctorsLessons[year] && doctorsLessons[year][month] && doctorsLessons[year][month][dayIndex] && todayDay > dayIndex ) ||
-                                     (isCalendarPage && userData.myData.userType == 'client' && userData.myData.lessons && userData.myData.lessons[year] && userData.myData.lessons[year][month] && userData.myData.lessons[year][month][dayIndex] && todayDay > dayIndex)
+            'lesson': (isCalendarPage && userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][dayIndex]), 
+            'lesson-old': (isCalendarPage && userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][dayIndex] && todayDay > dayIndex )
             }" >
    <span>{{dayIndex}}</span>
    <!-- <div class="help">

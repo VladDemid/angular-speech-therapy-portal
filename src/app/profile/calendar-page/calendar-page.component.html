@@ -1,3 +1,7 @@
+<div class="event-details-popup" *ngIf="popupService.eventDetailsPopup">
+   <app-event-details-popup></app-event-details-popup>
+</div>
+
 <div class="calendar-page">
    <div class="container">
       <div class="breadcrumb" [routerLink]="['/profile']">
@@ -5,15 +9,23 @@
       </div>
       <h2>Календарь</h2>
 
+
       <div class="user-type-icon">
          Вы вошли как 
          <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥  {{myId | slice:0:5}}</span>
-         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠</span>
+         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}}</span>
+         <!-- <button (click)="testMessage()">telegram</button>
+         <button (click)="testZoom()">Zoom</button>
+         <button (click)="createMeeting()">Zoom создать</button>
+         <button (click)="getUserId()">Zoom ID</button> -->
+         <!-- <button (click)="getDate()">Date</button> -->
+         
       </div>
       
       <div class="calendar-wrapper">
          <app-calendar-block [inputDoctorInfo]="userData.myData" [isCalendarPage]="true" [calendarUserId]="myId" [isInProfileModule]="true"></app-calendar-block>
       </div>
+
 
       <!-- <div class="change-shedule-block">
          <h3>Настройка моего графика</h3>

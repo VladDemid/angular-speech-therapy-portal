@@ -5,15 +5,23 @@ import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { specializationsList } from 'src/app/shared/lists';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.sass']
-})
-export class EditProfileComponent implements OnInit {
 
+})
+
+
+export class EditProfileComponent implements OnInit {
+  
+  uploadingSertificates = false
+  newFilesToUpload = 0
+  uploadingAvatar = false
+  defaultAvatar = environment.defaultAvatarUrl
   doubleClickPrevent = false
   doctorForm: FormGroup
   clientForm: FormGroup
@@ -155,8 +163,9 @@ export class EditProfileComponent implements OnInit {
     
   }
   
-  test() {
-    const firstSpecializaionRadio = document.querySelector(".specializaion-radio")
+  changeSertificatesCount() {
+    const files = (<HTMLInputElement>document.querySelector('#newSertificates')).files
+    this.newFilesToUpload = files.length
   }
 
   selectMainSpecialization(mainSpecialization) {
@@ -309,7 +318,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   async addNewSertificates() {
+    this.uploadingSertificates = true
     const files = (<HTMLInputElement>document.querySelector('#newSertificates')).files
+    this.newFilesToUpload = files.length
     console.log("файлы для отправки: ", files);
     
     for (let file in files) {
@@ -326,6 +337,7 @@ export class EditProfileComponent implements OnInit {
       }
     }
     console.log("все новые сертификаты загружены")
+    this.uploadingSertificates = false
     this.userData.getSertificates();
     (<HTMLFormElement>document.getElementById('newSertificatesForm')).reset()
     
@@ -333,14 +345,17 @@ export class EditProfileComponent implements OnInit {
 
   async updateAvatar() {
     console.log("updating avatar");
+    this.uploadingAvatar = true
     const file = (<HTMLInputElement>document.querySelector('#avatar-upload-button')).files[0]
     console.log(file);
     await this.firebase.uploadAvatar(file)
       .then(() => {
         console.log(`аватарка загружена...`);
+        this.uploadingAvatar = false
         this.setAvatarUrl()
       })
       .catch((err) => {
+        this.uploadingAvatar = false
         console.log("ошибка при загрузке аватарки: ", err);
       })
   }
@@ -382,6 +397,8 @@ export class EditProfileComponent implements OnInit {
       }
     }, 500)
   }
+
+  
 
   
 

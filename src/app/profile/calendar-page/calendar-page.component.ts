@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { TelegramBotService } from 'src/app/shared/services/telegram-bot.service';
+import { ZoomService } from 'src/app/shared/services/zoom.service';
 import { UserData } from '../shared/services/user-data.service';
 
 @Component({
@@ -19,8 +24,22 @@ export class CalendarPageComponent implements OnInit {
   myDuration: number
   myId: string //для инжект в календарь
 
+  // signatureEndpoint = 'https://logogo.herokuapp.com/'
+  // apiKey = 'sSYzyR3TSBWM_EGy7z3qcw'
+  // meetingNumber = '75106540621'
+  // role = 0
+  // leaveUrl = 'http://localhost:4200'
+  // userName = 'Angular'
+  // userEmail = 'test@gmail.com'
+  // passWord = 'XW07fd'
+
   constructor(
-    public userData: UserData
+    public userData: UserData,
+    private telegram: TelegramBotService,
+    private zoom: ZoomService,
+    public httpClient: HttpClient,
+    public popupService: PopupService,
+    @Inject(DOCUMENT) document
     
   ) { }
 
@@ -29,7 +48,29 @@ export class CalendarPageComponent implements OnInit {
   }
 
 
+  testMessage() {
+    // const userName = `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`
+    // this.telegram.sendNewLessonMessage(this.myId, userName)
+  }
 
+  // getDate() {
+  //   console.log(new Date())
+  // }
+  
+  
+  testZoom() {
+    this.zoom.startZoom()
+  }
+
+  createMeeting() {
+    this.zoom.createMeeting()
+  }
+
+  getUserId() {
+    this.zoom.getUserId()
+  }
+
+  
   
 
   flagDayOfWeek(i) {

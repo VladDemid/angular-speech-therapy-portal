@@ -1,0 +1,33 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleEventDetailsPopup()"></div>
+   <div class="popup">
+
+      <div class="popup-container">
+         <div class="date">
+            <span class="days-left" *ngIf="popupService.eventDetails.daysLeft > 0">
+               Через {{popupService.eventDetails.daysLeft}} дней,
+            </span>
+            <span *ngIf="popupService.eventDetails.daysLeft == 0">
+               Сегодня,
+            </span>
+            {{popupService.eventDetails.date.day}} {{monthsNamesWhomCase[popupService.eventDetails.date.month]}}</div>
+         <div class="time">Время: {{popupService.eventDetails.time | timeRow}} (мск)</div>
+         <div class="doctor-name">Специалист: {{popupService.eventDetails.doctorName}}</div>
+         <div class="client-name">Специалист: {{popupService.eventDetails.patientName}}</div>
+         <div class="problem">Проблема: {{popupService.eventDetails.problemDescription}}</div>
+         <div class="zoom">
+            <h2>Вход в <span class="zoom-icon">Zoom</span></h2>
+            <div class="auto">
+               <h3>Автоматически:</h3>
+               <a class="app-link" [href]="popupService.eventDetails.zoom.link">войти через приложение</a>
+               <a class="web-zoom" (click)="goToZoom(popupService.eventDetails.zoom.id, popupService.eventDetails.zoom.password, popupService.eventDetails.doctorName, popupService.eventDetails.patientName)">войти через сайт</a>
+            </div>
+            <div class="manual">
+               <h3>Вручную:</h3>
+               <div class="meeting-credentials">ID: <span (click)="copyId(popupService.eventDetails.zoom.id)">{{popupService.eventDetails.zoom.id}}</span></div>
+               <div class="meeting-credentials">Пароль: <span (click)="copyPass(popupService.eventDetails.zoom.password)">{{popupService.eventDetails.zoom.password}}</span> </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

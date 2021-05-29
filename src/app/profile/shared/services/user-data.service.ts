@@ -41,6 +41,11 @@ export class UserData {
             this.changeMyLocalData(response)
             if (this.myData.userType === "doctor") {
                this.getSertificates()
+               this.checkMyLessons()
+            } else if (this.myData.userType === "client") {
+               if (this.myData.events) {
+                  this.makeDatesOfEventsObject()
+               }
             }
          },
          (err) => {
@@ -50,18 +55,87 @@ export class UserData {
 
 
    getMyData() {
-      // if (!userType) {
-      //    this.http.get(`${environment.FbDbUrl}/users.json`)
-      //    .subscribe((resp) => {
-      //       console.log("!!!!!!!!!!!!!",resp)
-      //    },
-      //    (err) => {
-      //       console.log('!!!!!!!!!!!!ошибка скачивания инфы по пользователю', err)
-      //    })
-      // } 
-
-      // this.http.get(`${environment.FbDbUrl}/users/doctors/${localStorage.getItem("user-Id")}.json`)
       return this.http.get(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`)
+   }
+   
+   checkMyLessons() {
+      this.firebase.getAllLessons()
+         .subscribe((resp) => {
+            // console.log("все ивенты тут: ",resp)
+            // console.log("!!!!!!",resp )
+            const allLessonsArray = Object.entries(resp) //делаем массив всех уроков [[id, data],[id, data]],...
+            const myLessonsIdsFromServer = allLessonsArray.filter((item) => {
+               const lessonIdParseArray = item[0].split("_"); //разделяем каждый Id урока на слова
+               //*оставить если id пользователя == последней части id ивента
+               return localStorage.getItem("user-Id") == lessonIdParseArray[lessonIdParseArray.length - 1]
+            })
+            // console.log(myLessonsIdsFromServer)
+            //* проверка данных пользователя на наличие этих уроков в себе
+            let newLessonsFound = false 
+            let newLessonsToSend = {}
+            if (!this.myData.events && myLessonsIdsFromServer) {
+               this.myData.events = {} //*проверка, есть ли объект lessons в юзере
+               newLessonsFound = true
+               console.log("не было уроков в данных")
+            }
+            for(let lessonId of myLessonsIdsFromServer) {
+               if (!this.myData.events[lessonId[0]]) { //*проверка, по каждому уроку
+                  this.myData.events[lessonId[0]] = resp[lessonId[0]]
+                  newLessonsToSend[lessonId[0]] = resp[lessonId[0]]
+                  newLessonsFound = true
+                  console.log("найден новый урок", this.myData.events[lessonId[0]])
+               }
+            }
+            if(newLessonsFound) {
+               this.sendMyLessonsDataChanges(newLessonsToSend)
+               .subscribe((resp) => {
+                  console.log("новые уроки найдены и записаны в ячейку", resp)
+               },
+               (err) => {
+                  console.log("Ошибка записи новых уроков: ", err)
+               })
+            } else {
+               console.log("новых уроков не обнаружено")
+            }
+            this.makeDatesOfEventsObject()
+            
+         },
+         (err) => {
+            console.log("ошибка. не удалось найти ивенты", err)
+         })
+   }
+
+   makeDatesOfEventsObject() {
+      this.myData.eventsDates = {}
+      // console.log(Object.assign(this.myData.events))
+      // console.log(this.myData.events)
+      let lessonsDates = {} 
+      for(let lessonObj in this.myData.events) {
+         const thisDate = this.myData.events[lessonObj].date
+         const thistime = this.myData.events[lessonObj].time
+         const newLessonTime = {
+            [thisDate.year]: { //= создание объекта year-month-day-time
+               [thisDate.month]: {
+                  [thisDate.day]: {
+                     [thistime]: {}
+                  }
+               }
+            }
+         }
+         //= слияние нового объекта m(newLessonTime) и основного (lessonsDates)
+         if (!lessonsDates[thisDate.year]) lessonsDates[thisDate.year] = {}
+         if (!lessonsDates[thisDate.year][thisDate.month]) lessonsDates[thisDate.year][thisDate.month] = {}
+         if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day]) lessonsDates[thisDate.year][thisDate.month][thisDate.day] = {}
+         if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime]) lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime] = {
+            patientName: this.myData.events[lessonObj].patientName,
+            doctorName: this.myData.events[lessonObj].doctorName,
+            problemDescription: this.myData.events[lessonObj].problemDescription
+         }
+      }
+      this.myData.eventsDates = lessonsDates
+      // console.log("!!!!!",this.myData)
+      // this.myData.eventsDates[]
+      // console.log(this.myData)
    }
 
    getSertificates() {
@@ -102,6 +176,7 @@ export class UserData {
       this.myData = userData
    }
 
+
    // checkEmailVerify() {
    //    // console.log(this.myData.emailVerified);
    //    if (this.myData.emailVerified === undefined) {
@@ -129,6 +204,13 @@ export class UserData {
       // if (userType == "client") firebaseUserType = "patients"
       // else firebaseUserType = "doctors"
       return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`, newUserData)
+   }
+
+   sendMyLessonsDataChanges(newLessonData) {
+      // let firebaseUserType
+      // if (userType == "client") firebaseUserType = "patients"
+      // else firebaseUserType = "doctors"
+      return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json`, newLessonData)
    }
 
 

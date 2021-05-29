@@ -18,14 +18,14 @@ export class MenuComponent implements OnInit {
       name: "Календарь",
       link: "calendar",
     },
-    {
-      name: "Видеочат",
-      link: "videochat",
-    },
-    {
-      name: "Записи консультаций",
-      link: "records",
-    },
+    // {
+    //   name: "Видеочат",
+    //   link: "videochat",
+    // },
+    // {
+    //   name: "Записи консультаций",
+    //   link: "records",
+    // },
     // {
       //   name: "Записи консультаций",
       //   link: "multimedia",

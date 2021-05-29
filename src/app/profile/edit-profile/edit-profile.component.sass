@@ -7,72 +7,105 @@ form
    // flex-direction: row
    // justify-content: start
    .photo-update
+      display: flex
+      justify-content: center
+      align-items: center
+      flex-direction: column
       position: absolute
-      right: -0px
-      width: 222px
+      right: 0px
+      width: 220px
       min-height: 100px
       // order: 1
       // width: 250px
       // background-color: #ccc
-      img
-         border: 2px solid $orange_common
-         border-radius: 4px
-         display: block
-         width: 90%
-         margin: 20px auto 60px
-
-      .input-avatar-wrapper
+      // border: 1px solid #000
+      .profile-photo
+         width: 100%
+         img
+            border: 2px solid $orange_common
+            border-radius: 9px
+            display: block
+            width: 90%
+            margin: 10px auto 
+      .avatar-buttons-wrapper
+         // border: 1px solid #000
          position: relative
-         display: block
-         margin: -40px auto 0
-         border-radius: 50px
-         border: 2px solid $orange_common
-         display: block
-         margin-bottom: 10px
-         // padding: 10px
-         width: 175px
-         height: 45px
-         text-align: center
-         cursor: pointer
-         transition: all 0.2s
-         &:hover
-            border: 2px solid $button_hover
-            background-color: $button_hover
-            outline: none
-         &:active
-            border: 2px solid $button_active
-            background-color: $button_active
-            outline: none
-            transition: all 0.1s
-         &:focus
-            outline: none
-               
-         span
+         height: 70px
+         user-select: none
+         .upload
+            position: absolute
+            top: 50%
+            left: 50% 
+            transform: translate(-50%, -50%)
+            &::after
+               content: ''
+            &.loading
+               &::after
+                  // width: 20px
+                  animation: updating 1.5s 1 ease
+               // border: 3px solid #000
+            
+         .input-avatar-label
             position: absolute
             display: block
-            text-align: center
+            top: 50%
+            left: 50% 
+            transform: translate(-50%, -50%)
+            // margin: -40px auto 0
+            border-radius: 50px
+            // border: 2px solid $orange_common
+            display: block
+            margin-bottom: 10px
+            // padding: 10px
             width: 175px
-            left: -2px
-            top: calc(50% - 10px)
-            height: 20px
-            font-weight: 500
-            max-height: 100% 
-            overflow: hidden
-            &.success
-               color: $button_active
+            height: 45px
+            text-align: center
+            cursor: pointer
+            transition: all 0.2s
+            &:hover
+               // border: 2px solid $button_hover
+               // background-color: $button_hover
+               outline: none
+            &:active
+               border: 2px solid $button_active
+               background-color: $button_active
+               outline: none
+               transition: all 0.1s
+            &:focus
+               outline: none
+            &.hide
+               visibility: hidden
+               transition: all 0s
+                  
+            span
+               position: absolute
+               display: block
+               text-align: center
+               width: 175px
+               // left: -2px
+               // top: calc(50% - 10px)
+               // max-height: 100% 
+               // overflow: hidden
+               height: 20px
+               font-weight: 500
+               top: 50%
+               left: 50% 
+               transform: translate(-50%, -50%)
+               &.success
+                  color: $button_active
 
-         .upload-avatar
-            visibility: hidden
-            width: 100%
-            border: 2px solid #CACACA
-            height: 56px
-            border-radius: 9px
-            outline: none
-            padding: 0 20px
-            padding-top: 11px
-            color: #454A4A
-            font-size: 20px
-            overflow: hidden
+            .upload-avatar
+               visibility: hidden
+               width: 100%
+               border: 2px solid #CACACA
+               height: 56px
+               border-radius: 9px
+               outline: none
+               padding: 0 20px
+               padding-top: 11px
+               color: #454A4A
+               font-size: 20px
+               overflow: hidden
 
    .inputs-wrapper
       position: relative
@@ -82,7 +115,7 @@ form
    margin-top: 40px
 
 .sertificates
-   margin-top: 40px
+   margin: 40px 0 100px
    border-top: 2px dashed $yellow_common
    padding: 20px 0px
 
@@ -142,10 +175,28 @@ form
             text-align: center
 
    .new-sertificates
-      margin: 30px 0
-      border-top: 2px dashed $orange_common
-      .upload-sertrificates
-         margin-top: 15px
+      .inputs-wrapper
+         // margin: 30px 0
+         // border-top: 2px dashed $orange_common
+         label
+            position: relative
+            input
+               visibility: hidden
+            .add-sertificates
+               // border: 2px solid #000
+               position: absolute
+               right: 200px
+               top: 50%
+               transform: translateY(-50%)
+               text-align: center
+               padding-top: 13px
+            .upload-sertrificates
+               position: absolute
+               right: 20px
+               top: 50%
+               transform: translateY(-50%)
+               &::after
+                  animation: updating 1.5s 1 ease
 
 
 @media screen and (max-width: 1150px) 
@@ -156,25 +207,5 @@ form
       flex-direction: column
       .photo-update
          position: relative
-         display: flex
-         justify-content: space-around
-         width: 400px
-         &>*
-            // border: 1px solid #000
-         .profile-photo
-            width: 66%
-            
-         .avatar-buttons-wrapper
-            position: relative
-            padding-left: 20px
-            // width: 150px
-            // min-height: 100px
-            // border: 1px solid #000
-            .input-avatar-wrapper
-               position: absolute
-               top: 40%
-            .button
-               position: absolute
-               top: 55%
-               left: 30px
+         
             

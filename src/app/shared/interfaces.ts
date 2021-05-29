@@ -67,6 +67,8 @@ export interface UserDbInfo {
    //service keys
    id?: string
    daysShedule?: any
+   eventsDates?: Object
+   events?: any
    lessons?: any
    emailVerified?: boolean
    specializations?: string[]
@@ -110,3 +112,34 @@ export interface UserDoctor {
    daysShedule?: object
    aboutMe?: string
 }
+
+export interface Event {
+   date: {
+      year: number,
+      month: number,
+      day: number
+   },
+   time: number
+}
+
+export interface Signature {
+   signature: string
+}
+
+export interface ZoomInfo {
+   date?: object
+   daysLeft?: number
+   doctorId?: string
+   doctorName?: string
+   doctorsConfirmation?: boolean
+   patientId?: string
+   patientName?: string
+   problemDescription?: string
+   time?: number
+   zoom?: {
+      id?: string
+      link?: string
+      password?: string
+   }
+}
+

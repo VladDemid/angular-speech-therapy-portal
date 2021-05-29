@@ -12,7 +12,7 @@
       font-weight: 400   
       font-size: 22px
    &.today
-      border: 3px solid $orange_common
+      border: 4px solid $orange_common
       span
          // font-weight: 500
    &.work-day //рабочий день
@@ -27,11 +27,11 @@
       transform: scale(1.05)
       span
          color: #fff
-      &.lesson-appointed //назначен урок
+      &.lesson //назначен урок
          &::after
             background-color: #fff
             // box-shadow: 1px 2px 6px #000
-   &.lesson-appointed //назначен урок
+   &.lesson //назначен урок
       &::after
          content: ''
          position: absolute
@@ -41,7 +41,7 @@
          top: 7%
          right: 7%
          background-color: $orange_common
-   &.lesson-appointed-past //назначен урок
+   &.lesson-old //назначен урок
       &::after
          background-color: $grey
    span

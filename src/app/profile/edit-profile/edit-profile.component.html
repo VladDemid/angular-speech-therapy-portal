@@ -33,16 +33,17 @@
       >
          <div class="photo-update">
             <div class="profile-photo">
-               <img src="{{userData.myData.avatarUrl}}" alt="Фото не загружено">
+               <img src="{{defaultAvatar}}" *ngIf="!userData.myData.avatarUrl" alt="">
+               <img src="{{userData.myData.avatarUrl}}" *ngIf="userData.myData.avatarUrl" alt="">
             </div>
             <!-- <div class="photo-preview">photo</div> -->
             <div class="avatar-buttons-wrapper">
-               <label class="input-avatar-wrapper" for="avatar-upload-button">
-                  <span *ngIf="!avatarPrefireName" >выберите аватар</span>
+               <label class="input-avatar-label btn" [ngClass]="{'hide': avatarPrefireName}" for="avatar-upload-button">
+                  <span *ngIf="!avatarPrefireName" >изменить фото</span>
                   <span *ngIf="avatarPrefireName" class="success">файл выбран</span>
                   <input class="upload-avatar" (click)="scanAvatarName()" name="avatar" type="file" id="avatar-upload-button">
                </label>
-               <button class="button" (click)="updateAvatar()">загрузить фото</button>
+               <button class="button upload" *ngIf="avatarPrefireName" [ngClass]="{'loading': uploadingAvatar}"  (click)="updateAvatar()">загрузить фото</button>
             </div>
          </div>
          <div class="inputs-wrapper">
@@ -118,8 +119,19 @@
          </div>
       </form>
       <div class="sertificates" *ngIf="userData.myData.userType === 'doctor'">
-         <h3>Мои сертификаты</h3>
-         <!-- {{userData.myData.sertificatesNames | json}} -->
+         <form class="new-sertificates" id="newSertificatesForm">
+            <div class="inputs-wrapper">
+               <label>
+                  <span class="narrow">Добавить сертификаты</span> 
+                  <input class="upload_documents" name="documents" type="file" id="newSertificates" multiple (change)=changeSertificatesCount()>
+                  <div class="add-sertificates btn">выбрать файлы</div>
+                  <button class="upload-sertrificates" [ngClass]="{loading: uploadingSertificates}" *ngIf="newFilesToUpload > 0" (click)="addNewSertificates()">
+                     Загрузить ({{newFilesToUpload}})
+                  </button>
+               </label>
+            </div>
+         </form>
+         <h3 *ngIf="userData.myData.sertificatesNames && userData.myData.sertificatesNames[0]">Мои сертификаты</h3>
          <div class="sertif-list" *ngIf="userData.myData.sertificatesLinks">
             <div class="sertif-item" *ngFor="let item of userData.myData.sertificatesLinks; let i = index">
                <div class="img-wrapper">
@@ -129,12 +141,6 @@
                <!-- <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span> -->
             </div>
          </div>
-         <form class="new-sertificates" id="newSertificatesForm">
-            <div class="inputs-wrapper">
-               <label><span class="narrow">Добавить сертификаты</span> <input class="upload_documents" name="documents" type="file" id="newSertificates" multiple></label>
-               <button class="upload-sertrificates" (click)="addNewSertificates()">Загрузить сертификаты</button>
-            </div>
-         </form>
       </div>
    </div>
 </div>

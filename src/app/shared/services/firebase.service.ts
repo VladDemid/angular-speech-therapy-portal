@@ -105,21 +105,21 @@ export class FirebaseService implements OnInit {
     return firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
   }
 
-  createNewUserDataObject(user, result) { //больше не используется ((((
+  createNewUserDataObject(user, result) { 
     this.helper.toConsole("инфа для заполнения пользователя: ", user)
     this.helper.toConsole("Id нового пользователя: ", result.user.uid)
     return this.http.put(`${environment.FbDbUrl}/users/${result.user.uid}.json`, user)
     
   }
 
-  createNewPatientDataObject(user, result) {
+  createNewPatientDataObject(user, result) { //шо то фигня
     this.helper.toConsole("инфа для заполнения пациента: ", user)
     this.helper.toConsole("Id нового пациента: ", result.user.uid)
     return this.http.put(`${environment.FbDbUrl}/users/patients/${result.user.uid}.json`, user)
     
   }
 
-  createNewDoctorDataObject(user, result) {
+  createNewDoctorDataObject(user, result) { //шо это фигня
     this.helper.toConsole("инфа для заполнения пациента: ", user)
     this.helper.toConsole("Id нового пациента: ", result.user.uid)
     return this.http.put(`${environment.FbDbUrl}/users/doctors/${result.user.uid}.json`, user)
@@ -276,28 +276,34 @@ export class FirebaseService implements OnInit {
     return this.http.get(`${environment.FbDbUrl}/lessons.json`)
   }
 
-  makeALesson(time, doctorData, clientData) {
-    //запись для доктора в lessons/doctorId
-    this.http.put(`${environment.FbDbUrl}/lessons/${doctorData.id}/${time.year}/${time.month}/${time.day}/${time.hour}.json`, clientData)
-    .subscribe((resp)=>{
-      console.log("клиент записан: ", resp);
-    },
-    (err) => {
-      console.log("ошибка записи к доктору (запись информации доктору): ", err);
-    })
-    
-    //запись для доктора в user/userId
-    this.http.put(`${environment.FbDbUrl}/users/${clientData.id}/lessons/${time.year}/${time.month}/${time.day}/${time.hour}.json`, doctorData)
-    .subscribe((resp)=>{
-      console.log("информация о посещении доктора записана себе: ", resp);
-    },
-    (err) => {
-      console.log("ошибка записи к доктору (запись информации клиенту): ", err);
-    })
+  checkLessonEngage(eventId) {
+    return this.http.get(`${environment.FbDbUrl}/events/${eventId}.json`)
+  }
+
+  getAllLessons() {
+    return this.http.get(`${environment.FbDbUrl}/events.json`)
+  }
+
+  makeALesson(eventLesson, eventId) {
+     return this.http.put(`${environment.FbDbUrl}/events/${eventId}.json`, eventLesson)
+  }
+
+  getEvents() {
+    return this.http.get(`${environment.FbDbUrl}/events.json`)
   }
 
   getDoctorlessons(id) {
     return this.http.get(`${environment.FbDbUrl}/lessons/${id}.json`)
+  }
+
+  updateEvent(eventLesson, eventId) {
+    let myNewLessonData = {}
+    myNewLessonData[eventId] = JSON.parse(JSON.stringify(eventLesson))
+    delete myNewLessonData[eventId].daysLeft
+    console.log(myNewLessonData)
+    // myNewLessonData.lessons.lessonId = eventId
+    console.log("!!!!!!!!!!!",eventLesson, eventId)
+    return this.http.patch(`${environment.FbDbUrl}/events.json`, myNewLessonData)
   }
 
   
