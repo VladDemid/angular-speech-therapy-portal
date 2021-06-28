@@ -1,4 +1,4 @@
-<div class="debug-block" *ngIf="false && helper.DEBUG">
+<div class="debug-block" *ngIf="true && helper.DEBUG">
    <p>selectedDay: {{selectedDay}}</p>
    <p>currentFirstDay: {{currentFirstDay}}</p>
    <p>selectedDayOfWeek: {{selectedDayOfWeek}}</p>
@@ -7,6 +7,9 @@
    <!-- <p>weeklySchedule: {{inputDoctorInfo.weeklySchedule | json}}</p> -->
 </div>
 
+<div class="fb-security-popup" *ngIf="popupService.appointmentDeatailsPopup" >
+   <app-appointment-details-popup (voted) = "makeLessonFromPopup($event)"></app-appointment-details-popup>
+</div>
 
 
 <div class="calendar">
@@ -77,22 +80,24 @@
                   <div class="period">
                      {{time | timeRow}}
                   </div>
-                  <div class="patient" *ngIf="doctorsLessons && doctorsLessons[year] && doctorsLessons[year][month] && doctorsLessons[year][month][selectedDay+1] && doctorsLessons[year][month][selectedDay+1][time]">
+                  <div class="patient" *ngIf="doctorEventsYearMonthDayHour && doctorEventsYearMonthDayHour[year] && doctorEventsYearMonthDayHour[year][month] && doctorEventsYearMonthDayHour[year][month][selectedDay+1] && doctorEventsYearMonthDayHour[year][month][selectedDay+1][time]">
                      <!-- {{doctorsLessons[year][month][selectedDay+1][time].name}} -->
-                     <div class="busy-sign" *ngIf="doctorsLessons[year][month][selectedDay+1][time].name != (userData.myData.name + ' ' + userData.myData.surname)">
+                     <div class="busy-sign" *ngIf="doctorEventsYearMonthDayHour[year][month][selectedDay+1][time].patientName != (userData.myData.surname + ' ' + userData.myData.name + ' ' + userData.myData.patronymic)">
                         Занято
                      </div>
-                     <div class="busy-myself-sign" *ngIf="doctorsLessons[year][month][selectedDay+1][time].name == (userData.myData.name + ' ' + userData.myData.surname)">
+                     <div class="busy-myself-sign" *ngIf="doctorEventsYearMonthDayHour[year][month][selectedDay+1][time].patientName == (userData.myData.surname + ' ' + userData.myData.name + ' ' + userData.myData.patronymic)">
                         моя запись
                      </div>
                   </div>
                </div>
-               
             </div>
          </div>
          <button [routerLink]="['/profile/doctors']" *ngIf='isInProfileModule == "false"'>В личный кабинет</button>
-         <button [disabled]="selectedHourForLesson == -1" (click)="makeAnAppointment(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true"'>Записаться</button>
-         <div class="doctor-alert">
+         <!-- <button [disabled]="selectedHourForLesson == -1" (click)="makeAnAppointment(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true"'>Записаться(стар)</button> -->
+         <button [disabled]="selectedHourForLesson == -1" (click)="appointmentDeatails(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true" && selectedHourForLesson != -1'>Записаться</button>
+         <button [disabled]="true" *ngIf='selectedHourForLesson == -1'>выберите час</button>
+         <div class="doctor-alert error" *ngIf="errorMakingLesson">
+            {{errorMakingLesson}}
          </div>
       </div>
    </div>
@@ -137,7 +142,7 @@
                      <span *ngIf="item[1].daysLeft == 1">
                         Завтра,
                      </span>
-                     {{item[1].date.day}} {{monthsNamesWhomCase[item[1].date.month]}}</div>
+                     {{item[1].date.day}} {{monthsNamesWhomCase[item[1].date.month - 1]}}</div>
                   <div class="time">{{item[1].time | timeRow}}</div>
                   <div class="doctor-name">{{item[1].patientName}}</div>
                   <div class="problem">{{item[1].problemDescription}}</div>
@@ -191,7 +196,7 @@
                   <span *ngIf="item[1].daysLeft == 1">
                      Завтра,
                   </span>
-                  {{item[1].date.day}} {{monthsNamesWhomCase[item[1].date.month]}}</div>
+                  {{item[1].date.day}} {{monthsNamesWhomCase[item[1].date.month - 1]}}</div>
                <div class="time">{{item[1].time | timeRow}}</div>
                <div class="doctor-name">{{item[1].doctorName}}</div>
                <div class="problem">{{item[1].problemDescription}}</div>
@@ -208,8 +213,8 @@
       <div class="">newDaysOfWeekShedule: {{newDaysOfWeekShedule | json}}</div>
 
    </div>
-   <h3>Настройка моего графика</h3>
    <div class="days-selection-wrapper">
+   <h3>Настройка моего графика</h3>
       <div class="days-of-week-selection">
          <div class="days-sign">Выберите удобные для вас дни</div>
          <div class="days-of-week-checkboxes">

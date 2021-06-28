@@ -19,10 +19,12 @@ import { TelegramBotService } from '../../services/telegram-bot.service';
 export class CalendarBlockComponent implements OnInit {
 
   @Input() inputDoctorInfo: UserDoctor;
+  @Input() doctorEventsYearMonthDayHour: object;
   @Input() isCalendarPage: boolean;
   @Input() calendarUserId: string;
   @Input() isInProfileModule: boolean | string; // string|boolean
   
+
   currentHour = new Date().getHours()
   selectedDay = -1 //номер дня (-1\ 1-31)
   selectedDayOfWeek = -1
@@ -46,6 +48,9 @@ export class CalendarBlockComponent implements OnInit {
   doctorShedule = {}
   doctorsLessons = {}
   doctorAlertSign: string
+  patientProblem = "проблема..."
+  withChild = "0" //проблема у ребенка или нет 0/1
+  errorMakingLesson = ""
 
   daysOfWeekShedule = {}
   newDaysOfWeekShedule = {}
@@ -143,6 +148,7 @@ export class CalendarBlockComponent implements OnInit {
 
   increaseMonth() {
     this.selectedDay = -1 //сброс дня
+    this.selectedHourForLesson = -1 //сброс часа
     this.month++
     if (this.month == 13) {
       this.month = 1
@@ -153,6 +159,7 @@ export class CalendarBlockComponent implements OnInit {
   }
   decreaseMonth() {
     this.selectedDay = -1 //сброс дня
+    this.selectedHourForLesson = -1 //сброс часа
     this.month--
     if (this.month == 0) {
       this.month = 12
@@ -263,8 +270,22 @@ export class CalendarBlockComponent implements OnInit {
     
   }
 
+  makeLessonFromPopup(details) {
+    this.patientProblem = details.problem
+    this.withChild = details.withChild
+    // console.log("PARENT TEST SUCCESS", details)
+    this.makeAnAppointment(this.year, this.month, this.selectedDay + 1, this.selectedHourForLesson)
+  }
+
 
   makeAnAppointment(year, month, day, hour) { 
+    this.errorMakingLesson = "" //сброс надписи об ошибках
+
+    // console.log(`год ${year}, ${this.currentYear},| месяц: ${month}, ${this.currentMonth},| день ${day}, ${this.day}`)
+    if (year < this.currentYear || month < this.currentMonth || day < this.day) {
+      this.errorMakingLesson = "Выбранный день уже прошел"
+      return
+    }
     //записывать если пользователь авторизирован ,является клиентом и час не занят (пустое расписание или конкретно свободный час)
     if (this.auth.isAuthenticated() && this.userData.myData.userType == 'client' 
     && (!this.doctorsLessons || !this.doctorsLessons[year] || !this.doctorsLessons[year][month] 
@@ -300,7 +321,8 @@ export class CalendarBlockComponent implements OnInit {
         time: hour,
         patientId: localStorage.getItem("user-Id"),
         patientName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
-        problemDescription: "описание проблемы...",
+        problemDescription: this.patientProblem,
+        withChild: this.withChild,
         doctorId: this.calendarUserId,
         doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
         doctorsConfirmation: false,
@@ -327,6 +349,7 @@ export class CalendarBlockComponent implements OnInit {
               console.log("ошибка записи к доктору (запись информации доктору): ", err);
             })
         } else {
+          this.errorMakingLesson = `данный час занят (${hour}:00 ${day}.${month}.${year})`
           console.log("данный час занят")
         }
       },
@@ -349,6 +372,18 @@ export class CalendarBlockComponent implements OnInit {
     } else if (this.doctorsLessons[year][month][day][hour].name) {
       this.doctorAlertSign = "Это время уже занято. Пожалуйста выберите другой час."
     }
+  }
+
+  appointmentDeatails(year, month , day, hour) {
+    this.popupService.appointmentDetails = {
+      year,
+      month,
+      day,
+      hour,
+
+    }
+    this.popupService.toggleappointmentDeatailsPopup()
+    
   }
 
 
@@ -422,7 +457,8 @@ export class CalendarBlockComponent implements OnInit {
     this.uploadNewEvent(this.userData.myData.events[eventName], eventName)
     this.firebase.updateEvent(this.userData.myData.events[eventName], eventName)
       .subscribe((resp) => {
-        console.log(resp)
+        this.telegram.telegramNotifConfirmMeeting(this.userData.myData.events[eventName])
+        // console.log(resp)
       },
       (err) => {
         console.log("ОШИБКА подтверждения занятия: ", err)

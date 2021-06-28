@@ -8,6 +8,7 @@ import { DebugHelper } from 'protractor/built/debugger';
 import { DevelopHelp } from 'src/app/shared/services/develop-help.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 
@@ -29,7 +30,8 @@ export class UserData {
       private auth: AuthService,
       private http: HttpClient,
       private firebase: FirebaseService,
-      private popupService: PopupService
+      private popupService: PopupService,
+      private router: Router
    ) {}
 
 
@@ -38,6 +40,10 @@ export class UserData {
       .subscribe(
          (response: UserDbInfo) => {
             this.helper.toConsole("Инициализация пользователя: ",response)
+            if (response == null) {
+               this.router.navigate(['/profile'])
+               console.log("обнаружен выход из аккаунта")
+            }
             this.changeMyLocalData(response)
             if (this.myData.userType === "doctor") {
                this.getSertificates()
@@ -45,6 +51,7 @@ export class UserData {
             } else if (this.myData.userType === "client") {
                if (this.myData.events) {
                   this.makeDatesOfEventsObject()
+                  this.checkConfirmationOfMyLessons()
                }
             }
          },
@@ -59,12 +66,12 @@ export class UserData {
    }
    
    checkMyLessons() {
-      this.firebase.getAllLessons()
+      this.firebase.getAllLessons() //скач всех ивентов
          .subscribe((resp) => {
             // console.log("все ивенты тут: ",resp)
             // console.log("!!!!!!",resp )
             const allLessonsArray = Object.entries(resp) //делаем массив всех уроков [[id, data],[id, data]],...
-            const myLessonsIdsFromServer = allLessonsArray.filter((item) => {
+            const myLessonsIdsFromServer = allLessonsArray.filter((item) => { 
                const lessonIdParseArray = item[0].split("_"); //разделяем каждый Id урока на слова
                //*оставить если id пользователя == последней части id ивента
                return localStorage.getItem("user-Id") == lessonIdParseArray[lessonIdParseArray.length - 1]
@@ -105,7 +112,71 @@ export class UserData {
          })
    }
 
-   makeDatesOfEventsObject() {
+   checkConfirmationOfMyLessons() { //проверка на подтвеждение спеца (если в себе урок не подтвержден, а на серваке уже подтвержден)
+      
+      let myEvents = Object.entries(this.myData.events)
+      const myFutureNonconfirmedLessons = myEvents //= создание подобъекта будущих неподтвержденных уроков
+         .filter(item => { 
+            const lessonIdParseArray = item[0].split("_"); //разделяем каждый Id урока на слова
+            //*оставить если год\месяц\день будущие и неподтвержден
+            const date = new Date()
+            const day = date.getDate()
+            const month = date.getMonth()
+            const year = date.getFullYear()
+            const isFuture = Number(lessonIdParseArray[0]) >= year && Number(lessonIdParseArray[1]) >= month && Number(lessonIdParseArray[2]) >= day
+            const isNonConfirmed = item[1].doctorsConfirmation == false
+            // console.log(isFuture && isNonConfirmed)
+            return isFuture && isNonConfirmed
+         })
+      console.log(myFutureNonconfirmedLessons)
+
+      if (myFutureNonconfirmedLessons) { //!добавить проверку есть ли вообще уроки без подтверждения (работает вообще или нет)
+         this.firebase.getAllLessons() //качаем все уроки
+            .subscribe((resp) => {
+               let myNewLessonData = {}
+               for (let i of myFutureNonconfirmedLessons) { //ищем свои и сравниваем
+                  // console.log(i[0])
+                  if (resp[i[0]].doctorsConfirmation == true) { //если нашли что какой-то уже подтвержден, то запоминаем
+                     console.log(`${i[0]}: `,resp[i[0]])
+                     this.myData.events[i[0]].doctorsConfirmation = true
+                     myNewLessonData[i[0]] = this.myData.events[i[0]]
+                  }
+               }
+               if (Object.keys(myNewLessonData).length != 0) { //если нашли новые подтвержденные наши уроки, то сохраняем в FB
+                  this.sendMyLessonsDataChanges(myNewLessonData) //отправка в FB/user/id/events/ нужных ивентов с doctorsConfirmation == true 
+                     .subscribe((resp) => {
+                        console.log("статус урока обновлен у пациента", resp)
+                     },
+                     (err) => {
+                        console.log("Ошибка обновления статуса урокка у клиента", err)
+                     })
+               }
+            },
+            (err) => {
+               console.log("ошибка скачки всех ивентов с firebase")
+            })
+      } 
+
+         
+   }
+
+   // createLessonsChangesObject() {
+   //    let myNewLessonData = {}
+   //    myNewLessonData[eventId] = JSON.parse(JSON.stringify(eventLesson))
+   //    delete myNewLessonData[eventId].daysLeft
+   //    console.log(myNewLessonData)
+   //    // myNewLessonData.lessons.lessonId = eventId
+   //    this.userData.sendMyLessonsDataChanges(myNewLessonData)
+   //       .subscribe((resp) => {
+   //       console.log("урок добавлен в ячейку пользователя", resp)
+         
+   //       },
+   //       (err) => {
+   //       console.log("Ошибка добавления в ячейку пользователя", err)
+   //       })
+   // }
+
+   makeDatesOfEventsObject() { //= создание нужного формата ивентов для отображения(дней в календаре, и т.д.)
       this.myData.eventsDates = {}
       // console.log(Object.assign(this.myData.events))
       // console.log(this.myData.events)
@@ -126,11 +197,13 @@ export class UserData {
          if (!lessonsDates[thisDate.year]) lessonsDates[thisDate.year] = {}
          if (!lessonsDates[thisDate.year][thisDate.month]) lessonsDates[thisDate.year][thisDate.month] = {}
          if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day]) lessonsDates[thisDate.year][thisDate.month][thisDate.day] = {}
-         if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime]) lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime] = {
-            patientName: this.myData.events[lessonObj].patientName,
-            doctorName: this.myData.events[lessonObj].doctorName,
-            problemDescription: this.myData.events[lessonObj].problemDescription
-         }
+         if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime]) 
+            lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime] = 
+            {
+               patientName: this.myData.events[lessonObj].patientName,
+               doctorName: this.myData.events[lessonObj].doctorName,
+               problemDescription: this.myData.events[lessonObj].problemDescription
+            }
       }
       this.myData.eventsDates = lessonsDates
       // console.log("!!!!!",this.myData)

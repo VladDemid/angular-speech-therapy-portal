@@ -16,8 +16,10 @@ export class SpecialistPageComponent implements OnInit {
 
   defaultAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
   doctorInfo: UserDoctor
+  doctorEventsYearMonthDayHour: object
   doctorId: string
   isInProfileModule = "false" //может быть строкой т.к. params возвращает строку
+  
 
   constructor(
     private firebase: FirebaseService,
@@ -40,10 +42,47 @@ export class SpecialistPageComponent implements OnInit {
       this.firebase.getDoctorInfo(this.crypter.decrypt(params.id))
       .subscribe((doctorInfo: UserDoctor) => {
         this.doctorInfo = doctorInfo
-        console.log(doctorInfo);
         console.log("данные доктора загружены");
+        // console.log(doctorInfo);
+        this.sortDoctorLessons(doctorInfo)
       })
     })
+  }
+
+  sortDoctorLessons(doctorInfo) {
+    if (doctorInfo.events) {
+      const allDoctorLessonsArray = Object.entries(doctorInfo.events)
+    } else return
+    let lessonsDates = {} //год->месяц->день->час
+    for(let lessonObj in this.doctorInfo.events) {
+      const thisDate = this.doctorInfo.events[lessonObj].date
+      const thistime = this.doctorInfo.events[lessonObj].time
+      const newLessonTime = {
+         [thisDate.year]: { //= создание объекта year-month-day-time
+            [thisDate.month]: {
+               [thisDate.day]: {
+                  [thistime]: {}
+               }
+            }
+         }
+      }
+
+      //= слияние нового объекта m(newLessonTime) и основного (lessonsDates)  (хз зачем это тут)
+      if (!lessonsDates[thisDate.year]) lessonsDates[thisDate.year] = {}
+      if (!lessonsDates[thisDate.year][thisDate.month]) lessonsDates[thisDate.year][thisDate.month] = {}
+      if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day]) lessonsDates[thisDate.year][thisDate.month][thisDate.day] = {}
+      if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime]) 
+         lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime] = 
+         {
+            patientName: this.doctorInfo.events[lessonObj].patientName,
+            doctorName: this.doctorInfo.events[lessonObj].doctorName,
+            problemDescription: this.doctorInfo.events[lessonObj].problemDescription
+         }
+    }
+    this.doctorEventsYearMonthDayHour = lessonsDates
+    console.log(lessonsDates)
+
+
   }
 
 

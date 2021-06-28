@@ -59,15 +59,15 @@ export class CalendarPageComponent implements OnInit {
   
   
   testZoom() {
-    this.zoom.startZoom()
+    // this.zoom.startZoom()
   }
 
   createMeeting() {
-    this.zoom.createMeeting()
+    // this.zoom.createMeeting()
   }
 
   getUserId() {
-    this.zoom.getUserId()
+    // this.zoom.getUserId()
   }
 
   

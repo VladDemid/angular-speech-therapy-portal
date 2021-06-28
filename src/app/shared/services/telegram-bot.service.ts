@@ -29,10 +29,18 @@ export class TelegramBotService implements OnInit{
     xhttp.send()
   }
 
+  telegramNotifConfirmMeeting(eventLesson) {
+    const message = `Специалист 👨‍⚕️${eventLesson.doctorName} (${eventLesson.doctorId}) подтвердил занятие на 📅${eventLesson.date.day}.${eventLesson.date.month}.${eventLesson.date.year} с 🗣${eventLesson.patientName} (${eventLesson.patientId})`
+    let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${telegramConfig.logobotChatId}&text=${message}`
+    let xhttp = new XMLHttpRequest()
+    xhttp.open("GET", url, true)
+    xhttp.send()
+  }
+
 
   sendNewLessonMessage(eventLesson) {
   
-    const message = `Пользователь ${eventLesson.patientName} (${eventLesson.patientId}) записался на занятие к ${eventLesson.doctorName} (${eventLesson.doctorId}) с проблемой "${eventLesson.problemDescription}" на ${eventLesson.date.day}.${eventLesson.date.month}.${eventLesson.date.year}`
+    const message = `Пациент 🗣${eventLesson.patientName} (${eventLesson.patientId}) записался на занятие к 👨‍⚕️${eventLesson.doctorName} (${eventLesson.doctorId}) с проблемой "${eventLesson.problemDescription}" на 📅${eventLesson.date.day}.${eventLesson.date.month}.${eventLesson.date.year}`
     const chatId = telegramConfig.logobotChatId
     let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${chatId}&text=${message}`
     let xhttp = new XMLHttpRequest()

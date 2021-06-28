@@ -14,8 +14,8 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class RegistrationPageComponent implements OnInit {
 
-  ClientFormDisplay = true
-  DoctorFormDisplay = false
+  clientFormDisplay = true 
+  doctorFormDisplay = false
   showPassRepeatErrorMsg = false
   showRulesRequired = false
   showSuccessReg = false
@@ -290,13 +290,13 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   showClientForm() {
-    this.ClientFormDisplay = true
-    this.DoctorFormDisplay = false
+    this.clientFormDisplay = true
+    this.doctorFormDisplay = false
   }
 
   showDoctorForm() {
-    this.ClientFormDisplay = false
-    this.DoctorFormDisplay = true
+    this.clientFormDisplay = false
+    this.doctorFormDisplay = true
   }
 
 //--------для input select---------

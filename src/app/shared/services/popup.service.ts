@@ -4,8 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class PopupService {
+  monthsNamesWhomCase = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"]
   imgName = ""
   imgUrl = "https://storiavoce.com/wp-content/plugins/lightbox/images/No-image-found.jpg"
+  appointmentDetails = { "year": 2000, "month": 0, "day": 0, "hour": 0 }
   imgPopup = false
   eventDetails = { "date": { "day": 0, "month": 0, "year": 0 }, "doctorId": "", "doctorName": "0", "doctorsConfirmation": false, "patientId": "", "patientName": "", "problemDescription": "описание проблемы...", "time": 0, "zoom": { "id": "", "link": "", "password": "" }, "daysLeft": 0 }
   homePageLoginPopup = false
@@ -14,6 +16,8 @@ export class PopupService {
   registrTermsOfUsePopup = false
   emailVerifyPopup = false
   eventDetailsPopup = false
+  appointmentDeatailsPopup = false
+  requisitesPopup = false
 
   constructor() { }
 
@@ -51,6 +55,14 @@ export class PopupService {
 
   toggleEventDetailsPopup() {
     this.eventDetailsPopup = !this.eventDetailsPopup
+  }
+
+  toggleappointmentDeatailsPopup() {
+    this.appointmentDeatailsPopup = !this.appointmentDeatailsPopup
+  }
+
+  toggleRequisitesPopup() {
+    this.requisitesPopup = !this.requisitesPopup
   }
 
   toggleLoginAndPass() {

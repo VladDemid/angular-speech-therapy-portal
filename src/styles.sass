@@ -1,4 +1,5 @@
-
+// @import "../node_modules/@zoomus/websdk/dist/css/bootstrap.css"
+// @import "../node_modules/@zoomus/websdk/dist/css/react-select.css"
 @import "assets/styles/normlize.min"
 @import "assets/styles/light-reset.min"
 @import "assets/styles/variables"
@@ -22,10 +23,8 @@ div
 
 body 
    position: relative
-   overflow: auto !important // zoom переопределяет стили в js файле O_o
+   // overflow: auto !important // zoom переопределяет стили в js файле O_o
 
-html
-   overflow: auto !important
 
 
 
@@ -49,29 +48,32 @@ h2
 .orange
    color: $orange_common
 
-.breadcrumb
-   padding: 6px 0 0 25px
-   margin-top: 30px
-   display: inline-block
-   // border: 1px solid #000
-   font-size: 12px
-   height: 26px
-   position: relative
-   cursor: pointer
-   transition: 0.2s
-   &::before
-      content: ''
-      position: absolute
-      left: 0px
-      top: 3px
-      border: 9px solid transparent
-      border-left: 0px solid transparent
-      border-right: 14px solid $blue_common
-   &:hover
-      transition: 0.2s
-      color: $blue_common
-      &::before
-         animation: test 1s 1 ease-out
+.error
+   color: red
+
+// .breadcrumb
+//    padding: 6px 0 0 25px
+//    margin-top: 30px
+//    display: inline-block
+//    // border: 1px solid #000
+//    font-size: 12px
+//    height: 26px
+//    position: relative
+//    cursor: pointer
+//    transition: 0.2s
+//    &::before
+//       content: ''
+//       position: absolute
+//       left: 0px
+//       top: 3px
+//       border: 9px solid transparent
+//       border-left: 0px solid transparent
+//       border-right: 14px solid $blue_common
+//    &:hover
+//       transition: 0.2s
+//       color: $blue_common
+//       &::before
+//          animation: test 1s 1 ease-out
 
 .user-type-icon
    margin-top: 20px
@@ -235,3 +237,124 @@ button, .btn
    100%
       width: 100%
       background-color: rgba(251, 133, 1, 0.0)   
+
+.breadcrumb-arrows
+   margin: 20px 0
+   white-space: nowrap
+   user-select: none
+
+   li
+      display: inline-block
+      line-height: 26px
+      margin: 0 9px 0 -10px
+      padding: 0 20px
+      position: relative
+
+      &::before
+         border-right: 2px solid #666666
+         content: ''
+         display: block
+         height: 50%
+         position: absolute
+         left: 0
+         right: 0
+         top: 0
+         z-index: -1
+         transform: skewX(45deg)
+
+      &::after
+         border-right: 2px solid #666666
+         content: ''
+         display: block
+         height: 50%
+         position: absolute
+         left: 0
+         right: 0
+         top: 0
+         z-index: -1
+         transform: skewX(45deg)
+         bottom: 0
+         top: auto
+         transform: skewX(-45deg)
+
+      &:last-of-type
+         &::before, &::after
+            display: none
+
+      a
+         font: bold 24px Sans-Serif
+         letter-spacing: -1px
+         text-decoration: none
+         cursor: pointer
+
+
+      &:nth-last-of-type(1) a
+         color: rgba(255, 133, 1, 0.9)
+
+      &:nth-last-of-type(2) a
+         color: rgba(255, 133, 1, 0.75)
+
+      &:nth-last-of-type(3) a
+         color: rgba(255, 133, 1, 0.6)
+
+      &:nth-last-of-type(4) a
+         color: rgba(255, 133, 1, 0.6)
+
+.cookie_notice
+   display: block
+   position: fixed
+   z-index: 9999999
+   bottom: 0
+   left: 0
+   right: 0
+   text-align: center
+   font-size: 15px
+   font-family: Verdana, sans-serif
+   color: #FFF
+   background: #337AB7
+   padding: 10px 20px
+   border-top: 4px solid #BFE2FF
+
+   /* Оформление кнопок
+
+.cookie_btn
+   display: inline-block
+   margin: 10px 6px 4px 6px
+   text-decoration: none
+   position: relative
+   font-size: 13px
+   padding: 4px 12px
+   color: #FFF
+   font-weight: bold
+   text-transform: uppercase
+   background: #337AB7
+   border: 2px solid #BFE2FF
+
+   &:hover
+      color: #FFF
+
+   &:after
+      position: absolute
+      height: 2px
+      left: 50%
+      background: #FFF
+      bottom: -6px
+      content: ""
+      transition: all 280ms ease-in-out
+      width: 0
+
+   &:before
+      position: absolute
+      height: 2px
+      left: 50%
+      background: #FFF
+      bottom: -6px
+      content: ""
+      transition: all 280ms ease-in-out
+      width: 0
+      top: -6px
+
+   &:hover
+      &:after, &:before
+         width: 100%
+         left: 0

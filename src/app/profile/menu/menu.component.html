@@ -7,10 +7,10 @@
          <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥</span>
          <span *ngIf="userData.myData.userType == 'client'">клиент 🏠</span>
       </div>
-      <div class="help">
+      <!-- <div class="help">
          Пожалуйста дополните данные о себе в разделе 
          <span>"Редактировать личные данные"</span> 
-      </div>
+      </div> -->
       <div class="menu-list">
          <div class="menu-item" *ngFor="let item of menuItems"  [routerLink]="['/profile', item.link]" >
             

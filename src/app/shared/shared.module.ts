@@ -19,13 +19,17 @@ import { SpecializationsListPipe } from './pipes/specializations-list.pipe';
 import { FbSecurityPopupComponent } from './components/fb-security-popup/fb-security-popup.component';
 import { TextCutterPipe } from './pipes/text-cutter.pipe';
 import { EventDetailsPopupComponent } from './components/event-details-popup/event-details-popup.component';
+import { AppointmentDetailsPopupComponent } from './components/appointment-details-popup/appointment-details-popup.component';
+import { FormsModule } from '@angular/forms';
+import { RequisitesPopupComponent } from './components/requisites-popup/requisites-popup.component';
 // import { FaqNewComponent } from './components/faq-new/faq-new.component';
 
 
 @NgModule({
    imports: [
       CommonModule,
-      RouterModule 
+      RouterModule,
+      FormsModule
    ],
    exports: [
       CommonModule,
@@ -56,7 +60,9 @@ import { EventDetailsPopupComponent } from './components/event-details-popup/eve
       ImgPopupComponent,
       SpecializationsListPipe,
       TextCutterPipe,
-      EventDetailsPopupComponent
+      EventDetailsPopupComponent,
+      AppointmentDetailsPopupComponent,
+      
       // FaqNewComponent,
       // FbSecurityPopupComponent,
    ],

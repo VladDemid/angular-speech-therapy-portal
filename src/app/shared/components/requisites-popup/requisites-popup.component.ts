@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { PopupService } from '../../services/popup.service';
 
 @Component({
-  selector: 'app-footer-home',
-  templateUrl: './footer-home.component.html',
-  styleUrls: ['./footer-home.component.sass']
+  selector: 'app-requisites-popup',
+  templateUrl: './requisites-popup.component.html',
+  styleUrls: ['./requisites-popup.component.sass']
 })
-export class FooterHomeComponent implements OnInit {
+export class RequisitesPopupComponent implements OnInit {
 
   constructor(
     public popupService: PopupService

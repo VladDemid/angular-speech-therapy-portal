@@ -66,9 +66,9 @@ export class FbSecurityPopupComponent implements OnInit {
       case("verifyEmail"): {
         this.verifyEmailMode = true
         this.firebase.applyActionCode(oobCode)
-          .then(() => {
+          .then((resp) => {
             console.log("подтверждение почты успешно");
-            setTimeout(() => {location.reload()}, 1500)
+            // setTimeout(() => {location.reload()}, 1500)
             this.popupService.toggleFbSecurityPopup()
             this.router.navigate(['/profile'])
           })

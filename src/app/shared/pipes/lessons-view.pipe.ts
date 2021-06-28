@@ -16,7 +16,7 @@ export class LessonsViewPipe implements PipeTransform {
         return lesson[1].date.year >= currentYear && lesson[1].date.month >= currentMonth 
             && lesson[1].date.day >= currentDay
       })
-      console.log("!!!!!!!!",comingLessons)
+      // console.log(comingLessons)
     return comingLessons;
   }
 

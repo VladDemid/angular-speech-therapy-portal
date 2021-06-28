@@ -1,12 +1,15 @@
 @import "../../../../assets/styles/_variables"
 
 .calendar
+   // border: 1px solid #000
    margin: 20px 0 100px
    display: flex
    justify-content: space-between
+   // max-width: 100%
    .calendar-wrapper
       margin-top: 40px
       width: 55vw
+      max-width: 600px
       .calendar-header
          display: flex
          justify-content: space-around
@@ -59,12 +62,13 @@
             display: flex
             justify-content: flex-start
             flex-wrap: wrap
+            
             // height: 30vw
             // height: 380px
             .day
                width: calc(100% / 7 - 4px)
                // height: 74px
-               height: 62px
+               height: 60px
                margin: 2px
                cursor: pointer
                user-select: none
@@ -77,7 +81,7 @@
                // &:nth-child(1)
                //    margin-left: calc(200% / 7 + 2px)
    .time-aside
-      border: 2px dashed #ccc
+      // border: 2px dashed #ccc
       width: calc(45vw - 30px)
       position: relative
       margin: 30px 15px 0
@@ -439,6 +443,12 @@
                animation: updating 1.5s 1 ease
                // width: 100%
                transition: 2s
+
+.doctor-alert
+   text-align: center
+   font-size: 16px
+   border-bottom: none
+   text-decoration: underline
 
 @keyframes updating
    0%

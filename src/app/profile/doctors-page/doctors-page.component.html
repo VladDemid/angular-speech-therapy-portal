@@ -1,5 +1,9 @@
 <div class="doctors-page">
    <div class="container">
+      <ul class="breadcrumb-arrows arrows">
+         <li><a [routerLink]="['/profile']">Личный кабинет</a></li>
+         <li><a>Специалисты</a></li>
+      </ul>
       <div class="doctor-alert" *ngIf="userType == 'doctor'">
          К сожалению, вы как <span>доктор</span>  не можете записаться к другому доктору. Если это необходимо, создайте аккаунт как <span>пациент</span>!
       </div>

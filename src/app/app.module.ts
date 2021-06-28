@@ -21,6 +21,7 @@ import { UserData } from './profile/shared/services/user-data.service';
 import { SpecializationsListPipe } from './shared/pipes/specializations-list.pipe';
 import { FbSecurityPopupComponent } from './shared/components/fb-security-popup/fb-security-popup.component';
 import { FaqNewComponent } from './shared/components/faq-new/faq-new.component';
+import { RequisitesPopupComponent } from './shared/components/requisites-popup/requisites-popup.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -45,7 +46,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     FbSecurityPopupComponent,
     TermsOfUsePopupComponent,
     SpecialistPageComponent,
-    // SpecializationsListPipe
+    // SpecializationsListPipe,
+    RequisitesPopupComponent
   ],
   imports: [
     BrowserModule,

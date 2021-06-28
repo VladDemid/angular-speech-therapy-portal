@@ -20,12 +20,15 @@
             <div class="auto">
                <h3>Автоматически:</h3>
                <a class="app-link" [href]="popupService.eventDetails.zoom.link">войти через приложение</a>
-               <a class="web-zoom" (click)="goToZoom(popupService.eventDetails.zoom.id, popupService.eventDetails.zoom.password, popupService.eventDetails.doctorName, popupService.eventDetails.patientName)">войти через сайт</a>
+               <!-- <a class="web-zoom" (click)="goToZoom(popupService.eventDetails.zoom.id, popupService.eventDetails.zoom.password, popupService.eventDetails.doctorName, popupService.eventDetails.patientName)">войти через сайт</a> -->
             </div>
             <div class="manual">
                <h3>Вручную:</h3>
                <div class="meeting-credentials">ID: <span (click)="copyId(popupService.eventDetails.zoom.id)">{{popupService.eventDetails.zoom.id}}</span></div>
                <div class="meeting-credentials">Пароль: <span (click)="copyPass(popupService.eventDetails.zoom.password)">{{popupService.eventDetails.zoom.password}}</span> </div>
+            </div>
+            <div class="help">
+               <button [routerLink]="['/profile/help']">у вас вопросы?</button>
             </div>
          </div>
       </div>

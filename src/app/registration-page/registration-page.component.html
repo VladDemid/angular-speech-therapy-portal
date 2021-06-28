@@ -11,16 +11,16 @@
       <div class="registration-type">
          <label>
             <input required checked type="radio" name="registration-type" value="client">
-            <span class="type-text" (click)="showClientForm()">Присоединиться как пациент</span>
+            <span class="type-text" (click)="showClientForm()" [ngClass]="{active: clientFormDisplay}">Присоединиться как пациент</span>
          </label>
          <label>
             <input required  type="radio" name="registration-type" value="professional">
-            <span class="type-text" (click)="showDoctorForm()">Присоединиться как специалист</span>
+            <span class="type-text" (click)="showDoctorForm()" [ngClass]="{active: doctorFormDisplay}">Присоединиться как специалист</span>
          </label>
       </div>
 
       <form class="client-form"
-         *ngIf="ClientFormDisplay"
+         *ngIf="clientFormDisplay"
          [formGroup]="clientRegistrationForm"
          (ngSubmit) = "sendClientForm()"
       >
@@ -93,7 +93,7 @@
       
 
       <form class="doctor-form"
-         *ngIf="DoctorFormDisplay"
+         *ngIf="doctorFormDisplay"
          [formGroup]="doctorRegistrationForm"
          (ngSubmit) = "sendDoctorForm()"
       >

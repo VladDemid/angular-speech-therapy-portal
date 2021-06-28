@@ -7,7 +7,7 @@ import { SpecialistCard, UserDbInfo } from '../interfaces';
 export class SpecialistFilterPipe implements PipeTransform {
 
   transform(array: UserDbInfo[], selectedSpecialisation: string) {
-    console.log("!!!!!!!!!!!!",selectedSpecialisation,array)
+    // console.log("!!!!!!!!!!!!",selectedSpecialisation,array)
     if (!selectedSpecialisation || selectedSpecialisation == "Специализация" || !array) {
       return array
     }

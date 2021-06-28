@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DevelopHelp } from '../../services/develop-help.service';
 import { FirebaseService } from '../../services/firebase.service';
+import { environmentOther } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login-popup',
@@ -25,7 +26,7 @@ export class LoginPopupComponent implements OnInit {
     private authServise: AuthService,
     private firebase: FirebaseService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
@@ -39,11 +40,11 @@ export class LoginPopupComponent implements OnInit {
     })
 
     this.form = new FormGroup({
-      email: new FormControl("test7@gmail.com", [
+      email: new FormControl(environmentOther.emailDefault, [
         Validators.required,
         Validators.email
       ]),
-      password: new FormControl("123456", [
+      password: new FormControl(environmentOther.passwordDefault, [
         Validators.required,
         Validators.minLength(this.passwordMinLength)
       ])

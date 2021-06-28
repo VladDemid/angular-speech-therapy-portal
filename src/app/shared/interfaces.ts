@@ -68,7 +68,7 @@ export interface UserDbInfo {
    id?: string
    daysShedule?: any
    eventsDates?: Object
-   events?: any
+   events?: Event
    lessons?: any
    emailVerified?: boolean
    specializations?: string[]
@@ -111,15 +111,17 @@ export interface UserDoctor {
    specializations?: string[]
    daysShedule?: object
    aboutMe?: string
+   events?: object
 }
 
 export interface Event {
-   date: {
+   date?: {
       year: number,
       month: number,
       day: number
    },
-   time: number
+   time?: number,
+   doctorsConfirmation?: boolean
 }
 
 export interface Signature {

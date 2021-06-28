@@ -23,11 +23,11 @@ export class EventDetailsPopupComponent implements OnInit {
   }
 
   goToZoom(id, password, doctorName, clientName) {
-    this.popupService.toggleEventDetailsPopup()
-    if (this.userData.myData.userType == "client") {
-      this.zoom.userName = clientName
-    } else {this.zoom.userName = doctorName}
-    this.zoom.startZoom() // Id и пароль берется пока из ZoomConfig environment
+    // this.popupService.toggleEventDetailsPopup()
+    // if (this.userData.myData.userType == "client") {
+    //   this.zoom.userName = clientName
+    // } else {this.zoom.userName = doctorName}
+    // this.zoom.startZoom() // Id и пароль берется пока из ZoomConfig environment
   }
 
   copyId(id) {

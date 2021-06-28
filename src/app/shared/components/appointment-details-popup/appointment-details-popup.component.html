@@ -1,0 +1,37 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleappointmentDeatailsPopup()"></div>
+   <div class="popup">
+
+      
+      <div class="popup-container">
+         <div class="appointment-deatails">
+            <!-- {{popupService.appointmentDetails | json}} -->
+            <!-- {{testLesson | json}} -->
+            <div class="date">
+               <span class="date-of-lesson">Дата занятия: </span>
+               {{popupService.appointmentDetails.day}} {{popupService.monthsNamesWhomCase[popupService.appointmentDetails.month - 1]}} {{popupService.appointmentDetails.year}} - {{popupService.appointmentDetails.hour}}:00 часов (Минск)
+            </div>
+            <form (ngSubmit)="makeAnAppointment()">
+               <div class="inputs-wrapper">
+                  <label><span>Проблема</span><input [(ngModel)]="problem" name="problem"  type="text"></label>
+                  <div class="with-child radio-wrapper">
+                     <label class="radio-label" [ngClass]="{active: withChild == '0'}">
+                        <input [(ngModel)]="withChild" type="radio" name="withChild" value=0 >
+                        <span>без ребенка</span>
+                     </label>
+                     <label class="radio-label" [ngClass]="{active: withChild == '1'}">
+                        <input [(ngModel)]="withChild" type="radio" name="withChild" value=1>
+                        <span>с ребенком</span></label>
+                     </div>
+                  <!-- withChild: {{withChild}} -->
+                  <div class="with-child2 radio-wrapper">
+                     
+                  </div>
+               </div>
+               <button class="login" type="submit">записаться</button>
+            </form>
+         </div>
+      </div>
+
+   </div>
+</div>

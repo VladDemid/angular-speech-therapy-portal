@@ -4,6 +4,10 @@
 
 <div class="edit-profile">
    <div class="container">
+      <ul class="breadcrumb-arrows arrows">
+         <li><a [routerLink]="['/profile']">Личный кабинет</a></li>
+         <li><a>Моя информация</a></li>
+      </ul>
       <!-- форма для клиента -->
       <form 
       [formGroup]="clientForm"
