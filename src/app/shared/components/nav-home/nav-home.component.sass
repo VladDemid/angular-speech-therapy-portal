@@ -2,13 +2,16 @@
 
 header
    // background-image: linear-gradient(to right, rgba(235, 236, 240, 0.6), rgba(235, 236, 240, 0))
-   background-color: $orange_new
+   background-color: #FCFCFC
    // border-radius:  0 0 25px 25px
-   position: absolute
-   // position: fixed
+   // position: absolute
+   position: sticky
+   top: 0px
    z-index: 10
    width: 100%
-   box-shadow: 0px 3px 20px 0px rgba(34, 60, 80, 0.6)
+   // box-shadow: 0px 3px 20px 0px rgba(34, 60, 80, 0.6)
+   @include box-shadow($nav_shadow)
+
    // border: 1px solid #000
    // border-bottom: 3px solid #fff
    // &::after
@@ -19,7 +22,7 @@ header
    //    height: 3px
    //    background-image: linear-gradient(to right, rgba(235, 236, 240, 1), rgba(235, 236, 240, 0.15)) 
    nav
-      height: 100px
+      height: 93px
       display: flex
       justify-content: space-between
       // padding: 36px 0 0
@@ -30,7 +33,7 @@ header
       display: flex
       justify-content: center
       align-items: center
-      margin-left: 20px
+      // margin-left: 20px
       a
          // background-color: #fff
          position: relative
@@ -58,36 +61,37 @@ header
       align-items: center
       li
          display: inline-block
-         font-size: 22px
          margin-right: 33px
          padding: 0 10px
          &:last-child
             margin-right: 0
             padding: 0
          a
+            font-size: 20px
             display: block
-            color: #fff
+            color: $orange_501
             transition: 0.2s
-            font-weight: 500
+            font-weight: 700
             &::after
                content: ''
                display: block
                height: 2px
-               background-color:  #eee
+               background-color:  $orange_501
                transform: scaleX(0)
                transition:  0.4s
             &:hover
-               color: #eee
+               // color: #eee
+
+               background-color:  rgba(251, 133, 1, 0.05)
+               @include box-shadow($shadows_button_hover)
             &:hover::after
                transform: scaleX(1)
             &:active
-               color: #ddd
+               color: $button_active
+               // background-color: $button_active
             &:active::after
-               background-color: #ddd
-      button
-         background-color: transparent
-         box-shadow: none
-         color: #fff
+               background-color: $orange_501
+               &:hover
    &.fixed
       position: fixed
       nav

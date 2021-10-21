@@ -7,12 +7,11 @@
             [ngClass]="{active: i == activeDescription}"
             (click)="chooseTab(i)">
             <div class="faq-item-header">
-               <h3>
-                  {{item.title}}
-               </h3>
-               <div class="arrow" ></div>
+               <h4>{{item.title}}</h4>
+               <!-- <div class="arrow" ></div> -->
             </div>
             <div class="faq-item-descr">
+               <h5>{{item.title}}</h5>
                <p *ngFor="let p of item.description">{{p}}</p>
             </div>
          </li>

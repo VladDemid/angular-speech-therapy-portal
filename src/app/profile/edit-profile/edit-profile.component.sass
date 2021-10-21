@@ -7,36 +7,62 @@ form
    // flex-direction: row
    // justify-content: start
    .photo-update
+      
       display: flex
       justify-content: center
       align-items: center
       flex-direction: column
       position: absolute
       right: 0px
-      width: 220px
+      width: 320px
+      height: 320px
       min-height: 100px
-      // order: 1
-      // width: 250px
-      // background-color: #ccc
+      border-radius: 20px
+      margin-bottom: 32px
+      // padding: 32px
+      @include box-shadow($nav_shadow)
       // border: 1px solid #000
       .profile-photo
-         width: 100%
+         display: flex
+         justify-content: center
+         align-items: center
+         height: 254px
+         width: 254px
+         margin: 0
+         // width: 100%
+         // margin: 32px
+         border: 2px solid #4e463e31
+         border-radius: 10px
          img
-            border: 2px solid $orange_common
-            border-radius: 9px
+            border-radius: 10px
             display: block
-            width: 90%
-            margin: 10px auto 
+            width: 220px
+            height: 220px
+            // margin: 10px auto 
+            // padding: 32px
       .avatar-buttons-wrapper
          // border: 1px solid #000
-         position: relative
+         position: absolute
          height: 70px
+         right: 35px
+         bottom: 15px
          user-select: none
-         .upload
+         button.upload
             position: absolute
             top: 50%
             left: 50% 
             transform: translate(-50%, -50%)
+            width: 54px
+            height: 54px
+            border-radius: 50%
+            padding: 0
+            // border: 1px solid #000
+            background-image: url('/assets/icons/functions/upload.svg')
+            background-repeat: no-repeat
+            background-size: 32px
+            background-position: 50% 35%
+            background-color: #fff
+            @include box-shadow($nav_shadow)
             &::after
                content: ''
             &.loading
@@ -56,16 +82,23 @@ form
             // border: 2px solid $orange_common
             display: block
             margin-bottom: 10px
+            padding: 0px
             // padding: 10px
-            width: 175px
-            height: 45px
+            width: 54px
+            height: 54px
             text-align: center
             cursor: pointer
             transition: all 0.2s
+            background-image: url('/assets/icons/functions/photo.svg')
+            background-repeat: no-repeat
+            background-size: 38px
+            background-position: 50% 50%
+            background-color: #fff
+            @include box-shadow($nav_shadow)
             &:hover
+               outline: none
                // border: 2px solid $button_hover
                // background-color: $button_hover
-               outline: none
             &:active
                border: 2px solid $button_active
                background-color: $button_active
@@ -81,7 +114,7 @@ form
                position: absolute
                display: block
                text-align: center
-               width: 175px
+               // width: 175px
                // left: -2px
                // top: calc(50% - 10px)
                // max-height: 100% 
@@ -116,13 +149,20 @@ form
 
 .sertificates
    margin: 40px 0 100px
-   border-top: 2px dashed $yellow_common
+   // border-top: 2px dashed $yellow_common
    padding: 20px 0px
+   @include box-shadow($nav_shadow)
+   border-radius: 20px
+   .add-sertificates.btn
+      height: 48px
+   .inputs-wrapper
+      box-shadow: none
 
    .sertif-list
       display: flex
       justify-content: space-around
       flex-wrap: wrap
+      width: 100%
       .sertif-item
          position: relative            
          margin: 0 5px
@@ -185,7 +225,7 @@ form
             .add-sertificates
                // border: 2px solid #000
                position: absolute
-               right: 200px
+               right: 235px
                top: 50%
                transform: translateY(-50%)
                text-align: center
@@ -199,11 +239,11 @@ form
                   animation: updating 1.5s 1 ease
 
 
-@media screen and (max-width: 1150px) 
+@media screen and (max-width: 1300px) 
    form
       display: flex
-      justify-content: space-around
-      align-items: center
+      justify-content: flex-start
+      align-items: flex-start
       flex-direction: column
       .photo-update
          position: relative

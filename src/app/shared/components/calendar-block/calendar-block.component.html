@@ -1,4 +1,8 @@
-<div class="debug-block" *ngIf="true && helper.DEBUG">
+<div class="fb-security-popup" *ngIf="popupService.appointmentDeatailsPopup" >
+   <app-appointment-details-popup (voted) = "makeLessonFromPopup($event)"></app-appointment-details-popup>
+</div>
+
+<div class="debug-block" *ngIf="false && !production">
    <p>selectedDay: {{selectedDay}}</p>
    <p>currentFirstDay: {{currentFirstDay}}</p>
    <p>selectedDayOfWeek: {{selectedDayOfWeek}}</p>
@@ -6,11 +10,6 @@
    <p>selectedHourForLesson: {{selectedHourForLesson}}</p>
    <!-- <p>weeklySchedule: {{inputDoctorInfo.weeklySchedule | json}}</p> -->
 </div>
-
-<div class="fb-security-popup" *ngIf="popupService.appointmentDeatailsPopup" >
-   <app-appointment-details-popup (voted) = "makeLessonFromPopup($event)"></app-appointment-details-popup>
-</div>
-
 
 <div class="calendar">
    <div class="calendar-wrapper">
@@ -214,9 +213,9 @@
 
    </div>
    <div class="days-selection-wrapper">
-   <h3>Настройка моего графика</h3>
+   <h3>Рабочее время</h3>
       <div class="days-of-week-selection">
-         <div class="days-sign">Выберите удобные для вас дни</div>
+         <!-- <div class="days-sign">Выберите удобные для вас дни</div> -->
          <div class="days-of-week-checkboxes">
             <div class="day-of-week" 
                *ngFor="let item of daysOfWeek; index as i" 
@@ -226,15 +225,13 @@
             </div>
             
          </div>
-         <div class="lesson-duration-description">
+         <!-- <div class="lesson-duration-description">
             Стандартная продолжительность занятий - 
             <span>40 минут</span>
-         </div>
+         </div> -->
       </div>
-      <div class="days-of-week-aside">
-         <div class="days-sign">
-            Ваше рабочее время
-         </div>
+      <div class="days-of-week-settings">
+         <!-- <div class="days-sign" >Ваше рабочее время</div> -->
          <div class="days-of-week-aside-rows">
             <div class="time-row" 
             *ngFor="let item of daysOfWeek; index as i"
@@ -242,7 +239,7 @@
                <span>{{item}}</span>
                <div class="active-row row-settings" *ngIf="newDaysOfWeekShedule[i]">
                   <div class="row-setting from">
-                     <span>{{newDaysOfWeekShedule[i][0]}}</span>  
+                     <span>{{newDaysOfWeekShedule[i][0]}}</span>
                      <div class="increase time-setting-button" (click)="changeWorkHour(1, i, 0)"></div>
                      <div class="decrease time-setting-button" (click)="changeWorkHour(-1, i, 0)"></div>
                   </div>

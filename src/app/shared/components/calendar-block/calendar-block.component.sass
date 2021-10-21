@@ -4,12 +4,16 @@
    // border: 1px solid #000
    margin: 20px 0 100px
    display: flex
+   // display: none
    justify-content: space-between
    // max-width: 100%
    .calendar-wrapper
       margin-top: 40px
       width: 55vw
       max-width: 600px
+      @include box-shadow($nav_shadow)
+      border-radius: 20px
+      padding: 32px
       .calendar-header
          display: flex
          justify-content: space-around
@@ -25,10 +29,16 @@
             position: relative
             display: inline-block
             cursor: pointer
-            width: 18px
-            height: 18px
+            width: 20px
+            height: 15px
+            // border: 1px solid #000
             &::after
                top: -1px
+               width: 20px
+               height: 15px
+               background-image: url('/assets/icons/functions/arrow-blue.svg')
+               background-size: contain
+               background-repeat: no-repeat
                // background-color: #ccc
                // border: 1px solid #000
          .arrow-left
@@ -36,17 +46,14 @@
                content: ''
                position: absolute
                left: -1px
-               border: 9px solid transparent
-               border-left: 0px solid transparent
-               border-right: 14px solid $blue_common
+               transform: rotate(90deg)
+               
          .arrow-right
             &::after
                content: ''
                position: absolute
                right: -1px
-               border: 9px solid transparent
-               border-right: 0px solid transparent
-               border-left: 14px solid $blue_common
+               transform: rotate(-90deg)
       .calendar-body
          text-align: center
          font-size: 24px
@@ -330,29 +337,31 @@
                   background-color: $orange_common
             
 .change-shedule-block
+   max-width: 600px
    h3
       font-size: 25px
       font-weight: 600
-      text-align: center
+      text-align: left
+      margin-bottom: 32px
    .days-selection-wrapper
-      display: flex
-      justify-content: center
+      // display: flex
+      // justify-content: center
       // margin-top: 20px
       &>div
-         margin: 20px 20px 0px
+         // margin: 20px 20px 0px
          // border: 1px solid #000
       .days-sign
          font-size: 12px
       .days-of-week-selection
-         width: 55%
+         // width: 55%
          .days-of-week-checkboxes
             margin-top: 20px
             .day-of-week
                position: relative
                display: inline-block
-               width: 13%
-               height: 63px
-               margin-right: 1%
+               width: 65px
+               height: 56px
+               margin-right: 10px
                border-radius: 9px
                border: 1px solid $grey
                font-size: 22px
@@ -360,24 +369,28 @@
                color: $grey_45
                cursor: pointer
                user-select: none
+               &:last-child
+                  margin-right: 0
                &.active
                   background-color: $orange_501
+                  border: none
                   color: #fff
                span
                   position: absolute
                   top: 50%
                   left: 50%
                   transform: translate(-50%, -50%)
-      .days-of-week-aside
-         width: calc(45% - 30px)
+      .days-of-week-settings
+         // width: calc(45% - 30px)
          .time-row
             display: flex
             justify-content: space-between
             align-items: center
+            max-width: 370px
             font-size: 22px
             color: $grey_E6
             border-bottom: 1px solid #000
-            height: 37px
+            height: 54px
             &.active
                color: #000
             &>span
@@ -392,27 +405,71 @@
                justify-content: space-between
                .row-setting
                   display: inline-block
-                  width: 40%
                   position: relative
-                  border: 1px solid #000
-                  height: 30px
+                  padding: 10px
+                  height: 44px
+                  width: 64px
+                  border-radius: 10px
+                  background-color: $_4E463E02
+                  border: 1px solid $_4E463E15
                   .time-setting-button
                      position: absolute
                      right: 4px
-                     top: 50%
+                     top: 55%
                      transform: translateY(-50%)
-                     width: 0
                      cursor: pointer
-                     height: 0
-                     border-style: solid
-                     border-width: 0 5px 11px 5px
-                     border-color: transparent transparent #007bff transparent
-                           
+                     height: 16px
+                     width: 16px
+                     background-color: #fb8601a1
+                     border-radius: 3px
+                     // border: 1px solid #000
+                     // border-style: solid
+                     // border-width: 0 5px 11px 5px
+                     // border-color: transparent transparent #007bff transparent
+                     &::before
+                        content: ""
+                        position: absolute
+                        width: 10px
+                        height: 2px
+                        background-color: #FB8501
+                        top: 50%
+                        left: 50%
+                        transform: translate3d(-50%, -50%, 0)
                      &.increase
-                        margin-top: -7px
+                        margin-top: -12px
+                        &::after
+                           content: ""
+                           position: absolute
+                           width: 2px
+                           height: 10px
+                           background-color: #FB8501
+                           top: 50%
+                           left: 50%
+                           transform: translate3d(-50%, -50%, 0)
                      &.decrease
-                        margin-top: 2px
-                        transform: rotate(180deg)
+                        margin-top: 7px
+                  &::before
+                     content: 'С'
+                     position: absolute
+                     left: -42px
+                     top: 12px
+                     
+                     font-size: 20px
+                     color: #454A5A
+
+                     width: 30px
+                     height: 20px
+                     display: flex
+                     justify-content: flex-end
+                     align-items: center
+                     // border: 1px solid #000
+                     
+                  &.from
+                     &::before
+                        content: 'C'
+                  &.to
+                     &::before
+                        content: 'По'
    .buttons
       display: flex
       justify-content: flex-end
@@ -423,6 +480,7 @@
 
       .cancel
          margin-right: 50px   
+         background-color: #fb8601bd
       .submit-new-shedule
          position: relative
          &::after

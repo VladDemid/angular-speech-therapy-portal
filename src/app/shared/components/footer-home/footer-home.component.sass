@@ -1,18 +1,23 @@
+@import "../../../../assets/styles/_variables"
+
 footer
    color: #ccc
-   min-height: 150px
+   min-height: 100px
    padding: 20px 0
-   background-color: #454A4A
+   border-top: 1px solid #34302d38
+   // background-color: #454A4A
    .container
-      // border: 1px solid #fff
-   .entity-data
-      border-top: 1px solid #ccc
-  
-   .info-line
-      margin-top: 5px
-      &.requisites
-         text-decoration: underline
-         cursor: pointer
-      .info-title
-         &+div
-            display: inline
+      padding-top: 32px
+      display: flex
+      justify-content: space-between
+      .email a
+         font-size: 20px
+         font-weight: 700
+         color: $headings100
+      .info
+         li
+            display: inline-block
+            margin-right: 60px
+            &:last-child
+               margin-right: 0
+               

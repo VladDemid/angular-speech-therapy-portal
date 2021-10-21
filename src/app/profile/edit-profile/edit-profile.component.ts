@@ -374,6 +374,7 @@ export class EditProfileComponent implements OnInit {
       this.userData.sendMyDataChanges(newData)
       .subscribe((resp) => {
         console.log("url аватара записан");
+        this.avatarPrefireName = ""
       },
       (err) => {
         console.log("ошибка записи url аватара ", err);

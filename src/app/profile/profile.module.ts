@@ -16,6 +16,7 @@ import { SecurityPageComponent } from './security-page/security-page.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { EmailVerifyPopupComponent } from './shared/components/email-verify-popup/email-verify-popup.component';
 import { FirebaseService } from '../shared/services/firebase.service';
+import { AsideMenuComponent } from './shared/components/aside-menu/aside-menu.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { FirebaseService } from '../shared/services/firebase.service';
       DoctorsPageComponent,
       SecurityPageComponent,
       HelpPageComponent,
-      EmailVerifyPopupComponent
+      EmailVerifyPopupComponent,
+      AsideMenuComponent
    ],
    imports: [
       // CommonModule,

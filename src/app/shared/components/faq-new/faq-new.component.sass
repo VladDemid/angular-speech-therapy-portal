@@ -1,5 +1,8 @@
+@import "../../../../assets/styles/_variables"
+
 .faq
-   margin-bottom: 400px
+   margin-bottom: 40px
+   color: $headings100
 
 h2
    margin-bottom: 55px
@@ -15,17 +18,16 @@ h2
    .faq-item-header
       position: relative
       min-height: 90px
-      // border: 1px solid #000
-      border: 1px solid #000
+      margin: 20px 0
       border-radius: 10px
       display: flex
       justify-content: center
       align-items: center
-      color: #209EBB
-      h3
+      @include box-shadow($nav_shadow)
+      h4
          width: 80%
          display: block
-         font-size: 24px
+         font-size: 20px
          font-weight: 500
          line-height: 1.2em
          margin-right: 15px
@@ -45,16 +47,18 @@ h2
       transition: 0.15s
       max-height: 0px
       border-bottom: 1px solid #000
-      background-color: #F2F2F2
+      background-color: $orange_new05
       border-radius: 10px
-      color: #9C9C9C
       // margin: 50px 100px
       &:last-child
          border-bottom: none
+      h5
+         font-size: 20px
+         margin-bottom: 29px
          
       p
          // display: none
-         font-size: 21px
+         font-size: 16px
          line-height: 1.75em
          // font-weight: 400
    &.active
@@ -66,6 +70,8 @@ h2
          padding: 50px 100px
       .arrow
          transform: rotate(180deg)
+      .faq-item-header
+         display: none
 
 
 @media screen and (max-width: 900px) 

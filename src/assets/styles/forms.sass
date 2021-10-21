@@ -3,18 +3,24 @@
    display: flex
    justify-content: space-between
    color: #000
-   max-width: 1300px
+   max-width: 860px
    margin: 0 auto
    div
       text-align: center
       line-height: 70px
-      width: 49%
+      // width: 10%
       border: 2px solid #fff
       height: 70px
       cursor: pointer
       font-size: 22px
       font-weight: 500
       transition: all 0.15s
+      border-radius: 20px
+      &:nth-child(1)
+         width: 70%
+      &:nth-child(2)
+         width: 29%
+         
       &:hover
          border: 2px solid $yellow_common
          background-color: rgba(255, 183, 1, 0.5)
@@ -22,7 +28,7 @@
          border: 2px solid $orange_common
       &.active
          // background-color: $orange_common
-         border: 2px solid $orange_common
+         border: 2px solid $_34302D15
 
 .registration-type
    display: flex
@@ -87,22 +93,27 @@
 form
    button
       display: block
-      margin: 0 auto
+      // margin: 0 auto
+      height: 48px
       &.login
          margin: 50px auto 30px
          width: 254px
-         height: 52px
    .inputs-wrapper
       max-width: 824px
       margin: 0 auto
+      padding: 32px
+      border-radius: 20px
+      @include box-shadow($nav_shadow)
       label
          display: flex
          justify-content: space-between
          margin-top: 34px
          transition: all 0.15s
+      
          input, textarea
             width: 540px
-            border: 2px solid #CACACA
+            background-color: #4E463E05
+            border: 2px solid $_34302D15
             height: 56px
             border-radius: 9px
             outline: none
@@ -204,59 +215,59 @@ form
                padding-right: 0
                max-width: 166px
                // background-color: rgba(0,0,0,.1)
+      & > label:nth-child(1)
+         margin-top: 0
       .educations
+         position: relative
          .education
-            &:nth-child(n+2)
-               label span
-                  position: relative
-                  &::after
-                     content: '(доп)'
-                     position: absolute
-                     top: -20px
-                     right: 10px
-                     font-size: 12px
-                     color: #999
-                     width: 0px
-                     height: 0px
-                  
+            // &:nth-child(n+2)
+            //    label span
+            //       position: relative
+            //       &::after
+            //          content: '(доп)'
+            //          position: absolute
+            //          top: -20px
+            //          right: 10px
+            //          font-size: 12px
+            //          color: #999
+            //          width: 0px
+            //          height: 0px
+            
          .education_buttons
-            position: relative
-            cursor: pointer
-            display: inline-block
+            position: absolute
+            width: 24px
+            height: 24px
+            border-radius: 8px
             // border: 1px solid #000
-            // width: 30px
-            // height: 30px
-            padding-left: 30px
-            font-size: 20px
-            font-weight: 400
-            margin: 20px 20px 0 0 
-            display: flex
-            // justify-content: flex-start
-            // &::after
-            //    content: ''
-            //    position: absolute
-            //    top: calc(50% - 2px)
-            //    left: 10px
-            //    width: 20px
-            //    height: 4px
-            //    background-color: $blue_common
-            // &::before
-            //    content: ''
-            //    position: absolute
-            //    top: calc(50% - 10px)
-            //    left: 18px
-            //    width: 4px
-            //    height: 20px
-            //    background-color: $blue_common
-            button
-               // display: block
-               padding: 5px 5px
-               height: 70px
-               width: 160px
-               
-         .educations_decr
-            &::before
-               display: none
+            background-color: #fb8601a1
+            margin: 0
+            padding: 10px
+            color: #000
+            &:hover
+               transform: scale(1.05)
+            &::after, &::before
+               content: ''
+               position: absolute
+               width: 14px
+               height: 2px
+               background-color: $grey_45
+               top: 50%
+               left: 50%
+               transform: translate3d(-50%, -50%, 0)
+            &::after
+               width: 2px
+               height: 14px
+            &.incrEducation
+               bottom: 107px
+               left: 47px
+            &.decrEducation
+               bottom: 132px
+               right: -9px
+               &:after, &::before
+                  transform: translate3d(-50%, -50%, 0) rotate(45deg)
+            
+
+                  
 
             
 
@@ -316,24 +327,30 @@ form
                   &::after
                      content: ''
                      position: absolute
-                     width: 20px
-                     height: 20px
-                     top: calc(50% - 10px)
+                     width: 18px
+                     height: 18px
+                     top: calc(50% - 9px)
                      left: 5px
-                     border: 2px solid #CACACA
+                     border: 2px solid $form_non_selected
                      border-radius: 3px
                   &.specialization_selected
                      &::after
-                        border: 2px solid $orange_common
+                        // background-color: $orange_common
+                        border: 2px solid $orange_501
                      &::before
                         content: ''
                         position: absolute
                         width: 10px
-                        height: 10px
-                        top: calc(50% - 5px)
-                        left: 10px
-                        border: 2px solid $orange_common
-                        border-radius: 3px
+                        height: 9px
+                        top: calc(50% - 4px)
+                        left: 9px
+                        // border: 2px solid $orange_common
+                        // border: 1px solid #000
+                        // border-radius: 3px
+                        background-image: url('/assets/icons/functions/check-mark-3.svg')
+                        background-repeat: no-repeat
+                        background-size: cover
+
                label.radio
                   &::after
                      border-radius: 10px
@@ -346,7 +363,7 @@ form
                         width: 10px
                         height: 10px
                         top: calc(50% - 5px)
-                        left: 10px
+                        left: 9px
                         border: 2px solid $orange_common
                         border-radius: 10px
                input 
@@ -426,11 +443,12 @@ form
    text-decoration: underline
 .rules
    margin: 0 auto
-   width: 80%
+   width: 71%
    display: flex
    flex-direction: column
    justify-content: flex-start
    font-size: 16px
+   user-select: none
 
    label
       display: block
@@ -450,31 +468,38 @@ form
          opacity: 0%
          &:checked + span:after
             position: absolute
-            content: "\01F5F8"
-            width: 10px
-            top: 3px
+            content: ""
+            z-index: 10
+            width: 15px
             height: 12px
+            top: 3px
             color: #219EBC
             font-size: 20px
             font-weight: bold
-            left: -22px
+            left: -25px
+            background-image: url('/assets/icons/functions/check-mark.svg')
+            background-repeat: no-repeat
+            background-position: 0px 0px
+            // position: relative
+            // background-size: contain
             // bottom: 8px
          &:checked + span::before
-            border: 2px solid #748B91
+            border: 3px solid #748B91
          &:hover + span::before
-            border: 2px solid #96AFB8
+            border: 3px solid #96AFB8
          &:active + span::before
-            border: 2px solid #334A52
+            border: 3px solid #334A52
 
 
          & + span::before
             position: absolute
             content: ''
-            width: 16px
-            height: 16px
-            left: -24px
-            top: 3px
-            border: 2px solid #C9C9C9
+            width: 24px
+            height: 24px
+            left: -30px
+            top: calc(50% - 13px)
+            border: 3px solid #C9C9C9
+            
    a
       color: #019393
       text-decoration: underline

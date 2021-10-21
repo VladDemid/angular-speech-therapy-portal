@@ -2,10 +2,20 @@
    <div class="container">
       <div class="logo">
          <a [routerLink]="['/']">
-            <img class="logo_img" src="./assets/icons/logo_invert.png" alt="logo">
+            <img class="logo_img" src="./assets/icons/logo.svg" alt="logo">
          </a>
       </div>
-      <div class="profile-menu">
+      <div class="person">
+         <div class="portrait">
+            <img [src]="userData.myData.avatarUrl" alt="portrait">
+            <!-- {{userData.myData.avatarUrl}} -->
+         </div>
+         <div class="name">{{userData.myData.name}} {{userData.myData.surname}}</div>
+         <div class="notifications">
+            <img class="logo_img" src="./assets/icons/interface/bell.svg" alt="logo">
+         </div>
+      </div>
+      <!-- <div class="profile-menu">
          <div class="profile-navigation">
             <div class="dropdown">
                <span class="user-name">{{userData.myData.name}} {{userData.myData.surname}}</span>
@@ -15,22 +25,21 @@
                         <span class="inner">Календарь</span></li>
                      <li [routerLink]="['/profile/menu']" routerLinkActive="link-active">
                         <span class="inner">Личный кабинет</span></li>
-                     <!-- <li><span class="inner">Сообщения</span></li> -->
                      <li [routerLink]="['/profile/security']" routerLinkActive="link-active" >
                         <span class="inner">Безопасность</span></li>
                      <li [routerLink]="['/profile/edit']" routerLinkActive="link-active" >
                         <span class="inner">Личная информация</span></li>
-                        <!-- <li *ngIf="userData.myData.userType === 'doctor' "><span class="inner">Мои клиенты</span></li> -->
                      <li [routerLink]="['/profile/help']" routerLinkActive="link-active" >
                         <span class="inner">Помощь</span></li>
                      <li (click)="exitProfile()">
                         <span class="inner">Выход</span></li>
                   </ul>
                </div>
-             </div>
+            </div>
          </div>
          <div class="profile-notifications"></div>
-      </div>
+      </div> -->
+      <button class="exit" (click)="exitProfile()">выход</button>
    </div>
    
 </div>

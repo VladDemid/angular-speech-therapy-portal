@@ -5,10 +5,10 @@
 <div class="calendar-page">
    <div class="container">
       
-      <ul class="breadcrumb-arrows arrows">
-         <li><a [routerLink]="['/profile']">Личный кабинет</a></li>
-         <li><a>Календарь</a></li>
-      </ul>
+      <div class="breadcrumb-arrows arrows">
+         <a [routerLink]="['/profile']">Личный кабинет</a>
+      </div>
+      <h3>Календарь</h3>
 
       <!-- <ol class="arrows">
          <li><a href="#">Home</a></li>
@@ -23,8 +23,8 @@
          Вы вошли как 
          <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥  {{myId | slice:0:5}}</span>
          <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}}</span>
-         <button (click)="testMessage()">telegram</button>
-         <button (click)="testZoom()">Zoom</button>
+         <!-- <button (click)="testMessage()">telegram</button>
+         <button (click)="testZoom()">Zoom</button> -->
          
       </div>
       

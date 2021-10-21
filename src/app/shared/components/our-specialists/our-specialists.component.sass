@@ -1,5 +1,5 @@
 .specialists
-   padding: 47px 0 35px
+   padding: 84px 0 0px
    
       
    &__filters
@@ -27,29 +27,37 @@
       &_title
          position: relative
          border: 1px solid #9C9C9C
-         padding: 6px 30px 6px 10px
-         height: 34px
+         // padding: 6px 30px 6px 10px
+         height: 44px
          // width: 80%
          border-radius: 10px
          font-size: 19px
          span
             display: block
+            position: absolute
+            top: calc(50% - 11px)
+            left: 12px
+            
             // max-width: 90%
             overflow: hidden
             white-space: nowrap
          &::after
             content: ''
             position: absolute
+            z-index: 4
             right: 10px
-            top: 9px
+            top: 12px
             // transform: translateY(-50%)
-            width: 10px
-            height: 10px
+            width: 20px
+            height: 15px
             // background-color: #209EBB
             transition: 0.2s
-            border-style: solid
-            border-width: 0 6px 12px 6px
-            border-color: transparent transparent #209EBB transparent
+            // border: 1px solid #000
+            background-image: url('/assets/icons/functions/arrow-blue.svg')
+            background-repeat: no-repeat
+            background-size: contain
+            // border-width: 0 6px 12px 6px
+            // border-color: transparent transparent #209EBB transparent
          &.active
             &::after
                transition: 0.2s
@@ -64,11 +72,11 @@
             background: gradient(left, rgba(255,204,0, 0.2), #fc0 100%)
       &_list
          position: absolute
-         top: 26px
+         top: 34px
          z-index: 2
          background-color: #fff
          width: 100%
-         border: 1px solid #000
+         border: 1px solid #9C9C9C
          border-top: none
          border-radius: 0 0 10px 10px
          .custom_selector_item
@@ -83,6 +91,7 @@
                border-radius: 0 0 10px 10px
             &:hover
                background-color: #D6D6D6
+               color: #505050
                transition: 0.1s
             &.active
                background-color: #FB8501
@@ -92,7 +101,7 @@
       .name
          border: 1px solid #9C9C9C
          width: 570px
-         height: 34px
+         height: 44px
          border-radius: 10px
          margin-top: 9px
          outline: none

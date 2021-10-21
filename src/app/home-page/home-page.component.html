@@ -14,30 +14,16 @@
    <!-- <div class="container"> -->
       <!-- <button (click)="testSignIn()">test sign in</button> -->
       <div class="promo">
-         <app-footer-home></app-footer-home>
+         
          <div class="container">
+            <!-- <slideshow [imageUrls]="testUrls"></slideshow> -->
+            <div class="promo-descr">
+               <p class="describe">
+                  <span>Логого</span> - онлайн занятия с детьми по коррекции поведения, слуха и речи
+               </p>
+               <button class="sign-up">Записаться</button>
+            </div>
             
-            <div class="promo_descr specialists">
-               <span class="highlighted">
-                  Для вас работают опытные специалисты:
-               </span>
-               <p class="describe">
-                  логопеды, психологи, сурдопедагоги, тифлопедагоги, 
-                  специалисты по РАС, специалисты по двигательной реабилитации
-                  детей с ДЦП
-               </p>
-            </div>
-            <div class="promo_descr services">
-               <span class="highlighted">
-                  Виды услуг: 
-               </span>
-               <p class="describe">
-                  онлайн консультации
-                  комплексная диагностика
-                  индивидуальные занятия 
-               </p>
-               <!-- <button (click)="getSignature()">Zoom</button> -->
-            </div>
 
             <!-- <h1 class="promo_header">
                Инклюзив - дефектологическая
@@ -59,21 +45,12 @@
          [firebaseDoctors]="doctors"
          [isProfileModule]="false"
       ></app-our-specialists>
-   
-      <div class="recomendation">
-         <div class="container">
-            <h2>Рекомендуем</h2>
-            <div class="recomendation__our-game our-game">
-               <img class="our-game__img" src="./assets/img/our-game/our-game.png" alt="" class="our-game__img">
-               <p class="our-game__descr">
-                  <span>CatZu</span> - это детская мобильная игра, содержащая базовый комплекс упражнений для развития артикуляционной моторики и советы для родителей от профессионалов
-               </p>
-               <a href="#more" id="more" class="our-game__more">Узнать больше ></a>
-            </div>
-         </div>
-      </div>
+
+      <app-recomendation></app-recomendation>
+      
+      <app-job-invitation></app-job-invitation>
    
       <app-faq-new></app-faq-new>
-      <!-- <app-faq></app-faq> -->
+      <app-footer-home></app-footer-home>
    <!-- </div> -->
 </div>

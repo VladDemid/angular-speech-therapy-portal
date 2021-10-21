@@ -3,16 +3,18 @@
       <nav>
          <div class="logo">
             <a [routerLink]="['/']">
-               <img class="logo_img" src="./assets/icons/logo.png" alt="logo">
+               <img class="logo_img" src="./assets/icons/logo.svg" alt="logo">
             </a>
          </div>
          <div class="menu">
             <ul>
                <li><a [routerLink]="['/']" [fragment]="'specialists'">Специалисты</a></li>
                <li><a [routerLink]="['/']" [fragment]="'faq'">FAQ</a></li>
-               <li><a [routerLink]="['/']" [fragment]="''">Контакты</a></li>
-               <li><button class="login" *ngIf="!isAuthenticated" id="login" [routerLink]="['/']" (click)="popupService.toggleLoginPopup()">Войти</button></li>
-               <li><button class="login" *ngIf="isAuthenticated" [routerLink]="['/profile']" >в кабинет</button></li>
+               <li><a [routerLink]="['/']" [fragment]="'footer'">Контакты</a></li>
+               <li>
+                  <button class="login" *ngIf="!isAuthenticated" id="login" [routerLink]="['/']" (click)="popupService.toggleLoginPopup()">Войти</button>
+                  <button class="login" *ngIf="isAuthenticated" [routerLink]="['/profile']" >в кабинет</button>
+               </li>
             </ul>
          </div>
       </nav>

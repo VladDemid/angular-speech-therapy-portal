@@ -4,10 +4,10 @@
 
 <div class="edit-profile">
    <div class="container">
-      <ul class="breadcrumb-arrows arrows">
-         <li><a [routerLink]="['/profile']">Личный кабинет</a></li>
-         <li><a>Моя информация</a></li>
-      </ul>
+      <div class="breadcrumb-arrows arrows">
+         <a [routerLink]="['/profile']">Личный кабинет</a>
+      </div>
+      <h3>Персональные данные</h3>
       <!-- форма для клиента -->
       <form 
       [formGroup]="clientForm"
@@ -21,7 +21,7 @@
             <label><span>Фамилия</span><input required name="surname" type="text" formControlName="surname" [placeholder]="userData.myData.surname"></label>
             <label><span>Отчество</span><input required name="patronymic" type="text" formControlName="patronymic" [placeholder]="userData.myData.patronymic"></label>
             <label><span class="narrow">Диагноз ребенка</span><input required name="childDiagnosis" type="text" formControlName="childDiagnosis" [placeholder]="userData.myData.childDiagnosis"></label>
-            <button class="submit" type="submit">Изменить</button>
+            <button class="submit" type="submit">Сохранить изменения</button>
             <div class="update-success" *ngIf="showUpdate">
                Информация обновлена!
             </div>
@@ -40,14 +40,13 @@
                <img src="{{defaultAvatar}}" *ngIf="!userData.myData.avatarUrl" alt="">
                <img src="{{userData.myData.avatarUrl}}" *ngIf="userData.myData.avatarUrl" alt="">
             </div>
-            <!-- <div class="photo-preview">photo</div> -->
             <div class="avatar-buttons-wrapper">
                <label class="input-avatar-label btn" [ngClass]="{'hide': avatarPrefireName}" for="avatar-upload-button">
-                  <span *ngIf="!avatarPrefireName" >изменить фото</span>
+                  <span *ngIf="!avatarPrefireName" ></span>
                   <span *ngIf="avatarPrefireName" class="success">файл выбран</span>
                   <input class="upload-avatar" (click)="scanAvatarName()" name="avatar" type="file" id="avatar-upload-button">
                </label>
-               <button class="button upload" *ngIf="avatarPrefireName" [ngClass]="{'loading': uploadingAvatar}"  (click)="updateAvatar()">загрузить фото</button>
+               <button class="button upload" *ngIf="avatarPrefireName" [ngClass]="{'loading': uploadingAvatar}"  (click)="updateAvatar()"></button>
             </div>
          </div>
          <div class="inputs-wrapper">
@@ -62,24 +61,22 @@
                      <label><span>Год выпуска</span><input required name="year"  type="text" [placeholder]="userData.myData.year" formControlName="year"></label>
                   </div>
                </div>
-               <div class="education" *ngIf="educationsCount > 1">
+               <div class="education" *ngIf="educationsCount > 1" >
                   <label><span>Вуз</span><input required name="university2" type="text"  [placeholder]="userData.myData.university2" formControlName="university2"></label>
                   <div class="double-input-row">
                      <label><span>Факультет</span><input required name="faculty2"  type="text" [placeholder]="userData.myData.faculty2" formControlName="faculty2"></label>
                      <label><span>Год выпуска</span><input required name="year2"  type="text" [placeholder]="userData.myData.year2" formControlName="year2"></label>
                   </div>
                </div>
-               <div class="education" *ngIf="educationsCount > 2">
+               <div class="education" *ngIf="educationsCount > 2" >
                   <label><span>Вуз</span><input required name="university3" type="text"  [placeholder]="userData.myData.university3" formControlName="university3"></label>
                   <div class="double-input-row">
                      <label><span>Факультет</span><input required name="faculty3"  type="text" [placeholder]="userData.myData.faculty3" formControlName="faculty3"></label>
                      <label><span>Год выпуска</span><input required name="year3"  type="text" [placeholder]="userData.myData.year3" formControlName="year3"></label>
                   </div>
                </div>
-               <div class="education_buttons">
-                  <button type="button" (click)="incrEducation()">Добавить образование</button>
-                  <button type="button" (click)="decrEducation()">Удалить образование</button>
-               </div>
+               <button type="button" class="education_buttons incrEducation" (click)="incrEducation()" *ngIf="educationsCount < 3"></button>
+               <button type="button" class="education_buttons decrEducation" (click)="decrEducation()" *ngIf="educationsCount > 1"></button>
                <!-- <div class="educations_incr" (click)="incrEducation()">
                </div>
                <div class="educations_decr" (click)="decrEducation()">
@@ -126,7 +123,7 @@
          <form class="new-sertificates" id="newSertificatesForm">
             <div class="inputs-wrapper">
                <label>
-                  <span class="narrow">Добавить сертификаты</span> 
+                  <span >Cертификаты</span> 
                   <input class="upload_documents" name="documents" type="file" id="newSertificates" multiple (change)=changeSertificatesCount()>
                   <div class="add-sertificates btn">выбрать файлы</div>
                   <button class="upload-sertrificates" [ngClass]="{loading: uploadingSertificates}" *ngIf="newFilesToUpload > 0" (click)="addNewSertificates()">
@@ -134,17 +131,16 @@
                   </button>
                </label>
             </div>
-         </form>
-         <h3 *ngIf="userData.myData.sertificatesNames && userData.myData.sertificatesNames[0]">Мои сертификаты</h3>
-         <div class="sertif-list" *ngIf="userData.myData.sertificatesLinks">
-            <div class="sertif-item" *ngFor="let item of userData.myData.sertificatesLinks; let i = index">
-               <div class="img-wrapper">
-                  <img class="sertif-img" src={{item}} alt="sertificate" (click)="popupService.showImgPopup(item, userData.myData.sertificatesNames[i])">
-                  <div class="sertif-delete" (click)="deleteSertificate(i)">&#10006;</div>
+            <div class="sertif-list" *ngIf="userData.myData.sertificatesLinks">
+               <div class="sertif-item" *ngFor="let item of userData.myData.sertificatesLinks; let i = index">
+                  <div class="img-wrapper">
+                     <img class="sertif-img" src={{item}} alt="sertificate" (click)="popupService.showImgPopup(item, userData.myData.sertificatesNames[i])">
+                     <div class="sertif-delete" (click)="deleteSertificate(i)">&#10006;</div>
+                  </div>
+                  <!-- <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span> -->
                </div>
-               <!-- <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span> -->
             </div>
-         </div>
+         </form>
       </div>
    </div>
 </div>

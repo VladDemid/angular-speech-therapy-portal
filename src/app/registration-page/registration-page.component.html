@@ -4,11 +4,11 @@
 
 <div class="registration-block">
    <div class="login-registration_tabs">
-      <div class="registration-tab active">Регистрация</div>
+      <div class="registration-tab active">Регистрация для пациентов</div>
       <div class="login-tab" [routerLink]="['/']" (click)="popupService.homePageLoginPopup = true">Вход</div>
    </div>
    <div class="container">
-      <div class="registration-type">
+      <div class="registration-type" *ngIf="false">
          <label>
             <input required checked type="radio" name="registration-type" value="client">
             <span class="type-text" (click)="showClientForm()" [ngClass]="{active: clientFormDisplay}">Присоединиться как пациент</span>

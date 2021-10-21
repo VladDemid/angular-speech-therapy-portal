@@ -63,6 +63,7 @@ import { RequisitesPopupComponent } from './components/requisites-popup/requisit
       EventDetailsPopupComponent,
       AppointmentDetailsPopupComponent,
       
+      
       // FaqNewComponent,
       // FbSecurityPopupComponent,
    ],

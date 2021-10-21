@@ -18,7 +18,7 @@ export class NavHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAuthentication()
-    this.scrollcheck()
+    // this.scrollcheck()
   }
 
   checkAuthentication() {

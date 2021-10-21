@@ -3,6 +3,8 @@ import { UserData } from '../shared/services/user-data.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { PopupService } from 'src/app/shared/services/popup.service';
+import { DevelopHelp } from 'src/app/shared/services/develop-help.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -12,6 +14,8 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 export class MenuComponent implements OnInit {
 
 
+  testVar = 2
+  production = environment.production
 
   menuItems = [
     {
@@ -39,7 +43,7 @@ export class MenuComponent implements OnInit {
         link: "security",
       },
       {
-        name: "Доктора",
+        name: "Специалисты",
         link: "doctors",
       },
       {
@@ -54,7 +58,8 @@ export class MenuComponent implements OnInit {
     public userData: UserData,
     private auth: AuthService,
     private router: Router,
-    public popupService: PopupService
+    public popupService: PopupService,
+    public helper: DevelopHelp 
   ) {}
 
     

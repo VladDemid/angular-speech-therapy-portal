@@ -1,29 +1,66 @@
 @import '../../../../../assets/styles/_variables'
 
 .navigation
-   margin-top: 12px
-   // position: absolute
+   position: sticky
+   top: 0px
+   z-index: 30
    // width: 100%
-   .container
-      display: flex
-      justify-content: space-between
+   // border-bottom: 1px solid #000
+   @include box-shadow($nav_shadow)
+   height: 93px
+   background-color: $fcfcfc
 
+   .container
+      height: 100%
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      // border: 1px solid #000
 
 .logo
+   position: relative
    display: inline-block
    width: 119px
+   margin-left: 150px
    // height: 88px
    // border: 1px solid #000
    a
+      position: absolute
+      top: 50%
+      left: 0px
+      transform: translateY(-50%)
       // display: inline-block
       img
          display: block
-         // width: 100%
+         width: 66px
+         height: 54px
          // max-height: 100%
+
+.person
+   // border: 1px solid #000
+   display: flex
+   justify-content: flex-start
+   align-items: center
+   user-select: none
+   &>div
+      // border: 1px solid #000
+      margin-right: 12px
+   .name
+      font-size: 20px
+      font-weight: 600
+      color: $orange_new
+   .notifications
+      margin-top: 3px
+      cursor: not-allowed
+
+.exit
+   margin-left: auto 
+
+
 
 .profile-menu 
    display: flex
-   justify-content: space-between
+   justify-content: center
 
 
    .dropdown

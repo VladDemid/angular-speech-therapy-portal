@@ -7,10 +7,10 @@
    <div class="specialist-card__name">{{card.name}} {{card.surname}}</div>
    <div class="specialist-card__specialization">{{card.mainSpecialization}}</div>
    <!-- <div class="specialist-card__description">{{card.aboutMe | slice:0:65}}</div> -->
-   <div *ngIf="card.aboutMe" class="specialist-card__description">{{card.aboutMe | textCutter:60}}</div>
+   <div *ngIf="card.aboutMe" class="specialist-card__description">{{card.aboutMe | textCutter:70}}</div>
 
    <!-- <div class="specialist-card__experience">Стаж (лет): {{card.experience}}</div> -->
    <div class="specialist-card__details">
-      <a [routerLink]="['/doctor']" [queryParams]='{id: encryptedId, returnToProfileModule: isProfileModule}' >Подробнее ></a>
+      <a [routerLink]="['/doctor']" [queryParams]='{id: encryptedId, returnToProfileModule: isProfileModule}' >Узнать больше</a>
    </div>
 </div>

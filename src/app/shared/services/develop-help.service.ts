@@ -22,10 +22,17 @@ export class DevelopHelp {
          for (var i = 0; i < arguments.length; i++) {
             console.log(arguments[i])
          }
-      } 
+      }
    }
    
    test() {
       console.log("test test");
+   }
+
+   preventLog() {
+      if (environment.production) {
+         window.console.log = function () { };   // disable any console.log debugging statements in production mode
+       
+      }
    }
 }

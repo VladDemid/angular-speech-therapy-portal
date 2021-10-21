@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { UserData } from 'src/app/profile/shared/services/user-data.service';
 import { DebugHelper } from 'protractor/built/debugger';
 import { DevelopHelp } from '../../services/develop-help.service';
-import { zoomConfig } from 'src/environments/environment';
+import { environment, zoomConfig } from 'src/environments/environment';
 import { TelegramBotService } from '../../services/telegram-bot.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class CalendarBlockComponent implements OnInit {
   @Input() calendarUserId: string;
   @Input() isInProfileModule: boolean | string; // string|boolean
   
+  production = environment.production
 
   currentHour = new Date().getHours()
   selectedDay = -1 //номер дня (-1\ 1-31)

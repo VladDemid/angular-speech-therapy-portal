@@ -1,0 +1,59 @@
+@import '../../../../../assets/styles/_variables'
+
+.aside-menu
+   position: fixed
+   left: 0px
+   height: 100% 
+   user-select: none  
+   // border: 1px solid #000
+   width: 96px
+   background-color: #fcf6ef
+   padding-top: 85px
+   z-index: 10
+   .pages
+      .page-link
+         position: relative
+         display: flex
+         justify-content: center
+         margin-bottom: 15px
+         padding: 5px
+         cursor: pointer
+         svg 
+            transition: 0.2s all
+            path
+               fill: #fb8601a6
+         &.active
+            svg 
+               // display: block
+               // border: 1px solid #000
+               margin-left: 20px
+               path
+                  fill: #fb8601
+         &:hover
+            .nameplate
+               display: block
+               opacity: 1
+               max-width: 230px
+            svg path
+               fill: $orange_new
+         .nameplate
+            // display: none
+            position: absolute
+            white-space: nowrap
+            // width: 150px
+            @include box-shadow($nav_shadow_hover)
+            top: 50%
+            padding: 7px 12px
+            max-width: 0px
+            opacity: 0
+            backdrop-filter: blur(2px)
+            border-radius: 7px
+            transition: 0.2s all
+            transition-max-width: 0s
+            overflow: hidden
+            font-weight: 600
+            // right: -150px
+            left: 80px
+            // color: red
+            background-color: #fb8601b7
+            transform: translateY(-50%)

@@ -19,7 +19,7 @@ export class HomePageComponent implements OnInit {
 
   doctors = []
 
-
+  // testUrls = ['https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Inkscape_vectorisation_test.svg/1280px-Inkscape_vectorisation_test.svg.png']
 
   constructor(
     public popupService: PopupService,
