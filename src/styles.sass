@@ -2,6 +2,8 @@
 // @import "../node_modules/@zoomus/websdk/dist/css/react-select.css"
 @import "assets/styles/normlize.min"
 @import "assets/styles/light-reset.min"
+// @import '~swiper/swiper.min.css'
+@import '~swiper/swiper-bundle.min.css'
 @import "assets/styles/variables"
 @import "assets/styles/forms"
 @import "assets/styles/popups"
@@ -93,6 +95,22 @@ app-profile-layout
    padding: 0 15px
    margin: 0 auto
 
+swiper
+   .swiper-pagination-bullet
+      background-color: rgba(33, 158, 188, 1)
+   .swiper-button-next, .swiper-button-prev
+      // top: -1px
+      // width: 20px
+      // height: 15px
+      background-image: url('/assets/icons/functions/arrow-blue.svg')
+      background-size: contain
+      background-repeat: no-repeat
+      &::after
+         display: none
+   .swiper-button-next
+      transform: rotate(-90deg)
+   .swiper-button-prev
+      transform: rotate(90deg)
 .preloader
    // border: 3px dashed #000
    display: flex
@@ -253,12 +271,13 @@ button, .btn
    padding: 20px 0
    white-space: nowrap
    user-select: none
+   display: inline-block
 
    a
       position: relative
       font-size: 16px
       padding: 4px 30px
-      color: #000
+      color: $textBody80
 
       &::before
          content: ''
@@ -288,7 +307,32 @@ button, .btn
       color: $orange_new
       font-size: 24px
 
-
+.delete-button
+   position: absolute
+   width: 24px
+   height: 24px
+   border-radius: 8px
+   // border: 1px solid #000
+   background-color: #fb8601a1
+   margin: 0
+   padding: 10px
+   color: #000
+   &:hover
+      transform: scale(1.05)
+   &::after, &::before
+      content: ''
+      position: absolute
+      width: 14px
+      height: 2px
+      background-color: $grey_45
+      top: 50%
+      left: 50%
+      transform: translate3d(-50%, -50%, 0) rotate(45deg)
+   &::after
+      width: 2px
+      height: 14px
+         
+            
 
 
 
@@ -362,3 +406,6 @@ button, .btn
       &:after, &:before
          width: 100%
          left: 0
+
+.footer-spacer
+   height: 150px

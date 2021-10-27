@@ -4,34 +4,81 @@
 </div>
 <div class="doctor-card" *ngIf="doctorInfo" [ngClass]="{'in-profile': isInProfileModule == 'true'}">
    <div class="container">
+      <div class="breadcrumb-arrows arrows">
+         <a [routerLink]="['/profile']" *ngIf="isInProfileModule == 'true'">Личный кабинет</a>
+         <a [routerLink]="['/']" *ngIf="isInProfileModule == 'false'">Назад</a>
+      </div>
       <div class="user-data">
          <div class="user-image">
             <img *ngIf="doctorInfo.avatarUrl" [src]="doctorInfo.avatarUrl" alt="person photo">
             <img *ngIf="!doctorInfo.avatarUrl" [src]="defaultAvatarUrl" alt="person photo">
          </div>
-         <div class="user-description">
-            <div class="name"><span>{{doctorInfo.surname}} {{doctorInfo.name}} {{doctorInfo.patronymic}}</span></div>
-            <div class="specializations"><span>Специализация : </span>
+         <div class="user-description-short">
+            <div class="name">{{doctorInfo.surname}} {{doctorInfo.name}}</div>
+            <div class="specialization">
+               <span class="specialization-main">{{doctorInfo.mainSpecialization}}</span>
+               <span class="experience">Опыт {{doctorInfo.experience}} лет</span>
+               
                <!-- {{doctorInfo.mainSpecialization | specializationsList:doctorInfo.specializations}} -->
-               <ul class="specializations-list">
+               <!-- <ul class="specializations-list">
                   <li *ngFor="let item of doctorInfo.mainSpecialization | specializationsList:doctorInfo.specializations">
                      {{item}}
                   </li>
-               </ul>
+               </ul> -->
             </div>
+            <div class="about-me-short">
+               {{doctorInfo.aboutMe | textCutter:80}}
+            </div>
+            <button class="">записаться на прием</button>
             <!-- <div class="error-msg" *ngIf="helper.DEBUG && isInProfileModule && !userData?.myData?.name" style="font-weight: bold;">
                ---------------ERROR MSG----------------<br>
                isInProfileModule: {{isInProfileModule}}
             </div> -->
-            <div *ngIf="doctorInfo.experience"><span>Стаж (лет): </span>{{doctorInfo.experience}}</div>
-            <div *ngIf="doctorInfo.university"><span>Образование: </span>{{doctorInfo.university}} {{doctorInfo.faculty}} ({{doctorInfo.year}} г.)</div>
-            <div *ngIf="doctorInfo.university2 && doctorInfo.educationsCount > 1"><span>Образование 2: </span>{{doctorInfo.university2}} {{doctorInfo.faculty2}} ({{doctorInfo.year2}} г.)</div>
-            <div *ngIf="doctorInfo.university2 && doctorInfo.educationsCount > 2"><span>Образование 3: </span>{{doctorInfo.university3}} {{doctorInfo.faculty3}} ({{doctorInfo.year3}} г.)</div>
+            <!-- <div *ngIf="doctorInfo.experience"><span>Стаж (лет): </span>{{doctorInfo.experience}}</div> -->
+            <!-- <div *ngIf="doctorInfo.university"><span>Образование: </span>{{doctorInfo.university}} {{doctorInfo.faculty}} ({{doctorInfo.year}} г.)</div>
+               <div *ngIf="doctorInfo.university2 && doctorInfo.educationsCount > 1"><span>Образование 2: </span>{{doctorInfo.university2}} {{doctorInfo.faculty2}} ({{doctorInfo.year2}} г.)</div>
+               <div *ngIf="doctorInfo.university2 && doctorInfo.educationsCount > 2"><span>Образование 3: </span>{{doctorInfo.university3}} {{doctorInfo.faculty3}} ({{doctorInfo.year3}} г.)</div> -->
+            </div>
          </div>
+         <app-calendar-block [inputDoctorInfo]="doctorInfo" [doctorEventsYearMonthDayHour]="doctorEventsYearMonthDayHour" [isCalendarPage]="false" [calendarUserId]="doctorId" [isInProfileModule]="isInProfileModule"></app-calendar-block>
+         <div class="education">
+            <h2>Образование</h2>
+            <ul class="education-list">
+               <li>
+                  <div class="years">{{doctorInfo.year}}</div>
+                  <div class="university">{{doctorInfo.university}}</div>
+                  <div class="faculty">{{doctorInfo.faculty}}</div>
+               </li>
+            <li *ngIf="doctorInfo.educationsCount > 1">
+               <div class="years">{{doctorInfo.year2}}</div>
+               <div class="university">{{doctorInfo.university2}}</div>
+               <div class="faculty">{{doctorInfo.faculty2}}</div>
+            </li>
+            <li *ngIf="doctorInfo.educationsCount > 2">
+               <div class="years">{{doctorInfo.year3}}</div>
+               <div class="university">{{doctorInfo.university3}}</div>
+               <div class="faculty">{{doctorInfo.faculty3}}</div>
+            </li>
+         </ul>
+         <h2>Сертификаты</h2>
+         <ul class="sertificates-list">
+            <li class="sertificate-item"></li>
+            <li class="sertificate-item"></li>
+            <li class="sertificate-item"></li>
+            <li class="sertificate-item"></li>
+            <li class="sertificate-item"></li>
+         </ul>
       </div>
-      <div class="about-me">
-         <p class="detailed-description"><span>О себе: </span>{{doctorInfo.aboutMe}}</p>
+      <div class="about">
+         <h2>О специалисте</h2>
+         <p class="detailed-description">{{doctorInfo.aboutMe}}</p>
+
       </div>
-      <app-calendar-block [inputDoctorInfo]="doctorInfo" [doctorEventsYearMonthDayHour]="doctorEventsYearMonthDayHour" [isCalendarPage]="false" [calendarUserId]="doctorId" [isInProfileModule]="isInProfileModule"></app-calendar-block>
+      <!-- <div class="about-me">
+      </div> -->
+
+      <!-- ?????? -->
+      <!-- ?????? -->
    </div>
 </div>
+<app-footer-home></app-footer-home>

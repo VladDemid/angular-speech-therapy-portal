@@ -48,7 +48,7 @@
       <div class="day-not-chosen-sign" *ngIf="selectedDay == -1 || !inputDoctorInfo.weeklySchedule[selectedDayOfWeek]">
          <!-- день не выбран -->
          <div class="time-blocker"> 
-            Выберите рабочий день специалиста
+            <span class="">Выберите рабочий день специалиста</span>
             <div class="example">
                <div class="not-working-color color-example"></div>
                <p> - не рабочие дни специалиста</p>
@@ -125,12 +125,15 @@
                </div>
             </div>
             <div class="my-lessons" *ngIf="userData.myData.events">
-               Предстоящие занятия:
+               <div class="lessons-title">
+                  Занятия
+               </div>
                <div class="lesson-card" 
                   *ngFor="let item of userData.myData.events | lessonsView:currentYear:currentMonth:day:currentHour"
                   [ngClass]="{'selected': item[1].date.day == selectedDay + 1}">
                   <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}">
                   </div>
+                  <div class="subtitle">Дата и время</div>
                   <div class="date">
                      <span class="days-left" *ngIf="item[1].daysLeft > 1">
                         Через {{item[1].daysLeft - 1}} дней,
@@ -143,11 +146,15 @@
                      </span>
                      {{item[1].date.day}} {{monthsNamesWhomCase[item[1].date.month - 1]}}</div>
                   <div class="time">{{item[1].time | timeRow}}</div>
-                  <div class="doctor-name">{{item[1].patientName}}</div>
+                  <div class="subtitle">Пациент</div>
+                  <div class="patient-name">{{item[1].patientName}}</div>
                   <div class="problem">{{item[1].problemDescription}}</div>
-                  <button (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]">подробнее</button>
-                  <button (click)="confirmEvent(item[0])">подтвердить</button>
-                  
+                  <p>1</p>
+                  <p>2</p>
+                  <p>3</p>
+                  <!-- <button (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]">подр</button> -->
+                  <button (click)="confirmEvent(item[0])" *ngIf="!item[1].doctorsConfirmation == true">подтверждаю занятие</button>
+                  <div class="details" (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]"></div>
                   <!-- <div class="zoom">{{item[1].zoom.link}}</div> -->
                </div>
             </div>

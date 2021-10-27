@@ -24,12 +24,14 @@ import { FaqNewComponent } from './shared/components/faq-new/faq-new.component';
 import { RequisitesPopupComponent } from './shared/components/requisites-popup/requisites-popup.component';
 import { RecomendationComponent } from './shared/components/recomendation/recomendation.component';
 import { JobInvitationComponent } from './shared/components/job-invitation/job-invitation.component';
+import { SwiperModule } from 'swiper/angular';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   multi: true,
   useClass: AuthInterceptor
 }
+
 
 @NgModule({
   declarations: [
@@ -59,15 +61,15 @@ const INTERCEPTOR_PROVIDER: Provider = {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule
-    
+    SharedModule,
+    SwiperModule,
   ],
   exports: [
     HttpClientModule
   ],
   providers: [
     UserData,
-    INTERCEPTOR_PROVIDER
+    INTERCEPTOR_PROVIDER,
   ],
   bootstrap: [AppComponent]
 })

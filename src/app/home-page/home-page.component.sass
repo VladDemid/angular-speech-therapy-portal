@@ -2,32 +2,62 @@
 
 
 .home-page
-   // background-image: linear-gradient(to top right, $backgroung_purple, $backgroung_light_blue)
+   swiper .swiper-slide
+      text-align: center
+      border: 1px dashed #000
    .promo
       height: 808px
-      padding: 250px 0 74px
+      // padding: 250px 0 74px
       background-image: url('../../assets/img/promo_bg.jpg')  
-      // background-image: url('../../assets/img/promo_bg.png')
       background-repeat: no-repeat
-      // background-clip: cover
       background-size: cover
-      background-position: 0% 40% 
-
-      &-descr 
-         .describe
-            max-width: 550px
-            color: $heading
-            // line-height: 55px
-            font-size: 40px
-            font-weight: 500
-            margin-bottom: 70px
-            span
+      // background-position: 0% 40% 
+      // background: linear-gradient(114.5deg, rgba(252, 252, 252, 0.2) 1.77%, rgba(251, 133, 1, 0.004) 100%)
+      swiper
+         position: relative   
+         padding-top: 20px
+         img
+            display: block
+            width: 80%
+            border-radius: 40px
+            margin-left: auto
+            margin-right: 65px
+         .sign
+            position: absolute
+            padding: 44px
+            left: 70px
+            bottom: 100px
+            width: 364px
+            // height: 300px
+            border-radius: 20px
+            background-color: rgba(252, 252, 252, 0.3)
+            backdrop-filter: blur(35px)
+            .title
+               font-size: 56px
                color: $orange_new
-               font-size: 40px
                font-weight: 700
-               line-height: 61px
-         .sign-up
-            width: 238px
+               line-height: 68px
+               margin-bottom: 20px
+            .descr
+               font-size: 24px
+               font-weight: 500
+               margin-bottom: 44px
+
+      // &-descr 
+      //    .describe
+      //       max-width: 550px
+      //       color: $heading
+      //       // line-height: 55px
+      //       font-size: 40px
+      //       font-weight: 500
+      //       margin-bottom: 70px
+      //       span
+      //          color: $orange_new
+      //          font-size: 40px
+      //          font-weight: 700
+      //          line-height: 61px
+      //    .sign-up
+      //       width: 238px
 
       
 

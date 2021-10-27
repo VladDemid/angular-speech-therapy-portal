@@ -26,18 +26,22 @@ form
          display: flex
          justify-content: center
          align-items: center
-         height: 254px
-         width: 254px
+         height: 264px
+         width: 264px
          margin: 0
          // width: 100%
          // margin: 32px
-         border: 2px solid #4e463e31
          border-radius: 10px
          img
+            border: 2px solid #4e463e31
             border-radius: 10px
-            display: block
-            width: 220px
-            height: 220px
+            // display: block
+            object-fit: fill
+            background-color: #4e463e31
+            width: 100%
+            height: 100%
+            // width: 220px
+            // height: 220px
             // margin: 10px auto 
             // padding: 32px
       .avatar-buttons-wrapper
@@ -63,6 +67,15 @@ form
             background-position: 50% 35%
             background-color: #fff
             @include box-shadow($nav_shadow)
+            &:hover
+               outline: none
+               // border: 2px solid $button_hover
+               background-color: $button_hover
+            &:active
+               // border: 2px solid $button_active
+               background-color: $button_active
+               outline: none
+               transition: all 0.1s
             &::after
                content: ''
             &.loading
@@ -98,9 +111,9 @@ form
             &:hover
                outline: none
                // border: 2px solid $button_hover
-               // background-color: $button_hover
+               background-color: $button_hover
             &:active
-               border: 2px solid $button_active
+               // border: 2px solid $button_active
                background-color: $button_active
                outline: none
                transition: all 0.1s
@@ -161,6 +174,7 @@ form
    .sertif-list
       display: flex
       justify-content: space-around
+      align-items: center
       flex-wrap: wrap
       width: 100%
       .sertif-item
@@ -183,21 +197,8 @@ form
             .sertif-delete
                position: absolute
                content: ''
-               right: -7px
-               top: -7px
-               width: 20px
-               height: 20px
-               font-size: 14px
-               border-radius: 50% 
-               border: 2px dashed $orange_common
-               // background-color: red
-               text-align: center
-               background-color: #fff
-               transition: 0.2s
-               &:hover
-                  transition: 0.2s
-                  transform: scale(1.2)
-                  background-color: $orange_common
+               right: -11px
+               top: -11px
 
 
          .sertif-img
@@ -206,7 +207,7 @@ form
             // margin-top: 20px
             // max-height: 300px
             // padding: 2px
-            border: 2px solid $yellow_common
+            // border: 2px solid $yellow_common
             transition: 0.2s
          .sertif-name
             display: block

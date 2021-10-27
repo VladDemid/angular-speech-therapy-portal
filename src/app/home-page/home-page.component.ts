@@ -9,6 +9,9 @@ import { ZoomService } from '../shared/services/zoom.service';
 import { zoomConfig } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
+import Swiper, { Navigation, Pagination, SwiperOptions} from 'swiper';
+
+
 
 @Component({
   selector: 'app-home-page',
@@ -16,22 +19,74 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./home-page.component.sass']
 })
 export class HomePageComponent implements OnInit {
-
+  
   doctors = []
+  testIndex = 0
 
-  // testUrls = ['https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Inkscape_vectorisation_test.svg/1280px-Inkscape_vectorisation_test.svg.png']
+  config: SwiperOptions = {
+    spaceBetween: 150,
+    slidesPerView: "auto",
+    initialSlide: 0,
+    loop: true,
+    pagination: { 
+      type: 'bullets',
+      clickable: true,
+     },
+    navigation: true,
+  }
 
+  
+
+  activeSlide = 0
+  promoSlides = [
+    {
+      src: "/assets/img/home-slider-0.jpg",
+      sign: "Дистанционное решение проблем детского развития"
+    },
+    {
+      src: "/assets/img/home-slider-1.jpg",
+      sign: "Думаете, онлайн занятия - скучно и не продуктивно?"
+    },
+    {
+      src: "/assets/img/home-slider-2.jpg",
+      sign: "Мы ценим юмор и креатив"
+    },
+    {
+      src: "/assets/img/home-slider-3.jpg",
+      sign: "И поэтому видим радость в глазах наших учеников"
+    },
+  ]
+
+  testUrls = ['https://image.shutterstock.com/image-vector/img-file-document-icon-260nw-1356823577.jpg','https://image.shutterstock.com/image-vector/img-file-document-icon-260nw-1363854290.jpg']
+  
   constructor(
     public popupService: PopupService,
     private firebase: FirebaseService,
     private activatedRoute: ActivatedRoute,
     public helper: DevelopHelp,
-    ) { }
+    
+    ) { 
+      
+    }
 
   ngOnInit(): void {
     this.getAllDoctors()
     this.checkQuerry()
+    Swiper.use([Navigation, Pagination])
   }
+
+  initSwiper() {
+
+  }
+
+  onSwiper(swiper) {
+    console.log(swiper)
+  }
+
+  onSlideChange() {
+    console.log("change")
+  }
+
 
   checkQuerry() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {

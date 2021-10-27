@@ -13,31 +13,33 @@
 <div class="home-page">
    <!-- <div class="container"> -->
       <!-- <button (click)="testSignIn()">test sign in</button> -->
+      
+      
       <div class="promo">
          
          <div class="container">
-            <!-- <slideshow [imageUrls]="testUrls"></slideshow> -->
-            <div class="promo-descr">
+            <swiper class="swiper-test" [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
+               <ng-template swiperSlide *ngFor="let item of promoSlides; index as i">
+                  <div class="slide-container">
+                     <img [src]="'/assets/img/home-slider-' + i + '.jpg'" alt="promo">
+                     <div class="sign">
+                        <div class="title">Логого</div>
+                        <div class="descr">
+                           {{promoSlides[i].sign}}
+                        </div>
+                        <button>Записаться</button>
+                     </div>
+                  </div>
+               </ng-template>
+             </swiper>
+            <!-- <div class="promo-descr">
                <p class="describe">
                   <span>Логого</span> - онлайн занятия с детьми по коррекции поведения, слуха и речи
                </p>
                <button class="sign-up">Записаться</button>
-            </div>
+            </div> -->
             
 
-            <!-- <h1 class="promo_header">
-               Инклюзив - дефектологическая
-               онлайн-консультация 
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               в удобное для вас время
-            </h1>
-            <p class="promo_descr">Опытные специалисты в сфере коррекционно-развивающего обучения <br>
-               и реабилитации ответят на вопросы, связанные с детским развитием <br>
-               и преодолением речевых, познавательных, психо-эмоциональных <br>
-               и других особенностей</p>
-            <div class="button_wrapper">
-               <button class="sign_up">Записаться</button>
-            </div> -->
          </div>
       </div>
    

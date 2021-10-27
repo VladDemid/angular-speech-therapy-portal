@@ -17,6 +17,7 @@ import { HelpPageComponent } from './help-page/help-page.component';
 import { EmailVerifyPopupComponent } from './shared/components/email-verify-popup/email-verify-popup.component';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { AsideMenuComponent } from './shared/components/aside-menu/aside-menu.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AsideMenuComponent } from './shared/components/aside-menu/aside-menu.co
       SecurityPageComponent,
       HelpPageComponent,
       EmailVerifyPopupComponent,
-      AsideMenuComponent
+      AsideMenuComponent,
+      FooterComponent
    ],
    imports: [
       // CommonModule,

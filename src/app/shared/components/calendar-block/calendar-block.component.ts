@@ -23,11 +23,11 @@ export class CalendarBlockComponent implements OnInit {
   @Input() isCalendarPage: boolean;
   @Input() calendarUserId: string;
   @Input() isInProfileModule: boolean | string; // string|boolean
-  
+
   production = environment.production
 
   currentHour = new Date().getHours()
-  selectedDay = -1 //номер дня (-1\ 1-31)
+  selectedDay = -1 //номер дня (-1\ 1-31) //!! 0-30
   selectedDayOfWeek = -1
   day = new Date().getDate()
   month = new Date().getMonth() + 1 //меняется при листании календаря
@@ -283,7 +283,8 @@ export class CalendarBlockComponent implements OnInit {
     this.errorMakingLesson = "" //сброс надписи об ошибках
 
     // console.log(`год ${year}, ${this.currentYear},| месяц: ${month}, ${this.currentMonth},| день ${day}, ${this.day}`)
-    if (year < this.currentYear || month < this.currentMonth || day < this.day) {
+
+    if ( year < this.currentYear || month < this.currentMonth || day < this.day) {
       this.errorMakingLesson = "Выбранный день уже прошел"
       return
     }

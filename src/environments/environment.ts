@@ -10,7 +10,7 @@ export const environment = {
 };
 
 export const environmentOther = {
-  emailDefault: "test7@gmail.com",
+  emailDefault: "test5@gmail.com",
   passwordDefault: "123456"
 }
 

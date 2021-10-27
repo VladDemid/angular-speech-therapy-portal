@@ -30,8 +30,8 @@ export class TelegramBotService implements OnInit{
   }
 
   telegramNotifConfirmMeeting(eventLesson) {
-    const message = `Специалист 👨‍⚕️${eventLesson.doctorName} (${eventLesson.doctorId}) подтвердил занятие на 📅${eventLesson.date.day}.${eventLesson.date.month}.${eventLesson.date.year} с 🗣${eventLesson.patientName} (${eventLesson.patientId})`
-    let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${telegramConfig.logobotChatId}&text=${message}`
+    const message = `Специалист 👨‍⚕️*${eventLesson.doctorName}* (\`${eventLesson.doctorId}\`) ✅подтвердил занятие на 📅${eventLesson.date.day}.${eventLesson.date.month}.${eventLesson.date.year} с 🗣*${eventLesson.patientName}* (\`${eventLesson.patientId}\`)`
+    let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${telegramConfig.logobotChatId}&text=${message}&parse_mode=markdown`
     let xhttp = new XMLHttpRequest()
     xhttp.open("GET", url, true)
     xhttp.send()
@@ -40,9 +40,9 @@ export class TelegramBotService implements OnInit{
 
   sendNewLessonMessage(eventLesson) {
   
-    const message = `Пациент 🗣${eventLesson.patientName} (${eventLesson.patientId}) записался на занятие к 👨‍⚕️${eventLesson.doctorName} (${eventLesson.doctorId}) с проблемой "${eventLesson.problemDescription}" на 📅${eventLesson.date.day}.${eventLesson.date.month}.${eventLesson.date.year}`
+    const message = `🗣*${eventLesson.patientName}* (\`${eventLesson.patientId}\`) записался на занятие к 👨‍⚕️*${eventLesson.doctorName}* (\`${eventLesson.doctorId}\`) с проблемой "${eventLesson.problemDescription}" на 📅 *${eventLesson.date.day}.${eventLesson.date.month}.${eventLesson.date.year}*`
     const chatId = telegramConfig.logobotChatId
-    let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${chatId}&text=${message}`
+    let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=markdown`
     let xhttp = new XMLHttpRequest()
     xhttp.open("GET", url, true)
     xhttp.send()

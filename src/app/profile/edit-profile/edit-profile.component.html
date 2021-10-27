@@ -37,8 +37,8 @@
       >
          <div class="photo-update">
             <div class="profile-photo">
-               <img src="{{defaultAvatar}}" *ngIf="!userData.myData.avatarUrl" alt="">
-               <img src="{{userData.myData.avatarUrl}}" *ngIf="userData.myData.avatarUrl" alt="">
+               <img src="{{defaultAvatar}}" *ngIf="!userData.myData.avatarUrl" alt="logo">
+               <img src="{{userData.myData.avatarUrl}}" *ngIf="userData.myData.avatarUrl" alt="logo">
             </div>
             <div class="avatar-buttons-wrapper">
                <label class="input-avatar-label btn" [ngClass]="{'hide': avatarPrefireName}" for="avatar-upload-button">
@@ -135,7 +135,7 @@
                <div class="sertif-item" *ngFor="let item of userData.myData.sertificatesLinks; let i = index">
                   <div class="img-wrapper">
                      <img class="sertif-img" src={{item}} alt="sertificate" (click)="popupService.showImgPopup(item, userData.myData.sertificatesNames[i])">
-                     <div class="sertif-delete" (click)="deleteSertificate(i)">&#10006;</div>
+                     <div class="sertif-delete delete-button" (click)="deleteSertificate(i)"></div>
                   </div>
                   <!-- <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span> -->
                </div>

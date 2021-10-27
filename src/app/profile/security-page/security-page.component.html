@@ -2,7 +2,7 @@
    <div class="container">
       <ul class="breadcrumb-arrows arrows">
          <li><a [routerLink]="['/profile']">Личный кабинет</a></li>
-         <li><a>Безопасность</a></li>
+         <!-- <li><a>Безопасность</a></li> -->
       </ul>
       <div class="change-password">
          <h2>Изменение пароля</h2>
@@ -10,7 +10,7 @@
             <div class="inputs-wrapper">
                <label><span>Ваш email</span><input [(ngModel)]="email"  name="email"  type="text"></label>
             </div>
-            <button class="login" (click)="passwordRecovery()">изменить пароль</button>
+            <button class="" (click)="passwordRecovery()">изменить пароль</button>
          </form>
          <div class="signs">
             <div class="message successful-message" *ngIf="passwordChangeSuccessfulMessage" >{{passwordChangeSuccessfulMessage}}</div>
@@ -23,7 +23,7 @@
             <div class="inputs-wrapper">
                <label><span>Новый email*</span><input [(ngModel)]="newEmail"  name="newEmail"  type="text"></label>
             </div>
-            <button class="login" (click)="changeEmail()">изменить почту</button>
+            <button class="" (click)="changeEmail()">изменить почту</button>
          </form>
          <div class="signs">
             <div class="message successful-message" *ngIf="emailChangeSuccessfulMessage" >{{emailChangeSuccessfulMessage}}</div>
@@ -37,3 +37,5 @@
       <!-- <button (click)="alert()">test alert</button> -->
    </div>
 </div>
+
+
