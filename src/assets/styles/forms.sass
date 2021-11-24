@@ -365,6 +365,7 @@ form
                         top: calc(50% - 5px)
                         left: 9px
                         border: 2px solid $orange_common
+                        background-color: $orange_common
                         border-radius: 10px
                input 
                   width: 0px
@@ -429,7 +430,31 @@ form
             //    left: -10px
             //    top: calc(50% - 5px)
             //    background-color: #000
-      
+
+form.feedback
+   .inputs-wrapper
+      // border: 1px solid #000
+      padding: 32px 0 
+      display: flex
+      justify-content: space-between
+      flex-wrap: wrap
+      > label
+         width: 47%
+         // border: 1px solid #000
+         height: 58px
+         &:nth-child(2)
+            margin-top: 0
+
+         input
+            max-width: 264px
+         &.textarea-wrap
+            width: 100%
+            height: 200px
+            textarea
+               width: 702px
+         
+
+
 .error
    font-size: 14px
    border-bottom: 3px solid red

@@ -25,6 +25,10 @@ import { RequisitesPopupComponent } from './shared/components/requisites-popup/r
 import { RecomendationComponent } from './shared/components/recomendation/recomendation.component';
 import { JobInvitationComponent } from './shared/components/job-invitation/job-invitation.component';
 import { SwiperModule } from 'swiper/angular';
+import { ClientFormPopupComponent } from './shared/components/popups/client-form-popup/client-form-popup.component';
+import { DoctorFormPopupComponent } from './shared/components/popups/doctor-form-popup/doctor-form-popup.component';
+import { CookiePopupComponent } from './shared/components/popups/cookie-popup/cookie-popup.component';
+import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -49,11 +53,16 @@ const INTERCEPTOR_PROVIDER: Provider = {
     PasswordRecoveryComponent,
     FbSecurityPopupComponent,
     TermsOfUsePopupComponent,
+    RequisitesPopupComponent,
+    ClientFormPopupComponent,
+    DoctorFormPopupComponent,
+    CookiePopupComponent,
     SpecialistPageComponent,
     // SpecializationsListPipe,
-    RequisitesPopupComponent,
     RecomendationComponent,
-    JobInvitationComponent
+    JobInvitationComponent,
+    AdminLoginPageComponent,
+    
   ],
   imports: [
     BrowserModule,

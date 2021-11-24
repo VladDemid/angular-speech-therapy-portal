@@ -25,12 +25,7 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "./node_modules/@zoomus/websdk/dist/lib/",
-                "output": "./node_modules/@zoomus/websdk/dist/lib/"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.sass"
@@ -63,8 +58,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "15kb",
-                  "maximumError": "17kb"
+                  "maximumWarning": "19kb",
+                  "maximumError": "23kb"
                 }
               ]
             }

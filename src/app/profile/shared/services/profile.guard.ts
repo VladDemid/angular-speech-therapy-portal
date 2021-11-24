@@ -5,6 +5,9 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Injectable()
 export class ProfileGuard implements CanActivate {
+
+   userId = localStorage.getItem("user-Id")
+   
    constructor(
       private auth: AuthService,
       private popupService: PopupService,
@@ -15,7 +18,7 @@ export class ProfileGuard implements CanActivate {
       route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot
       ) {
-      if (this.auth.isAuthenticated()) {
+      if (this.auth.isAuthenticated() && this.userId !== "XUuNLsPankPqmDKLBb8ZS4X1dq12") {
          return true
       } else {
          this.auth.logout()

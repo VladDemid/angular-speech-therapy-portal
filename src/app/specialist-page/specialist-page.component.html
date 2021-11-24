@@ -1,3 +1,7 @@
+<div class="img-popup" >
+   <app-img-popup *ngIf="popupService.imgPopup"></app-img-popup>
+</div>
+
 <div class="doctor-card-nav">
    <app-nav-home *ngIf="isInProfileModule + '' == 'false'"></app-nav-home>
    <app-profile-nav *ngIf="isInProfileModule + '' == 'true'"></app-profile-nav>
@@ -62,12 +66,17 @@
          </ul>
          <h2>Сертификаты</h2>
          <ul class="sertificates-list">
-            <li class="sertificate-item"></li>
-            <li class="sertificate-item"></li>
-            <li class="sertificate-item"></li>
-            <li class="sertificate-item"></li>
-            <li class="sertificate-item"></li>
+            <li class="sertificate-item" *ngFor="let item of doctorInfo.sertificatesLinks; index as i" (click)="popupService.showImgPopup(item)">
+               <img [src]="item" alt="sertificate">
+            </li>
          </ul>
+         <!-- <ul class="sertif-list" *ngIf="userData.myData.sertificatesLinks">
+            <li class="sertif-item" *ngFor="let item of doctorSertificates; let i = index">
+               <div class="img-wrapper">{{item}}
+                  <img class="sertif-img" src={{item}} alt="sertificate" (click)="popupService.showImgPopup(item, userData.myData.sertificatesNames[i])">
+               </div>
+            </li>
+         </ul> -->
       </div>
       <div class="about">
          <h2>О специалисте</h2>

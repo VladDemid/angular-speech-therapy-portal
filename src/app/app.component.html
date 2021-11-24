@@ -1,1 +1,6 @@
+<div class="cookie-popup" *ngIf="!cookieService.allCookies['acceptCookie']">
+   <app-cookie-popup></app-cookie-popup>
+</div>
+
+
 <router-outlet></router-outlet>

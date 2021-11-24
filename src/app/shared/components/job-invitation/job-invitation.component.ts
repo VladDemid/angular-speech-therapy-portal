@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-job-invitation',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JobInvitationComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public popupService: PopupService
+  ) { }
 
   ngOnInit(): void {
   }

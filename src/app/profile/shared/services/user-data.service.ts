@@ -160,6 +160,8 @@ export class UserData {
          
    }
 
+   
+
    // createLessonsChangesObject() {
    //    let myNewLessonData = {}
    //    myNewLessonData[eventId] = JSON.parse(JSON.stringify(eventLesson))
@@ -224,6 +226,7 @@ export class UserData {
             .then((links) => {
                // console.log("полученные ссылки на скачку: ", links)
                this.myData.sertificatesLinks = links
+               this.updateSertifUrls()
             })
             
             
@@ -231,6 +234,24 @@ export class UserData {
          .catch((err) => {
             console.log("мои файлы не найдены: ", err);
          })
+   }
+
+   updateSertifUrls() { //загрузить новые ссылки на сертификаты в FB
+      // this.firebase.updateSertifUrls()
+      console.log("изменение sertList -----------------")
+      // console.log(this.userData.myData)
+      let newUserData = {
+        sertificatesLinks: this.myData.sertificatesLinks
+      }
+      
+      console.log(newUserData)
+      this.firebase.sendMyDataChanges(newUserData)
+      .subscribe((resp) => {
+        console.log("sertList uploaded")
+      },
+      (err) => {
+        console.log("sertList uploading ERROR:", err)
+      })
    }
 
    saveSertificatesNames(sertificates) {

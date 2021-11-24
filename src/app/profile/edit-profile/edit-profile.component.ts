@@ -6,6 +6,7 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 import { specializationsList } from 'src/app/shared/lists';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { environment } from 'src/environments/environment';
+import { UserDbInfo } from 'src/app/shared/interfaces';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { environment } from 'src/environments/environment';
 
 
 export class EditProfileComponent implements OnInit {
+  
   
   uploadingSertificates = false
   newFilesToUpload = 0
@@ -311,6 +313,7 @@ export class EditProfileComponent implements OnInit {
       .then((resp) => {
         console.log("файл удален успешно ", resp) 
         this.userData.getSertificates()
+        // this.updateSertifUrls();
       })
       .catch((err) => {
         console.log("ошибка при удалении файла: ", err);
@@ -339,9 +342,12 @@ export class EditProfileComponent implements OnInit {
     console.log("все новые сертификаты загружены")
     this.uploadingSertificates = false
     this.userData.getSertificates();
-    (<HTMLFormElement>document.getElementById('newSertificatesForm')).reset()
+    (<HTMLFormElement>document.getElementById('newSertificatesForm')).reset();
+    // this.updateSertifUrls();
     
   }
+
+  
 
   async updateAvatar() {
     console.log("updating avatar");

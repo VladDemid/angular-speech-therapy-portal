@@ -52,6 +52,8 @@ export class CalendarBlockComponent implements OnInit {
   patientProblem = "проблема..."
   withChild = "0" //проблема у ребенка или нет 0/1
   errorMakingLesson = ""
+  asideIsExpanded = false
+  expandSign = "Развернуть"
 
   daysOfWeekShedule = {}
   newDaysOfWeekShedule = {}
@@ -74,6 +76,11 @@ export class CalendarBlockComponent implements OnInit {
     
     this.waitForInfo() //после подгрузки инфы грузить все
     // }
+  }
+
+  invertExpand() {
+    this.asideIsExpanded = !this.asideIsExpanded
+    this.expandSign = this.expandSign == "Развернуть" ? "Свернуть" : "Развернуть"
   }
 
   waitForInfo() { //ждать подгрузки инфы себя (в профиле) (в случае F5 на странице календаря например)

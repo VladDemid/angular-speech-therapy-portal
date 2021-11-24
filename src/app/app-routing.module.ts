@@ -5,13 +5,17 @@ import { RegistrationPageComponent } from './registration-page/registration-page
 import { ProfileModule } from './profile/profile.module';
 import { ProfileGuard } from './profile/shared/services/profile.guard';
 import { SpecialistPageComponent } from './specialist-page/specialist-page.component';
-
+import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
+import { AdminModule } from './admin/admin.module';
 
 const routes: Routes = [
   {path:"", component: HomePageComponent},
   {path:"registration", component: RegistrationPageComponent},
   {path:"doctor", component: SpecialistPageComponent},
+  {path:"admin-login", component: AdminLoginPageComponent},
   {path:"profile", loadChildren: "./profile/profile.module#ProfileModule"},
+  // {path:"admin", loadChildren: "./profile/profile.module#ProfileModule"},
+  {path:"admin", loadChildren: "./admin/admin.module#AdminModule"},
   {path:"**", redirectTo: "/"}
 ];
 

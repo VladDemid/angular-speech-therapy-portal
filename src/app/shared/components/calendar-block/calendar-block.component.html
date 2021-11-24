@@ -102,10 +102,11 @@
    </div>
    <!-- для страницы календаря (profile/calendar) -->
       <!-- день не выбран -->
-   <div class="time-aside time-aside-edit" *ngIf="isCalendarPage" [ngClass]="{'downloading': updatingdWorkHourData}">
+   <div class="time-aside time-aside-edit" *ngIf="isCalendarPage" [ngClass]="{'downloading': updatingdWorkHourData, 'expanded': asideIsExpanded}">
+                     <!-- ?💉--DOCTOR--💉? -->
       <div class="time-aside-doctor" *ngIf="userData.myData.userType == 'doctor'" [ngClass]="{'downloading': updatingdWorkHourData}">
          <div class="day-not-chosen-sign" *ngIf="selectedDay == -1">
-            <span>Выберите день</span> 
+            <span>Выберите день или занятие</span> 
             <div class="time-blocker">
                <div class="example">
                   <div class="not-working-color color-example"></div>
@@ -124,16 +125,15 @@
                   <p> - выбранный день</p>
                </div>
             </div>
-            <div class="my-lessons" *ngIf="userData.myData.events">
+            <ul class="my-lessons" *ngIf="userData.myData.events">
                <div class="lessons-title">
                   Занятия
                </div>
-               <div class="lesson-card" 
+               <li class="lesson-card" 
                   *ngFor="let item of userData.myData.events | lessonsView:currentYear:currentMonth:day:currentHour"
                   [ngClass]="{'selected': item[1].date.day == selectedDay + 1}">
-                  <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}">
-                  </div>
-                  <div class="subtitle">Дата и время</div>
+                  <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}"></div>
+                  <div class="subtitle no-margin">Дата и время</div>
                   <div class="date">
                      <span class="days-left" *ngIf="item[1].daysLeft > 1">
                         Через {{item[1].daysLeft - 1}} дней,
@@ -149,15 +149,12 @@
                   <div class="subtitle">Пациент</div>
                   <div class="patient-name">{{item[1].patientName}}</div>
                   <div class="problem">{{item[1].problemDescription}}</div>
-                  <p>1</p>
-                  <p>2</p>
-                  <p>3</p>
                   <!-- <button (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]">подр</button> -->
                   <button (click)="confirmEvent(item[0])" *ngIf="!item[1].doctorsConfirmation == true">подтверждаю занятие</button>
                   <div class="details" (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]"></div>
                   <!-- <div class="zoom">{{item[1].zoom.link}}</div> -->
-               </div>
-            </div>
+               </li>
+            </ul>
          </div>
          <!-- календарь доктора -->
             <!-- рабочий день выбран -->
@@ -173,25 +170,29 @@
                         {{time | timeRow}}
                      </div>
                      <div class="patient" *ngIf="userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][selectedDay+1] && userData.myData.eventsDates[year][month][selectedDay+1][time]">
-                        {{userData.myData.eventsDates[year][month][selectedDay+1][time].patientName | textCutter:25}}
+                        {{userData.myData.eventsDates[year][month][selectedDay+1][time].patientName | textCutter:8}}
                      </div>
                   </div>
                </div>
             </div>
             <div class="go-back" (click)="unselectDay()">к списку занятий</div>
          </div>
+         <!-- <div class="expand" (click)="invertExpand()">развернуть</div> -->
       </div>
+                     <!-- ?💊--CLIENT--💊? -->
       <div class="time-aside-client" *ngIf="userData.myData.userType == 'client'">
          <div class="no-lessons-sign" *ngIf="!userData.myData.events">
             у вас пока нет занятий
          </div>
          <div class="my-lessons" *ngIf="userData.myData.events">
-            Предстоящие занятия:
+            <div class="lessons-sign">
+               <span>Предстоящие занятия:</span>
+            </div>
             <div class="lesson-card"  
                *ngFor="let item of userData.myData.events | lessonsView:currentYear:currentMonth:day:currentHour"
                [ngClass]="{selected: item[1].date.day == selectedDay + 1}">
-               <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}">
-               </div>
+               <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}"></div>
+               <div class="subtitle no-margin">Дата и время</div>
                <div class="date">
                   <span class="days-left" *ngIf="item[1].daysLeft > 1">
                      Через {{item[1].daysLeft - 1}} дней,
@@ -204,13 +205,18 @@
                   </span>
                   {{item[1].date.day}} {{monthsNamesWhomCase[item[1].date.month - 1]}}</div>
                <div class="time">{{item[1].time | timeRow}}</div>
+               <div class="subtitle">Доктор</div>
                <div class="doctor-name">{{item[1].doctorName}}</div>
-               <div class="problem">{{item[1].problemDescription}}</div>
-               <button (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]">подробнее</button>
+               <div class="subtitle">Ваш вопрос</div>
+               <div class="problem">{{item[1].problemDescription | slice:0:65}}</div>
+               <!-- <button (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]">подробнее</button> -->
+               <div class="details" (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]"></div>
             </div>
          </div>
       </div>
+      <div class="bottom-expand" (click)="invertExpand()">{{expandSign}}</div>
    </div>
+   
 </div>
 
 <div class="change-shedule-block" *ngIf="isCalendarPage && userData.myData.userType == 'doctor'">

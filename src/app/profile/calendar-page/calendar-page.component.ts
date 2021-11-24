@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TelegramBotService } from 'src/app/shared/services/telegram-bot.service';
-import { ZoomService } from 'src/app/shared/services/zoom.service';
+// import { ZoomService } from 'src/app/shared/services/zoom.service';
 import { UserData } from '../shared/services/user-data.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class CalendarPageComponent implements OnInit {
   constructor(
     public userData: UserData,
     private telegram: TelegramBotService,
-    private zoom: ZoomService,
+    // private zoom: ZoomService,
     public httpClient: HttpClient,
     public popupService: PopupService,
     @Inject(DOCUMENT) document

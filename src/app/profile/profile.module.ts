@@ -50,8 +50,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
             {path: "security", component: SecurityPageComponent, canActivate: [ProfileGuard] },
             {path: "help", component: HelpPageComponent, canActivate: [ProfileGuard] },
             {path:"**", redirectTo: "menu"}
-         ]
-      },
+         ]},
          
       ])
    ],
@@ -62,6 +61,4 @@ import { FooterComponent } from './shared/components/footer/footer.component';
    ]
 })
 
-export class ProfileModule{
-   
-}
+export class ProfileModule{}

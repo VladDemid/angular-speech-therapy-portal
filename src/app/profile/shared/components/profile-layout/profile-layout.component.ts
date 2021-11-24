@@ -35,7 +35,7 @@ export class ProfileLayoutComponent implements OnInit {
   fbUserObserver() {
     this.firebase.userObserver()
 
-    let timerUserCheck = setInterval(() => { //чекать к.200мс пока не найдет юзера
+    let timerUserCheck = setInterval(() => { //чекать к.200мс пока не найдет юзера //*ждет логина через signInWithPass()
       if (this.firebase.checkUser()) { //юзер найден
         clearInterval(timerUserCheck)
         const user = this.firebase.getUser()

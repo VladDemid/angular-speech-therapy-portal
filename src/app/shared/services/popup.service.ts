@@ -13,15 +13,18 @@ export class PopupService {
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
   homePageFbSecurityPopup = false
+  homePageClientPopup = false
+  homePageSpecialistPopup = false
   registrTermsOfUsePopup = false
   emailVerifyPopup = false
   eventDetailsPopup = false
   appointmentDeatailsPopup = false
   requisitesPopup = false
+  
 
   constructor() { }
 
-  showImgPopup(link, name) {
+  showImgPopup(link, name?) {
     if (link) {
       this.imgUrl = link
     }
@@ -43,6 +46,15 @@ export class PopupService {
 
   toggleFbSecurityPopup() {
     this.homePageFbSecurityPopup = !this.homePageFbSecurityPopup
+  }
+
+  toggleHoPgClientPopup() {
+    this.homePageClientPopup = !this.homePageClientPopup
+    console.log("345")
+  }
+
+  toggleHoPgSpecialistPopup() {
+    this.homePageSpecialistPopup = !this.homePageSpecialistPopup
   }
   
   toggleTermsOfUsePopup() {

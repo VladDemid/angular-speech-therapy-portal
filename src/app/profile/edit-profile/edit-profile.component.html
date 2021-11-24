@@ -9,6 +9,7 @@
       </div>
       <h3>Персональные данные</h3>
       <!-- форма для клиента -->
+      
       <form 
       [formGroup]="clientForm"
       class="user-edit-form"
@@ -119,7 +120,7 @@
             <button class="submit" type="submit">Сохранить изменения</button>
          </div>
       </form>
-      <div class="sertificates" *ngIf="userData.myData.userType === 'doctor'">
+      <div class="sertificates" id="" *ngIf="userData.myData.userType === 'doctor'">
          <form class="new-sertificates" id="newSertificatesForm">
             <div class="inputs-wrapper">
                <label>

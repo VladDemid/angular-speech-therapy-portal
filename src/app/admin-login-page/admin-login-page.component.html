@@ -1,0 +1,11 @@
+<button [routerLink]="['/']">назад</button>
+
+<div class="admin-login-form">
+   <form [formGroup]="form" (ngSubmit)="adminLogIn()">
+      <div class="inputs-wrapper">
+         <label><span>Email</span><input name="emailAdm" type="text" formControlName="emailAdm"></label>
+         <label><span>Пароль</span><input name="passwordAdm"  type="password" formControlName="passwordAdm"></label>
+      </div>
+      <button [disabled]="loggingIn" class="login" type="submit">Войти</button>
+   </form>
+</div>

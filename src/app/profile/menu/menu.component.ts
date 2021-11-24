@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MenuComponent implements OnInit {
 
-
+  myId = localStorage.getItem('user-Id')
   testVar = 2
   production = environment.production
 

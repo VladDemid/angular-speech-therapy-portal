@@ -26,7 +26,8 @@ div
 body 
    position: relative
 
-
+html
+   scrollbar-color: red
 
 
 a
@@ -60,6 +61,7 @@ app-profile-layout
 
 .error
    color: red
+
 
 // .breadcrumb
 //    padding: 6px 0 0 25px
@@ -102,9 +104,13 @@ swiper
       // top: -1px
       // width: 20px
       // height: 15px
+      box-sizing: border-box
       background-image: url('/assets/icons/functions/arrow-blue.svg')
       background-size: contain
       background-repeat: no-repeat
+      // margin: 20px
+      // padding: 10px
+      // border: 1px solid #000
       &::after
          display: none
    .swiper-button-next

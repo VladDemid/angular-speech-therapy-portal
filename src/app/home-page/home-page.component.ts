@@ -5,8 +5,8 @@ import { FirebaseService } from '../shared/services/firebase.service';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DevelopHelp } from '../shared/services/develop-help.service';
-import { ZoomService } from '../shared/services/zoom.service';
-import { zoomConfig } from 'src/environments/environment';
+// import { ZoomService } from '../shared/services/zoom.service';
+// import { zoomConfig } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import Swiper, { Navigation, Pagination, SwiperOptions} from 'swiper';
@@ -27,6 +27,10 @@ export class HomePageComponent implements OnInit {
     spaceBetween: 150,
     slidesPerView: "auto",
     initialSlide: 0,
+    autoplay: {
+      delay: 1000,
+      pauseOnMouseEnter: true
+    },
     loop: true,
     pagination: { 
       type: 'bullets',
@@ -84,7 +88,7 @@ export class HomePageComponent implements OnInit {
   }
 
   onSlideChange() {
-    console.log("change")
+    // console.log("change")
   }
 
 

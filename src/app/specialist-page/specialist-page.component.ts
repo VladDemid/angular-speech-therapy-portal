@@ -6,6 +6,7 @@ import { UserData } from 'src/app/profile/shared/services/user-data.service';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { DevelopHelp } from '../shared/services/develop-help.service';
 import { TestBed } from '@angular/core/testing';
+import { PopupService } from '../shared/services/popup.service';
 
 @Component({
   selector: 'app-specialist-page',
@@ -16,6 +17,7 @@ export class SpecialistPageComponent implements OnInit {
 
   defaultAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
   doctorInfo: UserDoctor
+  doctorSertificates: any[]
   doctorEventsYearMonthDayHour: object
   doctorId: string
   isInProfileModule = "false" //может быть строкой т.к. params возвращает строку
@@ -26,7 +28,8 @@ export class SpecialistPageComponent implements OnInit {
     private route: ActivatedRoute,
     private crypter: CrypterService,
     public helper: DevelopHelp,
-    public userData: UserData
+    public userData: UserData,
+    public popupService: PopupService
   ) { }
 
   ngOnInit(): void {
@@ -43,10 +46,26 @@ export class SpecialistPageComponent implements OnInit {
       .subscribe((doctorInfo: UserDoctor) => {
         this.doctorInfo = doctorInfo
         console.log("данные доктора загружены");
-        // console.log(doctorInfo);
+        console.log(doctorInfo);
+        this.getSertificates()
         this.sortDoctorLessons(doctorInfo)
       })
     })
+  }
+
+  getSertificates() {
+    console.log("поиск сертификатов")
+    this.firebase.getSertificatesList(this.doctorId)
+      .then((resp) => {
+        console.log("сертификаты: ", resp.items)
+        this.doctorSertificates = resp.items
+        // resp.items.forEach(item => {
+          
+        // });
+      })
+      .catch((err) => {
+        console.log("ошибка поиска сертификатов: ", err)
+      })
   }
 
   sortDoctorLessons(doctorInfo) {

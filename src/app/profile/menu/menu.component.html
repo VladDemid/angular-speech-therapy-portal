@@ -2,10 +2,10 @@
 <div class="profile-menu">
    <div class="container">
       <h3>Личный кабинет</h3>
-      <div class="user-type-icon" *ngIf="!production">
+      <div class="user-type-dev user-type-icon" *ngIf="!production">
          Вы вошли как 
-         <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥</span>
-         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠</span>
+         <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥 {{myId | slice:0:5}}</span>
+         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}}</span>
       </div>
       <!-- <div class="help">
          Пожалуйста дополните данные о себе в разделе 

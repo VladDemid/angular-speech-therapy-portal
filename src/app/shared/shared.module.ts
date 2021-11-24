@@ -20,7 +20,7 @@ import { FbSecurityPopupComponent } from './components/fb-security-popup/fb-secu
 import { TextCutterPipe } from './pipes/text-cutter.pipe';
 import { EventDetailsPopupComponent } from './components/event-details-popup/event-details-popup.component';
 import { AppointmentDetailsPopupComponent } from './components/appointment-details-popup/appointment-details-popup.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequisitesPopupComponent } from './components/requisites-popup/requisites-popup.component';
 
 // import { FaqNewComponent } from './components/faq-new/faq-new.component';
@@ -32,7 +32,7 @@ import { RequisitesPopupComponent } from './components/requisites-popup/requisit
       CommonModule,
       RouterModule,
       FormsModule,
-      
+      ReactiveFormsModule 
    ],
    exports: [
       CommonModule,
@@ -66,6 +66,8 @@ import { RequisitesPopupComponent } from './components/requisites-popup/requisit
       TextCutterPipe,
       EventDetailsPopupComponent,
       AppointmentDetailsPopupComponent,
+      
+      
       
       // FaqNewComponent,
       // FbSecurityPopupComponent,

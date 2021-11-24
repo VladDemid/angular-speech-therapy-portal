@@ -7,6 +7,14 @@
 <div class="fb-security-popup" *ngIf="popupService.homePageFbSecurityPopup">
    <app-fb-security-popup></app-fb-security-popup>
 </div>
+<div class="client-form-popup" *ngIf="popupService.homePageClientPopup">
+   <app-client-form-popup></app-client-form-popup>
+</div>
+<div class="doctor-form-popup" *ngIf="popupService.homePageSpecialistPopup">
+   <app-doctor-form-popup></app-doctor-form-popup>
+</div>
+
+
 
 
 <app-nav-home></app-nav-home>
@@ -17,7 +25,7 @@
       
       <div class="promo">
          
-         <div class="container">
+         <div class="container"> 
             <swiper class="swiper-test" [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
                <ng-template swiperSlide *ngFor="let item of promoSlides; index as i">
                   <div class="slide-container">
@@ -27,7 +35,7 @@
                         <div class="descr">
                            {{promoSlides[i].sign}}
                         </div>
-                        <button>Записаться</button>
+                        <button (click)="popupService.toggleHoPgClientPopup()">Записаться</button>
                      </div>
                   </div>
                </ng-template>

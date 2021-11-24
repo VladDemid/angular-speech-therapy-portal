@@ -112,6 +112,7 @@ export interface UserDoctor {
    daysShedule?: object
    aboutMe?: string
    events?: object
+   sertificatesLinks?: string[]
 }
 
 export interface Event {
@@ -144,4 +145,26 @@ export interface ZoomInfo {
       password?: string
    }
 }
+
+export interface ClientFeedbackObj {
+   name: string,
+   surname: string,
+   email: string,
+   phone: string,
+   question: string,
+}
+
+export interface SpecialistFeedbackObj {
+   name: string,
+   specialisation: string,
+   email: string,
+   phone: string,
+   description: string,
+}
+
+export interface allCookies {
+   acceptCookie?: boolean,
+   
+}
+
 

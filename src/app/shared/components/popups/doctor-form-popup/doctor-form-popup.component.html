@@ -1,0 +1,20 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleHoPgSpecialistPopup()"></div>
+   <div class="popup">
+
+      
+      <div class="popup-container">
+         <form [formGroup]="form" class="feedback" (ngSubmit)="submit()">
+            <div class="inputs-wrapper">
+               <label><span>Имя</span><input name="email" type="text" placeholder="Имя" formControlName="name"></label>
+               <label><span>Профессия</span><input name="specialisation"  type="text" placeholder="Специализация" formControlName="specialisation"></label>
+               <label><span>Email</span><input name="email" type="text" placeholder="email@email.com" formControlName="email"></label>
+               <label><span>Телефон</span><input name="phone"  type="text" placeholder="" formControlName="phone"></label>
+               <label class="textarea-wrap"><span>Вопрос</span><textarea name="description" placeholder="Опишите любой ваш вопрос" rows="10" formControlName="description"></textarea></label>
+            </div>
+            <div class="serverErrorMessage" *ngIf="ErrMessage" >{{ErrMessage}}</div>
+            <button [disabled]="isSubmitting" class="login" type="submit">Отправить</button>
+         </form>
+      </div>
+   </div>
+</div>

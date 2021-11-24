@@ -98,7 +98,9 @@ export class FirebaseService implements OnInit {
     return firebase.auth().checkActionCode(code)
   }
 
-  
+  sendMyDataChanges(newUserData) { //обновить часть данных
+    return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`, newUserData)
+  }
   
   registrNewUser(newUser) {
     this.helper.toConsole("Try to create new user: ", newUser)
@@ -106,8 +108,8 @@ export class FirebaseService implements OnInit {
   }
 
   createNewUserDataObject(user, result) { 
-    this.helper.toConsole("инфа для заполнения пользователя: ", user)
-    this.helper.toConsole("Id нового пользователя: ", result.user.uid)
+    console.log("инфа для заполнения пользователя: ", user)
+    console.log("Id нового пользователя: ", result.user.uid)
     return this.http.put(`${environment.FbDbUrl}/users/${result.user.uid}.json`, user)
     
   }
@@ -129,7 +131,7 @@ export class FirebaseService implements OnInit {
 
   signInWithPass(user: User) {
     // this.userObserver()
-    this.helper.toConsole("вход в систему через firebase...")
+    console.log("вход в систему через firebase...")
     return firebase.auth().signInWithEmailAndPassword(user.email, user.password)
   }
 
@@ -195,13 +197,20 @@ export class FirebaseService implements OnInit {
     return UsersIdSertRef.put(file)
   }
 
-  getSertificatesList() {
+  getSertificatesList(userId?) {
+    if (!userId) { //для edit page доктора
+      userId = localStorage.getItem("user-Id")
+      console.log(userId, "34524352456362345")
+    } 
+    
     this.helper.toConsole("...качаем сертификаты")
     const storageRef = firebase.storage().ref()
-    const UsersIdSerts = storageRef.child(`users/${localStorage.getItem("user-Id")}`)
+    const UsersIdSerts = storageRef.child(`users/${userId}`)
     
     return UsersIdSerts.child("/sertificates").listAll()
   }
+
+
   
   getAvatar() {
     const storageRef = firebase.storage().ref()
@@ -305,6 +314,7 @@ export class FirebaseService implements OnInit {
     console.log("!!!!!!!!!!!",eventLesson, eventId)
     return this.http.patch(`${environment.FbDbUrl}/events.json`, myNewLessonData)
   }
+
 
   
 

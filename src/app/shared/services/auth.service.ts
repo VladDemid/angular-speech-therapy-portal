@@ -26,6 +26,7 @@ export class AuthService {
 
    login(user: User) {
       this.helper.toConsole("вход пользователя: " + user.email)
+      console.log("вход пользователя: " + user.email)
       user.returnSecureToken = true
       return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
          .pipe(
@@ -35,7 +36,7 @@ export class AuthService {
 
    logout() {
       localStorage.clear()
-      // this.router.navigate(['/'])
+      this.router.navigate(['/'])
       console.log("logout (token expired / no token / exit)");
    }
 
@@ -63,7 +64,7 @@ export class AuthService {
       if (response) {
          const expDate = new Date(new Date().getTime() + +response.expiresIn * 1000)
          localStorage.setItem("fb-token-exp", expDate.toString())
-
+         
          localStorage.setItem("token-Id",  response.idToken)
          localStorage.setItem("user-Id",  response.localId)
          this.helper.toConsole("authorization completed")
