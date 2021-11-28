@@ -24,7 +24,7 @@
       
       
       <div class="promo">
-         
+         <button (click)="FBtest()">FB-test</button>
          <div class="container"> 
             <swiper class="swiper-test" [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
                <ng-template swiperSlide *ngFor="let item of promoSlides; index as i">

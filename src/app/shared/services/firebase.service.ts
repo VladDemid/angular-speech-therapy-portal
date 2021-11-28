@@ -3,6 +3,7 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/database"
 import "firebase/storage"
+import "firebase/functions"
 import { firebaseConfig, environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DevelopHelp } from './develop-help.service';
@@ -18,7 +19,7 @@ export class FirebaseService implements OnInit {
 
   signedIn = false
   actionCode: string
-
+  
   constructor(
     private helper: DevelopHelp,
     private http: HttpClient,
@@ -27,6 +28,7 @@ export class FirebaseService implements OnInit {
     ) {
       firebase.initializeApp(firebaseConfig)
       // this.userObserver()
+      const functions = firebase.functions()
     }
 
   ngOnInit(): void {
@@ -44,6 +46,12 @@ export class FirebaseService implements OnInit {
         console.log("User is signed out")
       }
     })
+  }
+
+  testFunctionRandom() {
+    const randomNumber = firebase.functions().httpsCallable('randomNumber');
+    return randomNumber()
+    // return firebase.functions().httpsCallable('randomNumber')
   }
   
   checkUser() {
@@ -275,6 +283,7 @@ export class FirebaseService implements OnInit {
     return this.http.get(`${environment.FbDbUrl}/doctorsDaysOfWeekSchedule/${id}.json`)
   }
 
+  
 
 
   getDoctorLessons(id) {
@@ -319,3 +328,7 @@ export class FirebaseService implements OnInit {
   
 
 }
+
+
+
+

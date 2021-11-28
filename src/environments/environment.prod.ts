@@ -20,6 +20,10 @@ export const firebaseConfig = {
   appId: "1:725914811248:web:aed51fdbbd11a5558fedb5"
 };
 
+export const firebaseFunctions = {
+  randomNumber: "https://us-central1-inclusive-test.cloudfunctions.net/randomNumber"
+}
+
 export const telegramConfig = {
   botToken: "1872651080:AAEw6lNr2WaRKXo_00Zn2WoXnxxODnUMIqI",
   logobotChatId: "-554014625"

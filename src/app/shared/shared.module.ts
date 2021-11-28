@@ -22,6 +22,10 @@ import { EventDetailsPopupComponent } from './components/event-details-popup/eve
 import { AppointmentDetailsPopupComponent } from './components/appointment-details-popup/appointment-details-popup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequisitesPopupComponent } from './components/requisites-popup/requisites-popup.component';
+// import { AngularFireModule } from '@angular/fire';
+// import { AngularFireAuthModule } from '@angular/fire/auth';
+// import { AngularFireFunctionsModule } from '@angular/fire/functions';
+
 
 // import { FaqNewComponent } from './components/faq-new/faq-new.component';
 

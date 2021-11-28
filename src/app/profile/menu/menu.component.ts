@@ -4,7 +4,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { DevelopHelp } from 'src/app/shared/services/develop-help.service';
-import { environment } from 'src/environments/environment';
+import { environment, firebaseFunctions } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+// import { AngularFireFunctions } from '@angular/fire/functions';
+// import { AngularFireAuth } from '@angular/fire/auth';
+// import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
 @Component({
   selector: 'app-menu',
@@ -59,7 +63,10 @@ export class MenuComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     public popupService: PopupService,
-    public helper: DevelopHelp 
+    public helper: DevelopHelp,
+    private http: HttpClient
+    // public afAuth: AngularFireAuth,
+    // private firebase: FirebaseService
   ) {}
 
     
@@ -72,5 +79,10 @@ export class MenuComponent implements OnInit {
     this.router.navigate(["/"])
   }
   
+  emailSend() {
+
+  }
+
+
 
 }

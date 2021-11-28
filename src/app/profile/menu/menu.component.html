@@ -6,6 +6,7 @@
          Вы вошли как 
          <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥 {{myId | slice:0:5}}</span>
          <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}}</span>
+         <!-- <button (click)="emailSend()">email</button> -->
       </div>
       <!-- <div class="help">
          Пожалуйста дополните данные о себе в разделе 

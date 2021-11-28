@@ -10,6 +10,7 @@ import { DevelopHelp } from '../shared/services/develop-help.service';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import Swiper, { Navigation, Pagination, SwiperOptions} from 'swiper';
+import { environment, firebaseFunctions } from 'src/environments/environment';
 
 
 
@@ -68,6 +69,7 @@ export class HomePageComponent implements OnInit {
     private firebase: FirebaseService,
     private activatedRoute: ActivatedRoute,
     public helper: DevelopHelp,
+    private http: HttpClient
     
     ) { 
       
@@ -89,6 +91,17 @@ export class HomePageComponent implements OnInit {
 
   onSlideChange() {
     // console.log("change")
+  }
+
+  FBtest() {
+    this.firebase.testFunctionRandom()
+    .then((res) => {
+      console.log("ура блять: ", res)
+    })
+    .catch((err) => {
+      console.log("Ошибка FBtest: ", err)
+    })
+    
   }
 
 
