@@ -162,6 +162,14 @@ export interface SpecialistFeedbackObj {
    description: string,
 }
 
+export interface EmailData {
+   to: string,
+   from: string,
+   templateId: string,
+   dynamicTemplateData: object
+}
+
+
 export interface allCookies {
    acceptCookie?: boolean,
    

@@ -80,10 +80,10 @@ header
                transform: scaleX(0)
                transition:  0.4s
             &:hover
-               // color: #eee
-
                background-color:  rgba(251, 133, 1, 0.05)
                @include box-shadow($shadows_button_hover)
+               // color: #eee
+
             &:hover::after
                transform: scaleX(1)
             &:active
@@ -91,7 +91,7 @@ header
                // background-color: $button_active
             &:active::after
                background-color: $orange_501
-               &:hover
+               // &:hover
    &.fixed
       position: fixed
       nav

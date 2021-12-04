@@ -24,10 +24,10 @@ export class AdminLoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      emailAdm: new FormControl("mysecretemail@gmail.com", [
+      emailAdm: new FormControl("", [
         Validators.required,
       ]),
-      passwordAdm: new FormControl("mysecretemail@gmail.com", [
+      passwordAdm: new FormControl("", [
         Validators.required,
       ])
     })

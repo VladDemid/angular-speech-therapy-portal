@@ -42,13 +42,32 @@
    // border: 1px solid #000
    color: #000
 
-.client-form-popup
+.client-form-popup, .doctor-form-popup
    .popup
       width: 870px
-      padding-bottom: 40px
+      // padding-bottom: 40px
       .popup-container 
          width: 95%
-
+         h2
+            font-size: 24px
+            margin-bottom: 0
+            color: $orange_common
+            text-align: center
+      button[type=submit]
+         &:after
+            opacity: .0
+         &.submitted
+            position: relative
+            &::after
+               content: 'вопрос отправлен'
+               position: absolute
+               right: -250px
+               opacity: .8
+               color: $orange_common
+               // width: 100px
+               height: 20px
+               border: 1px solid #000
+               // background-color: #000
 
 app-profile-layout
    .popup 

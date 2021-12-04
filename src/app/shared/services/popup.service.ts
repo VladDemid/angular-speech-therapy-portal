@@ -13,7 +13,7 @@ export class PopupService {
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
   homePageFbSecurityPopup = false
-  homePageClientPopup = false
+  homePageClientPopup = true
   homePageSpecialistPopup = false
   registrTermsOfUsePopup = false
   emailVerifyPopup = false
@@ -50,7 +50,6 @@ export class PopupService {
 
   toggleHoPgClientPopup() {
     this.homePageClientPopup = !this.homePageClientPopup
-    console.log("345")
   }
 
   toggleHoPgSpecialistPopup() {
@@ -80,6 +79,10 @@ export class PopupService {
   toggleLoginAndPass() {
     this.toggleLoginPopup()
     this.togglePassRecoveryPopup()
+  }
+
+  goToTerms() {
+    window.open(`/terms-of-use`, "_blank")
   }
 
 }

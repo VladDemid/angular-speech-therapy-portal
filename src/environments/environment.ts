@@ -28,6 +28,17 @@ export const firebaseFunctions = {
   randomNumber: "https://us-central1-inclusive-test.cloudfunctions.net/randomNumber"
 }
 
+export const emailConfig = {
+  fromEmailAdress: "vlatidos@gmail.com",
+  EMAIL_TEMPLATES: {
+    FIRST: "d-0214f1135b054334abbdcfad5446a077",
+    MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4"
+ 
+ }
+}
+
+
+
 export const telegramConfig = {
   botToken: "1872651080:AAEw6lNr2WaRKXo_00Zn2WoXnxxODnUMIqI",
   logobotChatId: "-554014625"

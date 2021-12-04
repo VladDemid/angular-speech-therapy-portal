@@ -24,9 +24,18 @@ export const firebaseFunctions = {
   randomNumber: "https://us-central1-inclusive-test.cloudfunctions.net/randomNumber"
 }
 
+export const emailConfig = {
+  fromEmailAdress: "vlatidos@gmail.com",
+  EMAIL_TEMPLATES: {
+    FIRST: "d-0214f1135b054334abbdcfad5446a077",
+    MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4"
+ 
+ }
+}
+
 export const telegramConfig = {
-  botToken: "1872651080:AAEw6lNr2WaRKXo_00Zn2WoXnxxODnUMIqI",
-  logobotChatId: "-554014625"
+  botToken: "5073623051:AAE7hs3R5jy7jwN6W9p1P1owKhBlunK4wJg",
+  logobotChatId: "-632966989"
 }
 
 export const zoomConfig = {

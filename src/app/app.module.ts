@@ -29,6 +29,7 @@ import { ClientFormPopupComponent } from './shared/components/popups/client-form
 import { DoctorFormPopupComponent } from './shared/components/popups/doctor-form-popup/doctor-form-popup.component';
 import { CookiePopupComponent } from './shared/components/popups/cookie-popup/cookie-popup.component';
 import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
+import { TermsOfUsePageComponent } from './terms-of-use-page/terms-of-use-page.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -62,6 +63,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     RecomendationComponent,
     JobInvitationComponent,
     AdminLoginPageComponent,
+    TermsOfUsePageComponent,
     
   ],
   imports: [

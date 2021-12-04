@@ -109,6 +109,7 @@ form
          justify-content: space-between
          margin-top: 34px
          transition: all 0.15s
+         user-select: none
       
          input, textarea
             width: 540px
@@ -127,6 +128,7 @@ form
                padding-top: 11px
                color: #454A4A
                font-size: 20px
+            
          textarea
                height: 100%
                resize: none
@@ -434,12 +436,12 @@ form
 form.feedback
    .inputs-wrapper
       // border: 1px solid #000
-      padding: 32px 0 
+      padding: 32px 0 10px
       display: flex
       justify-content: space-between
       flex-wrap: wrap
       > label
-         width: 47%
+         width: 49%
          // border: 1px solid #000
          height: 58px
          &:nth-child(2)
@@ -451,7 +453,13 @@ form.feedback
             width: 100%
             height: 200px
             textarea
-               width: 702px
+               width: 686px
+   .rules
+      display: block
+      // flex-direction: row
+      margin-bottom: 20px
+      .terms-of-use
+         margin-top: 10px
          
 
 

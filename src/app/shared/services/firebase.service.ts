@@ -1,14 +1,15 @@
 import { Injectable, OnInit } from '@angular/core';
-import * as firebase from "firebase/app"
+import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/database"
 import "firebase/storage"
 import "firebase/functions"
-import { firebaseConfig, environment } from 'src/environments/environment';
+import { firebaseConfig, environment, emailConfig } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DevelopHelp } from './develop-help.service';
-import { User } from 'src/app/shared/interfaces'
+import { EmailData, User } from 'src/app/shared/interfaces'
 import { Observable } from 'rxjs';
+
 import { ActivatedRoute, Params } from '@angular/router';
 import { UserData } from 'src/app/profile/shared/services/user-data.service';
 
@@ -19,6 +20,7 @@ export class FirebaseService implements OnInit {
 
   signedIn = false
   actionCode: string
+  functions = {}
   
   constructor(
     private helper: DevelopHelp,
@@ -28,7 +30,7 @@ export class FirebaseService implements OnInit {
     ) {
       firebase.initializeApp(firebaseConfig)
       // this.userObserver()
-      const functions = firebase.functions()
+      this.functions = firebase.functions()
     }
 
   ngOnInit(): void {
@@ -48,10 +50,42 @@ export class FirebaseService implements OnInit {
     })
   }
 
+  testEmailFunction() {
+    const fireHttpEmail = firebase.functions().httpsCallable('fireHttpEmail');
+    return fireHttpEmail({
+      to: "mr.zgot@yandex.ru",
+      from: "vlatidos@gmail.com",
+      templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
+      dynamicTemplateData: {
+         text: "тут текст",
+         subject: "Тема письма",
+         name: 'кастомноеИмя'
+      }
+      
+    })
+
+  }
+
   testFunctionRandom() {
-    const randomNumber = firebase.functions().httpsCallable('randomNumber');
-    return randomNumber()
-    // return firebase.functions().httpsCallable('randomNumber')
+    const randomNumberCall = firebase.functions().httpsCallable('randomNumberCall');
+    return randomNumberCall()
+
+  }
+
+  sendEmailFunction(msg: EmailData) {
+    const fireHttpEmail = firebase.functions().httpsCallable('fireHttpEmail');
+    return fireHttpEmail(msg)
+
+    // {
+    //   to: "mr.zgot@yandex.ru",
+    //   from: "vlatidos@gmail.com",
+    //   dynamicTemplateData: {
+    //      text: "тут текст",
+    //      subject: "Тема письма",
+    //      name: 'кастомноеИмя'
+    //   }
+    // }
+
   }
   
   checkUser() {

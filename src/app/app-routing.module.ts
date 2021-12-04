@@ -7,10 +7,12 @@ import { ProfileGuard } from './profile/shared/services/profile.guard';
 import { SpecialistPageComponent } from './specialist-page/specialist-page.component';
 import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
 import { AdminModule } from './admin/admin.module';
+import { TermsOfUsePageComponent } from './terms-of-use-page/terms-of-use-page.component';
 
 const routes: Routes = [
   {path:"", component: HomePageComponent},
   {path:"registration", component: RegistrationPageComponent},
+  {path:"terms-of-use", component: TermsOfUsePageComponent},
   {path:"doctor", component: SpecialistPageComponent},
   {path:"admin-login", component: AdminLoginPageComponent},
   {path:"profile", loadChildren: "./profile/profile.module#ProfileModule"},

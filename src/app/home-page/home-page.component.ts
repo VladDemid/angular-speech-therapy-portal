@@ -94,14 +94,27 @@ export class HomePageComponent implements OnInit {
   }
 
   FBtest() {
-    this.firebase.testFunctionRandom()
-    .then((res) => {
-      console.log("ура блять: ", res)
-    })
-    .catch((err) => {
-      console.log("Ошибка FBtest: ", err)
-    })
+    this.firebase.testEmailFunction()
+      .then((res) => {
+        console.log("ура : ", res)
+      })
+      .catch((err) => {
+        console.log("Ошибка FBtest: ", err)
+        console.log(err.code)
+        console.log(err.message)
+        console.log(Object.entries(err) )
+      })
     
+  }
+
+  FBnumber() {
+    this.firebase.testFunctionRandom()
+      .then((resp) => {
+        console.log("ура: ", resp)
+      })
+      .catch((err) => {
+        console.log("ERROR: ", err)
+      })
   }
 
 
