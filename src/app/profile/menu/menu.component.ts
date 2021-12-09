@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { DevelopHelp } from 'src/app/shared/services/develop-help.service';
-import { environment, firebaseFunctions } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 // import { AngularFireFunctions } from '@angular/fire/functions';
 // import { AngularFireAuth } from '@angular/fire/auth';

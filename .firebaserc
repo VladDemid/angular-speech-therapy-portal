@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "inclusive-test"
-  }
+    "dev": "inclusive-test",
+    "prod": "verbaland"
+  },
+  "targets": {}
 }

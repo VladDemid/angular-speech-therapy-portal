@@ -11,20 +11,19 @@ const sgMail = require('@sendgrid/mail');
 
 //firebase functions:config:set someservice.key="THE API KEY"
 
-const API_KEY1 = "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"
-const API_KEY = functions.config().sendgrid.key
+// const API_KEY = "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";
+const API_KEY = functions.config().sendgrid.key;
 
 const TEMPLATE_ID = "d-0214f1135b054334abbdcfad5446a077";
-sgMail.setApiKey(API_KEY1);
-
+sgMail.setApiKey(API_KEY);
 
 
 
 exports.randomNumberCall = functions.https.onCall((request, responce) => {
-   const number = Math.round(Math.random() * 100);
-   console.log(number)
-   // responce.send(number.toString());
-   return number
+      const number = Math.round(Math.random() * 100);
+      console.log(number)
+      // responce.send(number.toString());
+      return number
 });
 
 

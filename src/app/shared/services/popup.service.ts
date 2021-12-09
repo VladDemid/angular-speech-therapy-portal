@@ -13,7 +13,7 @@ export class PopupService {
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
   homePageFbSecurityPopup = false
-  homePageClientPopup = true
+  homePageClientPopup = false
   homePageSpecialistPopup = false
   registrTermsOfUsePopup = false
   emailVerifyPopup = false

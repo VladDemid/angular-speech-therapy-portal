@@ -10,7 +10,7 @@ import { DevelopHelp } from '../shared/services/develop-help.service';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import Swiper, { Navigation, Pagination, SwiperOptions} from 'swiper';
-import { environment, firebaseFunctions } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 
 
 

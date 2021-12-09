@@ -2,19 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
+export const environment = { //*DEV
   production: false,
   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
   FbDbUrl: "https://inclusive-test.firebaseio.com/",
   defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
 };
 
-export const environmentOther = {
-  emailDefault: "test5@gmail.com",
-  passwordDefault: "123456"
-}
-
-export const firebaseConfig = {
+export const firebaseConfig = { //*DEV
   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
   authDomain: "inclusive-test.firebaseapp.com",
   databaseURL: "https://inclusive-test.firebaseio.com",
@@ -24,17 +19,35 @@ export const firebaseConfig = {
   appId: "1:441293072662:web:679ec4fe7378d9b9c04837"
 }
 
-export const firebaseFunctions = {
-  randomNumber: "https://us-central1-inclusive-test.cloudfunctions.net/randomNumber"
+// export const environment = { //! PROD (release)
+//   production: true,
+//   apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
+//   FbDbUrl: "https://verbaland.firebaseio.com/",
+//   defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
+// };
+
+// export const firebaseConfig = { //! PROD (release)
+//   apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
+//   authDomain: "verbaland.firebaseapp.com",
+//   databaseURL: "https://verbaland.firebaseio.com",
+//   projectId: "verbaland",
+//   storageBucket: "verbaland.appspot.com",
+//   messagingSenderId: "725914811248",
+//   appId: "1:725914811248:web:aed51fdbbd11a5558fedb5"
+// };
+
+export const environmentOther = {
+  emailDefault: "test5@gmail.com",
+  passwordDefault: "123456"
 }
+
 
 export const emailConfig = {
   fromEmailAdress: "vlatidos@gmail.com",
   EMAIL_TEMPLATES: {
     FIRST: "d-0214f1135b054334abbdcfad5446a077",
     MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4"
- 
- }
+  }
 }
 
 
