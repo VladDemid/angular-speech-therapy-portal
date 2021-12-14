@@ -27,6 +27,7 @@ export class SecurityPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // 
     // this.firebase.getCurrentUser()
   }
 
@@ -50,8 +51,20 @@ export class SecurityPageComponent implements OnInit {
       })
       .catch((err) => {
         console.log("ошибка изменения почты: ", err);
-        this.emailChangeSuccessfulMessage = `Ошибка изменения почты: ${err}`
+        this.emailErrorHandler(err)
       })
+  }
+
+  emailErrorHandler(error) {
+    console.log("в обработчик пришло: ", error);
+    switch (error.code) {
+      case "auth/requires-recent-login":
+        this.emailChangeErrMessage = "Необходимо перезайти в аккаунт для переноса почты"
+        break
+      default: 
+      this.emailChangeErrMessage = `Неизвестная ошибка при изменении почты: ${error}`
+        break
+    }
   }
 
   alert() {
@@ -63,5 +76,7 @@ export class SecurityPageComponent implements OnInit {
       }
     })
   }
+
+  // code: auth/requires-recent-login
 
 }

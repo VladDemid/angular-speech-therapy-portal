@@ -21,7 +21,7 @@ export class CookieService {
           value = true,
           daysToLive = 30 
     let cookie = name + "=" + encodeURIComponent(value)
-    cookie += "; max-age=" + (daysToLive*60*60*24 )
+    cookie += "; max-age=" + (daysToLive*60*60*24 ) + ";path=/; secure; samesite=strict"
     document.cookie = cookie
     this.checkCookies()
   }
@@ -30,12 +30,40 @@ export class CookieService {
   addCookie() {
     const name = "some",
           value = true,
+          path = "/",
           daysToLive = 2 
     let cookie = name + "=" + encodeURIComponent(value)
-    cookie += "; max-age=" + (daysToLive*60*60*24 )
+    cookie += "; max-age=" + (daysToLive*60*60*24 ) + "; secure"
+    console.log(cookie)
+
     document.cookie = cookie
     this.checkCookies()
   }
+
+  // setCookie(name, value, options: any = {}) {
+
+  //   options = {
+  //     path: '/',
+  //     // при необходимости добавьте другие значения по умолчанию
+  //     ...options
+  //   };
+  
+  //   if (options.expires instanceof Date) {
+  //     options.expires = options.expires.toUTCString();
+  //   }
+  
+  //   let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  
+  //   for (let optionKey in options) {
+  //     updatedCookie += "; " + optionKey;
+  //     let optionValue = options[optionKey];
+  //     if (optionValue !== true) {
+  //       updatedCookie += "=" + optionValue;
+  //     }
+  //   }
+  
+  //   document.cookie = updatedCookie;
+  // }
 
 
   checkCookies() {
