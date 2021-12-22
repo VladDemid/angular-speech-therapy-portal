@@ -16,10 +16,13 @@
             </div>
             <div class="rules">
                <div class="terms-of-use">
-                  <label>
+                  <!-- <label>
                      <input name="termsOfUse"   type="checkbox" formControlName="termsOfUse">
                      <span>Подтверждаю согласие на <a class="show-rules" (click)="popupService.goToTerms()">обработку персональных данных</a></span>
-                  </label>
+                  </label> -->
+                  <div class="">Нажимая "отправить", вы соглашаетесь с 
+                     <a class="show-rules" (click)="popupService.goToTerms()">обработкой персональных данных</a>
+                  </div>
                </div>
             </div>
             <div class="serverErrorMessage" *ngIf="ErrMessage" >{{ErrMessage}}</div>

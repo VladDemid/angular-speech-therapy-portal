@@ -38,8 +38,20 @@ export const firebaseConfig = { //*DEV
 
 export const environmentOther = {
   emailDefault: "test5@gmail.com",
-  passwordDefault: "123456"
+  passwordDefault: "123456",
+  name: "Имя",
+  surname: "Фамилия",
+  dob: "0012-12-12",
+  emailClient: "mr.zgot@yandex.ru",
+  emailSpec: "mr.zgot@yandex.ru",
+  phone: '+7809',
+  question: "один два три",
+  specialization: "Инженер-проектировщик",
+
 }
+
+
+
 
 
 export const emailConfig = {

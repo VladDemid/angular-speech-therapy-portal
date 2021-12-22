@@ -8,17 +8,20 @@
          <form [formGroup]="form" class="feedback" (ngSubmit)="submit()">
             <div class="inputs-wrapper">
                <label><span>ФИО</span><input name="email" type="text" placeholder="ФИО" formControlName="name"></label>
-               <label><span>Профессия</span><input name="specialisation"  type="text" placeholder="Специализация" formControlName="specialisation"></label>
+               <label><span>Профессия</span><input name="specialisation"  type="text" placeholder="Специализация" formControlName="specialization"></label>
                <label><span>Email</span><input name="email" type="text" placeholder="email@email.com" formControlName="email"></label>
                <label><span>Телефон</span><input name="phone"  type="text" placeholder="" formControlName="phone"></label>
                <label class="textarea-wrap"><span>Вопрос</span><textarea name="description" placeholder="Опишите любой ваш вопрос" rows="10" formControlName="description"></textarea></label>
             </div>
             <div class="rules">
                <div class="terms-of-use">
-                  <label>
+                  <!-- <label>
                      <input name="termsOfUse"   type="checkbox" formControlName="termsOfUse">
                      <span>Подтверждаю согласие на <a class="show-rules" (click)="popupService.goToTerms()">обработку персональных данных</a></span>
-                  </label>
+                  </label> -->
+                  <div class="">Нажимая "отправить", вы соглашаетесь с 
+                     <a class="show-rules" (click)="popupService.goToTerms()">обработкой персональных данных</a>
+                  </div>
                </div>
             </div>
             <div class="serverErrorMessage" *ngIf="ErrMessage" >{{ErrMessage}}</div>

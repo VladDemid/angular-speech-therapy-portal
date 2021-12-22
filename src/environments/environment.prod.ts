@@ -34,7 +34,15 @@ export const firebaseConfig = { //*PROD
 
 export const environmentOther = {
   emailDefault: "",
-  passwordDefault: ""
+  passwordDefault: "",
+  name: "",
+  surname: "",
+  dob: "",
+  emailClient: "",
+  emailSpec: "",
+  phone: '',
+  question: "",
+  specialization: ""
 }
 
 export const emailConfig = {

@@ -15,9 +15,17 @@ const routes: Routes = [
   {path:"terms-of-use", component: TermsOfUsePageComponent},
   {path:"doctor", component: SpecialistPageComponent},
   {path:"admin-login", component: AdminLoginPageComponent},
-  {path:"profile", loadChildren: "./profile/profile.module#ProfileModule"},
-  // {path:"admin", loadChildren: "./profile/profile.module#ProfileModule"},
-  {path:"admin", loadChildren: "./admin/admin.module#AdminModule"},
+  {
+    path:"profile", 
+    loadChildren: () => import('./profile/profile.module').then(x => x.ProfileModule)
+    // loadChildren: "./profile/profile.module#ProfileModule"},
+    // {path:"admin", loadChildren: "./profile/profile.module#ProfileModule"},
+  },
+  {
+    path:"admin", 
+    loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule)
+    // loadChildren: "./admin/admin.module#AdminModule"
+  },
   {path:"**", redirectTo: "/"}
 ];
 

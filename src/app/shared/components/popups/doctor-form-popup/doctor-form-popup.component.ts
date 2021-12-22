@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TelegramBotService } from 'src/app/shared/services/telegram-bot.service';
-import { emailConfig, environment } from 'src/environments/environment';
+import { emailConfig, environment, environmentOther } from 'src/environments/environment';
 
 @Component({
   selector: 'app-doctor-form-popup',
@@ -31,22 +31,22 @@ export class DoctorFormPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('', [
+      name: new FormControl(environmentOther.name, [
         Validators.required
       ]),
-      specialisation: new FormControl("", []),
-      email: new FormControl('', [
+      specialization: new FormControl(environmentOther.specialization, []),
+      email: new FormControl(environmentOther.emailSpec, [
         Validators.email,
         Validators.required
       ]),
-      phone: new FormControl('+', [
+      phone: new FormControl(environmentOther.phone, [
         Validators.required
       ]),
-      description: new FormControl('', []),
-      termsOfUse: new FormControl(false, [
-        Validators.required,
-        Validators.requiredTrue
-      ]),
+      description: new FormControl(environmentOther.question, []),
+      // termsOfUse: new FormControl(false, [
+      //   Validators.required,
+      //   Validators.requiredTrue
+      // ]),
     })
   }
 

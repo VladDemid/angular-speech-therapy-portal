@@ -21,6 +21,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HomePageComponent implements OnInit {
   
+  production = environment.production
   doctors = []
   testIndex = 0
 

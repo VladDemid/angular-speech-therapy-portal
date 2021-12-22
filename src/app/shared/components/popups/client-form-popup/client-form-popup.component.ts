@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TelegramBotService } from 'src/app/shared/services/telegram-bot.service';
-import { emailConfig } from 'src/environments/environment';
+import { emailConfig, environmentOther } from 'src/environments/environment';
 
 @Component({
   selector: 'app-client-form-popup',
@@ -31,23 +31,23 @@ export class ClientFormPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('123', [
+      name: new FormControl(environmentOther.name, [
         Validators.required
       ]),
-      surname: new FormControl("123", []),
-      dob: new FormControl("0012-12-12", []),
-      email: new FormControl('mr.zgot@yandex.ru', [
+      surname: new FormControl(environmentOther.surname, []),
+      dob: new FormControl(environmentOther.dob, []),
+      email: new FormControl(environmentOther.emailClient, [
         Validators.email,
         Validators.required
       ]),
-      phone: new FormControl('+7809', [
+      phone: new FormControl(environmentOther.phone, [
         Validators.required
       ]),
-      question: new FormControl('один два три', []),
-      termsOfUse: new FormControl(true, [
-        Validators.required,
-        Validators.requiredTrue
-      ]),
+      question: new FormControl(environmentOther.question, []),
+      // termsOfUse: new FormControl(true, [
+      //   Validators.required,
+      //   Validators.requiredTrue
+      // ]),
     })
   }
 
