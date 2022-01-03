@@ -31,11 +31,11 @@ import { CookiePopupComponent } from './shared/components/popups/cookie-popup/co
 import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
 import { TermsOfUsePageComponent } from './terms-of-use-page/terms-of-use-page.component';
 
-const INTERCEPTOR_PROVIDER: Provider = {
-  provide: HTTP_INTERCEPTORS,
-  multi: true,
-  useClass: AuthInterceptor
-}
+// const INTERCEPTOR_PROVIDER: Provider = {
+//   provide: HTTP_INTERCEPTORS,
+//   multi: true,
+//   useClass: AuthInterceptor
+// }
 
 
 @NgModule({
@@ -80,7 +80,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
   ],
   providers: [
     UserData,
-    INTERCEPTOR_PROVIDER,
+    // INTERCEPTOR_PROVIDER,
   ],
   bootstrap: [AppComponent]
 })

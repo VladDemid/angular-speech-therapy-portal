@@ -44,7 +44,7 @@ export const environmentOther = {
   dob: "0012-12-12",
   emailClient: "mr.zgot@yandex.ru",
   emailSpec: "mr.zgot@yandex.ru",
-  phone: '+7809',
+  phone: '',
   question: "один два три",
   specialization: "Инженер-проектировщик",
 

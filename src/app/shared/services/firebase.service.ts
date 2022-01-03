@@ -242,7 +242,7 @@ export class FirebaseService implements OnInit {
   getSertificatesList(userId?) {
     if (!userId) { //для edit page доктора
       userId = localStorage.getItem("user-Id")
-      console.log(userId, "34524352456362345")
+      // console.log(userId, "34524352456362345")
     } 
     
     this.helper.toConsole("...качаем сертификаты")
@@ -356,6 +356,17 @@ export class FirebaseService implements OnInit {
     // myNewLessonData.lessons.lessonId = eventId
     console.log("!!!!!!!!!!!",eventLesson, eventId)
     return this.http.patch(`${environment.FbDbUrl}/events.json`, myNewLessonData)
+  }
+
+  patchUserEvents(newLessonData) {
+    const userEvents = firebase.database().ref(`users/${localStorage.getItem("user-Id")}/events`);
+    return userEvents.update(newLessonData);
+    // return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json`, newLessonData)
+ }
+
+  getUserEvents() {
+    const userEvents = firebase.database().ref(`users/${localStorage.getItem("user-Id")}/events`);
+    return userEvents.get();
   }
 
 

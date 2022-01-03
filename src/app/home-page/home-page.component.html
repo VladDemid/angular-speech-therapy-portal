@@ -24,9 +24,14 @@
       <!-- PROD: --{{production}}-- -->
       
       <div class="promo">
-         <div class="container"> 
-            <button (click)="FBtest()">@email</button>
-            <button (click)="FBnumber()">number</button>
+         <div class="container">
+            <div class="dev-test" *ngIf="!production">
+               <button (click)="FBtest()">@email</button>
+               <button (click)="FBnumber()">number</button>
+               <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd", returnToProfileModule: true}'>доктор</button>
+               <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd"}'>доктор2</button>
+               <button [routerLink]="['/profile']" >профиль</button>
+            </div>
             <swiper class="swiper-test" [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
                <ng-template swiperSlide *ngFor="let item of promoSlides; index as i">
                   <div class="slide-container">

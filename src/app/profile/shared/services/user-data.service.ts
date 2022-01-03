@@ -94,13 +94,14 @@ export class UserData {
                }
             }
             if(newLessonsFound) {
-               this.sendMyLessonsDataChanges(newLessonsToSend)
-               .subscribe((resp) => {
-                  console.log("новые уроки найдены и записаны в ячейку", resp)
-               },
-               (err) => {
-                  console.log("Ошибка записи новых уроков: ", err)
-               })
+               // this.sendMyLessonsDataChanges(newLessonsToSend)
+               // this.firebase.patchUserEvents(newLessonsToSend)
+                  // .subscribe((resp) => {
+                  //    console.log("новые уроки найдены и записаны в ячейку", resp)
+                  // },
+                  // (err) => {
+                  //    console.log("Ошибка записи новых уроков: ", err)
+                  // }) 
             } else {
                console.log("новых уроков не обнаружено")
             }
@@ -305,6 +306,10 @@ export class UserData {
       // if (userType == "client") firebaseUserType = "patients"
       // else firebaseUserType = "doctors"
       return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json`, newLessonData)
+   }
+
+   sendTestDataChanges(newTestData) {
+      return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json`, newTestData)
    }
 
 

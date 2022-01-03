@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupService } from '../../services/popup.service';
 import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-nav-home',
@@ -13,16 +14,27 @@ export class NavHomeComponent implements OnInit {
 
   constructor(
     public popupService: PopupService,
-    private auth: AuthService
+    private auth: AuthService,
+    private activatedRoute: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
-    this.checkAuthentication()
+    // this.checkAuthentication()
+    
     // this.scrollcheck()
   }
 
+  
+
   checkAuthentication() {
-    this.isAuthenticated = this.auth.isAuthenticated()
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      let fromProfile = params["returnToProfileModule"]
+      if (fromProfile && fromProfile == true ) {
+        this.isAuthenticated = this.auth.isAuthenticated() //! только если query fromProfile == true
+        //*возможно вообще нет. Хз зачем тут проверка
+      } 
+    })
+
   }
 
   scrollcheck() {

@@ -87,7 +87,7 @@ export class HomePageComponent implements OnInit {
   }
 
   onSwiper(swiper) {
-    console.log(swiper)
+    // console.log(swiper)
   }
 
   onSlideChange() {

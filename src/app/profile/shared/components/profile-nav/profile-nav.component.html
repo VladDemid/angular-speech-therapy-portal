@@ -1,12 +1,13 @@
 <div class="navigation">
    <div class="container">
       <div class="logo">
-         <a [routerLink]="['/']">
+         <!--* [queryParams]='{returnToProfileModule: "true"}'  -->
+         <a [routerLink]="['/']"  > 
             <img class="logo_img" src="./assets/icons/logo.svg" alt="logo">
          </a>
       </div>
-      <div class="person">
-         <div class="portrait">
+      <div class="person" [routerLink]="['/profile/edit']" >
+         <div class="portrait" *ngIf="userData.myData.userType === 'doctor'">
             <img [src]="userData.myData.avatarUrl" alt="portrait">
             <!-- {{userData.myData.avatarUrl}} -->
          </div>
@@ -40,6 +41,8 @@
          <div class="profile-notifications"></div>
       </div> -->
       <button class="exit" (click)="exitProfile()">выход</button>
+      {{isAuthenticated}} 
+      <button (click)="test()">test auth</button>
    </div>
    
 </div>

@@ -9,12 +9,20 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class ProfileNavComponent implements OnInit {
 
+  isAuthenticated = false
+
+
   constructor(
     public userData: UserData,
     private auth: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.isAuthenticated = this.auth.isAuthenticated()
+  }
+
+  test() {
+    console.log(this.auth.isAuthenticated(), this.isAuthenticated )
   }
 
   exitProfile() {

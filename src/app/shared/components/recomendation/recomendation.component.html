@@ -1,14 +1,14 @@
 <div class="recomendation" id="recomendation">
    <div class="container">
       <h2>Рекомендуем</h2>
-      <div class="menu-tabs">
+      <!-- <div class="menu-tabs">
          <ul class="tabs">
             <li *ngFor="let item of tabs"
                [ngClass]="{activeTab: activeTab === item}"
                (click) = "changeActiveTab(item)"
             >{{item}}</li>
          </ul>
-      </div>
+      </div> -->
       <div class="content">
          <div class="catzu-game" *ngIf="activeTab === 'Игры'">
             <div class="catzu-preview">

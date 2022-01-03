@@ -16,8 +16,11 @@ export class AuthService {
       ) { }
    
    get token() {
-      const expDate = new Date(localStorage.getItem('fb-token-exp'))
-      if (new Date() > expDate) {
+      const fbTokenExp = localStorage.getItem('fb-token-exp')
+      const expDate = new Date(fbTokenExp)
+      // console.log(new Date(), expDate)
+      // console.log(localStorage.getItem('fb-token-exp'), expDate, "!!!!!")
+      if (!!fbTokenExp && new Date() > expDate) {
          this.logout()
          return null
       }
@@ -25,7 +28,6 @@ export class AuthService {
    }
 
    login(user: User) {
-      this.helper.toConsole("вход пользователя: " + user.email)
       console.log("вход пользователя: " + user.email)
       user.returnSecureToken = true
       return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
@@ -37,7 +39,7 @@ export class AuthService {
    logout() {
       localStorage.clear()
       this.router.navigate(['/'])
-      console.log("logout (token expired / no token / exit)");
+      console.log("logout🛑 (token expired / no token / exit)");
    }
 
    toHomePage() {

@@ -10,7 +10,7 @@
                <label><span>ФИО</span><input name="email" type="text" placeholder="ФИО" formControlName="name"></label>
                <label><span>Профессия</span><input name="specialisation"  type="text" placeholder="Специализация" formControlName="specialization"></label>
                <label><span>Email</span><input name="email" type="text" placeholder="email@email.com" formControlName="email"></label>
-               <label><span>Телефон</span><input name="phone"  type="text" placeholder="" formControlName="phone"></label>
+               <label><span>Телефон</span><input name="phone"  type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" formControlName="phone"></label>
                <label class="textarea-wrap"><span>Вопрос</span><textarea name="description" placeholder="Опишите любой ваш вопрос" rows="10" formControlName="description"></textarea></label>
             </div>
             <div class="rules">

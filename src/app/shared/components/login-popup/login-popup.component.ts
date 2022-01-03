@@ -62,31 +62,44 @@ export class LoginPopupComponent implements OnInit {
     }
     this.loggingIn = true
     
-    this.firebase.signInWithPass(user)
+    this.firebase.signInWithPass(user) //вход юзера
       .then((result) => {
         console.log(result);
-        console.log("вход выполнен (currentUser)");
-        // this.loggingIn = false
+        console.log("вход выполнен (currentUser)", user);
+        this.loggingIn = false
       })
       .catch((err) => {
-        // this.loggingIn = false
+        this.loggingIn = false
         console.log("ошибка входа чз firebase: ", err);
       })
     
-    this.authServise.login(user).subscribe((response) => {
-      this.form.reset()
-      this.loggingIn = false
-      this.popupService.toggleLoginPopup()
-      this.helper.toConsole("При логине был получен ответ: ",response)
-      this.router.navigate(['/profile'])
+    // this.authServise.login(user).subscribe((response) => { 
+    //   this.form.reset()
+    //   this.loggingIn = false
+    //   this.popupService.toggleLoginPopup()
+    //   this.helper.toConsole("При логине был получен ответ: ",response)
+    //   this.router.navigate(['/profile'])
 
-    },
-    (err)=> {
-      console.log("ERROR:", err);
-      this.loginErrorHandler(err)
-      this.loggingIn = false
-      
-    })
+    // },
+    // (err)=> {
+    //   console.log("ERROR:", err);
+    //   this.loginErrorHandler(err)
+    //   this.loggingIn = false
+    // })
+
+    // this.firebase.signInWithPass(user)
+    //   .then((result) => {
+    //     console.log("firebase.signInWithPass: ", result);
+    //     this.form.reset()
+    //     this.loggingIn = false
+    //     // this.popupService.toggleLoginPopup()
+    //     // this.router.navigate(['/profile'])
+    //     // this.loggingIn = false
+    //   })
+    //   .catch((err) => {
+    //     console.log("ошибка входа чз firebase: ", err);
+    //     this.loggingIn = false
+    //   })
   }  
 
   loginErrorHandler(error) {
