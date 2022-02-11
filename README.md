@@ -22,7 +22,7 @@
    - Регистрация
    - пользовательское соглашение. 
    >
-   app-routing.module отдельно
+   routing -> app-routing.module 
    
 - "profile" - для для страниц /profile/.. - личный кабинет пользователя
    >
@@ -40,9 +40,18 @@
    >
    routing в модуле
 
-## Code scaffolding
+## Services
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Сервисы из папки shared/services
+
+- firebase
+   > 
+   - Доступ к функционалу firebase посредством REST и SDK
+   - firebase SDK инициализируется используя environment.firebaseConfig 
+   ### База данны
+   - REST запросы кроме "GET" должны дополняться токеном Пример `link....json?auth=${authToken}`. Присутствуют функции с запросами без токенов. Это старые функции, возможно нигде уже не используемые
+   - SDK запросы выполняются посредством внутренних методов firebase.storage() , firebase.database()
+   
 
 ## Build
 
