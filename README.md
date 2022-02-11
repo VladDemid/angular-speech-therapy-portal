@@ -44,16 +44,41 @@
 
 Сервисы из папки `shared/services`
 
-- firebase
+### firebase.service
    > 
+   - хранение currentUser, userToken после логина
    - Доступ к функционалу firebase посредством REST и SDK
    - firebase SDK инициализируется используя environment.firebaseConfig 
-   ### База данных + storage (.jpg)
+   #### База данных + storage (.jpg)
    - REST запросы кроме "GET" должны дополняться токеном. Пример: `link....json?auth=${authToken}`. Присутствуют функции с запросами без токенов. Это старые функции, возможно нигде уже не используемые
    - SDK запросы выполняются посредством внутренних методов `firebase.storage()` , `firebase.database()`
-   ### Запуск firebase functions
+   #### Firebase functions
    - Приватные функции: `.httpsCallable('funcName')` запуск через внутренний SDK. Соответственно функция .`onCall()` 
-   - Публичные функции `.onRequest()`. Доступные по `"GET"` запросу
+   - Публичные функции `.onRequest()`. Доступные по `"GET"` запросу по своим прямомым постоянным адресам.
+   #### Hosting
+   - тест продакшн билда 
+
+### auth.service
+   >
+   - доступ к localStorage userId item для некоторых проверок наличия сессии
+   
+### cookie.service
+   >
+   - пока только попапы
+
+### crypter.service 
+   >
+   - шифровка - расшифровка строк
+   - при открытии стриницы спеца `/doctor/id` его id там пишется в зашифрованном виде (не знаю зачем, пускай будет пока)
+
+### develop-help 
+   >
+   - не используется
+
+### popup.service
+   >
+   - хранение состояний попапов (показать/скрыть) и методы toggle для них
+
 
 ## Build
 

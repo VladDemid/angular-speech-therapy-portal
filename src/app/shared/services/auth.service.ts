@@ -16,7 +16,7 @@ export class AuthService {
       ) { }
    
    get token() {
-      const fbTokenExp = localStorage.getItem('fb-token-exp')
+      const fbTokenExp = localStorage.getItem('fb-token-exp') //* fb-token-exp больше не используется
       const expDate = new Date(fbTokenExp)
       // console.log(new Date(), expDate)
       // console.log(localStorage.getItem('fb-token-exp'), expDate, "!!!!!")
