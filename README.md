@@ -1,17 +1,26 @@
-# Logogo
+# Logogo (внутренняя документация)
+
+Чем занимается портал:
+онлайн консультации комплексная диагностика индивидуальные занятия со специалистами:
+логопеды, психологи, сурдопедагоги, тифлопедагоги, специалисты по РАС, специалисты по двигательной реабилитации детей с ДЦП
 
 Технологии: 
 - Angular 13.1.1
-- Firebase 8.10.0 (namespaced)
+- Firebase 8.10.0 (namespaced, not modular)
 
 Дополнительные сервисы:
 - Telegram bot
 - Sendgrid - email sending service
 - Alfa bank acquiring (in dev..)
 
-## Development server
+## Архитектура портала
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+3 модуля angular:
+- app - основной 
+   > Главная страница, регистрация, пользовательское соглашение. 
+   Все первичное, чтобы ознакомиться с порталом
+   
+- profile - для для страниц /profile/.. 
 
 ## Code scaffolding
 
