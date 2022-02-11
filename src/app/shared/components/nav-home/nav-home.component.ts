@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PopupService } from '../../services/popup.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-nav-home',
@@ -10,16 +11,18 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class NavHomeComponent implements OnInit {
 
-  isAuthenticated = false
+  isAuthenticated = localStorage.getItem("user-Id")
 
   constructor(
     public popupService: PopupService,
     private auth: AuthService,
     private activatedRoute: ActivatedRoute,
+    private firebase: FirebaseService
     ) { }
 
   ngOnInit(): void {
     // this.checkAuthentication()
+    // this.isAuthenticated = this.firebase.isAuthenticated()
     
     // this.scrollcheck()
   }
@@ -27,13 +30,13 @@ export class NavHomeComponent implements OnInit {
   
 
   checkAuthentication() {
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
-      let fromProfile = params["returnToProfileModule"]
-      if (fromProfile && fromProfile == true ) {
-        this.isAuthenticated = this.auth.isAuthenticated() //! только если query fromProfile == true
-        //*возможно вообще нет. Хз зачем тут проверка
-      } 
-    })
+    // this.activatedRoute.queryParams.subscribe((params: Params) => {
+    //   let fromProfile = params["returnToProfileModule"]
+    //   if (fromProfile && fromProfile == true ) {
+    //     this.isAuthenticated = this.auth.isAuthenticated() //! только если query fromProfile == true
+    //     //*возможно вообще нет. Хз зачем тут проверка
+    //   } 
+    // })
 
   }
 

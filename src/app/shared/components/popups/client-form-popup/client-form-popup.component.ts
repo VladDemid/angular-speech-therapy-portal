@@ -53,6 +53,7 @@ export class ClientFormPopupComponent implements OnInit {
 
   submit() {
     this.isSendingData = true
+    this.ErrMessage = ""
     
     let feedbackForm = {
       to: this.form.value.email,
@@ -66,27 +67,37 @@ export class ClientFormPopupComponent implements OnInit {
     
     
     if (this.form.invalid) {
-      console.log(this.form.value)
+      console.log(this.form)
+      this.ErrMessage = "форма заполнена не полностью"
       // this.showRulesRequired = true
       this.isSendingData = false
       return
     }
+
+    let sendingData = this.form.value
+    sendingData.dob = this.reformatDate(sendingData.dob) // 2010-12-30 -> 30.12.2010
+    console.log(sendingData)
     
-    // Promise.resolve(this.telegram.sendClientFeedback(this.form.value))
-    // .then((resp) => {
+    Promise.resolve(this.telegram.sendClientFeedback(sendingData))
+    .then((resp) => {
       this.firebase.sendEmailFunction(feedbackForm)
         .then((res) => {
-          // console.log("ура : ", res)
+          console.log("email отправлен: ", res)
           this.form.reset()
           this.isSendingData = false
           this.submitted = true
-          setTimeout(() => this.submitted = false, 3000)
+          setTimeout(() => this.submitted = false, 5000)
         })
         .catch((err) => {
           console.log("Ошибка FBtest: ", err)
           this.isSendingData = false
         })
-    // })
+    })
+  }
+
+  reformatDate(dateStr) {
+    const dArr = dateStr.split("-");  // ex input "2010-01-18"
+    return dArr[2] + "." + dArr[1]+ "." + dArr[0]; //ex out: "18.01.10"
   }
 
 

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { PopupService } from '../../services/popup.service';
+import { PopupService } from '../../../services/popup.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DevelopHelp } from '../../services/develop-help.service';
-import { FirebaseService } from '../../services/firebase.service';
+import { DevelopHelp } from '../../../services/develop-help.service';
+import { FirebaseService } from '../../../services/firebase.service';
 import { environmentOther } from 'src/environments/environment';
+import { UserCredentials } from '../../../interfaces';
 
 @Component({
   selector: 'app-login-popup',
@@ -19,7 +20,7 @@ export class LoginPopupComponent implements OnInit {
   passwordMinLength = 6
   serverErrMessage = ""
   accessErrMessage = ""
-
+  
   constructor(
     private helper: DevelopHelp,
     public popupService: PopupService,
@@ -27,10 +28,10 @@ export class LoginPopupComponent implements OnInit {
     private firebase: FirebaseService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    ) { }
-
-  ngOnInit(): void {
-
+    ) {}
+    
+    ngOnInit(): void {
+      
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params["needLogin"]) {
         this.accessErrMessage = "Время сессии вышло. Для доступа в личный кабинет необходимо заново войти в аккаунт"
@@ -57,21 +58,20 @@ export class LoginPopupComponent implements OnInit {
     }
 
     const user = {
-      email: this.form.value.email,
-      password: this.form.value.password,
+      email: this.form.value.email.trim(),
+      password: this.form.value.password.trim(),
     }
     this.loggingIn = true
-    
-    this.firebase.signInWithPass(user) //вход юзера
-      .then((result) => {
-        console.log(result);
-        console.log("вход выполнен (currentUser)", user);
-        this.loggingIn = false
-      })
-      .catch((err) => {
-        this.loggingIn = false
-        console.log("ошибка входа чз firebase: ", err);
-      })
+    // ---Obsolete--->
+    // this.firebase.signInWithPass(user) //вход юзера
+    //   .then((result) => {
+    //     console.log("user:", result);
+    //     this.loggingIn = false
+    //   })
+    //   .catch((err) => {
+    //     this.loggingIn = false
+    //     console.log("ошибка входа чз firebase: ", err);
+    //   })
     
     // this.authServise.login(user).subscribe((response) => { 
     //   this.form.reset()
@@ -86,33 +86,65 @@ export class LoginPopupComponent implements OnInit {
     //   this.loginErrorHandler(err)
     //   this.loggingIn = false
     // })
+    // <---Obsolete---
 
-    // this.firebase.signInWithPass(user)
-    //   .then((result) => {
-    //     console.log("firebase.signInWithPass: ", result);
-    //     this.form.reset()
-    //     this.loggingIn = false
-    //     // this.popupService.toggleLoginPopup()
-    //     // this.router.navigate(['/profile'])
-    //     // this.loggingIn = false
-    //   })
-    //   .catch((err) => {
-    //     console.log("ошибка входа чз firebase: ", err);
-    //     this.loggingIn = false
-    //   })
-  }  
+    // --test1-->
+    // this.firebase.signInWithPassNew(user)
+    // .then((result) => {
+      //   console.log("firebase.signInWithPass: ", result);
+      //   this.form.reset()
+      //   this.loggingIn = false
+      //   // this.popupService.toggleLoginPopup()
+      //   // this.router.navigate(['/profile'])
+      //   // this.loggingIn = false
+      // })
+      // .catch((err) => {
+      //   console.log("ошибка входа чз firebase: ", err);
+      //   this.loggingIn = false
+      // })
+      // <--test1--
+      
+
+      this.firebase.setPersistence()
+      .then(() => {
+        this.firebase.signInWithPass(user)
+        .then((userCredentials: any) => { //успешный вход в юзера
+          console.log("userCredentials: ", userCredentials)
+          // this.firebase.setUid(userCredentials)
+          localStorage.setItem("user-Id",  userCredentials.user.uid)
+          this.form.reset()
+          this.loggingIn = false
+          this.popupService.toggleLoginPopup()
+          this.router.navigate(['/profile'])
+          // this.currentUser = userCredentials.user
+        })
+        .catch((err) => {
+          this.loggingIn = false
+          console.log("signInWithEmailAndPassword ERROR: ", err)
+          this.loginErrorHandler(err)
+        })
+      })
+    .catch((err) => {
+        console.log("setPersistence ERROR: ", err)
+        this.loggingIn = false
+      })
+
+
+
+    }  
 
   loginErrorHandler(error) {
     this.helper.toConsole("в обработчик пришло: ", error);
-    switch (error.error.error.message) {
-      case "EMAIL_NOT_FOUND":
+    console.log()
+    switch (error.code) {
+      case "auth/user-not-found":
         this.serverErrMessage = "Такая почта не найдена"
         break
-      case "INVALID_PASSWORD":
+      case "auth/wrong-password":
         this.serverErrMessage = "Неверный пароль"
         break
       default: 
-      this.serverErrMessage = error.error.error.message
+      this.serverErrMessage = error.code
         break
     }
   }

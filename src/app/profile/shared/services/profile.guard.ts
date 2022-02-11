@@ -1,33 +1,38 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ProfileGuard implements CanActivate {
 
-   userId = localStorage.getItem("user-Id")
    
    constructor(
       private auth: AuthService,
       private popupService: PopupService,
-      private router: Router
-   ) { }
-
+      private router: Router,
+      private firebase: FirebaseService
+      ) { }
+      
    canActivate(
       route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot
       ) {
-      if (this.auth.isAuthenticated() && this.userId !== "XUuNLsPankPqmDKLBb8ZS4X1dq12") {
+         //TODO убрать костыль userId !=.....
+      const userId = localStorage.getItem("user-Id")
+      if (userId) {
          return true
       } else {
-         this.auth.logout()
+         this.firebase.signOut("needLogin")
          this.popupService.toggleLoginPopup()
-         this.router.navigate(["/"], {
-            queryParams: {
-               needLogin: true
-            }
-         })
+         // this.auth.logout() //пересмотреть
+         // this.router.navigate(["/"], {
+         //    queryParams: {
+         //       needLogin: true
+         //    }
+         // })
       }
 
    }

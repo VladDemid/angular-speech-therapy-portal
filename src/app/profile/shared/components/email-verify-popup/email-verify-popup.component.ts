@@ -19,13 +19,17 @@ export class EmailVerifyPopupComponent implements OnInit {
     private auth: AuthService,
     private firebase: FirebaseService,
     private userData: UserData,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     // this.sendEmailVerification()
     // this.checkQuerry()
     // this.firebase.userObserver()
+  }
+
+  logName() {
+    console.log( this.userData.myData.name)
   }
 
   checkQuerry() {
@@ -46,18 +50,13 @@ export class EmailVerifyPopupComponent implements OnInit {
 
 
   checkCurrentUser() {
-    return this.firebase.checkUser()
+    return this.firebase.isAuthenticated()
   }
 
   changeEmailVerifyBoolean() {
     console.log("changeEmailVerifyBoolean changeEmailVerifyBoolean");
   }
 
-  manuallyCheck() {
-    console.log("------------------------");
-    // this.firebase.
-    
-  }
 
   // sendEmailVerification() {
   //   const email = this.userData.myData.email
@@ -72,15 +71,13 @@ export class EmailVerifyPopupComponent implements OnInit {
   // }
 
   logOut() {
-    this.auth.logout()
-    this.auth.toHomePage()
-
-    this.firebase.signOutCurrentUser()
+    // this.auth.logout()
+    this.firebase.signOut()
       .then(() => {
-        console.log("currentUser clear");
+        console.log("user signed out");
       })
       .catch((err) => {
-        console.log("currentUser not clear: ", err);
+        console.log("user sign out ERROR: ", err);
       })
   }
 

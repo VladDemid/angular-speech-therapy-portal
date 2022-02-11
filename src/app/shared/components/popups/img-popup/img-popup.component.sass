@@ -1,0 +1,35 @@
+@import '../../../../../assets/styles/_variables'   
+
+.popup-container
+   position: relative
+   display: flex
+   justify-content: center
+   flex-direction: column
+   // max-height: 100%
+
+   img
+      display: block
+      max-height: 700px
+      max-width: 100%
+   a.new-tab
+      position: absolute
+      display: block
+      width: 50px
+      height: 50px
+      border-radius: 50%
+      background-color: $orange_common
+      bottom: 20px
+      left: 50%
+      transform: translateX(-50%)
+      font-size: 16px
+      font-weight: bold
+      &:hover
+         background-color: #e27900
+      img
+         position: absolute
+         top: 50%
+         left: 50%
+         transform: translate3d(-50%, -50%, 0)
+         width: 70%
+         height: 70%
+   

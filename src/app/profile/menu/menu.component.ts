@@ -6,6 +6,7 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 import { DevelopHelp } from 'src/app/shared/services/develop-help.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { FirebaseService } from 'src/app/shared/services/firebase.service';
 // import { AngularFireFunctions } from '@angular/fire/functions';
 // import { AngularFireAuth } from '@angular/fire/auth';
 // import { FirebaseService } from 'src/app/shared/services/firebase.service';
@@ -17,14 +18,20 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MenuComponent implements OnInit {
 
+  production = environment.production
   myId = localStorage.getItem('user-Id')
   testVar = 2
-  production = environment.production
+  testAction = false
+
 
   menuItems = [
     {
       name: "Календарь",
       link: "calendar",
+    },
+    {
+      name: "Специалисты",
+      link: "doctors",
     },
     // {
     //   name: "Видеочат",
@@ -47,10 +54,6 @@ export class MenuComponent implements OnInit {
         link: "security",
       },
       {
-        name: "Специалисты",
-        link: "doctors",
-      },
-      {
         name: "Помощь",
         link: "help",
       },
@@ -64,7 +67,8 @@ export class MenuComponent implements OnInit {
     private router: Router,
     public popupService: PopupService,
     public helper: DevelopHelp,
-    private http: HttpClient
+    private http: HttpClient,
+    private firebase: FirebaseService
     // public afAuth: AngularFireAuth,
     // private firebase: FirebaseService
   ) {}
@@ -83,6 +87,44 @@ export class MenuComponent implements OnInit {
 
   }
 
+  testLoading() {
+    const timer = setTimeout(() => {
+      this.testAction = false
+    }, 5000)
+    this.testAction = true
+    
+  }
 
+  
+  TESTsetToken() {
+    this.firebase.setUserToken()
+  }
+  
+  TESTgetToken() {
+    console.log(this.firebase.getUserToken()) 
+  }
+  
+  
+  TESTgetData() {
+    this.firebase.getUserData()
+  }
+  
+  TESTpatchUserData() {
+    const data = {
+      test:1,
+      test2: "123"
+    }
+    this.firebase.patchUserData(data)
+  }
+
+  TESTmanualRESTpatchUserData() {
+    this.firebase.TESTmanualREST().subscribe(
+      (resp) => {
+        console.log("REST: ", resp)
+      },
+      (err) => {
+        console.log("REST ERROR: ", err)
+      })
+  }
 
 }

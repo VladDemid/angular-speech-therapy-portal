@@ -10,9 +10,7 @@ import { NavHomeComponent } from './shared/components/nav-home/nav-home.componen
 import { FooterHomeComponent } from './shared/components/footer-home/footer-home.component';
 import { FaqComponent } from './shared/components/faq/faq.component';
 import { FaqItemComponent } from './shared/components/faq-item/faq-item.component';
-import { LoginPopupComponent } from './shared/components/login-popup/login-popup.component';
 import { PasswordRecoveryComponent } from './shared/components/password-recovery/password-recovery.component';
-import { TermsOfUsePopupComponent } from './shared/components/terms-of-use-popup/terms-of-use-popup.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { ProfileGuard } from './profile/shared/services/profile.guard';
@@ -30,6 +28,7 @@ import { DoctorFormPopupComponent } from './shared/components/popups/doctor-form
 import { CookiePopupComponent } from './shared/components/popups/cookie-popup/cookie-popup.component';
 import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
 import { TermsOfUsePageComponent } from './terms-of-use-page/terms-of-use-page.component';
+import { LoginPopupComponent } from './shared/components/popups/login-popup/login-popup.component';
 
 // const INTERCEPTOR_PROVIDER: Provider = {
 //   provide: HTTP_INTERCEPTORS,
@@ -53,7 +52,6 @@ import { TermsOfUsePageComponent } from './terms-of-use-page/terms-of-use-page.c
     LoginPopupComponent,
     PasswordRecoveryComponent,
     FbSecurityPopupComponent,
-    TermsOfUsePopupComponent,
     RequisitesPopupComponent,
     ClientFormPopupComponent,
     DoctorFormPopupComponent,

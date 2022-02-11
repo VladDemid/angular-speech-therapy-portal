@@ -7,10 +7,10 @@ import "firebase/functions"
 import { firebaseConfig, environment, emailConfig } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DevelopHelp } from './develop-help.service';
-import { EmailData, User } from 'src/app/shared/interfaces'
-import { Observable } from 'rxjs';
+import { EmailData, User, UserCredentials } from 'src/app/shared/interfaces'
+import { Observable, Subject } from 'rxjs';
 
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UserData } from 'src/app/profile/shared/services/user-data.service';
 
 @Injectable({
@@ -18,26 +18,48 @@ import { UserData } from 'src/app/profile/shared/services/user-data.service';
 })
 export class FirebaseService implements OnInit {
 
+
+  shortIds = null
   signedIn = false
   actionCode: string
   functions = {}
+  currentUser = null
+  userToken = ""
   
   constructor(
     private helper: DevelopHelp,
     private http: HttpClient,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     // private userData: UserData
     ) {
       firebase.initializeApp(firebaseConfig)
+      firebase.auth().onAuthStateChanged((user) => this.onAuthStateChanged(user))
       // this.userObserver()
       this.functions = firebase.functions()
+      // this.timerLogger()
     }
-
+    
   ngOnInit(): void {
     console.log("auth = ",firebase.auth);
-    
+    // this.currentUser1 = firebase.auth().currentUser
+    // console.log(this.currentUser, this.currentUser1)
   }
 
+
+  onAuthStateChanged(user) {
+    
+    this.currentUser = user
+    this.setUserToken()
+  }
+
+  setObserverOnUserToken() {
+    // const user = new Subject<object>()
+    // const currentUser$ = user.asObservable()
+  }
+  
+  
+ 
   userObserver() {
     firebase.auth().onAuthStateChanged((user) =>{
       if(user){
@@ -48,6 +70,13 @@ export class FirebaseService implements OnInit {
         console.log("User is signed out")
       }
     })
+  }
+
+  timerLogger() {
+    const timer = setInterval(() => {
+      // console.log("1: ", this.currentUser, "2: ", this.currentUser1)
+    }, 300)
+
   }
 
   testEmailFunction() {
@@ -72,6 +101,35 @@ export class FirebaseService implements OnInit {
 
   }
 
+  testAlfa(): Promise<any> {
+    const alfaTest = firebase.functions().httpsCallable('alfaReq');
+    return alfaTest()
+  }
+
+  
+  alfaREST(action, orderId, isProd) {
+    // getOrderStatusExtended.do - состояние заказа
+    // deposit.do - регистрация заказа
+    return this.http.get(`https://us-central1-inclusive-test.cloudfunctions.net/alfaReq?actionUrl=${action}&orderId=${orderId}&isProd=${isProd}`)
+  }
+  
+  testAlfaREST() {
+    return this.http.get("https://us-central1-inclusive-test.cloudfunctions.net/alfaReq?actionUrl=getOrderStatusExtended.do")
+  }
+  
+  testGetAlfaAll(action, isProd) {
+    return this.http.get(`https://us-central1-inclusive-test.cloudfunctions.net/alfaAllReq?actionUrl=${action}&isProd=${isProd}`)
+  }
+
+  testQuery() {
+    return this.http.get("https://us-central1-inclusive-test.cloudfunctions.net/queryTest?test=1243")
+  }
+  
+  authFuncTest(data) {
+    const fireHttpEmail = firebase.functions().httpsCallable('alfaCall');
+    return fireHttpEmail(data)
+  }
+
   sendEmailFunction(msg: EmailData) {
     const fireHttpEmail = firebase.functions().httpsCallable('fireHttpEmail');
     return fireHttpEmail(msg)
@@ -87,8 +145,17 @@ export class FirebaseService implements OnInit {
     // }
 
   }
+
+  isAuthenticated() { //вроде работает
+    return !!firebase.auth().currentUser
+  }
+
+  setUid(userCredentials: UserCredentials) { //вроде не нужно теперь
+    localStorage.setItem("user-Id",  userCredentials.uid)
+    console.log("authorization completed")
+  }
   
-  checkUser() {
+  checkUser() { //?? Нахрена такой огород
     const user = firebase.auth().currentUser
     return user ? true : false
   }
@@ -96,11 +163,87 @@ export class FirebaseService implements OnInit {
   getUser() {
     return firebase.auth().currentUser
   }
+
+  setUserToken() { 
+    firebase.auth().currentUser?.getIdToken()
+    .then((resp) => {
+      this.userToken = resp
+      // console.log("token set")
+    })
+    .catch((err) => {
+      console.log("set FB token ERROR: ", err)
+    })
+  }
+
+  getUserToken() {
+    return this.userToken
+  }
+
+  getUserData() {
+    const user = this.getUser()
+    const userId = user.uid
+    var userRef = firebase.database().ref('users/' + userId );
+    userRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      console.log(data)
+    });
+  }
+
+  getShortIds() {
+    // const user = this.getUser()
+    // const userId = user.uid
+    var userRef = firebase.database().ref('shortIds');
+    userRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      this.shortIds = data
+      // console.log(data)
+    });
+  }
   
+  patchUserData(newData) {
+    const user = this.getUser()
+    const userId = user.uid
+    const path = 'users/' + userId + "/newTest"
+    // var userRef = firebase.database().ref('users/' + userId );
+    return firebase.database().ref(path).update(newData);
+  }
+
+  patchUserDataFromAdmin(newData, userId) {
+    const path = 'users/' + userId
+    // var userRef = firebase.database().ref('users/' + userId );
+    return firebase.database().ref(path).update(newData);
+  }
+
+  patchDataByPath(newData, path) {
+    // const path = 'users/' + userId
+    // var userRef = firebase.database().ref('users/' + userId );
+    return firebase.database().ref(path).update(newData);
+  }
+
+  TESTmanualREST() {
+    const authToken = this.getUserToken()
+    // console.log(authToken)
+    const newUserData = {
+      test: 123,
+      test3: "32425354"
+    }
+    return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/new.json?auth=${authToken}`, newUserData)
+  }
   
 
-  signOutCurrentUser() {
+  signOut(query?) { //замена прошлому signOut (auth)
     this.signedIn = false
+    localStorage.clear()
+    console.log("FB signOut")
+    if (!query) {
+      this.router.navigate(['/'])
+    } else if (query === "needLogin") {
+      this.router.navigate(["/"], {
+        queryParams: {
+           needLogin: true
+        }
+     })
+    }
     return firebase.auth().signOut()
   }
 
@@ -141,18 +284,32 @@ export class FirebaseService implements OnInit {
   }
 
   sendMyDataChanges(newUserData) { //обновить часть данных
-    return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`, newUserData)
+    return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json?auth=${this.userToken}`, newUserData)
+  }
+
+  sendMyLessonsDataChanges(newLessonData) {
+    return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json?auth=${this.userToken}`, newLessonData)
   }
   
   registrNewUser(newUser) {
-    this.helper.toConsole("Try to create new user: ", newUser)
+    console.log("Try to create new user: ", newUser)
     return firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
   }
 
-  createNewUserDataObject(user, result) { 
+  createNewUserDataObject(user, result) {
     console.log("инфа для заполнения пользователя: ", user)
     console.log("Id нового пользователя: ", result.user.uid)
     return this.http.put(`${environment.FbDbUrl}/users/${result.user.uid}.json`, user)
+  }
+
+  createNewUserDBbyAdmin(userId, userInfo) { //data-base object
+    console.log("инфа для заполнения пользователя: ", userId)
+    return this.http.put(`${environment.FbDbUrl}/users/${userId}.json?auth=${this.userToken}`, userInfo)
+  }
+
+  TESTcreateNewUserDataObject(userId, userInfo) {
+    console.log("инфа для заполнения пользователя: ", userId)
+    return this.http.put(`${environment.FbDbUrl}/users/${userId}.json?auth=${this.userToken}`, userInfo)
     
   }
 
@@ -173,9 +330,37 @@ export class FirebaseService implements OnInit {
 
   signInWithPass(user: User) {
     // this.userObserver()
-    console.log("вход в систему через firebase...")
+    console.log("firebase signIn @ & Pass...")
     return firebase.auth().signInWithEmailAndPassword(user.email, user.password)
   }
+
+  setPersistence() {
+    return firebase.auth().setPersistence("local")
+  }
+
+  signInWithPassNew(user: User) {
+    console.log("FB login...")
+    console.log("setPersistence local")
+    firebase.auth().setPersistence("local")
+    .then(() => {
+        firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+        .then((userCredentials) => {
+          this.currentUser = userCredentials.user
+        })
+        .catch((err) => {
+          console.log("signInWithEmailAndPassword ERRORO: ", err)
+        })
+      })
+    .catch((err) => {
+        console.log("setPersistence ERROR: ", err)
+      })
+    
+    // this.userObserver()
+  }
+
+  // signOut() {
+  //   return firebase.auth().signOut()
+  // }
 
   sendPasswordResetEmail(email) {
     return firebase.auth().sendPasswordResetEmail(email)
@@ -245,7 +430,7 @@ export class FirebaseService implements OnInit {
       // console.log(userId, "34524352456362345")
     } 
     
-    this.helper.toConsole("...качаем сертификаты")
+    console.log("...качаем сертификаты")
     const storageRef = firebase.storage().ref()
     const UsersIdSerts = storageRef.child(`users/${userId}`)
     
@@ -262,12 +447,14 @@ export class FirebaseService implements OnInit {
     
   }
   
-  async getDownloadLinks(files) {
+  async getDownloadLinks(files) { //вытаскивание ссылок 
     const sertsDownloadLinks = []
+    // console.log("на входе: ", files) //непонятный формат, где есть имя файла
     
-    for (let file in files) {
+    const storageRef = firebase.storage().ref()
+    for (let file in files) { //по каждому имени файла запрашивать URL адреса сертификатов
+      // console.log(file)
       if (!isNaN(+file)) {
-        const storageRef = firebase.storage().ref()
         const storageImg = storageRef.child(`users/${localStorage.getItem("user-Id")}/sertificates/${files[file].name}`)
         // console.log("скачивание сертификата ", storageImg.name);
         
@@ -281,6 +468,7 @@ export class FirebaseService implements OnInit {
           
       }
     }
+    
     
     // console.log("ссылки: ", sertsDownloadLinks);
     
@@ -358,7 +546,7 @@ export class FirebaseService implements OnInit {
     return this.http.patch(`${environment.FbDbUrl}/events.json`, myNewLessonData)
   }
 
-  patchUserEvents(newLessonData) {
+  patchUserEvents(newLessonData) { //???
     const userEvents = firebase.database().ref(`users/${localStorage.getItem("user-Id")}/events`);
     return userEvents.update(newLessonData);
     // return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json`, newLessonData)

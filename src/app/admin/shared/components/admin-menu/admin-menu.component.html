@@ -1,0 +1,17 @@
+<div class="admin-menu">
+   <div class="container">
+      <button class="exit" (click)="exitAdmin()">выход</button>
+      <div class="menu-list">
+         <div class="menu-item" *ngFor="let item of menuItems"  [routerLink]="['/admin', item.link]" [attr.link]='item.link' >
+            
+            <!-- <div class="icon-wrapper">
+               <div class="icon"></div>
+            </div> -->
+            <div class="description">
+               {{item.name}}
+            </div>
+         </div>
+      </div>
+      <button (click)="TESTgetUser()">user</button>
+   </div>
+</div>

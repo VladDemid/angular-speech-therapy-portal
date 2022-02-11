@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserData } from '../../services/user-data.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
 @Component({
   selector: 'app-profile-nav',
@@ -14,7 +15,8 @@ export class ProfileNavComponent implements OnInit {
 
   constructor(
     public userData: UserData,
-    private auth: AuthService
+    private auth: AuthService,
+    private firebase: FirebaseService
   ) { }
 
   ngOnInit(): void {
@@ -26,8 +28,9 @@ export class ProfileNavComponent implements OnInit {
   }
 
   exitProfile() {
-    this.auth.logout()
-    this.auth.toHomePage()
+    // this.auth.logout() 
+    // this.auth.toHomePage()
+    this.firebase.signOut()
   }
 
 }

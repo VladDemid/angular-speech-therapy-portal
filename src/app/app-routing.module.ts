@@ -18,13 +18,11 @@ const routes: Routes = [
   {
     path:"profile", 
     loadChildren: () => import('./profile/profile.module').then(x => x.ProfileModule)
-    // loadChildren: "./profile/profile.module#ProfileModule"},
-    // {path:"admin", loadChildren: "./profile/profile.module#ProfileModule"},
+    // path:"profile", component: ProfileModule,
   },
   {
     path:"admin", 
     loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule)
-    // loadChildren: "./admin/admin.module#AdminModule"
   },
   {path:"**", redirectTo: "/"}
 ];

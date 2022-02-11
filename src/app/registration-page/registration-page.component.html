@@ -1,6 +1,3 @@
-<div class="rules-popup" *ngIf="popupService.registrTermsOfUsePopup">
-   <app-terms-of-use-popup></app-terms-of-use-popup>
-</div>
 
 <app-nav-home></app-nav-home>
 
@@ -72,14 +69,17 @@
          </div>
          <div class="rules">
             <div class="terms-of-use">
-               <label>
+               <div class="agreement">Нажимая "отправить", вы соглашаетесь с 
+                  <a class="show-rules" (click)="popupService.goToTerms()">пользовательским соглашением и обработкой персональных данных</a>
+               </div>
+               <!-- <label>
                   <input name="termsOfUse"  type="checkbox" formControlName="termsOfUse">
                   <span>Я подтверждаю, что ознакомлен и согласен с условиями <a class="show-rules" (click)="popupService.toggleTermsOfUsePopup()">Пользовательского соглашения</a></span>
                </label>
                <div class="validation-errors" *ngIf="clientRegistrationForm.get('termsOfUse').invalid && (clientRegistrationForm.get('termsOfUse').touched || showRulesRequired)">
                   <small class="error" *ngIf="clientRegistrationForm.get('termsOfUse').errors.required">
                         Необходимо подтвердить согласие с <span>правилами</span> сервиса</small>
-               </div>
+               </div> -->
             </div>
             <div class="news-subscription">
                <label>

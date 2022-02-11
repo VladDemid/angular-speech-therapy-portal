@@ -39,7 +39,7 @@ export class DoctorsPageComponent implements OnInit {
     // let doctors = []
     for (const property in users) {
       // console.log("проверка пользователя:" ,users[property]);
-      if (users[property].userType == "doctor") {
+      if (users[property].userType == "doctor" && users[property].zoomLink && users[property].weeklySchedule) {
         users[property].id = property;
         this.doctors.push(users[property])
       }

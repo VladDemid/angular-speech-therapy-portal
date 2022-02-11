@@ -70,10 +70,10 @@ export class RegistrationPageComponent implements OnInit {
       //   Validators.required,
       //   Validators.minLength(this.passwordMinLength)
       // ]),
-      termsOfUse: new FormControl(null, [
-        Validators.required,
-        Validators.requiredTrue
-      ]),
+      // termsOfUse: new FormControl(true, [
+      //   Validators.required,
+      //   Validators.requiredTrue
+      // ]),
       newsSubscription: new FormControl(false),
     })
 
@@ -99,10 +99,10 @@ export class RegistrationPageComponent implements OnInit {
         Validators.minLength(this.passwordMinLength)
       ]),
       // passwordRepeat: new FormControl(null),
-      termsOfUse: new FormControl(false, [
-        Validators.required,
-        Validators.requiredTrue
-      ]),
+      // termsOfUse: new FormControl(false, [
+      //   Validators.required,
+      //   Validators.requiredTrue
+      // ]),
       newsSubscription: new FormControl(false),
 
 
@@ -130,16 +130,16 @@ export class RegistrationPageComponent implements OnInit {
       name: this.clientRegistrationForm.value.name,
       surname: this.clientRegistrationForm.value.surname,
       patronymic: this.clientRegistrationForm.value.patronymic,
-      childDiagnosis: this.clientRegistrationForm.value.childDiagnosis,
-      email: this.clientRegistrationForm.value.email,
+      // childDiagnosis: this.clientRegistrationForm.value.childDiagnosis,
+      email: this.clientRegistrationForm.value.email.trim(),
       newsSubscription: this.doctorRegistrationForm.value.newsSubscription,
       userType: "client",
-      emailVerified: false
+      emailVerified: false,
     }
     
     const registrationData = {
-      email: this.clientRegistrationForm.value.email,
-      password: this.clientRegistrationForm.value.password,
+      email: this.clientRegistrationForm.value.email.trim(),
+      password: this.clientRegistrationForm.value.password.trim(),
     }
 
     this.firebase.registrNewUser(registrationData).then((res) => {

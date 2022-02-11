@@ -12,7 +12,7 @@
             <div class="custom_selector_list" *ngIf="specialist_selector.active">
                <div class="custom_selector_item" [ngClass]="{active: i == specialist_selector.selectedIndex}" (click)="chooseSpecialisation(item.title, i)" *ngFor="let item of diagnose; index as i">
                      {{item.title}}
-               </div> 
+               </div>
             </div>
          </div>
 
@@ -27,7 +27,7 @@
             </div>
          </div>
 
-         <div class="name_input">
+         <div class="name_input" *ngIf="isProfileModule">
             <input class="name" placeholder="ФИО специалиста" type="text">
          </div>
 
@@ -51,9 +51,10 @@
          </form> -->
          
       </div>
+      <!-- | specialistFilter:specialist_selector.selected -->
       <div class="specialists__catalog">
          <app-specialist-card
-         *ngFor="let card of firebaseDoctors | specialistFilter:specialist_selector.selected"
+         *ngFor="let card of firebaseDoctors "
          [card]="card"
          [isProfileModule]="isProfileModule"
          ></app-specialist-card>

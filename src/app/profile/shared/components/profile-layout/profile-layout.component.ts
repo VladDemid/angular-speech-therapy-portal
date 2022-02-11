@@ -36,7 +36,7 @@ export class ProfileLayoutComponent implements OnInit {
     this.firebase.userObserver()
 
     let timerUserCheck = setInterval(() => { //чекать к.200мс пока не найдет юзера //*ждет логина через signInWithPass()
-      if (this.firebase.checkUser()) { //юзер найден
+      if (this.firebase.isAuthenticated()) { //юзер найден
         clearInterval(timerUserCheck)
         const user = this.firebase.getUser()
 
@@ -85,8 +85,8 @@ export class ProfileLayoutComponent implements OnInit {
           if(!this.userData.myData.emailVerified) {
             const emailVerifyUpdate = {emailVerified: true}
             
-            this.userData.sendMyDataChanges(emailVerifyUpdate)
-            .subscribe((resp) => {
+            // this.userData.sendMyDataChanges(emailVerifyUpdate) 
+            this.firebase.sendMyDataChanges(emailVerifyUpdate).subscribe((resp) => {
               console.log('верификация почты обновлена!', resp)
               window.location.reload()
             },

@@ -52,15 +52,23 @@ app-profile-layout
       margin-bottom: 56px
 
 
-.green   
+.green
    color: #3CB371
 .blue
    color: $blue_common
 .orange
    color: $orange_common
 
-.error
+.error, .error-note
    color: red
+
+.success, .success-note
+   color: $success
+
+.link
+   color: $blue_common
+   cursor: pointer
+   text-decoration: underline
 
 
 // .breadcrumb
@@ -96,6 +104,22 @@ app-profile-layout
    max-width: 1210px
    padding: 0 15px
    margin: 0 auto
+
+span.bold
+   font-weight: bold
+
+.dev-test
+   display: inline-block
+   border: 1px dashed red
+   padding: 5px
+   border-radius: 3px
+   button
+      width: 100px
+      font-size: 16px
+      text-align: center
+      padding: 0
+      margin-right: 5px
+      border: 2px solid red
 
 swiper
    .swiper-pagination-bullet
@@ -171,6 +195,9 @@ swiper
     background-color: $preloader_circle-5
     animation-delay: 1000ms
 
+  
+
+
 @keyframes scale
    0%
       transform: scale(1)
@@ -233,7 +260,7 @@ button, .btn
    outline: none  
    cursor: pointer
    // padding: 0px 20px
-   width-min: 140px
+   // min-width: 140px
    padding: 0 37px 
    height: 52px
    font-size: 20px
@@ -255,11 +282,30 @@ button, .btn
       transition: all 0.1s
    &:focus
       outline: none
+   &:disabled
+      background-color: #fb860167
+      // background-color: $grey_9c
    &.updating
       &:hover
          background-color: #fff
-   &:disabled
-      background-color: $grey_9c
+   &.updating2
+      span
+         position: relative
+         color: transparent
+         &::after
+            content: attr(data-text)
+            position: absolute
+            top: 0%
+            left: 0%
+            // transform: translateY(-50%)
+            width: 100%
+            
+            color: #fff
+            animation: updating2 2s linear infinite
+            overflow: hidden
+            // border: 1px solid #000
+      // &:disabled
+         // background-color: #fb8601ab
 @keyframes updating
    0%
       width: 15%
@@ -272,10 +318,23 @@ button, .btn
       background-color: rgba(251, 133, 1, 0.7)
    100%
       width: 100%
-      background-color: rgba(251, 133, 1, 0.0)   
+      background-color: rgba(251, 133, 1, 0.0)  
+
+@keyframes updating2
+   0%    
+      opacity: 0% 
+      width: 0 
+   15%   
+      opacity: 100%  
+   85%   
+      opacity: 100%  
+   100%  
+      width: 100% 
+      opacity: 0% 
+
 
 .breadcrumb-arrows
-   padding: 20px 0
+   padding: 20px 5px
    white-space: nowrap
    user-select: none
    display: inline-block
@@ -284,7 +343,12 @@ button, .btn
       position: relative
       font-size: 16px
       padding: 4px 30px
-      color: $textBody80
+      // color: $textBody80
+      color: #fff
+      font-size: 20px
+      font-weight: bold
+      background-color: $orange_501
+      border-radius: 15px
 
       &::before
          content: ''
@@ -293,23 +357,23 @@ button, .btn
          width: 20px
          height: 20px
          // border: 1px solid #000
-         left: 0px
+         left: 4px
          top: 50%
          // transform: translateY(-50%)
-         z-index: -1
-         background-image: url('/assets/icons/functions/arrow-blue.svg')
-         background-repeat: no-repeat
+         z-index: 1
+         background-image: url('/assets/icons/functions/arrow-white.png')
+         // background-repeat: no-repeat
          background-position: center
+         background-size: contain
          transform: rotate(90deg) translateX(-50%)
          transition: 0.2s all
-   &:hover
-      a
+      &:hover
          &::before
-            left: -5px
+            left: -2px
    &:active
       a
          &::before
-            left: -2px
+            left: 1px
    &~h3
       color: $orange_new
       font-size: 24px
@@ -416,3 +480,109 @@ button, .btn
 
 .footer-spacer
    height: 150px
+
+
+.profile-menu, .admin-menu
+   padding-top: 50px
+   
+   .help
+      margin-top: 20px
+      span
+         font-weight: 500
+   .menu-list
+      margin-top: 58px
+      display: flex
+      justify-content: space-around
+      flex-wrap: wrap
+      .menu-item
+         position: relative
+         width: calc(33% - 10px) 
+         height: 200px
+         margin: 10px 5px
+         border-radius: 20px
+         overflow: hidden
+         @include box-shadow($nav_shadow)
+         user-select: none
+         transition: 0.2s all
+         // transition: 0.05s all
+         &:nth-child(2)
+            width: calc(66% - 10px) 
+         //кастомные атрибуты чисто ради css
+         
+         &::after
+            background-repeat: no-repeat
+            background-size: contain
+            content: ''
+            position: absolute
+            bottom: -50px
+            right: -30px
+            width: 100%
+            height: 100%
+            background-position: 100% 100%
+         &[link="calendar"] 
+            background: linear-gradient(113.94deg, rgba(251, 106, 1, 0.7) 0.77%, rgba(255, 255, 255, 0) 184.42%)
+            &:after
+               background-image: url('/assets/icons/menu/calendar.svg')
+         &[link="edit"] 
+            background: linear-gradient(131.91deg, rgba(120, 227, 150, 0.7) 1.25%, rgba(255, 255, 255, 0) 185.1%)
+            &:after
+               // background-image: url('/assets/icons/menu/edit.svg')
+         &[link="security"] 
+            &:after
+               background-image: url('/assets/icons/menu/security.svg')
+         &[link="doctors"] 
+            &:after
+               background-image: url('/assets/icons/menu/specialists.svg')
+         &[link="help"] 
+            &:after
+               background-image: url('/assets/icons/menu/help.svg')
+
+
+            
+         &:hover
+            box-shadow: 0 7px 10px -5px
+            transform: scale(1.02)
+            cursor: pointer
+            // background-color: $yellow_common
+            @include box-shadow($nav_shadow_hover)
+            .icon-wrapper 
+               margin-top: 46px
+               .icon
+                  transition: 0.2s   
+                  width: 86px
+                  height: 86px
+                  background-size: cover
+         &:active
+            background-color: $orange_common
+            outline: none
+            transform: scale(0.97)
+
+         .icon-wrapper
+            // border: 1px solid #000
+            margin: 50px 0 10px
+            .icon
+               // border: 1px solid #000
+               width: 82px
+               height: 82px
+               margin: 0 auto
+               background-image: url(/assets/icons/menu/icons_list.png)
+         &:nth-child(2)
+            .icon-wrapper .icon
+               background-position: 75% 0px 
+         &:nth-child(3)
+            .icon-wrapper .icon
+               background-position: -25% 0px 
+         &:nth-child(4)
+            .icon-wrapper .icon
+               background-position: 25% 0px 
+         &:nth-child(5)
+            .icon-wrapper .icon
+               background-position: 50% 0px 
+
+         
+         .description
+            margin: 24px
+            font-size: 20px
+            max-width: 230px
+            color: $headings100
+            font-weight: 500

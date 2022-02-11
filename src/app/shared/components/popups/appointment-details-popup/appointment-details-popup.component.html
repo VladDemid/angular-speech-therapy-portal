@@ -27,8 +27,11 @@
                   <div class="with-child2 radio-wrapper">
                   </div> -->
                </div>
-               <button class="login" type="submit">записаться</button>
+               <button class="login" [ngClass]="{updating2: isUpdating}"  type="submit" [disabled]="isUpdating"><span data-text="записаться">оплатить</span></button>
             </form>
+            <div class="updating-status">
+               <div class="success" *ngIf="successStatus">{{successStatus}}</div>
+            </div>
          </div>
       </div>
 

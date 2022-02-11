@@ -5,9 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TextCutterPipe implements PipeTransform {
 
-  transform(text: string, symbols: number): string {
-    let cuttedText = text.slice(0, symbols) + ".."
-    return cuttedText;
+  transform(text: string | undefined, symbols: number): string {
+    if (typeof text === "undefined") {
+      return undefined
+    } else {
+      let cuttedText = text.slice(0, symbols) + ".."
+      return cuttedText;
+    }
   }
 
 }

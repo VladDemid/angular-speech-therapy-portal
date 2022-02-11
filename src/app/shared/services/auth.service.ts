@@ -36,7 +36,7 @@ export class AuthService {
          )
    }
 
-   logout() {
+   logout() { //устаревшее (не использовать)
       localStorage.clear()
       this.router.navigate(['/'])
       console.log("logout🛑 (token expired / no token / exit)");
@@ -74,9 +74,11 @@ export class AuthService {
       } else {
          localStorage.clear()
       }
-      
-      
-      
+   }
+
+   private setId(uid) {
+      localStorage.setItem("user-Id", uid)
+      console.log("authorization completed")
    }
 
 }

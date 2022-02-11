@@ -1,8 +1,10 @@
 <div class="fb-security-popup" *ngIf="popupService.appointmentDeatailsPopup" >
-   <app-appointment-details-popup (voted) = "makeLessonFromPopup($event)"></app-appointment-details-popup>
+   <app-appointment-details-popup (voted)="makeLessonFromPopup($event)"></app-appointment-details-popup>
 </div>
 
-<div class="debug-block" *ngIf="false && !production">
+<div class="debug-block" *ngIf="true && !production">
+   <button (click)="TESTlogDoctorsLessons()">doctorsLessons</button>
+   <button (click)="TESTdoctorEventsYearMonthDayHour()">EventsYearMonthDayHour</button>
    <p>selectedDay: {{selectedDay}}</p>
    <p>currentFirstDay: {{currentFirstDay}}</p>
    <p>selectedDayOfWeek: {{selectedDayOfWeek}}</p>
@@ -44,11 +46,11 @@
    </div>
    <!--aside для страницы карточки специалиста (не календарь) -->
    <div class="time-aside time-aside-view" *ngIf="!isCalendarPage">
-      <span class="go-to-account-sign" *ngIf='isInProfileModule == "false"'>Для записи к специалисту необзодимо войти в <span class="link" [routerLink]="['/profile/doctors']">личный кабинет</span></span> 
+      <span class="go-to-account-sign" *ngIf='isInProfileModule == "false"'>Для записи к специалисту необходимо войти в <span class="link" (click)="redirectToSignIn()">личный кабинет</span> или <span class="link" (click)="redirectToQuestionForm()">запишитесь на консультацию</span></span> 
       <div class="day-not-chosen-sign" *ngIf="selectedDay == -1 || !inputDoctorInfo.weeklySchedule[selectedDayOfWeek]">
          <!-- день не выбран -->
-         <div class="time-blocker"> 
-            <span class="">Выберите рабочий день специалиста</span>
+         <div class="time-blocker">
+            <span class="bold">Выберите рабочий день специалиста</span>
             <div class="example">
                <div class="not-working-color color-example"></div>
                <p> - не рабочие дни специалиста</p>
@@ -70,6 +72,7 @@
       <!-- карточка доктора-->
          <!-- рабочий день выбран -->
       <div class="day-chosen" *ngIf="selectedDay != -1 && inputDoctorInfo.weeklySchedule[selectedDayOfWeek]">
+         <span class="time-note">Выберите время (По Минску)</span> 
          <div class="time-selection">
             <div class="time-row" 
             [ngClass]="{'work-hour': inputDoctorInfo.weeklySchedule && inputDoctorInfo.weeklySchedule[selectedDayOfWeek] && time >= inputDoctorInfo.weeklySchedule[selectedDayOfWeek][0] && inputDoctorInfo.weeklySchedule[selectedDayOfWeek][1] >= time, 
@@ -93,10 +96,13 @@
          </div>
          <button [routerLink]="['/profile/doctors']" *ngIf='isInProfileModule == "false"'>В личный кабинет</button>
          <!-- <button [disabled]="selectedHourForLesson == -1" (click)="makeAnAppointment(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true"'>Записаться(стар)</button> -->
-         <button [disabled]="selectedHourForLesson == -1" (click)="appointmentDeatails(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true" && selectedHourForLesson != -1'>Записаться</button>
-         <button [disabled]="true" *ngIf='selectedHourForLesson == -1'>выберите час</button>
+         <button [disabled]="selectedHourForLesson == -1 || isLoading" class="makeAppointment" [ngClass]="{updating2: isLoading}" (click)="appointmentDeatails(year, month, selectedDay+1, selectedHourForLesson)" *ngIf='isInProfileModule == "true" && selectedHourForLesson != -1'><span data-text="записаться">записаться</span></button>
+         <button [disabled]="true" class="chooseHour" *ngIf='selectedHourForLesson == -1'>выберите час</button>
          <div class="doctor-alert error" *ngIf="errorMakingLesson">
             {{errorMakingLesson}}
+         </div>
+         <div class="doctor-alert success" *ngIf="successMakingLesson">
+            {{successMakingLesson}}
          </div>
       </div>
    </div>
@@ -132,7 +138,7 @@
                <li class="lesson-card" 
                   *ngFor="let item of userData.myData.events | lessonsView:currentYear:currentMonth:day:currentHour"
                   [ngClass]="{'selected': item[1].date.day == selectedDay + 1}">
-                  <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}"></div>
+                  <!-- <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}"></div> -->
                   <div class="subtitle no-margin">Дата и время</div>
                   <div class="date">
                      <span class="days-left" *ngIf="item[1].daysLeft > 1">
@@ -150,7 +156,7 @@
                   <div class="patient-name">{{item[1].patientName}}</div>
                   <div class="problem">{{item[1].problemDescription}}</div>
                   <!-- <button (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]">подр</button> -->
-                  <button (click)="confirmEvent(item[0])" *ngIf="!item[1].doctorsConfirmation == true">подтверждаю занятие</button>
+                  <!-- <button (click)="confirmEvent(item[0])" *ngIf="!item[1].doctorsConfirmation == true">подтверждаю занятие</button> -->
                   <div class="details" (click)="popupService.toggleEventDetailsPopup(); popupService.eventDetails = item[1]"></div>
                   <!-- <div class="zoom">{{item[1].zoom.link}}</div> -->
                </li>
@@ -159,7 +165,7 @@
          <!-- календарь доктора -->
             <!-- рабочий день выбран -->
          <div class="time-of-day-chosen" *ngIf="selectedDay != -1">
-            Мои часы работы (по Москве):
+            Мои часы работы (по Минску):
             <div class="time-selection">
                <div class="time-row" 
                [ngClass]="{'work-hour': daysOfWeekShedule && daysOfWeekShedule[selectedDayOfWeek] && time >= daysOfWeekShedule[selectedDayOfWeek][0] && daysOfWeekShedule[selectedDayOfWeek][1] >= time, 
@@ -191,7 +197,7 @@
             <div class="lesson-card"  
                *ngFor="let item of userData.myData.events | lessonsView:currentYear:currentMonth:day:currentHour"
                [ngClass]="{selected: item[1].date.day == selectedDay + 1}">
-               <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}"></div>
+               <!-- <div class="status" [ngClass]="{'unconfirmed': item[1].doctorsConfirmation == false, 'confirmed': item[1].doctorsConfirmation == true}"></div> -->
                <div class="subtitle no-margin">Дата и время</div>
                <div class="date">
                   <span class="days-left" *ngIf="item[1].daysLeft > 1">
@@ -271,8 +277,8 @@
       <button class="cancel" (click)="cancelNewShedule()">
          отмена 
       </button>
-      <button class="submit-new-shedule" (click)="sendNewShedule()" [ngClass]="{updating: updatingdWorkHourData}">
-         сохранить изменения
+      <button class="submit-new-shedule" (click)="sendNewShedule()" [disabled]="updatingdWorkHourData" [ngClass]="{updating2: updatingdWorkHourData}">
+         <span data-text="сохранить">сохранить</span>
       </button>
    </div>
 </div>

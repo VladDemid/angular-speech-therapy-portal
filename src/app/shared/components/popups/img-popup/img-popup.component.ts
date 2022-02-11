@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopupService } from '../../services/popup.service';
+import { PopupService } from '../../../services/popup.service';
 
 @Component({
   selector: 'app-img-popup',

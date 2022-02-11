@@ -101,6 +101,7 @@
       border-radius: 20px
       padding-bottom: 20px
       border-bottom: 50px solid $orange_common
+      min-width: 300px
       // max-height: 500px
       // overflow-y: scroll
       // cursor: pointer
@@ -237,13 +238,15 @@
                   width: 100px
             .details
                position: absolute
-               top: 19px
-               right: 7px
+               filter: invert(62%) sepia(73%) saturate(3572%) hue-rotate(3deg) brightness(99%) contrast(104%)
+               top: 6px
+               right: 6px
                width: 32px
                height: 32px
                border-radius: 8px
                background-color: rgba(251, 133, 1, 0.1)
-               background-image: url('/assets/icons/interface/edit.svg')
+               background-image: url('/assets/icons/interface/question-mark.svg')
+               background-size: 20px 20px
                background-repeat: no-repeat
                background-position: 50% 50%
                cursor: pointer
@@ -297,7 +300,9 @@
       //    border-radius:  0 0 20px 20px
       //    border: 1px solid #000
          
-
+      .makeAppointment, .chooseHour
+         display: block
+         margin: 0 auto
       .go-to-account-sign
          .link
             color: $blue_common
@@ -322,6 +327,11 @@
                width: 100%
                transition: 2s width
       .day-chosen
+         .time-note
+            display: block
+            text-align: center
+            padding-bottom: 5px 
+            font-weight: bold
          .time-selection
             border-radius: 20px
             padding: 20px 3px
@@ -360,8 +370,24 @@
             display: inline-block
          .patient
             position: absolute
+            height: 100%
             // margin-left: 15px
-            left: 145px
+            left: 110px
+            top: 50%
+            transform: translateY(-50%)
+            // border: 1px solid #000
+            .busy-myself-sign, .busy-sign
+               display: flex
+               justify-content: center
+               flex-direction: column
+               padding-left: 5px
+               height: 100%
+               overflow: hidden
+               font-weight: bold
+               // text-overflow: hidden
+            .busy-sign
+               color: $grey_45
+
       .time-blocker
          position: relative
          padding: 15px
@@ -388,16 +414,19 @@
                border: 2px solid $orange_common
       //?💊--CLIENT--💊?
       .time-aside-client
+         .no-lessons-sign
+            padding: 15px
          .my-lessons
             .lessons-sign
                margin-top: 10px
                &>span
                   display: block
                   text-align: center
-                  font-weight: 500
+                  font-weight: 600
+                  // font-weight: bold
          .lesson-card
             position: relative
-            border: 1px solid #000
+            // border: 1px solid #000
             border-radius: 9px
             margin: 10px auto
             padding: 5px 15px

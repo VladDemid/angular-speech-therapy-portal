@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PopupService } from '../../services/popup.service';
+import { PopupService } from '../../../services/popup.service';
 // import { CalendarBlockComponent } from '../calendar-block/calendar-block.component';
 
 
@@ -16,6 +16,8 @@ export class AppointmentDetailsPopupComponent implements OnInit {
   problem = ""
   testLesson = { "year": 2000, "month": 0, "day": 0, "hour": 0 }
   withChild = "0"
+  isUpdating = false
+  successStatus = ""
 
   constructor(
     public popupService: PopupService,
@@ -32,14 +34,18 @@ export class AppointmentDetailsPopupComponent implements OnInit {
 
 
   makeAnAppointment() {
+    // this.isUpdating = true
     const emitLessonDetailsObject = {
       problem: this.problem,
-      withChild: this.withChild,
-
     }
+
     this.popupService.toggleappointmentDeatailsPopup()
     this.voted.emit(emitLessonDetailsObject)
-    
+    // this.successStatus = "Вы записаны. На также на почту отправлено подтверждение заказа" //тут не писать коменты
+    // this.isUpdating = false
+
+
+
     // this.callParent()
     // this.calendarBlock.patientProblem = this.problem
     // this.calendarBlock.withChild = this.withChild

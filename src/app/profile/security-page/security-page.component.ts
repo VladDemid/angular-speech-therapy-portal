@@ -39,7 +39,7 @@ export class SecurityPageComponent implements OnInit {
     })
     .catch((err) => {
       console.log("email sent ERROR", err);
-      this.passwordChangeErrMessage = `Ошибка отправки письма на почту: ${err}`
+      this.passwordChangeErrMessage = `Ошибка отправки письма на почту (изменения пароля): ${err}`
     })
   }
 

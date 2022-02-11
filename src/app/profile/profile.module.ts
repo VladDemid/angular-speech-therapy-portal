@@ -18,6 +18,8 @@ import { EmailVerifyPopupComponent } from './shared/components/email-verify-popu
 import { FirebaseService } from '../shared/services/firebase.service';
 import { AsideMenuComponent } from './shared/components/aside-menu/aside-menu.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { PaymentSuccessPageComponent } from './shared/components/payment-success-page/payment-success-page.component';
+import { PaymentFailPageComponent } from './shared/components/payment-fail-page/payment-fail-page.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { FooterComponent } from './shared/components/footer/footer.component';
       HelpPageComponent,
       EmailVerifyPopupComponent,
       AsideMenuComponent,
-      FooterComponent
+      FooterComponent,
+      PaymentSuccessPageComponent,
+      PaymentFailPageComponent
    ],
    imports: [
       // CommonModule,
@@ -49,6 +53,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
             {path: "doctors", component: DoctorsPageComponent, canActivate: [ProfileGuard] },
             {path: "security", component: SecurityPageComponent, canActivate: [ProfileGuard] },
             {path: "help", component: HelpPageComponent, canActivate: [ProfileGuard] },
+            {path: "payment-fail", component: PaymentFailPageComponent, canActivate: [ProfileGuard] },
+            {path: "payment-success", component: PaymentSuccessPageComponent, canActivate: [ProfileGuard] },
             {path:"**", redirectTo: "menu"}
          ]},
          

@@ -25,6 +25,10 @@ export class UserData {
       // sertificatesNames: []
    }
 
+   getDataError = "" 
+
+   
+
    constructor(
       private helper: DevelopHelp,
       private auth: AuthService,
@@ -39,10 +43,13 @@ export class UserData {
       this.getMyData()
       .subscribe(
          (response: UserDbInfo) => {
-            this.helper.toConsole("Инициализация пользователя: ",response)
+            console.log("Получение данных (FB rltm-DB): ",response)
             if (response == null) {
-               this.router.navigate(['/profile'])
-               console.log("обнаружен выход из аккаунта")
+               // this.router.navigate(['/profile'])
+               this.firebase.signOut()
+               console.log("user not found!")
+               this.getDataError = "пользователь не найден"
+               return
             }
             this.changeMyLocalData(response)
             if (this.myData.userType === "doctor") {
@@ -65,13 +72,14 @@ export class UserData {
       return this.http.get(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}.json`)
    }
    
-   checkMyLessons() {
-      this.firebase.getAllLessons() //скач всех ивентов
+   checkMyLessons() { //проверить свои новые уроки из events/...
+      this.firebase.getAllLessons() //скач всех ивентов всех докторов
          .subscribe((resp) => {
             // console.log("все ивенты тут: ",resp)
             // console.log("!!!!!!",resp )
             const allLessonsArray = Object.entries(resp) //делаем массив всех уроков [[id, data],[id, data]],...
-            const myLessonsIdsFromServer = allLessonsArray.filter((item) => { 
+            console.log("lessons: ", allLessonsArray) 
+            const myLessonsIdsFromServer = allLessonsArray.filter((item) => { //фильтр по урокам этого спеца
                const lessonIdParseArray = item[0].split("_"); //разделяем каждый Id урока на слова
                //*оставить если id пользователя == последней части id ивента
                return localStorage.getItem("user-Id") == lessonIdParseArray[lessonIdParseArray.length - 1]
@@ -87,15 +95,24 @@ export class UserData {
             }
             for(let lessonId of myLessonsIdsFromServer) {
                if (!this.myData.events[lessonId[0]]) { //*проверка, по каждому уроку
-                  this.myData.events[lessonId[0]] = resp[lessonId[0]]
-                  newLessonsToSend[lessonId[0]] = resp[lessonId[0]]
+                  this.myData.events[lessonId[0]] = resp[lessonId[0]] //запись локально
+                  newLessonsToSend[lessonId[0]] = resp[lessonId[0]]   //запись для отправления
                   newLessonsFound = true
                   console.log("найден новый урок", this.myData.events[lessonId[0]])
                }
             }
             if(newLessonsFound) {
-               // this.sendMyLessonsDataChanges(newLessonsToSend)
+               this.firebase.sendMyLessonsDataChanges(newLessonsToSend).subscribe(
+               (resp) => {
+                  console.log("новые уроки загружены: ", resp)
+               },
+               (err) => {
+                  console.log("Ошибка обновления новых уроков: ", err)
+               })
+               
+
                // this.firebase.patchUserEvents(newLessonsToSend)
+               
                   // .subscribe((resp) => {
                   //    console.log("новые уроки найдены и записаны в ячейку", resp)
                   // },
@@ -137,7 +154,7 @@ export class UserData {
                let myNewLessonData = {}
                for (let i of myFutureNonconfirmedLessons) { //ищем свои и сравниваем
                   // console.log(i[0])
-                  if (resp[i[0]].doctorsConfirmation == true) { //если нашли что какой-то уже подтвержден, то запоминаем
+                  if (resp[0] && resp[i[0]].doctorsConfirmation == true) { //если нашли что какой-то уже подтвержден, то запоминаем
                      console.log(`${i[0]}: `,resp[i[0]])
                      this.myData.events[i[0]].doctorsConfirmation = true
                      myNewLessonData[i[0]] = this.myData.events[i[0]]
@@ -214,20 +231,16 @@ export class UserData {
       // console.log(this.myData)
    }
 
-   getSertificates() {
-      this.firebase.getSertificatesList()
+   getSertificates() { //скачивание сертификатов и форматирование в массив
+      this.firebase.getSertificatesList() //скач кривого формата
          .then((files) => {
             console.log("мои файлы", files.items)
-
             this.saveSertificatesNames(files.items)
-            
-
-            
-            this.firebase.getDownloadLinks(files.items)
+            this.firebase.getDownloadLinks(files.items) //вытаскивание ссылок
             .then((links) => {
-               // console.log("полученные ссылки на скачку: ", links)
+               console.log("полученные ссылки на скачку: ", links)
                this.myData.sertificatesLinks = links
-               this.updateSertifUrls()
+               // this.updateSertifUrls() //! раскоментировать и проверить
             })
             
             
@@ -239,7 +252,7 @@ export class UserData {
 
    updateSertifUrls() { //загрузить новые ссылки на сертификаты в FB
       // this.firebase.updateSertifUrls()
-      console.log("изменение sertList -----------------")
+      console.log("изменение sertList(???)")
       // console.log(this.userData.myData)
       let newUserData = {
         sertificatesLinks: this.myData.sertificatesLinks

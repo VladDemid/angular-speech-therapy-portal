@@ -1,4 +1,8 @@
-<form class="doctor-form"
+<div class="specialist-reg">
+   <div class="container">
+
+      <button [routerLink]="['/admin/menu']" >назад</button>
+      <form class="doctor-form"
          [formGroup]="doctorRegistrationForm"
          (ngSubmit) = "sendDoctorForm()"
       >
@@ -23,11 +27,18 @@
                </label>
             </div>
          </div>
+         <div class="reloginErrorMessage" *ngIf="reloginErrorMessage" >{{reloginErrorMessage}}</div>
+         <div class="shortIdErrorMessage" *ngIf="shortIdErrorMessage" >{{shortIdErrorMessage}}</div>
          <div class="serverErrorMessage" *ngIf="serverErrMessage" >{{serverErrMessage}}</div>
          <div class="registrationStatus" *ngIf="registrationStatus" >{{registrationStatus}}</div>
          <div class="createDBStatus" *ngIf="createDBStatus" >{{createDBStatus}}</div>
-         <button class="submit" [disabled]="isSendingData" type="submit">Зарегистрироваться</button>
+         <button class="submit" [disabled]="isSendingData" type="submit">зарегистрировать</button>
       </form>
       <div class="success-registration-sign" *ngIf="showSuccessReg">
          Вы успешно зарегистрировались!
       </div>
+   </div>
+   <!-- <button>test FB shortIds</button> -->
+      <!-- <button (click)="TESTFbMakeDBuser()">testDB</button>
+      <button (click)="TESTgetToken()">getToken</button> -->
+</div>

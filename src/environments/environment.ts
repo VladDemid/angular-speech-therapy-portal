@@ -1,13 +1,10 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = { //*DEV
   production: false,
+  adminId: "XUuNLsPankPqmDKLBb8ZS4X1dq12",
   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
   FbDbUrl: "https://inclusive-test.firebaseio.com/",
   defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
-};
+}
 
 export const firebaseConfig = { //*DEV
   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
@@ -19,50 +16,28 @@ export const firebaseConfig = { //*DEV
   appId: "1:441293072662:web:679ec4fe7378d9b9c04837"
 }
 
-// export const environment = { //! PROD (release)
-//   production: true,
-//   apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
-//   FbDbUrl: "https://verbaland.firebaseio.com/",
-//   defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
-// };
-
-// export const firebaseConfig = { //! PROD (release)
-//   apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
-//   authDomain: "verbaland.firebaseapp.com",
-//   databaseURL: "https://verbaland.firebaseio.com",
-//   projectId: "verbaland",
-//   storageBucket: "verbaland.appspot.com",
-//   messagingSenderId: "725914811248",
-//   appId: "1:725914811248:web:aed51fdbbd11a5558fedb5"
-// };
 
 export const environmentOther = {
   emailDefault: "test5@gmail.com",
   passwordDefault: "123456",
   name: "Имя",
   surname: "Фамилия",
-  dob: "0012-12-12",
+  dob: "1995-12-30",
   emailClient: "mr.zgot@yandex.ru",
   emailSpec: "mr.zgot@yandex.ru",
   phone: '',
   question: "один два три",
   specialization: "Инженер-проектировщик",
-
 }
-
-
-
-
 
 export const emailConfig = {
-  fromEmailAdress: "vlatidos@gmail.com",
+  fromEmailAdress: "admin@logogo.online",
   EMAIL_TEMPLATES: {
     FIRST: "d-0214f1135b054334abbdcfad5446a077",
-    MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4"
+    MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4",
+    CLIENT_MADE_AN_APPOINTMENT: "d-006ae47f70c74c949e486cf9f63b694e",
   }
 }
-
-
 
 export const telegramConfig = {
   botToken: "1872651080:AAEw6lNr2WaRKXo_00Zn2WoXnxxODnUMIqI",

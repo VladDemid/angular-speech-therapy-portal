@@ -68,7 +68,9 @@ export class SpecialistPageComponent implements OnInit {
       })
   }
 
-  sortDoctorLessons(doctorInfo) {
+  
+
+  sortDoctorLessons(doctorInfo) { 
     if (doctorInfo.events) {
       const allDoctorLessonsArray = Object.entries(doctorInfo.events)
     } else return
@@ -98,8 +100,9 @@ export class SpecialistPageComponent implements OnInit {
             problemDescription: this.doctorInfo.events[lessonObj].problemDescription
          }
     }
+    console.log("lessonsDates: ",lessonsDates)
     this.doctorEventsYearMonthDayHour = lessonsDates
-    console.log(lessonsDates)
+    // console.log(lessonsDates)
 
 
   }

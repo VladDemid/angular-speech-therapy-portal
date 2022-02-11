@@ -1,0 +1,27 @@
+@import '../../../../../assets/styles/_variables'
+
+.edit-solo-spec
+   h3
+      text-transform: uppercase
+      color: $orange_501
+   .specialists-list
+      display: flex
+      justify-content: flex-start
+      .specialist-card
+         display: flex
+         justify-content: flex-start
+         flex-direction: column
+         margin: 0 10px
+         padding: 5px
+         border: 2px dashed #ccc
+         cursor: pointer
+         &.active
+            border: 2px solid $orange_501
+         span
+            margin: 5px
+         .notes
+            span
+               color: #db1f48
+               font-style: italic
+   .data
+      margin-top: 20px

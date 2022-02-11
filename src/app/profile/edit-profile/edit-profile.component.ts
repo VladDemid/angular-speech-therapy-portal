@@ -20,7 +20,6 @@ import { UserDbInfo } from 'src/app/shared/interfaces';
 export class EditProfileComponent implements OnInit {
   
   
-  uploadingSertificates = false
   newFilesToUpload = 0
   uploadingAvatar = false
   defaultAvatar = environment.defaultAvatarUrl
@@ -38,6 +37,9 @@ export class EditProfileComponent implements OnInit {
   testSign = "test"
   educationsCount = 1
   educationsMax = 3
+  isLoading = false
+  uploadingSertificates = false
+  
 
   constructor(
     public userData:UserData,
@@ -72,6 +74,7 @@ export class EditProfileComponent implements OnInit {
         Validators.pattern("^[0-9]*$")
       ]),
       workPlace: new FormControl(null),
+      zoomLink: new FormControl(null),
       aboutMe: new FormControl(null),
     })
     this.scanSpecialisationData()
@@ -106,7 +109,7 @@ export class EditProfileComponent implements OnInit {
           }
           if (this.userData.myData.educationsCount) {
             this.educationsCount = this.userData.myData.educationsCount
-            console.log("@@@@@@@@@@@@@@", this.userData.myData.educationsCount);
+            // console.log("@@@@@@@@@@@@@@", this.userData.myData.educationsCount);
           } else {
             // console.log("@@@@@@@@@@@@@@", this.userData.myData.educationsCount);
           }
@@ -183,7 +186,6 @@ export class EditProfileComponent implements OnInit {
   
   setAboutMeDescription() {
   }
-  
 
   changeMyImage() {
     const clientPhoto = (<HTMLInputElement>document.getElementById('clientPhoto')).files[0]
@@ -197,6 +199,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   clientChangeData() {
+    this.isLoading = true
     const clientData = {
       name: this.clientForm.value.name,
       surname: this.clientForm.value.surname,
@@ -206,20 +209,24 @@ export class EditProfileComponent implements OnInit {
 
     const newUserData = this.dataTrimmer(clientData)
     if (Object.keys(newUserData).length == 0) {
+      this.isLoading = false
       return
     }
-    this.userData.sendMyDataChanges(newUserData)
+    this.firebase.sendMyDataChanges(newUserData)
       .subscribe(() => {
+        this.isLoading = false
         this.userData.initialization()
         this.clientForm.reset()
         this.successfulDataUpdate()
       },(err) => {
+        this.isLoading = false
         console.log("ERROR:", err);
       })
     
   }
 
   doctorChangeData() {
+    this.isLoading = true
     // if (this.doctorForm.invalid) {
     //   console.log(this.doctorForm);
     // }
@@ -240,6 +247,7 @@ export class EditProfileComponent implements OnInit {
       year3: this.doctorForm.value.year3,
       experience: this.doctorForm.value.experience,
       workPlace: this.doctorForm.value.workPlace,
+      zoomLink: this.doctorForm.value.zoomLink,
       aboutMe: this.doctorForm.value.aboutMe,
     }
     
@@ -248,6 +256,7 @@ export class EditProfileComponent implements OnInit {
     
     for (let key in newUserData) {
       if (this.doctorForm.controls[key].invalid) {
+        this.isLoading = false
         return
       }
     }
@@ -256,14 +265,17 @@ export class EditProfileComponent implements OnInit {
     
 
     if (Object.keys(newUserData).length == 0) { //проверка на наличие хоть одного заполненного поля
+      this.isLoading = false
       return
     }
-    this.userData.sendMyDataChanges(newUserData)
+    this.firebase.sendMyDataChanges(newUserData)
       .subscribe(() => {
+        this.isLoading = false
         this.userData.initialization()
         // this.doctorForm.reset()
         this.successfulDataUpdate()
       },(err) => {
+        this.isLoading = false
         console.log("ERROR:", err);
       })
   }
@@ -277,7 +289,7 @@ export class EditProfileComponent implements OnInit {
     }
     if (!this.userData.myData.specializations || this.specializationsSelected != this.userData.myData.specializations) {
       console.log(newSpecializationsData);
-      this.userData.sendMyDataChanges(newSpecializationsData)
+      this.firebase.sendMyDataChanges(newSpecializationsData)
         .subscribe(() => {
           console.log("специализации загружены");
         },
@@ -304,7 +316,7 @@ export class EditProfileComponent implements OnInit {
     this.showUpdate = true
     setTimeout(() => {
       this.showUpdate = false
-    }, 3000)
+    }, 5000)
   }
 
   deleteSertificate(index) {

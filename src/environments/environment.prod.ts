@@ -1,9 +1,10 @@
 export const environment = { //*PROD
   production: true,
+  adminId: "1miKlbmgxbUxzNdopWxqKH1o1SP2",
   apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
   FbDbUrl: "https://verbaland.firebaseio.com/",
   defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
-};
+}
 
 export const firebaseConfig = { //*PROD
   apiKey: "AIzaSyDZgKMaO0pCmO8AuLmwfmjEduV-p0tJ3E4",
@@ -13,24 +14,8 @@ export const firebaseConfig = { //*PROD
   storageBucket: "verbaland.appspot.com",
   messagingSenderId: "725914811248",
   appId: "1:725914811248:web:aed51fdbbd11a5558fedb5"
-};
+}
 
-// export const environment = { //! DEV
-//   production: false,
-//   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
-//   FbDbUrl: "https://inclusive-test.firebaseio.com/",
-//   defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
-// };
-
-// export const firebaseConfig = { //! DEV
-//   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
-//   authDomain: "inclusive-test.firebaseapp.com",
-//   databaseURL: "https://inclusive-test.firebaseio.com",
-//   projectId: "inclusive-test",
-//   storageBucket: "inclusive-test.appspot.com",
-//   messagingSenderId: "441293072662",
-//   appId: "1:441293072662:web:679ec4fe7378d9b9c04837"
-// }
 
 export const environmentOther = {
   emailDefault: "",
@@ -46,11 +31,11 @@ export const environmentOther = {
 }
 
 export const emailConfig = {
-  fromEmailAdress: "vlatidos@gmail.com",
+  fromEmailAdress: "admin@logogo.online",
   EMAIL_TEMPLATES: {
     FIRST: "d-0214f1135b054334abbdcfad5446a077",
-    MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4"
- 
+    MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4",
+    CLIENT_MADE_AN_APPOINTMENT: "d-006ae47f70c74c949e486cf9f63b694e",
  }
 }
 

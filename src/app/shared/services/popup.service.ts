@@ -31,6 +31,20 @@ export class PopupService {
     this.imgName = name
     this.toggleImgPopup()
   }
+
+  hideAllPopups() {
+    this.imgPopup = false
+    this.homePageLoginPopup = false
+    this.homePagePassRecoveryPopup = false
+    this.homePageFbSecurityPopup = false
+    this.homePageClientPopup = false
+    this.homePageSpecialistPopup = false
+    this.registrTermsOfUsePopup = false
+    this.emailVerifyPopup = false
+    this.eventDetailsPopup = false
+    this.appointmentDeatailsPopup = false
+    this.requisitesPopup = false
+  }
   
   toggleImgPopup() {
     this.imgPopup = !this.imgPopup

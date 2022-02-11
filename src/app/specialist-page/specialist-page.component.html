@@ -9,7 +9,7 @@
 <div class="doctor-card" *ngIf="doctorInfo" [ngClass]="{'in-profile': isInProfileModule == 'true'}">
    <div class="container">
       <div class="breadcrumb-arrows arrows">
-         <a [routerLink]="['/profile']" *ngIf="isInProfileModule == 'true'">Личный кабинет</a>
+         <a [routerLink]="['/profile']" *ngIf="isInProfileModule == 'true'">Меню</a>
          <a [routerLink]="['/']" *ngIf="isInProfileModule == 'false'">Назад</a>
       </div>
       <div class="user-data">
@@ -33,7 +33,7 @@
             <div class="about-me-short">
                {{doctorInfo.aboutMe | textCutter:80}}
             </div>
-            <button class="">записаться на прием</button>
+            <button *ngIf="isInProfileModule == 'false'">записаться на прием</button>
             <!-- <div class="error-msg" *ngIf="helper.DEBUG && isInProfileModule && !userData?.myData?.name" style="font-weight: bold;">
                ---------------ERROR MSG----------------<br>
                isInProfileModule: {{isInProfileModule}}

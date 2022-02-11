@@ -7,13 +7,14 @@ import { SpecialistCard, UserDbInfo } from '../interfaces';
 export class SpecialistFilterPipe implements PipeTransform {
 
   transform(array: UserDbInfo[], selectedSpecialisation: string) {
-    // console.log("!!!!!!!!!!!!",selectedSpecialisation,array)
-    if (!selectedSpecialisation || selectedSpecialisation == "Специализация" || !array) {
+    if (!selectedSpecialisation || !array) {
       return array
     }
     // console.log(selectedSpecialisation, "...пока сортировка отключена");
-    // return array
-    let specialistsOnly = array.filter(spec => spec.mainSpecialization)
+    return array
+    
+    
+    let specialistsOnly = array.filter(spec => {spec.mainSpecialization && spec.zoomLink})
     return specialistsOnly.filter(spec => spec.mainSpecialization.toLowerCase() == selectedSpecialisation.toLowerCase())
   }
 

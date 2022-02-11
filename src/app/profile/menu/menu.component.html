@@ -8,6 +8,15 @@
          <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}}</span>
          <!-- <button (click)="emailSend()">email</button> -->
       </div>
+      <div class="dev-test" *ngIf="!production">
+         <button (click)="TESTsetToken()">setToken</button>
+         <button (click)="TESTgetToken()">getToken</button>
+         <button (click)="TESTgetData()">getData</button>
+         <button (click)="TESTpatchUserData()">patchData</button>
+         <button (click)="TESTmanualRESTpatchUserData()">manualRestPatchData</button>
+         <button [ngClass]="{updating2: testAction}" (click)="testLoading()"  ><span data-text="загрузить">загрузить</span></button>
+         {{testAction}}
+      </div>
       <!-- <div class="help">
          Пожалуйста дополните данные о себе в разделе 
          <span>"Редактировать личные данные"</span> 

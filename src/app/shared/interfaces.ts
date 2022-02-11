@@ -73,7 +73,8 @@ export interface UserDbInfo {
    emailVerified?: boolean
    specializations?: string[]
    mainSpecialization?: string
-   aboutMe?: string
+   aboutMe?: string,
+   zoomLink?: string
 }
 
 export interface UserClient {
@@ -112,7 +113,15 @@ export interface UserDoctor {
    daysShedule?: object
    aboutMe?: string
    events?: object
-   sertificatesLinks?: string[]
+   sertificatesLinks?: string[],
+   zoomLink?: string,
+   shortId: string
+}
+
+export interface UserCredentials {
+   uid: string,
+   email: string,
+   emailVerified: boolean,
 }
 
 export interface Event {
@@ -149,6 +158,7 @@ export interface ZoomInfo {
 export interface ClientFeedbackObj {
    name: string,
    surname: string,
+   dob: string,
    email: string,
    phone: string,
    question: string,
@@ -156,7 +166,7 @@ export interface ClientFeedbackObj {
 
 export interface SpecialistFeedbackObj {
    name: string,
-   specialisation: string,
+   specialization: string,
    email: string,
    phone: string,
    description: string,

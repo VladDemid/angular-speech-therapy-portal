@@ -52,6 +52,7 @@ export class DoctorFormPopupComponent implements OnInit {
 
   submit() {
     this.isSendingData = true
+    this.ErrMessage = ""
     
     let feedbackForm = {
       to: this.form.value.email,
@@ -65,8 +66,9 @@ export class DoctorFormPopupComponent implements OnInit {
     
     
     if (this.form.invalid) {
-      console.log(this.form.value)
+      console.log(this.form)
       // this.showRulesRequired = true
+      this.ErrMessage = "форма заполнена не полностью"
       this.isSendingData = false
       return
     }
@@ -75,11 +77,11 @@ export class DoctorFormPopupComponent implements OnInit {
     .then((resp) => {
       this.firebase.sendEmailFunction(feedbackForm)
       .then((res) => {
-        // console.log("ура : ", res)
+        console.log("email отправлен: ", res)
         this.form.reset()
         this.isSendingData = false
         this.submitted = true
-        setTimeout(() => this.submitted = false, 3000)
+        setTimeout(() => this.submitted = false, 5000)
         })
         .catch((err) => {
           console.log("Ошибка FBtest: ", err)
