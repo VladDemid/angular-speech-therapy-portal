@@ -1,6 +1,13 @@
-# Inclusive2
+# Logogo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
+Технологии: 
+- Angular 13.1.1
+- Firebase 8.10.0 (namespaced)
+
+Дополнительные сервисы:
+- Telegram bot
+- Sendgrid - email sending service
+- Alfa bank acquiring (in dev..)
 
 ## Development server
 
