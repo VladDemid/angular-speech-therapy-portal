@@ -63,22 +63,25 @@
    - доступ к localStorage userId item для некоторых проверок наличия сессии
    
 ### cookie.service
-   - пока только попапы
+   - пока только для попапа "подтвердите cookie"
 
 ### crypter.service 
    - шифровка - расшифровка строк
    - при открытии стриницы спеца `/doctor/id` его id там пишется в зашифрованном виде (не знаю зачем, пускай будет пока)
 
-### develop-help 
-   - не используется
-
 ### popup.service
    - хранение состояний попапов (показать/скрыть) и методы toggle для них
 
+### telegram-bot.service
+   - отправка сообщений во внутренний чат для разработки и предположительно мониторинга записей на занятия в первое время.
 
-## Build
+### develop-help 
+   - не используется
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### zoom.service
+- уже не используется, не суть
+
+
 
 ## Running unit tests
 
