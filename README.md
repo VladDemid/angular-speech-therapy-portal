@@ -42,7 +42,7 @@
 
 ## Services
 
-Сервисы из папки shared/services
+Сервисы из папки <shared/services>
 
 - firebase
    > 
