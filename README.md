@@ -44,7 +44,7 @@
 
 Сервисы из папки `shared/services`
 
-- firebase.service
+### firebase.service
    
    - хранение currentUser, userToken после логина
    - Доступ к функционалу firebase посредством REST и SDK
