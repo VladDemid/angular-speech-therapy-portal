@@ -297,3 +297,40 @@ exports.fireHttpEmail = functions.https.onCall((data, context) => {
 
    // return request
 });
+
+
+exports.payOrder = functions.https.onCall((request, responce) => {
+
+   functions.logger.debug("request.body", JSON.stringify(request.body, null, "  "));
+   const orderId = request.body["id"];
+   functions.logger.debug("orderId:", orderId);
+
+   const parameters = {
+      orderNumber: orderId,
+      userName: 'logogo.online-api',
+      password: 'HnnlT8Et',
+      amount: 1000,
+      currency: 810,
+      returnUrl: 'http://localhost:4000',
+    }
+
+   functions.logger.debug("parameters: ", JSON.stringify(parameters, null, "  "));
+
+  const url =  new URL(BASE_URL);
+  for(let key in parameters) {
+      url.searchParams.append(key, request.body[key]);
+  }
+
+  functions.logger.debug('Alfa Bank API url: ', url.toString())
+  
+  const alfaResponse = axios.post(url.toString(),undefined, {
+      headers: {
+          'Content-type': 'application/x-www-form-urlencoded'
+      }
+  });
+
+  functions.logger.debug("alfa response.body: ", JSON.stringify(alfaResponse.body, null, "  "));
+
+  response.send(alfaResponse.body);
+
+});
