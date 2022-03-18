@@ -302,8 +302,12 @@ const  BASE_URL = 'https://web.rbsuat.com/ab_by/rest/register.do';
 
 exports.payOrder = functions.https.onRequest(async (request, response) => {
 
+   if (request.method !== 'POST') {
+      response.status(405).end();
+   }
+
    functions.logger.debug("request.body", JSON.stringify(request.body, null, "  "));
-   const orderId = request.body["id"];
+   const orderId = request.body.id;
    functions.logger.debug("orderId:", orderId);
 
    const parameters = {
