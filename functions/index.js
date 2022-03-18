@@ -298,8 +298,9 @@ exports.fireHttpEmail = functions.https.onCall((data, context) => {
    // return request
 });
 
+const  BASE_URL = 'https://web.rbsuat.com/ab_by/rest/register.do';
 
-exports.payOrder = functions.https.onCall((request, responce) => {
+exports.payOrder = functions.https.onRequest(async (request, response) => {
 
    functions.logger.debug("request.body", JSON.stringify(request.body, null, "  "));
    const orderId = request.body["id"];
@@ -318,19 +319,25 @@ exports.payOrder = functions.https.onCall((request, responce) => {
 
   const url =  new URL(BASE_URL);
   for(let key in parameters) {
-      url.searchParams.append(key, request.body[key]);
+      url.searchParams.append(key, parameters[key]);
   }
 
   functions.logger.debug('Alfa Bank API url: ', url.toString())
+   try {
+      const alfaResponse = await axios.post(url.toString(),undefined, {
+         headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+         }
+      });
+
+      functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
+      response.send(alfaResponse.data);
+  }
+  catch (e) {
+   functions.logger.error("Alfa Bank API error: ", e);
+   response.status(500).send("Unexpected error occurred. Please try later");
+  }
   
-  const alfaResponse = axios.post(url.toString(),undefined, {
-      headers: {
-          'Content-type': 'application/x-www-form-urlencoded'
-      }
-  });
 
-  functions.logger.debug("alfa response.body: ", JSON.stringify(alfaResponse.body, null, "  "));
-
-  response.send(alfaResponse.body);
 
 });
