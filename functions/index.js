@@ -5,6 +5,7 @@ const request = require('request');
 const axios = require("axios")
 const cors = require("cors")({ origin: true });
 const rp = require('request-promise');
+const { v4: uuidv4 } = require('uuid');
 // import * as functions from 'firebase-functions'
 // import * as admin from 'firebase-admin'
 
@@ -310,13 +311,19 @@ exports.payOrder = functions.https.onRequest(async (request, response) => {
    const orderId = request.body.id;
    functions.logger.debug("orderId:", orderId);
 
+   const token = uuidv4();
+
    const parameters = {
       orderNumber: orderId,
       userName: 'logogo.online-api',
       password: 'HnnlT8Et',
       amount: 1000,
       currency: 810,
-      returnUrl: 'http://localhost:4000',
+      // TODO: поменять на страницу подтверждения
+      returnUrl: 'https://us-central1-inclusive-test.cloudfunctions.net/confirmPayment?token='+ token,
+      // TODO: поменять на страницу отмены
+      failUrl: 'https://us-central1-inclusive-test.cloudfunctions.net/rejectPayment?token='+ token,
+      dynamicCallbackUrl: 'https://us-central1-inclusive-test.cloudfunctions.net/callbackPayment?token='+ token,
     }
 
    functions.logger.debug("parameters: ", JSON.stringify(parameters, null, "  "));
@@ -341,7 +348,20 @@ exports.payOrder = functions.https.onRequest(async (request, response) => {
    functions.logger.error("Alfa Bank API error: ", e);
    response.status(500).send("Unexpected error occurred. Please try later");
   }
-  
 
+});
 
+exports.confirmPayment = functions.https.onRequest(async (request, response) => {
+   functions.logger.info("Alfa Bank API payment confirmation: ", request.url, request.params);
+   response.status(200).end()
+});
+
+exports.rejectPayment = functions.https.onRequest(async (request, response) => {
+   functions.logger.info("Alfa Bank API payment rejection: ", request.url, request.params);
+   response.status(200).end()
+});
+
+exports.callbackPayment = functions.https.onRequest(async (request, response) => {
+   functions.logger.info("Alfa Bank API payment callback: ", request.url, request.params);
+   response.status(200).end()
 });
