@@ -8,7 +8,7 @@ const app = !admin.apps.length ? admin.initializeApp() : admin.app();
 const db = admin.database();
 let defaultPayment;
 
-exports.payOrder = functions.https.onRequest(async (request, response) => {
+exports.pay = functions.https.onRequest(async (request, response) => {
   if (request.method !== "POST") {
     response.status(405).end();
   }
@@ -20,39 +20,14 @@ exports.payOrder = functions.https.onRequest(async (request, response) => {
   const orderId = request.body.id;
   functions.logger.debug("orderId:", orderId);
 
-  const token = uuidv4();
+  const payment = await createPayment(orderId);
 
-  const parameters = {
-    orderNumber: orderId,
-    userName: "logogo.online-api",
-    password: "HnnlT8Et",
-    amount: 1000,
-    currency: 810,
-    // TODO: поменять на страницу подтверждения заказа в UI
-    returnUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-confirmPayment?token=${token}`,
-    // TODO: поменять на страницу отмены заказа в UI
-    failUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-rejectPayment?token=${token}`,
-    dynamicCallbackUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-callback?token=${token}`,
-  };
-
-  functions.logger.debug(
-    "parameters: ",
-    JSON.stringify(parameters, null, "  ")
-  );
-
-  const url = new URL(process.env.BASE_ACQUIRING_API_URL);
-  for (let key in parameters) {
-    url.searchParams.append(key, parameters[key]);
-  }
-
-  functions.logger.debug("Alfa Bank API url: ", url.toString());
   try {
-    const alfaResponse = await axios.post(url.toString(), undefined, {
+    const alfaResponse = await axios.post(getPaymentUrl(payment), undefined, {
       headers: {
         "Content-type": "application/x-www-form-urlencoded",
       },
     });
-
     functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
     response.send(alfaResponse.data);
   } catch (e) {
@@ -100,7 +75,9 @@ exports.rejectPayment = functions.https.onRequest(async (request, response) => {
 
 exports.test = functions.https.onRequest(async (request, response) => {
   try {
-    const value = await createPayment('2021_5_30_15_dawRBLNTpDV5gep3mG9TyGAACrE3');
+    const value = await createPayment(
+      "2021_5_30_15_dawRBLNTpDV5gep3mG9TyGAACrE3"
+    );
     response.status(200).send(value);
   } catch (e) {
     functions.logger.error("Alfa Bank API payment callback error: ", e);
@@ -113,6 +90,10 @@ async function createPayment(orderId) {
   const orderRef = db.ref(`events/${orderId}`);
   const paymentsRef = db.ref(`payments/${token}`);
 
+  const shortIdRef = db.ref(`shortIds/${orderId.substring(orderId.lastIndexOf() + 1)}`);
+  const snapshot = await orderRef.once("value");
+  const shortId = snapshot.val();
+
   orderRef.update({
     paymentToken: token,
   });
@@ -120,8 +101,8 @@ async function createPayment(orderId) {
   paymentsRef.set(orderId);
 
   return {
-    ...await getDefaultPayment(),
-    orderNumber: orderId,
+    ...(await getDefaultPayment()),
+    orderNumber: shortId,
     // TODO: поменять на страницу подтверждения заказа в UI
     returnUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-confirmPayment?token=${token}`,
     // TODO: поменять на страницу отмены заказа в UI
@@ -145,4 +126,17 @@ async function getDefaultPayment() {
   }
 
   return defaultPayment;
+}
+
+function getPaymentUrl(payment) {
+  functions.logger.debug("payment: ", JSON.stringify(payment, null, "  "));
+
+  const url = new URL(process.env.BASE_ACQUIRING_API_URL);
+  for (let key in payment) {
+    url.searchParams.append(key, payment[key]);
+  }
+
+  functions.logger.debug("Alfa Bank API url: ", url.toString());
+
+  return url.toString();
 }
