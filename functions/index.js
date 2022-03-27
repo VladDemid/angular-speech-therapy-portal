@@ -5,7 +5,7 @@ const request = require('request');
 const axios = require("axios")
 const cors = require("cors")({ origin: true });
 const rp = require('request-promise');
-const { v4: uuidv4 } = require('uuid');
+
 // import * as functions from 'firebase-functions'
 // import * as admin from 'firebase-admin'
 
@@ -22,6 +22,8 @@ const API_KEY = functions.config().sendgrid.key;
 
 const TEMPLATE_ID = "d-0214f1135b054334abbdcfad5446a077";
 sgMail.setApiKey(API_KEY);
+
+
 
 exports.queryTest = functions.https.onRequest((req, res) => {
    cors(req, res, () => {
@@ -299,69 +301,4 @@ exports.fireHttpEmail = functions.https.onCall((data, context) => {
    // return request
 });
 
-const  BASE_URL = 'https://web.rbsuat.com/ab_by/rest/register.do';
-
-exports.payOrder = functions.https.onRequest(async (request, response) => {
-
-   if (request.method !== 'POST') {
-      response.status(405).end();
-   }
-
-   functions.logger.debug("request.body", JSON.stringify(request.body, null, "  "));
-   const orderId = request.body.id;
-   functions.logger.debug("orderId:", orderId);
-
-   const token = uuidv4();
-
-   const parameters = {
-      orderNumber: orderId,
-      userName: 'logogo.online-api',
-      password: 'HnnlT8Et',
-      amount: 1000,
-      currency: 810,
-      // TODO: поменять на страницу подтверждения
-      returnUrl: 'https://us-central1-inclusive-test.cloudfunctions.net/confirmPayment?token='+ token,
-      // TODO: поменять на страницу отмены
-      failUrl: 'https://us-central1-inclusive-test.cloudfunctions.net/rejectPayment?token='+ token,
-      dynamicCallbackUrl: 'https://us-central1-inclusive-test.cloudfunctions.net/callbackPayment?token='+ token,
-    }
-
-   functions.logger.debug("parameters: ", JSON.stringify(parameters, null, "  "));
-
-  const url =  new URL(BASE_URL);
-  for(let key in parameters) {
-      url.searchParams.append(key, parameters[key]);
-  }
-
-  functions.logger.debug('Alfa Bank API url: ', url.toString())
-   try {
-      const alfaResponse = await axios.post(url.toString(),undefined, {
-         headers: {
-            'Content-type': 'application/x-www-form-urlencoded'
-         }
-      });
-
-      functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
-      response.send(alfaResponse.data);
-  }
-  catch (e) {
-   functions.logger.error("Alfa Bank API error: ", e);
-   response.status(500).send("Unexpected error occurred. Please try later");
-  }
-
-});
-
-exports.confirmPayment = functions.https.onRequest(async (request, response) => {
-   functions.logger.info("Alfa Bank API payment confirmation: ", request.url, request.params);
-   response.status(200).end()
-});
-
-exports.rejectPayment = functions.https.onRequest(async (request, response) => {
-   functions.logger.info("Alfa Bank API payment rejection: ", request.url, request.params);
-   response.status(200).end()
-});
-
-exports.callbackPayment = functions.https.onRequest(async (request, response) => {
-   functions.logger.info("Alfa Bank API payment callback: ", request.url, request.params);
-   response.status(200).end()
-});
+exports.orders = require('./orders');
