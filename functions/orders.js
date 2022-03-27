@@ -30,17 +30,27 @@ exports.pay = functions.https.onRequest(async (request, response) => {
     });
     functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
 
-    // TODO: Обновить состояние заказа на "В ожидании оплаты"
-    const orderRef = db.ref(`events/${orderId}`);
-    orderRef.update({
-      state: "AwaitingPayment",
-      externalPaymentId: alfaResponse.data.orderId
-    });
+    if (alfaResponse.data.errorCode) {
+      response.status(400).send({
+        errorCode: alfaResponse.data.errorCode + 1000000,
+        errorMessage: alfaResponse.data.errorMessage,
+      });
+    } else {
+      // TODO: Обновить состояние заказа на "В ожидании оплаты"
+      const orderRef = db.ref(`events/${orderId}`);
+      orderRef.update({
+        state: "AwaitingPayment",
+        externalPaymentId: alfaResponse.data.orderId,
+      });
 
-    response.send(alfaResponse.data);
+      response.send({ formUrl: alfaResponse.data.formUrl });
+    }
   } catch (e) {
     functions.logger.error("Alfa Bank API error: ", e);
-    response.status(500).send("Unexpected error occurred. Please try later");
+    response.status(500).send({
+      errorCode: 1,
+      errorMessage: "Возникла непредвиденная ошибка. Пожалуйста, повторите попытку позже",
+    });
   }
 });
 
@@ -126,9 +136,10 @@ async function createPayment(orderId) {
   const orderRef = db.ref(`events/${orderId}`);
   const paymentsRef = db.ref(`payments/${token}`);
 
-  const shortIdRef = db.ref(
-    `shortIds/${orderId.substring(orderId.lastIndexOf() + 1)}`
-  );
+  const shortIdKey = orderId.substring(orderId.lastIndexOf("_") + 1);
+  functions.logger.debug(`shortIdKey: ${shortIdKey}`);
+
+  const shortIdRef = db.ref(`shortIds/${shortIdKey}`);
   const shortIdSnapshot = await shortIdRef.once("value");
   const shortId = shortIdSnapshot.val();
 
