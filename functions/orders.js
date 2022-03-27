@@ -29,6 +29,13 @@ exports.pay = functions.https.onRequest(async (request, response) => {
       },
     });
     functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
+
+   // TODO: Обновить состояние заказа на "В ожидании оплаты" 
+    const orderRef = db.ref(`events/${orderId}`);
+    orderRef.update({
+      state: "AwaitingPayment",
+    });
+
     response.send(alfaResponse.data);
   } catch (e) {
     functions.logger.error("Alfa Bank API error: ", e);
@@ -43,6 +50,25 @@ exports.callback = functions.https.onRequest(async (request, response) => {
       request.url,
       request.params
     );
+
+   const paymentSuccessfullyConfirmed = false;
+
+   if (paymentSuccessfullyConfirmed) {
+      // TODO: Обновить состояние заказа на "Оплата подтверждена" 
+       const orderRef = db.ref(`events/${orderId}`);
+       orderRef.update({
+         state: "PaymentConfirmed",
+       });
+   } else {
+      // TODO: Обновить состояние заказа на "Оплата отклонена" 
+       const orderRef = db.ref(`events/${orderId}`);
+       orderRef.update({
+         state: "PaymentRejected",
+       });
+   }
+    
+
+
     response.status(200).end();
   } catch (e) {
     functions.logger.error("Alfa Bank API payment callback error: ", e);
