@@ -121,18 +121,6 @@ exports.rejectPayment = functions.https.onRequest(async (request, response) => {
   response.status(200).end();
 });
 
-exports.test = functions.https.onRequest(async (request, response) => {
-  try {
-    const value = await createPayment(
-      "2021_5_30_15_dawRBLNTpDV5gep3mG9TyGAACrE3"
-    );
-    response.status(200).send(value);
-  } catch (e) {
-    functions.logger.error("Alfa Bank API payment callback error: ", e);
-    response.status(500).send("Unexpected error occurred. Please try later");
-  }
-});
-
 async function createPayment(orderId) {
   const token = uuidv4();
   const orderRef = db.ref(`events/${orderId}`);
