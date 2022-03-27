@@ -6,9 +6,6 @@ const axios = require("axios")
 const cors = require("cors")({ origin: true });
 const rp = require('request-promise');
 
-// import * as functions from 'firebase-functions'
-// import * as admin from 'firebase-admin'
-
 admin.initializeApp()
 const db = admin.firestore()
 
