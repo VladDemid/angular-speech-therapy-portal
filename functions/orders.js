@@ -64,6 +64,10 @@ exports.callback = functions.https.onRequest(async (request, response) => {
     const paymentSnapshot = await paymentRef.once("value");
     const orderId = paymentSnapshot.val();
 
+    if (!orderId) {
+      throw new Error(`Payment with token ${token} not found`);
+    }
+
     const orderRef = db.ref(`events/${orderId}`);
 
     // TODO: реализовать обработку всех типов операций
