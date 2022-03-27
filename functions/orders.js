@@ -30,10 +30,11 @@ exports.pay = functions.https.onRequest(async (request, response) => {
     });
     functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
 
-   // TODO: Обновить состояние заказа на "В ожидании оплаты" 
+    // TODO: Обновить состояние заказа на "В ожидании оплаты"
     const orderRef = db.ref(`events/${orderId}`);
     orderRef.update({
       state: "AwaitingPayment",
+      externalPaymentId: alfaResponse.data.orderId
     });
 
     response.send(alfaResponse.data);
@@ -45,35 +46,56 @@ exports.pay = functions.https.onRequest(async (request, response) => {
 
 exports.callback = functions.https.onRequest(async (request, response) => {
   try {
-    functions.logger.info(
-      "Alfa Bank API payment callback: ",
-      request.url,
-      request.params
-    );
+    functions.logger.info("Alfa Bank API payment callback: ", request.url);
 
-   const paymentSuccessfullyConfirmed = false;
+    const { operation, status, token } = request.query;
 
-   if (paymentSuccessfullyConfirmed) {
-      // TODO: Обновить состояние заказа на "Оплата подтверждена" 
-       const orderRef = db.ref(`events/${orderId}`);
-       orderRef.update({
-         state: "PaymentConfirmed",
-       });
-   } else {
-      // TODO: Обновить состояние заказа на "Оплата отклонена" 
-       const orderRef = db.ref(`events/${orderId}`);
-       orderRef.update({
-         state: "PaymentRejected",
-       });
-   }
-    
+    const paymentRef = db.ref(`payments/${token}`);
+    const paymentSnapshot = await paymentRef.once("value");
+    const orderId = paymentSnapshot.val();
 
+    const orderRef = db.ref(`events/${orderId}`);
+
+    // TODO: реализовать обработку всех типов операций
+    switch (operation) {
+      case "approved":
+        functions.logger.error(
+          `Alfa Bank API payment callback '${operation}' operation not implemented`
+        );
+        break;
+      case "deposited":
+        if (status) {
+          orderRef.update({ state: "PaymentConfirmed" });
+        } else {
+          orderRef.update({ state: "PaymentRejected" });
+        }
+        break;
+      case "reversed":
+        functions.logger.error(
+          `Alfa Bank API payment callback '${operation}' operation not implemented`
+        );
+        break;
+      case "refunded":
+        functions.logger.error(
+          `Alfa Bank API payment callback '${operation}' operation not implemented`
+        );
+        break;
+      case "declinedByTimeout":
+        if (status) {
+          orderRef.update({ state: "PaymentRejected" });
+        }
+        break;
+      default:
+        functions.logger.error(
+          `Alfa Bank API payment callback '${operation}' operation not implemented`
+        );
+        break;
+    }
 
     response.status(200).end();
   } catch (e) {
     functions.logger.error("Alfa Bank API payment callback error: ", e);
     response.status(200).end();
-    //response.status(500).send("Unexpected error occurred. Please try later");
   }
 });
 
@@ -116,9 +138,11 @@ async function createPayment(orderId) {
   const orderRef = db.ref(`events/${orderId}`);
   const paymentsRef = db.ref(`payments/${token}`);
 
-  const shortIdRef = db.ref(`shortIds/${orderId.substring(orderId.lastIndexOf() + 1)}`);
-  const snapshot = await orderRef.once("value");
-  const shortId = snapshot.val();
+  const shortIdRef = db.ref(
+    `shortIds/${orderId.substring(orderId.lastIndexOf() + 1)}`
+  );
+  const shortIdSnapshot = await shortIdRef.once("value");
+  const shortId = shortIdSnapshot.val();
 
   orderRef.update({
     paymentToken: token,
