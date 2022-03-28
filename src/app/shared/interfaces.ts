@@ -45,7 +45,7 @@ export interface UserDbInfo {
    email?: string
    description?: string
    //client keys
-   childDiagnosis?: string
+   childDiagnosis?: string //будет писаться в тикете к занятию
    //doctor keys
    weeklySchedule?: []
    educationsCount?: number
@@ -66,7 +66,7 @@ export interface UserDbInfo {
    avatarUrl?: string
    //service keys
    id?: string
-   daysShedule?: any
+   daysShedule?: any //не используется. не помню зачем оно
    eventsDates?: Object
    events?: Event
    lessons?: any
