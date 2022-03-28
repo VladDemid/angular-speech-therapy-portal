@@ -5,8 +5,6 @@ const request = require('request');
 const axios = require("axios")
 const cors = require("cors")({ origin: true });
 const rp = require('request-promise');
-// import * as functions from 'firebase-functions'
-// import * as admin from 'firebase-admin'
 
 admin.initializeApp()
 const db = admin.firestore()
@@ -21,6 +19,8 @@ const API_KEY = functions.config().sendgrid.key;
 
 const TEMPLATE_ID = "d-0214f1135b054334abbdcfad5446a077";
 sgMail.setApiKey(API_KEY);
+
+
 
 exports.queryTest = functions.https.onRequest((req, res) => {
    cors(req, res, () => {
@@ -297,3 +297,5 @@ exports.fireHttpEmail = functions.https.onCall((data, context) => {
 
    // return request
 });
+
+exports.orders = require('./orders');
