@@ -137,16 +137,16 @@ exports.rejectPayment = functions.https.onRequest(async (request, response) => {
 
 async function createPayment(orderId) {
   const token = uuidv4();
-  const orderRef = db.ref(`events/${orderId}`);
+  const orderRef = db.ref(`events/${orderId}`); //! поменять на orders/
   const paymentsRef = db.ref(`payments/${token}`);
 
   //!start delete
-  const shortIdKey = orderId.substring(orderId.lastIndexOf("_") + 1);
-  functions.logger.debug(`shortIdKey: ${shortIdKey}`);
+  // const shortIdKey = orderId.substring(orderId.lastIndexOf("_") + 1);
+  // functions.logger.debug(`shortIdKey: ${shortIdKey}`);
 
-  const shortIdRef = db.ref(`shortIds/${shortIdKey}`);
-  const shortIdSnapshot = await shortIdRef.once("value");
-  const shortId = shortIdSnapshot.val();
+  // const shortIdRef = db.ref(`shortIds/${shortIdKey}`);
+  // const shortIdSnapshot = await shortIdRef.once("value");
+  // const shortId = shortIdSnapshot.val();
   //!end delete
 
   orderRef.update({
@@ -157,7 +157,7 @@ async function createPayment(orderId) {
 
   return {
     ...(await getDefaultPayment()),
-    orderNumber: shortId, //! вместо shortId добавить token
+    orderNumber: token, //! вместо shortId добавить token
     // TODO: поменять на страницу подтверждения заказа в UI
     returnUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-confirmPayment?token=${token}`,
     // TODO: поменять на страницу отмены заказа в UI
