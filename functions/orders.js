@@ -140,12 +140,14 @@ async function createPayment(orderId) {
   const orderRef = db.ref(`events/${orderId}`);
   const paymentsRef = db.ref(`payments/${token}`);
 
+  //!start delete
   const shortIdKey = orderId.substring(orderId.lastIndexOf("_") + 1);
   functions.logger.debug(`shortIdKey: ${shortIdKey}`);
 
   const shortIdRef = db.ref(`shortIds/${shortIdKey}`);
   const shortIdSnapshot = await shortIdRef.once("value");
   const shortId = shortIdSnapshot.val();
+  //!end delete
 
   orderRef.update({
     paymentToken: token,
@@ -155,7 +157,7 @@ async function createPayment(orderId) {
 
   return {
     ...(await getDefaultPayment()),
-    orderNumber: shortId,
+    orderNumber: shortId, //! вместо shortId добавить token
     // TODO: поменять на страницу подтверждения заказа в UI
     returnUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-confirmPayment?token=${token}`,
     // TODO: поменять на страницу отмены заказа в UI
