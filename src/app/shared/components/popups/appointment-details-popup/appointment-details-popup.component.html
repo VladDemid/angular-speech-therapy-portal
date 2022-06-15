@@ -13,7 +13,7 @@
             </div>
             <form (ngSubmit)="makeAnAppointment()">
                <div class="inputs-wrapper">
-                  <label><span>Проблема</span><input [(ngModel)]="problem" name="problem"  type="text"></label>
+                  <label><span  class="narrow">Опишите вашу проблему</span><input [(ngModel)]="problem" name="problem"  type="text"></label>
                   <!-- <div class="with-child radio-wrapper">
                      <label class="radio-label" [ngClass]="{active: withChild == '0'}">
                         <input [(ngModel)]="withChild" type="radio" name="withChild" value=0 >

@@ -13,7 +13,8 @@ export const firebaseConfig = { //*PROD
   projectId: "verbaland",
   storageBucket: "verbaland.appspot.com",
   messagingSenderId: "725914811248",
-  appId: "1:725914811248:web:aed51fdbbd11a5558fedb5"
+  appId: "1:725914811248:web:aed51fdbbd11a5558fedb5",
+  BASE_FUNCTIONS_URL: "https://us-central1-verbaland.cloudfunctions.net"
 }
 
 
@@ -31,7 +32,7 @@ export const environmentOther = {
 }
 
 export const emailConfig = {
-  fromEmailAdress: "admin@logogo.online",
+  fromEmailAdress: "info@logogo.online",
   EMAIL_TEMPLATES: {
     FIRST: "d-0214f1135b054334abbdcfad5446a077",
     MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4",

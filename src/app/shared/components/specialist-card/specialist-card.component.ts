@@ -12,7 +12,7 @@ export class SpecialistCardComponent implements OnInit {
   @Input() card: UserDbInfo
   @Input() isProfileModule: boolean
   active = false
-  defaultAvatarUrl="https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
+  defaultAvatarUrl="https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault-user-avatar.png?alt=media&token=59fe0397-e8df-467e-82cf-e7dc3aa3b60b"
   encryptedId: string
 
   constructor(private crypter: CrypterService) { }

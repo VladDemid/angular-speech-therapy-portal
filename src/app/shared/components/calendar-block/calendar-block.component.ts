@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { log } from 'console';
-import { UserDoctor } from '../../interfaces';
+import { alfaRegistrationResp, UserDoctor } from '../../interfaces';
 import { FirebaseService } from '../../services/firebase.service';
 import { PopupService } from '../../services/popup.service';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { DebugHelper } from 'protractor/built/debugger';
 import { DevelopHelp } from '../../services/develop-help.service';
 import { emailConfig, environment, zoomConfig } from 'src/environments/environment';
 import { TelegramBotService } from '../../services/telegram-bot.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-calendar-block',
@@ -27,15 +28,15 @@ export class CalendarBlockComponent implements OnInit {
   production = environment.production
 
   currentHour = new Date().getHours()
-  selectedDay = -1 //номер дня (-1\ 1-31) //!! 0-30
-  selectedDayOfWeek = -1
+  selectedDay = 22 //!-1 номер дня (-1\ 0-30) 
+  selectedDayOfWeek = 3 //! -1
   day = new Date().getDate()
   month = new Date().getMonth() + 1 //меняется при листании календаря
   currentMonth = new Date().getMonth() + 1 //1 = январь, 12 = декабрь (не меняется)
   year = new Date().getFullYear() //меняется при листании календаря
   currentYear = new Date().getFullYear() //не меняется при листании
   daysArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-  currentDays: number
+  currentDays: number //число дней в месяце
   monthsNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
   monthsNamesWhomCase = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"]
   monthName = ""
@@ -56,10 +57,12 @@ export class CalendarBlockComponent implements OnInit {
   asideIsExpanded = false
   expandSign = "Развернуть"
   isLoading = false
-
+  isMakingAppointment = true //костыль
+  
   daysOfWeekShedule = {}
   newDaysOfWeekShedule = {}
-
+  environment: any;
+  
   constructor(
     private firebase: FirebaseService,
     public popupService: PopupService,
@@ -68,15 +71,17 @@ export class CalendarBlockComponent implements OnInit {
     public userData: UserData,
     public helper: DevelopHelp,
     private telegram: TelegramBotService
-  ) { }
-
-  ngOnInit(): void {
-    this.setMonthName()
-    this.showDays()
-    this.makeHoursArray()
-    // if (this.userData.myData.userType == "doctor") {
+    ) { 
+      
+    }
     
-    this.waitForInfo() //после подгрузки инфы грузить все
+    ngOnInit(): void {
+      this.setMonthName()
+      this.showDays()
+      this.makeHoursArray()
+      // if (this.userData.myData.userType == "doctor") {
+        
+      this.waitForInfo() //после подгрузки инфы грузить все
     // }
   }
 
@@ -296,145 +301,199 @@ export class CalendarBlockComponent implements OnInit {
     this.makeAnAppointment(this.year, this.month, this.selectedDay + 1, this.selectedHourForLesson)
   }
 
-  checkIsDayFuture(year, month, day, hour) {
+  checkIsDayFuture(year, month, day, hour) { //проверка прошел ли день уже?
+    let timeAccess = true
     
+    const orderDate = new Date(year, month - 1, day)
+    const todayDate = new Date()
+    
+    if (orderDate < todayDate) {
+      timeAccess = false
+    }
+
+    const data = {
+      orderDate: {
+        date: orderDate,
+        year: orderDate.getFullYear(),
+        month: orderDate.getMonth(),
+        day: orderDate.getDate(),
+      },
+      todayDate: {
+        date: todayDate,
+        year: todayDate.getFullYear(),
+        month: todayDate.getMonth(),
+        day: todayDate.getDate(),
+      }
+
+    }
+    console.log(timeAccess, data) 
+
+    return timeAccess
   }
 
 
-  makeAnAppointment(year, month, day, hour) {
+  //TODO____________СОЗДАНИЕ_ЗАКАЗА____________________
+  async makeAnAppointment(year, month, day, hour) {
+
     this.isLoading = true
     this.errorMakingLesson = "" //сброс надписи об ошибках
     this.successMakingLesson = "" //сброс надписи об успехе
+    const orderId = `${year}_${month}_${day}_${hour}_${this.calendarUserId}`
 
     // console.log(`год ${year}, ${this.currentYear},| месяц: ${month}, ${this.currentMonth},| день ${day}, ${this.day}`)
-
-    if ( year < this.currentYear || month < this.currentMonth || day < this.day) {
+    
+    if ( !this.checkIsDayFuture(year, month, day, hour) ) {
       this.errorMakingLesson = "Выбранный день уже прошел"
       this.isLoading = false
       return
     }
+    
+    //! добавить проверку
+    //*сигнализация о занятом часе 
+    // this.isLoading = false
+    // this.errorMakingLesson = `данный час занят (${hour}:00 ${day}.${month}.${year})`
+    // console.log("данный час занят")
+
     //записывать если пользователь авторизирован ,является клиентом и час не занят (пустое расписание или конкретно свободный час)
-    if (this.firebase.isAuthenticated() && this.userData.myData.userType == 'client' 
-    && (!this.doctorsLessons || !this.doctorsLessons[year] || !this.doctorsLessons[year][month] 
-        || !this.doctorsLessons[year][month][day] || !this.doctorsLessons[year][month][day][hour] )) {
+    let orderThisHour = null
+    await this.firebase.getLesson(orderId)
+      .then((snapshot) => {
+        orderThisHour = snapshot.val()
+        console.log("объект урока: ", snapshot.val()) //объект урока
+      })
+    //* проверка-был ли такой заказ уже
+    if (orderThisHour) { 
+      if (orderThisHour.patientId === localStorage.getItem("user-Id")) {
+        this.errorMakingLesson = `Вы уже записаны на этот час, но не оплатили. Пожалуйста оплатите этот заказ через Личный кабинет -> Календарь`
+      } else {
+        this.errorMakingLesson = `данный час уже занят`
+      }
+      console.log("ОШИБКА: !!!такой заказ уже был!!!")
+      this.isLoading = false
+      return
+    }
+    
+    if (this.firebase.isAuthenticated() && this.userData.myData.userType == 'client') {
+      //*была проверка на занятость по doctorsLessons
+      //! потом опять возвратить, когда у доктора будут записываться чисто id заказа
+      // && (!this.doctorsLessons || !this.doctorsLessons[year] || !this.doctorsLessons[year][month] 
+      //   || !this.doctorsLessons[year][month][day] || !this.doctorsLessons[year][month][day][hour] )
 
-      // const timeData = {
-      //   year: year,
-      //   month: month,
-      //   day: day,
-      //   hour: hour
-      // }
-
-      // const doctorData = {
-      //   userType: "doctor",
-      //   id: this.calendarUserId,
-      //   name: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
-      //   description: "описание проблемы...",
-      // }
-
-      // const clientData = {
-      //   userType: "client",
-      //   clientId: localStorage.getItem("user-Id"),
-      //   name: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
-      //   description: "описание проблемы...",
-      // }
-
-      const eventLesson = {
+      const orderData = {
         date: {
           year: year,
           month: month,
-          day: day
+          day: day,
+          time: hour,
         },
-        time: hour,
         patientId: localStorage.getItem("user-Id"),
         patientName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
         problemDescription: this.patientProblem,
-        // withChild: this.withChild,
         doctorId: this.calendarUserId,
         doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
         doctorsConfirmation: false,
-        zoomLink: this.inputDoctorInfo.zoomLink ? this.inputDoctorInfo.zoomLink : undefined
+        zoomLink: this.inputDoctorInfo.zoomLink ? this.inputDoctorInfo.zoomLink : undefined,
+        state: ""
       }
 
-      const eventId = `${eventLesson.date.year}_${eventLesson.date.month}_${eventLesson.date.day}_${eventLesson.time}_${eventLesson.doctorId}`
-
-      this.firebase.checkLessonEngage(eventId) //проверка на занятость часа
-      .subscribe((resp) => {
-        if (resp == null) { 
-          let clientsEmailConfirmation = {
-            to: this.userData.myData.email,
-            from: emailConfig.fromEmailAdress,
-            templateId: emailConfig.EMAIL_TEMPLATES.CLIENT_MADE_AN_APPOINTMENT,
-            dynamicTemplateData: {
-              subject: "Logogo запись на прием",
-              date: `${day}-${month}-${year}`,
-              clientName: this.userData.myData.name,
-              doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
-              time: "",
-              
-            }
-          }
+      //* создание заказа в БД (firebase)
+      
+      let dbSaveArray = this.createOrderInDB(orderId, orderData)
+      await Promise.all([dbSaveArray])
+        .then((resp) => {
+          console.log("создание заказа в БД - удачно")
+          // this.errorMakingLesson += "✔️запись в БД создана"
           
-          //* регистрация заказа в альфе
-          // this.alfaTest()
-          // getOrderStatusExtended.do - состояние заказа
-          // deposit.do - регистрация заказа
-          const action = "getOrderStatusExtended.do"
-          if (!this.inputDoctorInfo.shortId) {
-            this.isLoading = false
-            this.errorMakingLesson = "У доктора не указан Id! Пожалуйста, сообщите нам об этом."
-            return
-          }
-          const orderId = `${eventLesson.date.year}_${eventLesson.date.month}_${eventLesson.date.day}_${eventLesson.time}_${this.inputDoctorInfo.shortId}`
-          // console.log(orderId)
-          this.firebase.alfaREST(action, orderId, this.production).subscribe(
-            (resp) => {
-              console.log("order registration: ", resp)
-              this.isLoading = false
-            },
-            (err) => {
-              console.log("order reg error: ", err)
-              this.isLoading = false
-            }
-          )
-
-          //* отправка почты 
-          // this.firebase.sendEmailFunction(clientsEmailConfirmation)
-          // .then((res) => {
-          //   console.log("email отправлен: ", res)
-          //   })
-          // .catch((err) => {
-          //     console.log("Ошибка FBtest: ", err)
-          //     // this.isSendingData = false
-          //   })
-
-          //* запись в БД
-          // this.firebase.makeALesson(eventLesson, eventId) 
-          //   .subscribe((resp) => {
-          //     console.log("клиент записан: ", resp);
-          //     this.successMakingLesson = "Вы записаны. Проверьте сообщение на почте"
-          //     this.isLoading = false
-          //     this.telegram.sendNewLessonMessage(eventLesson)
-          //     //найти уроки и записать в себя
-          //     this.uploadNewEvent(eventLesson, eventId)
-          //   },
-          //   (err) => {
-          //     this.isLoading = false
-          //     console.log("ошибка записи к доктору (запись информации доктору): ", err);
-          //   })
-
-          
-
-        } else {
+        })
+        .catch((err) => {
+          console.log("создание заказа в БД - неудачно", err)
+          this.errorMakingLesson += "❌запись в БД не создана"
+          this.isMakingAppointment = false
+        })
+      if (!this.isMakingAppointment) { return }
+        
+      //* вызов функции для создания заказа в банке
+      const funcData = {
+        id: orderId,
+        prod: this.production
+      }
+      await this.firebase.reqFunc("orders-pay", funcData).subscribe(
+        (resp: alfaRegistrationResp) => {
+          console.log("orders-pay url: ", resp.formUrl)
+          window.open(resp.formUrl, '_blank')
+          // this.router.navigate(['/profile/calendar'])
+          this.successMakingLesson = "Вы записались! Ваше занятие лежит в разделе 'календарь'"
           this.isLoading = false
-          this.errorMakingLesson = `данный час занят (${hour}:00 ${day}.${month}.${year})`
-          console.log("данный час занят")
-        }
-      },
-      (err) => {
+        },
+        (err) => {
+          console.log("ERROR orders-pay: ", err)
+          this.isLoading = false
+        })
+      //! поменять на observable
+        // .then((resp) => {
+        //   console.log("orders-pay: ", resp)
+        // })
+        // .catch((err) => {
+        //   console.log("Ошибка orders-pay функции: ", err)
+        // })
+      
+      
+      //?
+      //* регистрация заказа в альфе //
+      // this.alfaTest()
+      // getOrderStatusExtended.do - состояние заказа
+      // deposit.do - регистрация заказа
+      const action = "getOrderStatusExtended.do"
+      if (!this.inputDoctorInfo.shortId) {
         this.isLoading = false
-        console.log("не удалось проверить данный час на занятость", err)
-      })
+        this.errorMakingLesson = "У доктора не указан Id! Пожалуйста, сообщите нам об этом."
+        return
+      }
+      // const orderId = `${eventLesson.date.year}_${eventLesson.date.month}_${eventLesson.date.day}_${eventLesson.date.time}_${this.inputDoctorInfo.shortId}`
+      // console.log(orderId)
+
+      //?
+      //* отправка в альфу?
+      // this.firebase.alfaREST(action, orderId, this.production).subscribe(
+      //   (resp) => {
+      //     console.log("order registration: ", resp)
+      //     this.isLoading = false
+      //   },
+      //   (err) => {
+      //     console.log("order reg error: ", err)
+      //     this.isLoading = false
+      //   }
+      // )
+
+      let clientsEmailConfirmation = {
+        to: this.userData.myData.email,
+        from: emailConfig.fromEmailAdress,
+        templateId: emailConfig.EMAIL_TEMPLATES.CLIENT_MADE_AN_APPOINTMENT,
+        dynamicTemplateData: {
+          subject: "Logogo запись на прием",
+          date: `${day}-${month}-${year}`,
+          clientName: this.userData.myData.name,
+          doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
+          time: "",
+          
+        }
+      }
+
+      //* отправка почты 
+      // this.firebase.sendEmailFunction(clientsEmailConfirmation)
+      // .then((res) => {
+      //   console.log("email отправлен: ", res)
+      //   })
+      // .catch((err) => {
+      //     console.log("Ошибка FBtest: ", err)
+      //     // this.isSendingData = false
+      //   })
+
+
+          
+
+        
+      
 
 
       // console.log(`запись: \n клиент: ${year} ${month} ${day} ${hour} \n ${clientData.name} \n ${clientData.id} \n доктор:`);
@@ -453,6 +512,28 @@ export class CalendarBlockComponent implements OnInit {
     }
   }
 
+  createOrderInDB(orderId, orderData) {
+    const dbOrderPath = `orders/${orderId}`
+
+    const dbPatientOrdersPath = `users/${localStorage.getItem("user-Id")}/orders/${orderId}`
+    const patientData = { orderId: orderId }
+
+    const dbDoctorOrdersPath = `users/${this.calendarUserId}/orders/${orderId}`
+    const doctorData = { orderId: orderId }
+
+    return Promise.all([
+      this.firebase.setData(dbOrderPath, orderData),
+      this.firebase.updateData(dbPatientOrdersPath, patientData),
+      this.firebase.updateData(dbDoctorOrdersPath, doctorData)
+    ])
+  }
+
+  payOrder(paymentUrl) {
+    window.open(paymentUrl)
+  }
+
+  
+
   alfaTest() {
     const registrData = {
 
@@ -468,7 +549,12 @@ export class CalendarBlockComponent implements OnInit {
     
   }
 
-  appointmentDeatails(year, month , day, hour) {
+  appointmentDetails(year, month , day, hour) {
+    if (this.userData.myData.userType === "doctor") {
+      this.isLoading = false
+      this.errorMakingLesson = "Вы, как доктор, не можете записаться к другому доктору. Пожалуйста сделайте аккаунт как клиент."
+      return
+    }
     this.popupService.appointmentDetails = {
       year,
       month,
@@ -498,7 +584,7 @@ export class CalendarBlockComponent implements OnInit {
       })
   }
 
-  changeWorkHour(value, day, side) {
+  changeWorkHour(value, day, side) { //куда, какой день, from или to  
     const x = this.newDaysOfWeekShedule[day][side]
     let workPeriodCheck = true
     if (side == 0 && value == 1 && this.newDaysOfWeekShedule[day][0] + 1 >= this.newDaysOfWeekShedule[day][1]) {
@@ -547,20 +633,20 @@ export class CalendarBlockComponent implements OnInit {
     this.selectedDay = -1
   }
 
-  confirmEvent(eventName) { //!все фигня, надо удалять
-    this.userData.myData.events[eventName].doctorsConfirmation = true
-    console.log(this.userData.myData.events[eventName])
+  // confirmEvent(eventName) { //!все фигня, надо удалять
+  //   this.userData.myData.events[eventName].doctorsConfirmation = true
+  //   console.log(this.userData.myData.events[eventName])
     
-    this.uploadNewEvent(this.userData.myData.events[eventName], eventName)
-    this.firebase.updateEvent(this.userData.myData.events[eventName], eventName)
-      .subscribe((resp) => {
-        this.telegram.telegramNotifConfirmMeeting(this.userData.myData.events[eventName])
-        // console.log(resp)
-      },
-      (err) => {
-        console.log("ОШИБКА подтверждения занятия: ", err)
-      })
-  }
+  //   this.uploadNewEvent(this.userData.myData.events[eventName], eventName)
+  //   this.firebase.updateEvent(this.userData.myData.events[eventName], eventName)
+  //     .subscribe((resp) => {
+  //       this.telegram.telegramNotifConfirmMeeting(this.userData.myData.events[eventName])
+  //       // console.log(resp)
+  //     },
+  //     (err) => {
+  //       console.log("ОШИБКА подтверждения занятия: ", err)
+  //     })
+  // }
 
   redirectToSignIn() {
     this.popupService.hideAllPopups()

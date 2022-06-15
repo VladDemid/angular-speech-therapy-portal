@@ -48,6 +48,7 @@ export interface UserDbInfo {
    childDiagnosis?: string //будет писаться в тикете к занятию
    //doctor keys
    weeklySchedule?: []
+   schedule?: []
    educationsCount?: number
    university?: string
    faculty?: string
@@ -68,13 +69,19 @@ export interface UserDbInfo {
    id?: string
    daysShedule?: any //не используется. не помню зачем оно
    eventsDates?: Object
-   events?: Event
+   events?: Object
+   orders?: Object
+   ordersArr?: Array<string>
+   ordersFuture?: Object
+   ordersFutureIds?: Array<string>
    lessons?: any
    emailVerified?: boolean
    specializations?: string[]
    mainSpecialization?: string
    aboutMe?: string,
-   zoomLink?: string
+   zoomLink?: string,
+   currentTime?: string,
+
 }
 
 export interface UserClient {
@@ -128,7 +135,8 @@ export interface Event {
    date?: {
       year: number,
       month: number,
-      day: number
+      day: number,
+      time: number,
    },
    time?: number,
    doctorsConfirmation?: boolean
@@ -184,5 +192,12 @@ export interface allCookies {
    acceptCookie?: boolean,
    
 }
+
+export interface alfaRegistrationResp {
+   formUrl: string,
+}
+
+
+
 
 

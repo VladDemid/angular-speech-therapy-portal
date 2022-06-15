@@ -10,7 +10,7 @@ import { DevelopHelp } from '../shared/services/develop-help.service';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import Swiper, { Navigation, Pagination, SwiperOptions} from 'swiper';
-import { environment } from 'src/environments/environment';
+import { emailConfig, environment } from 'src/environments/environment';
 import { AlfaAcquiringService } from '../shared/services/alfa-acquiring.service';
 import axios, { Axios } from 'axios';
 
@@ -26,6 +26,7 @@ export class HomePageComponent implements OnInit {
   FBUser = null
   doctors = []
   testIndex = 0
+  customFunc = 'getTime'
 
   config: SwiperOptions = {
     spaceBetween: 150,
@@ -106,17 +107,74 @@ export class HomePageComponent implements OnInit {
     // console.log("change")
   }
 
-  FBtest() {
+  customFbFunc() {
+    // console.log(this.customFunc)
+    this.firebase.reqFunc(this.customFunc, {})
+      .subscribe(
+        (resp) => {console.log(`${this.customFunc}: `, resp)},
+        (err) => {console.log(`${this.customFunc} error: `, err)})
+  }
+
+  getOrders() {
+    const ordersArr = ['2022_5_24_10_E9IKBLSbkTfzEJPXzFimuXeXs1b2', '2022_5_24_8_E9IKBLSbkTfzEJPXzFimuXeXs1b2', '2022_5_24_9_E9IKBLSbkTfzEJPXzFimuXeXs1b2', '2022_5_5_8_E9IKBLSbkTfzEJPXzFimuXeXs1b2']
+    this.firebase.reqFunc("getOrders", {ordersArr: ordersArr})
+      .subscribe(
+        (resp) => {console.log("emailTest: ", resp)},
+        (err) => {console.log("emailTest error: ", err)})
+  }
+
+  emailTest() {
     this.firebase.testEmailFunction()
-      .then((res) => {
-        console.log("ура : ", res)
-      })
-      .catch((err) => {
-        console.log("Ошибка FBtest: ", err)
-        console.log(err.code)
-        console.log(err.message)
-        console.log(Object.entries(err) )
-      })
+      const data = {
+        to: "mr.zgot@gmail.com",
+        from: emailConfig.fromEmailAdress,
+        // from: "info@logogo.online",
+        templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
+        dynamicTemplateData: {
+            text: "тут текст",
+            subject: "Тема1 test",
+            name: 'кастомноеИмя'
+        }
+        
+      }
+      this.firebase.reqFunc("emailTest", data)
+      .subscribe(
+        (resp) => {console.log("emailTest: ", resp)},
+        (err) => {console.log("emailTest error: ", err)})
+      // .then((res) => {
+      //   console.log("ура : ", res)
+      // })
+      // .catch((err) => {
+      //   console.log("Ошибка FBtest: ", err)
+      //   console.log(err.code)
+      //   console.log(err.message)
+      //   console.log(Object.entries(err) )
+      // })
+  }
+
+  emailTest2() {
+    const data = {
+      to: "mr.zgot@yandex.ru",
+      from: emailConfig.fromEmailAdress,
+      // from: "info@logogo.online",
+      templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
+      dynamicTemplateData: {
+          text: "тут текст",
+          subject: "Тема письма",
+          name: 'кастомноеИмя'
+      }
+    }
+    this.firebase.reqFunc("emailTest", data)
+    .subscribe(
+      (resp) => {console.log("emailTest2: ", resp)},
+      (err) => {console.log("emailTest2 error: ", err)})
+  }
+
+  getEmails() {
+    this.firebase.reqFunc("orders-getEmailsDev", {})
+    .subscribe(
+      (resp) => {console.log("getEmailsDev: ", resp)},
+      (err) => {console.log("getEmailsDev error: ", err)})
   }
 
   FBLogout() {
@@ -138,6 +196,8 @@ export class HomePageComponent implements OnInit {
         console.log("ERROR: ", err)
       })
   }
+
+ 
 
   queryTest() {
     this.firebase.testQuery().subscribe(
@@ -171,10 +231,24 @@ export class HomePageComponent implements OnInit {
     console.log(this.firebase.isAuthenticated())
   }
 
-  alfaAll() {
-    this.firebase.testGetAlfaAll("getLastOrdersForMerchants.do", false).subscribe(
-      (resp) => {console.log("allAlfa: ", resp)},
-      (err) => {console.log("allAlfa error: ", err)})
+  FBAuthToken() {
+    console.log(this.firebase.getAuthToken())
+  }
+
+  alfaReq() {
+    this.firebase.alfaReq("getLastOrdersForMerchants.do", false).subscribe(
+      (resp) => {console.log("alfaReq: ", resp)},
+      (err) => {console.log("alfaReq error: ", err)})
+  }
+
+  alfaTest() { 
+    const data = {
+      uid: "2022_4_14_9_E9IKBLSbkTfzEJPXzFimuXeXs1b2"
+    }
+    this.firebase.reqFunc("queryTest", data)
+    .subscribe(
+      (resp) => {console.log("pay: ", resp)},
+      (err) => {console.log("pay error: ", err)})
   }
 
   ACQtest() {

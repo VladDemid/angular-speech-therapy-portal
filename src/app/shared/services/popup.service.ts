@@ -9,7 +9,6 @@ export class PopupService {
   imgUrl = "https://storiavoce.com/wp-content/plugins/lightbox/images/No-image-found.jpg"
   appointmentDetails = { "year": 2000, "month": 0, "day": 0, "hour": 0 }
   imgPopup = false
-  eventDetails = { "date": { "day": 0, "month": 0, "year": 0 }, "doctorId": "", "doctorName": "0", "doctorsConfirmation": false, "patientId": "", "patientName": "", "problemDescription": "описание проблемы...", "time": 0, "zoom": { "id": "", "link": "", "password": "" }, "daysLeft": 0 }
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
   homePageFbSecurityPopup = false
@@ -20,6 +19,29 @@ export class PopupService {
   eventDetailsPopup = false
   appointmentDeatailsPopup = false
   requisitesPopup = false
+  eventDetails = { 
+    date: { 
+      day: 0, 
+      month: 0, 
+      year: 0, 
+      time: 0 
+    }, 
+    doctorId: "", 
+    doctorName: "0", 
+    doctorsConfirmation: false, 
+    patientId: "", 
+    patientName: "", 
+    problemDescription: "описание проблемы...", 
+    time: 0, 
+    zoom: { 
+      id: "", 
+      link: "", 
+      password: "" 
+    }, 
+    daysLeft: 0, 
+    zoomLink: "",
+    hoursLeft: 0,
+  }
   
 
   constructor() { }

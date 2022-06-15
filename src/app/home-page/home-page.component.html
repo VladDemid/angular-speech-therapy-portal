@@ -17,19 +17,25 @@
 
 
 
+
+
 <app-nav-home></app-nav-home>
 <div class="home-page">
    <!-- <div class="container"> -->
       <!-- <button (click)="testSignIn()">test sign in</button> -->
       <!-- PROD: --{{production}}-- -->
-      
+     
+
       <div class="promo">
          <div class="container">
             <div class="dev-test" *ngIf="!production">
-               <button (click)="FBtest()">@email</button>
+               <button (click)="emailTest()">@emailManual</button>
+               <!-- <button (click)="emailTest2()">@email2</button> -->
                <button (click)="FBnumber()">number</button>
-               <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd", returnToProfileModule: true}'>доктор</button>
-               <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd"}'>доктор2</button>
+               <button (click)="getEmails()">=getEmails=</button>
+
+               <!-- <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd", returnToProfileModule: true}'>доктор</button>
+               <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd"}'>доктор2</button> -->
                <button [routerLink]="['/profile']" >в профиль</button>
                <button [routerLink]="['/admin-login']" >админка</button>
                <button  >logIn</button>
@@ -37,12 +43,19 @@
                <!-- --{{FBUser | json}}-- -->
                <button  (click)="FBdisplayUser()">FB-User</button>
                <button  (click)="FBdIsAuth()">isAuth</button>
-               ---------------
+               <button  (click)="FBAuthToken()">authToken</button>
+               <button  (click)="getOrders()">getOrders</button>
+               <div class="customFunc">
+                  <input type="text" [(ngModel)]="customFunc">
+                  <button  (click)="customFbFunc()">customFunc</button>
+               </div>
+               ------------------------------------------------------------------------
                <div class="alfa">
                   <button  (click)="ACQtest()">alfaReq</button>
                   <button  (click)="authTest()">alfaCall</button>
                   <button  (click)="queryTest()">testQuery</button>
-                  <button  (click)="alfaAll()">alfaAll</button>
+                  <button  (click)="alfaReq()">alfaReq</button>
+                  <button  (click)="alfaTest()">alfaTest</button>
                </div>
 
             </div>

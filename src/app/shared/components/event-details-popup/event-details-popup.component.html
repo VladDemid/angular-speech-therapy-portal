@@ -3,30 +3,38 @@
    <div class="popup">
 
       <div class="popup-container">
+         <div class="subtitle">Дата и время</div>
          <div class="date">
+            <span class="bold">{{popupService.eventDetails.date.day}}</span>
+            {{monthsNamesWhomCase[popupService.eventDetails.date.month]}} 
+            {{popupService.eventDetails.date.year}} 
+            {{popupService.eventDetails.date.time}}:00 
+            <!-- {{popupService.eventDetails.date.time}}:00 (МСК)  -->
             <span class="days-left" *ngIf="popupService.eventDetails.daysLeft > 0">
-               Через {{popupService.eventDetails.daysLeft}} дней,
+               (через {{popupService.eventDetails.daysLeft}} дней)
             </span>
             <span *ngIf="popupService.eventDetails.daysLeft == 0">
-               Сегодня,
+               (сегодня)
             </span>
-            {{popupService.eventDetails.date.day}} {{monthsNamesWhomCase[popupService.eventDetails.date.month]}}</div>
-         <div class="time">Время: {{popupService.eventDetails.time | timeRow}} (мск)</div>
-         <div class="doctor-name">Специалист: {{popupService.eventDetails.doctorName}}</div>
-         <div class="client-name">Специалист: {{popupService.eventDetails.patientName}}</div>
-         <div class="problem">Проблема: {{popupService.eventDetails.problemDescription}}</div>
+            <!-- {{popupService.eventDetails.date.day}} {{monthsNamesWhomCase[popupService.eventDetails.date.month]}}</div> -->
+            <!-- <div class="time">Время: {{popupService.eventDetails.time | timeRow}} (мск)</div> -->
+            <!-- <div class="doctor-name">Специалист: {{popupService.eventDetails.doctorName}}</div> -->
+            <!-- <div class="client-name">Специалист: {{popupService.eventDetails.patientName}}</div> -->
+         </div>
+         <div class="subtitle">Проблема:</div>
+         {{popupService.eventDetails.problemDescription}}
+
          <div class="zoom">
-            <h2>Вход в <span class="zoom-icon">Zoom</span></h2>
-            <div class="auto">
-               <h3>Автоматически:</h3>
-               <a class="app-link" [href]="popupService.eventDetails.zoom.link">войти через приложение</a>
-               <!-- <a class="web-zoom" (click)="goToZoom(popupService.eventDetails.zoom.id, popupService.eventDetails.zoom.password, popupService.eventDetails.doctorName, popupService.eventDetails.patientName)">войти через сайт</a> -->
+            <div class="subtitle"><span class="blue zoom-icon">Zoom</span> ссылка:</div>
+            
+            <div class="not-ready" *ngIf="popupService.eventDetails.hoursLeft > 2">
+               <h3>Ссылка на zoom конференцию будет доступна за 2 часа до звонка</h3>
+               <span class="note">*Если ссылка не появилась напишите нам по кнопке снизу</span>
             </div>
-            <div class="manual">
-               <h3>Вручную:</h3>
-               <div class="meeting-credentials">ID: <span (click)="copyId(popupService.eventDetails.zoom.id)">{{popupService.eventDetails.zoom.id}}</span></div>
-               <div class="meeting-credentials">Пароль: <span (click)="copyPass(popupService.eventDetails.zoom.password)">{{popupService.eventDetails.zoom.password}}</span> </div>
+            <div class="ready" *ngIf="popupService.eventDetails.hoursLeft <= 2">
+               <h3>{{popupService.eventDetails.zoomLink}}</h3>
             </div>
+
             <div class="help">
                <button [routerLink]="['/profile/help']">у вас вопросы?</button>
             </div>

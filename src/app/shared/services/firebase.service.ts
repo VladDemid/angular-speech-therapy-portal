@@ -83,7 +83,7 @@ export class FirebaseService implements OnInit {
     const fireHttpEmail = firebase.functions().httpsCallable('fireHttpEmail');
     return fireHttpEmail({
       to: "mr.zgot@yandex.ru",
-      from: "vlatidos@gmail.com",
+      from: emailConfig.fromEmailAdress,
       templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
       dynamicTemplateData: {
          text: "тут текст",
@@ -98,7 +98,10 @@ export class FirebaseService implements OnInit {
   testFunctionRandom() {
     const randomNumberCall = firebase.functions().httpsCallable('randomNumberCall');
     return randomNumberCall()
+  }
 
+  testFunctionEnvTest() {
+    return this.http.post(`https://us-central1-inclusive-test.cloudfunctions.net/orders-payTest2`, {prod: true})
   }
 
   testAlfa(): Promise<any> {
@@ -117,17 +120,30 @@ export class FirebaseService implements OnInit {
     return this.http.get("https://us-central1-inclusive-test.cloudfunctions.net/alfaReq?actionUrl=getOrderStatusExtended.do")
   }
   
-  testGetAlfaAll(action, isProd) {
-    return this.http.get(`https://us-central1-inclusive-test.cloudfunctions.net/alfaAllReq?actionUrl=${action}&isProd=${isProd}`)
+  alfaReq(action, isProd) {
+    return this.http.get(`https://us-central1-inclusive-test.cloudfunctions.net/alfaReq?actionUrl=${action}&isProd=${isProd}`)
   }
 
   testQuery() {
-    return this.http.get("https://us-central1-inclusive-test.cloudfunctions.net/queryTest?test=1243")
+    const data = {
+      uid: "8hfgd99078"
+    }
+    return this.http.post("https://us-central1-inclusive-test.cloudfunctions.net/queryTest", data)
   }
   
   authFuncTest(data) {
     const fireHttpEmail = firebase.functions().httpsCallable('alfaCall');
     return fireHttpEmail(data)
+  }
+
+  async callFunc(funcName, data) {
+    const fireFunc = firebase.functions().httpsCallable(funcName)
+    return fireFunc(data)
+  }
+
+  reqFunc(funcName, data) {
+    const url = `${firebaseConfig.BASE_FUNCTIONS_URL}/${funcName}`
+    return this.http.post(url, data)
   }
 
   sendEmailFunction(msg: EmailData) {
@@ -148,6 +164,10 @@ export class FirebaseService implements OnInit {
 
   isAuthenticated() { //вроде работает
     return !!firebase.auth().currentUser
+  }
+
+  getAuthToken() {
+    return !!firebase.auth()
   }
 
   setUid(userCredentials: UserCredentials) { //вроде не нужно теперь
@@ -214,11 +234,17 @@ export class FirebaseService implements OnInit {
     return firebase.database().ref(path).update(newData);
   }
 
-  patchDataByPath(newData, path) {
+  updateData(path, newData) {
     // const path = 'users/' + userId
     // var userRef = firebase.database().ref('users/' + userId );
     return firebase.database().ref(path).update(newData);
   }
+
+  setData(path, data) {
+    return firebase.database().ref(path).set(data)
+  }
+
+
 
   TESTmanualREST() {
     const authToken = this.getUserToken()
@@ -536,21 +562,27 @@ export class FirebaseService implements OnInit {
     return this.http.get(`${environment.FbDbUrl}/lessons/${id}.json`)
   }
 
-  updateEvent(eventLesson, eventId) {
-    let myNewLessonData = {}
-    myNewLessonData[eventId] = JSON.parse(JSON.stringify(eventLesson))
-    delete myNewLessonData[eventId].daysLeft
-    console.log(myNewLessonData)
-    // myNewLessonData.lessons.lessonId = eventId
-    console.log("!!!!!!!!!!!",eventLesson, eventId)
-    return this.http.patch(`${environment.FbDbUrl}/events.json`, myNewLessonData)
-  }
+  // updateEvent(eventLesson, eventId) {
+  //   let myNewLessonData = {}
+  //   myNewLessonData[eventId] = JSON.parse(JSON.stringify(eventLesson))
+  //   delete myNewLessonData[eventId].daysLeft
+  //   console.log(myNewLessonData)
+  //   // myNewLessonData.lessons.lessonId = eventId
+  //   console.log("!!!!!!!!!!!",eventLesson, eventId)
+  //   return this.http.patch(`${environment.FbDbUrl}/events.json`, myNewLessonData)
+  // }
 
   patchUserEvents(newLessonData) { //???
     const userEvents = firebase.database().ref(`users/${localStorage.getItem("user-Id")}/events`);
     return userEvents.update(newLessonData);
     // return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json`, newLessonData)
- }
+  }
+
+
+  getLesson(lesson_id) { //есть ли уже такой урок
+    const lessonRef = firebase.database().ref(`orders/${lesson_id}`);
+    return lessonRef.once("value")
+  }
 
   getUserEvents() {
     const userEvents = firebase.database().ref(`users/${localStorage.getItem("user-Id")}/events`);

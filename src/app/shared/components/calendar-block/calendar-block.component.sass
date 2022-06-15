@@ -1,4 +1,5 @@
 @import "../../../../assets/styles/_variables"
+@import "../../../../assets/styles/schedule"
 
 .calendar
    // border: 1px solid #000
@@ -162,13 +163,13 @@
             .status
                position: absolute
                width: 32px
-               height: 6px
+               height: 12px
                border-radius: 3px
                margin-bottom: 0px
                cursor: help
                right: 6px
                // padding: 4px
-               top: 6px
+               top: 20px
                // padding: 2px
                background-color: #fff
                border: 2px dashed #ccc
@@ -186,7 +187,7 @@
                   // height: 0px
                   top: -26px
                   left: -100%
-                  background-color: rgba(211, 86, 86, 0.102)
+                  background-color: rgba(200, 200, 200, 0.1)
                   // top: -10px
                   transition: 0.5s all
                   // rigth: 50px
@@ -337,56 +338,56 @@
             padding: 20px 3px
             border: 1px solid rgba(78, 70, 62, 0.3)
             margin-bottom: 15px
-      .time-row
-         // border-bottom: 1px dashed #000
-         color: #ccc
-         background-color: rgba(52, 48, 45, 0.15)
-         &:hover
-            background-color: $grey_CA 
-         &:nth-child(1)
-            // border-radius: 20px 20px 0 0
-            // border-top: 1px dashed #000
-         &:nth-child(2n)
-            // background-color: $grey_E6
-         &.work-hour
-            // background-color: $orange_common
-            color: #000
-            background-color: #fff
-         &.lesson-appointed
-            background-color: $blue_light
-         &.selected-hour
-            background-color: $button_active
-            // border: 2px solid #000
-            &:hover
-               background-color: $yellow_common
-         &:hover
-            background-color: rgba(251, 133, 1, 0.4)
-      .time-row-inner
-         position: relative
-         cursor: pointer
-         user-select: none
-         padding: 3px 10px 2px
-         &>div
-            display: inline-block
-         .patient
-            position: absolute
-            height: 100%
-            // margin-left: 15px
-            left: 110px
-            top: 50%
-            transform: translateY(-50%)
-            // border: 1px solid #000
-            .busy-myself-sign, .busy-sign
-               display: flex
-               justify-content: center
-               flex-direction: column
-               padding-left: 5px
-               height: 100%
-               overflow: hidden
-               font-weight: bold
-               // text-overflow: hidden
-            .busy-sign
-               color: $grey_45
+      // .time-row
+      //    // border-bottom: 1px dashed #000
+      //    color: #ccc
+      //    // background-color: rgba(52, 48, 45, 0.15)
+      //    &:hover
+      //       background-color: $grey_CA 
+      //    &:nth-child(1)
+      //       // border-radius: 20px 20px 0 0
+      //       // border-top: 1px dashed #000
+      //    &:nth-child(2n)
+      //       // background-color: $grey_E6
+      //    &.work-hour
+      //       // background-color: $orange_common
+      //       color: #000
+      //       background-color: #fff
+      //    &.lesson-appointed
+      //       background-color: $blue_light
+      //    &.selected-hour
+      //       background-color: $button_active
+      //       // border: 2px solid #000
+      //       &:hover
+      //          background-color: $yellow_common
+      //    &:hover
+      //       background-color: rgba(251, 133, 1, 0.4)
+      // .time-row-inner
+      //    position: relative
+      //    cursor: pointer
+      //    user-select: none
+      //    padding: 3px 10px 2px
+      //    &>div
+      //       display: inline-block
+      //    .patient
+      //       position: absolute
+      //       height: 100%
+      //       // margin-left: 15px
+      //       left: 110px
+      //       top: 50%
+      //       transform: translateY(-50%)
+      //       // border: 1px solid #000
+      //       .busy-myself-sign, .busy-sign
+      //          display: flex
+      //          justify-content: center
+      //          flex-direction: column
+      //          padding-left: 5px
+      //          height: 100%
+      //          overflow: hidden
+      //          font-weight: bold
+      //          // text-overflow: hidden
+      //       .busy-sign
+      //          color: $grey_45
 
       .time-blocker
          position: relative
@@ -439,12 +440,12 @@
             .status
                position: absolute
                width: 32px
-               height: 6px
+               height: 32px
                border-radius: 3px
                margin-bottom: 0px
                cursor: pointer
                right: 6px
-               top: 6px
+               top: 50px
                background-color: #fff
                border: 2px dashed #ccc
                overflow: visible
@@ -454,11 +455,9 @@
                      opacity: 1
                &::after
                   // content: 'fghfhtgdfgh'
-                  border: 2px solid #ccc
                   position: absolute
                   display: block
                   opacity: 0
-                  background-color: rgba(211, 86, 86, 0.102)
                   // top: -10px
                   transition: 0.5s all
                   left: -100%
@@ -478,14 +477,29 @@
 
                &.unconfirmed
                   border: none
-                  background-color: #a84d4d
+                  // background-color: #a84d4d
+                  background-color: transparent
+                  background-image: url('/assets/icons/interface/credit-card.png')
+                  background-size: cover
+                  box-shadow: inset 0 0 5px 1px #a84d4d
                   &::after
-                     content: 'ожидаем подтверждения от специалиста'
+                     border: 2px solid #a84d4d
+                     content: 'отменено'
+               &.waiting
+                  background-color: #fde769
+                  &::after
+                     border: 2px solid #f5f591
+                     content: 'ожидание оплаты'
                &.confirmed
                   border: none
-                  background-color: #7bad60
+                  // background-color: #7bad60
+                  background-color: transparent
+                  background-image: url('/assets/icons/functions/check-mark-3.svg')
+                  background-size: cover
+                  // box-shadow: inset 0 0 5px 1px #a84d4d
                   &::after
-                     content: 'специалист подтвердил занятие'
+                     border: 2px solid #7bad60
+                     content: 'оплачено'
             
             &.unconfirmed
                border: 2px dashed $grey_E6
@@ -670,171 +684,6 @@
       overflow: visible
       max-height: 700px
             
-.change-shedule-block
-   max-width: 600px
-   h3
-      font-size: 25px
-      font-weight: 600
-      text-align: left
-      margin-bottom: 32px
-   .days-selection-wrapper
-      // display: flex
-      // justify-content: center
-      // margin-top: 20px
-      &>div
-         // margin: 20px 20px 0px
-         // border: 1px solid #000
-      .days-sign
-         font-size: 12px
-      .days-of-week-selection
-         // width: 55%
-         .days-of-week-checkboxes
-            margin-top: 20px
-            .day-of-week
-               position: relative
-               display: inline-block
-               width: 65px
-               height: 56px
-               margin-right: 10px
-               border-radius: 9px
-               border: 1px solid $grey
-               font-size: 22px
-               font-weight: 500
-               color: $grey_45
-               cursor: pointer
-               user-select: none
-               &:last-child
-                  margin-right: 0
-               &.active
-                  background-color: $orange_501
-                  border: none
-                  color: #fff
-               span
-                  position: absolute
-                  top: 50%
-                  left: 50%
-                  transform: translate(-50%, -50%)
-      .days-of-week-settings
-         // width: calc(45% - 30px)
-         .time-row
-            display: flex
-            justify-content: space-between
-            align-items: center
-            max-width: 370px
-            font-size: 22px
-            color: $grey_E6
-            border-bottom: 1px solid #000
-            height: 54px
-            &.active
-               color: #000
-            &>span
-               display: inline-block
-               width: 10%
-               margin-left: 28px
-
-            .row-settings
-               display: inline-block
-               width: 60%
-               display: flex
-               justify-content: space-between
-               .row-setting
-                  display: inline-block
-                  position: relative
-                  padding: 10px
-                  height: 44px
-                  width: 64px
-                  border-radius: 10px
-                  background-color: $_4E463E02
-                  border: 1px solid $_4E463E15
-                  .time-setting-button
-                     position: absolute
-                     right: 4px
-                     top: 55%
-                     transform: translateY(-50%)
-                     cursor: pointer
-                     height: 16px
-                     width: 16px
-                     background-color: #fb8601a1
-                     border-radius: 3px
-                     // border: 1px solid #000
-                     // border-style: solid
-                     // border-width: 0 5px 11px 5px
-                     // border-color: transparent transparent #007bff transparent
-                     &::before
-                        content: ""
-                        position: absolute
-                        width: 10px
-                        height: 2px
-                        background-color: #FB8501
-                        top: 50%
-                        left: 50%
-                        transform: translate3d(-50%, -50%, 0)
-                     &.increase
-                        margin-top: -12px
-                        &::after
-                           content: ""
-                           position: absolute
-                           width: 2px
-                           height: 10px
-                           background-color: #FB8501
-                           top: 50%
-                           left: 50%
-                           transform: translate3d(-50%, -50%, 0)
-                     &.decrease
-                        margin-top: 7px
-                  &::before
-                     content: 'С'
-                     position: absolute
-                     left: -42px
-                     top: 12px
-                     
-                     font-size: 20px
-                     color: #454A5A
-
-                     width: 30px
-                     height: 20px
-                     display: flex
-                     justify-content: flex-end
-                     align-items: center
-                     // border: 1px solid #000
-                     
-                  &.from
-                     &::before
-                        content: 'C'
-                  &.to
-                     &::before
-                        content: 'По'
-   .buttons
-      display: flex
-      justify-content: flex-end
-      margin-top: 40px
-      margin-bottom: 100px
-      button
-         width: 347px
-
-      .cancel
-         margin-right: 50px   
-         background-color: #fb8601bd
-      .submit-new-shedule
-         position: relative
-         &::after
-            transition: 2s
-            content: ''
-            position: absolute
-            bottom: 0px
-            background-color: rgba(251, 133, 1, 0.5)
-            left: 0px
-            height: 100%
-            border-radius: 2px
-            width: 0%
-            border-radius: 22px
-         &.updating
-            // border-bottom: 10px solid #000
-            // transition: 2s
-            &::after
-               animation: updating 1.5s 1 ease
-               // width: 100%
-               transition: 2s
 
 .doctor-alert
    text-align: center

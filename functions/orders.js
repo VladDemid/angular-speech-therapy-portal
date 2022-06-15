@@ -1,57 +1,168 @@
 const functions = require("firebase-functions");
 const axios = require("axios");
 const { v4: uuidv4 } = require("uuid");
-
+const cors = require("cors")({ origin: true });
 const admin = require("firebase-admin");
 
 const app = !admin.apps.length ? admin.initializeApp() : admin.app();
 const db = admin.database();
 let defaultPayment;
 
-exports.pay = functions.https.onRequest(async (request, response) => {
-  if (request.method !== "POST") {
-    response.status(405).end();
-  }
+const sgMail = require('@sendgrid/mail');
+// const API_KEY = process.env.SENDGRID_KEY
+const API_KEY = functions.config().sendgrid.key;
+sgMail.setApiKey(API_KEY);
 
-  functions.logger.debug(
-    "request.body",
-    JSON.stringify(request.body, null, "  ")
-  );
-  const orderId = request.body.id;
-  functions.logger.debug("orderId:", orderId);
+exports.alfaTest = functions
+  .runWith({memory: "128MB"})
+  .https.onRequest(async (request, response) => {
+    const orderData = {
+      userName: "logogo.online-api",
+      password: "HnnlT8Et",
+      orderNumber: 820,
+      price: 10,
+      returnUrl: "http://localhost:4200/profile/payment?token=1234&paySuccess=true",
+      failUrl: "http://localhost:4200/profile/payment?token=1234&paySuccess=false"
+    }
 
-  const payment = await createPayment(orderId);
-
-  try {
-    const alfaResponse = await axios.post(getPaymentUrl(payment), undefined, {
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded",
-      },
-    });
-    functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
-
-    if (alfaResponse.data.errorCode) {
-      response.status(400).send({
-        errorCode: alfaResponse.data.errorCode + 1000000,
-        errorMessage: alfaResponse.data.errorMessage,
-      });
-    } else {
-      // TODO: Обновить состояние заказа на "В ожидании оплаты"
-      const orderRef = db.ref(`events/${orderId}`);
-      orderRef.update({
-        state: "AwaitingPayment",
-        externalPaymentId: alfaResponse.data.orderId,
-      });
+    const url = "https://web.rbsuat.com/ab_by/rest/register.do"
+    cors(request, response, async () => {
+      const alfaResponse = axios.post(url, orderData, {
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded",
+        },
+      })
 
       response.send({ formUrl: alfaResponse.data.formUrl });
+    })
+})
+
+
+
+
+exports.payTest2 = functions
+  .runWith({memory: "128MB"})
+  .https.onRequest(async (request, response) => {
+
+    const prod = request.body.prod
+    const path = prod ? ".env.prod" : ".env.dev"
+    const env = require("dotenv").config({ path: path })
+
+    functions.logger.info("pay INFO: ", "start")
+    const var1 = "testTEST"
+    cors(request, response, async () => {
+      if (request.method !== "POST") {
+        response.status(405).end();
+      } 
+      // response.status(200).send('success')
+      response.setHeader('Content-Type', 'application/json')
+      response.end(JSON.stringify(
+        {
+          true: request.body.true,
+          prod: request.body.prod,
+          path: path,
+          body: request.body,
+          url: `${process.env.BASE_LOGOGO_URL}`,
+        }
+      ));
+    })
+
+})
+
+//    ????--------????
+
+exports.checkOrderStatus = functions
+  .runWith({memory: "128MB"})
+  .https.onRequest( (request, response) => {
+    cors(request, response, async () => {
+
+      const prod = request.body.prod
+      const path = prod ? ".env.prod" : ".env.dev"
+      const env = require("dotenv").config({ path: path })
+      
+      orderToken = request.body.token
+
+      const paymentRef = db.ref(`payments/${orderToken}`);
+      const paymentSnapshot = await paymentRef.once("value");
+      const orderId = paymentSnapshot.val();
+
+      const ordersRef = db.ref(`orders/${orderId}`)
+      const ordersSnapshot = await ordersRef.once("value");
+      orderState = ordersSnapshot.val().state
+
+
+      response.send({orderState: orderState});
+
+      // response.send({ 
+      //   orderId: orderId,
+      //   path: `payments/${orderToken}`
+      // });
+    })
+
+})
+
+
+exports.pay = functions.https.onRequest(async (request, response) => {
+
+  const prod = request.body.prod
+  const path = prod ? ".env.prod" : ".env.dev"
+  const env = require("dotenv").config({ path: path })
+
+  cors(request, response, async () => {
+    if (request.method !== "POST") {
+      response.status(405).end();
     }
-  } catch (e) {
-    functions.logger.error("Alfa Bank API error: ", e);
-    response.status(500).send({
-      errorCode: 1,
-      errorMessage: "Возникла непредвиденная ошибка. Пожалуйста, повторите попытку позже",
-    });
-  }
+    
+    functions.logger.debug(
+      "request.body",
+      JSON.stringify(request.body, null, "  ")
+      );
+      const orderId = request.body.id;
+      functions.logger.debug("request body:", request.body);
+      functions.logger.debug("orderId:", orderId);
+      
+      
+      functions.logger.info("pay createPayment START")
+      const payment = await createPayment(orderId, prod);
+      functions.logger.info("pay createPayment END", payment)
+  
+    
+  
+    try {
+      const alfaResponse = await axios.post(getPaymentUrl(payment), undefined, {
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded",
+        },
+      });
+      functions.logger.debug("Alfa Bank API response.data: ", alfaResponse.data);
+  
+      if (alfaResponse.data.errorCode) {
+        response.status(400).send({
+          errorCode: alfaResponse.data.errorCode + 1000000,
+          errorMessage: alfaResponse.data.errorMessage,
+        });
+      } else {
+        // TODO: Обновить состояние заказа на "В ожидании оплаты"
+        const orderRef = db.ref(`orders/${orderId}`);
+        orderRef.update({
+          state: "AwaitingPayment",
+          paymentFormUrl: alfaResponse.data.formUrl,
+          externalPaymentId: alfaResponse.data.orderId,
+          orderCreationTime: Date.now(),
+        });
+  
+        response.send({ formUrl: alfaResponse.data.formUrl });
+      }
+    } catch (e) {
+      functions.logger.error("Alfa Bank API error: ", e);
+      response.status(500).send({
+        errorCode: 1,
+        errorMessage: "Возникла непредвиденная ошибка. Пожалуйста, повторите попытку позже",
+      });
+    }
+  })
+    
+  
 });
 
 exports.callback = functions.https.onRequest(async (request, response) => {
@@ -68,7 +179,7 @@ exports.callback = functions.https.onRequest(async (request, response) => {
       throw new Error(`Payment with token ${token} not found`);
     }
 
-    const orderRef = db.ref(`events/${orderId}`);
+    const orderRef = db.ref(`orders/${orderId}`);
 
     // TODO: реализовать обработку всех типов операций
     switch (operation) {
@@ -80,6 +191,8 @@ exports.callback = functions.https.onRequest(async (request, response) => {
       case "deposited":
         if (status) {
           orderRef.update({ state: "PaymentConfirmed" });
+          sendEmailsFromOrder(orderId);
+          // sendEmail("mr.zgot@yandex.ru", "d-006ae47f70c74c949e486cf9f63b694e", {})
         } else {
           orderRef.update({ state: "PaymentRejected" });
         }
@@ -113,6 +226,8 @@ exports.callback = functions.https.onRequest(async (request, response) => {
   }
 });
 
+
+
 exports.confirmPayment = functions.https.onRequest(
   async (request, response) => {
     functions.logger.info(
@@ -120,50 +235,232 @@ exports.confirmPayment = functions.https.onRequest(
       request.url,
       request.params,
       request.query
-    );
-    response.status(200).end();
+      );
+      response.status(200).end();
   }
 );
 
+exports.getEmailsDev = functions
+.runWith({memory: "128MB"})
+.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    // const specData = 
+    await sendEmailsFromOrder("2022_5_10_10_E9IKBLSbkTfzEJPXzFimuXeXs1b2")
+      .then((resp) => {
+        res.status(200).send({emailStatus: "письмо обоим отправлено", resp})
+      })
+      .catch((err) => {
+        res.status(500).send({err: err})
+      })
+    // res.status(200).send({specData: specData})
+
+  })
+})
+
+
+
+// exports.getEmails = functions
+// .runWith({memory: "128MB"})
+// .https.onRequest((req, res) => {
+  
+//   cors(req, res, async () => {
+//     const configurationRef = db.ref("orders/2022_5_10_10_E9IKBLSbkTfzEJPXzFimuXeXs1b2");
+//     const snapshot = await configurationRef.once("value");
+//     const orderVal = snapshot.val();
+//     const patientId = orderVal.patientId
+//     const doctorId = orderVal.doctorId
+    
+//     const patientRef = db.ref(`users/${patientId}`);
+//     const patientSnap = await patientRef.once("value");
+//     const patientVal = patientSnap.val();
+    
+//     const doctorRef = db.ref(`users/${doctorId}`);
+//     const doctorSnap = await doctorRef.once("value");
+//     const doctorVal = doctorSnap.val();
+
+
+//     sendEmail(patientVal.email, process.env.EMAIL_ID_PATIENT_NEW_ORDER, {})
+//       .then((resp) => {
+//         res.status(200).send({emailStatus: "письмо пациенту отправлено"})
+//       })
+//       .catch((err) => {
+//         res.status(500).send(err)
+//       })
+
+//     sendEmail(doctorVal.email, process.env.EMAIL_ID_SPEC_NEW_ORDER, {})
+//       .then((resp) => {
+//         res.status(200).send({emailStatus: "письмо спецу отправлено"})
+//       })
+//       .catch((err) => {
+//         res.status(500).send(err)
+//       })
+    
+      
+        
+//         // res.status(200).send(answer)
+    
+//   })
+// })
+    
 exports.rejectPayment = functions.https.onRequest(async (request, response) => {
   functions.logger.info(
     "Alfa Bank API payment rejection: ",
     request.url,
     request.params,
     request.query
-  );
-  response.status(200).end();
+    );
+    response.status(200).end();
 });
-
-async function createPayment(orderId) {
+  
+async function createPayment(orderId, prod) {
   const token = uuidv4();
-  const orderRef = db.ref(`events/${orderId}`); //! поменять на orders/
+  const orderRef = db.ref(`orders/${orderId}`); //! поменять на orders/
   const paymentsRef = db.ref(`payments/${token}`);
-
+  
   //!start delete
   // const shortIdKey = orderId.substring(orderId.lastIndexOf("_") + 1);
   // functions.logger.debug(`shortIdKey: ${shortIdKey}`);
-
+  
   // const shortIdRef = db.ref(`shortIds/${shortIdKey}`);
   // const shortIdSnapshot = await shortIdRef.once("value");
   // const shortId = shortIdSnapshot.val();
   //!end delete
-
+  
   orderRef.update({
     paymentToken: token,
   });
-
+  
   paymentsRef.set(orderId);
-
+  
   return {
     ...(await getDefaultPayment()),
-    orderNumber: token, //! вместо shortId добавить token
-    // TODO: поменять на страницу подтверждения заказа в UI
-    returnUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-confirmPayment?token=${token}`,
-    // TODO: поменять на страницу отмены заказа в UI
-    failUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-rejectPayment?token=${token}`,
+    orderNumber: token, 
+    returnUrl: `${process.env.BASE_LOGOGO_URL}/profile/payment?token=${token}&paySuccess=true`,
+    failUrl: `${process.env.BASE_LOGOGO_URL}/profile/payment?token=${token}&paySuccess=true`,
     dynamicCallbackUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-callback?token=${token}`,
   };
+}
+      
+async function sendEmailsFromOrder(orderId) { 
+
+  const configurationRef = db.ref(`orders/${orderId}`);
+  const snapshot = await configurationRef.once("value");
+  const orderVal = snapshot.val();
+  
+  const patientId = orderVal.patientId
+  const doctorId = orderVal.doctorId
+  
+  const patientRef = db.ref(`users/${patientId}`);
+  const patientSnap = await patientRef.once("value");
+  const patientVal = patientSnap.val();
+  
+  const doctorRef = db.ref(`users/${doctorId}`);
+  const doctorSnap = await doctorRef.once("value");
+  const doctorVal = doctorSnap.val();
+
+  // return {patient: patientVal.email, doctor: doctorVal.email}
+
+    // const patientData = {
+    //   // subject: "Logogo - новая запись ",
+    //   date: `${orderVal.date.time} часов (МСК) ${orderVal.date.day}-${orderVal.date.month}-${orderVal.date.year}`,
+    //   doctorName: orderVal.doctorName,
+    //   token: orderVal.paymentToken
+    // }
+    // // sendEmail(patientVal.email, process.env.EMAIL_ID_PATIENT_NEW_ORDER, patientData)
+    
+    // const specData = {
+    //   date: "TEST-DATE",
+    //   patientName: "TEST_name",
+    //   to: "vlatidos@gmail.com",
+    //   from: emailConfig.fromEmailAdress,
+    //   // from: "info@logogo.online",
+    //   templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
+    //   dynamicTemplateData: {
+    //     text: "тут текст",
+    //     subject: "Тема письма",
+    //     name: 'кастомноеИмя'
+    //   }
+    // }
+    
+    const orderData = {
+      date: `${orderVal.date.time} часов (МСК) ${orderVal.date.day}-${orderVal.date.month}-${orderVal.date.year}`,
+      doctorName: orderVal.doctorName,
+      patientName: orderVal.patientName,
+      token: orderVal.paymentToken
+    }
+
+    // return {patientVal: patientVal.email, doctorVal: doctorVal.email, orderData: orderData}
+    
+
+    return sendEmails(patientVal.email, doctorVal.email, orderData)
+
+    // const specData = {
+    //   // subject: "Новая запись Logogo",
+    //   date: `${orderVal.date.time} часов (МСК) ${orderVal.date.day}-${orderVal.date.month}-${orderVal.date.year}`,
+    //   patientName: orderVal.patientName,
+    //   token: orderVal.paymentToken
+    // }
+    // sendEmail(doctorVal.email, process.env.EMAIL_ID_SPEC_NEW_ORDER, specData)
+    
+}
+
+function sendEmails(patientEmail, doctorEmail, orderData) {
+  // cors(req, res, async () => {
+    const fromEmail = process.env.LOGOGO_EMAIL
+    // const fromEmail = "info@logogo.online"
+
+    const patientData = {
+      to: patientEmail, 
+      templateId: process.env.EMAIL_ID_PATIENT_NEW_ORDER,
+      from: fromEmail,
+      dynamicTemplateData: {
+        date: orderData.date,
+        doctorName: orderData.doctorName,
+        token: orderData.token,
+      },
+    }
+
+    const specData = {
+      to: doctorEmail, 
+      templateId: process.env.EMAIL_ID_SPEC_NEW_ORDER,
+      from: fromEmail,
+      dynamicTemplateData: {
+        date: orderData.date,
+        patientName: orderData.patientName,
+        token: orderData.token,
+      },
+    }
+
+    // const specData = {
+    //   to: "vlatidos@gmail.com", 
+    //   templateId: process.env.EMAIL_ID_TEST,
+    //   from: fromEmail,
+    //   dynamicTemplateData: {
+    //     date: orderData.date,
+    //     doctorName: orderData.doctorName,
+    //     token: orderData.token,
+    //   },
+    // }
+    
+    // const messages = [patientData,specData]
+    const messages = [patientData, specData]
+    
+    // return {specData: specData}
+
+    return sgMail.send(messages)
+
+    // const prod = req.body.prod
+    // const path = prod ? ".env.prod" : ".env.dev"
+    // const env = require("dotenv").config({ path: path })
+    
+    // const msg = { 
+    //     to: email,
+    //     from: fromEmail,
+    //     templateId: templateId,
+    //     dynamicTemplateData: dynamicTemplateData,
+    // }
+
+    // return sgMail.send(msg)
 }
 
 async function getDefaultPayment() {
@@ -185,8 +482,8 @@ async function getDefaultPayment() {
 
 function getPaymentUrl(payment) {
   functions.logger.debug("payment: ", JSON.stringify(payment, null, "  "));
-
   const url = new URL(process.env.BASE_ACQUIRING_API_URL);
+
   for (let key in payment) {
     url.searchParams.append(key, payment[key]);
   }
@@ -195,3 +492,5 @@ function getPaymentUrl(payment) {
 
   return url.toString();
 }
+
+

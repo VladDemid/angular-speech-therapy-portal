@@ -1,6 +1,6 @@
 <div class="day-inner" 
 [ngClass]="{'today': (todayDay == dayIndex && month == currentMonth && year == currentYear), 
-            'work-day': (isCalendarPage && userData.myData.userType == 'client') || (daysOfWeekShedule && daysOfWeekShedule[thisDayOfWeek] ), 
+            'work-day': (isCalendarPage && userData.myData.userType == 'client') || (daysOfWeekShedule && daysOfWeekShedule[thisDayOfWeek] && false), 
             'day-choosen': selectedDay == dayIndex - 1, 
             'lesson': (isCalendarPage && userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][dayIndex]), 
             'lesson-old': (isCalendarPage && userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][dayIndex] && todayDay > dayIndex )

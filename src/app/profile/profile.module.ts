@@ -20,6 +20,7 @@ import { AsideMenuComponent } from './shared/components/aside-menu/aside-menu.co
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { PaymentSuccessPageComponent } from './shared/components/payment-success-page/payment-success-page.component';
 import { PaymentFailPageComponent } from './shared/components/payment-fail-page/payment-fail-page.component';
+import { PaymentComponent } from './shared/components/payment/payment.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { PaymentFailPageComponent } from './shared/components/payment-fail-page/
       AsideMenuComponent,
       FooterComponent,
       PaymentSuccessPageComponent,
-      PaymentFailPageComponent
+      PaymentFailPageComponent,
+      PaymentComponent
    ],
    imports: [
       // CommonModule,
@@ -54,6 +56,7 @@ import { PaymentFailPageComponent } from './shared/components/payment-fail-page/
             {path: "security", component: SecurityPageComponent, canActivate: [ProfileGuard] },
             {path: "help", component: HelpPageComponent, canActivate: [ProfileGuard] },
             {path: "payment-fail", component: PaymentFailPageComponent, canActivate: [ProfileGuard] },
+            {path: "payment", component: PaymentComponent, canActivate: [ProfileGuard] },
             {path: "payment-success", component: PaymentSuccessPageComponent, canActivate: [ProfileGuard] },
             {path:"**", redirectTo: "menu"}
          ]},

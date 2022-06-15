@@ -129,7 +129,7 @@ export class SpecialistRegComponent implements OnInit {
         this.isSendingData = false
         this.helper.toConsole("объект доктора создан")
         this.createDBStatus = "✔️ячейка базы данных создана, пользователь полностью готов"
-        this.reloginErrorMessage = "❌✔️все норм, но теперь придется перелогиниться. Такой баг..."
+        this.reloginErrorMessage = "❌✔️ Готово. Но чтобы продолжить работать в админке надо перелогиниться опять."
         this.doctorRegistrationForm.reset()
         // this.router.navigate(['/profile'])
       }, (err) => {
@@ -156,7 +156,7 @@ export class SpecialistRegComponent implements OnInit {
       [longId]: newShortId
     }
 
-    this.firebase.patchDataByPath(newData, "shortIds")
+    this.firebase.updateData("shortIds", newData)
       .then((resp) => {
         console.log("ура")
         this.shortIdErrorMessage = "✔️shortId успешно записан"

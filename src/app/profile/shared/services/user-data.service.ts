@@ -280,32 +280,111 @@ export class UserData {
       console.log("мои сертификаты: ", this.myData.sertificatesNames);
    }
 
-   changeMyLocalData(userData: UserDbInfo) {
+   changeMyLocalData (userData: UserDbInfo) {
       this.myData = userData
+      this.getTime()
+      if (userData.orders) {
+         // userData.ordersFutureIds = this.getFutureOrdersIds(Object.keys(userData.orders))
+         // this.updateFutureOrders(userData.ordersFutureIds)
+      }
+   }
+   
+   getTime() {
+      this.firebase.reqFunc("getTime", {}).subscribe(
+         (resp: any) => {
+            console.log("getTime: ", resp)
+            this.myData.currentTime = resp.currentTime
+            if (this.myData.orders) {
+               const checkTime = setInterval(() => {
+                  if (this.myData.currentTime) {
+                     this.sortFutureOrders()
+                     clearInterval(checkTime)
+                  } 
+               }, 100)
+            }
+         },
+         (err) => {
+            console.log("getTime ERROR:", err)
+         }
+      )
    }
 
+   sortFutureOrders() {
+      this.myData.ordersFutureIds = this.getFutureOrdersIds(Object.keys(this.myData.orders))
+      this.updateFutureOrders(this.myData.ordersFutureIds)
+   }
 
-   // checkEmailVerify() {
-   //    // console.log(this.myData.emailVerified);
-   //    if (this.myData.emailVerified === undefined) {
-   //       console.log("myData.emailVerified не найдено");
-   //       this.myData.emailVerified = false
-   //       const newData = {
-   //          emailVerified: false,
-   //       }
-   //       this.sendMyDataChanges(newData)
-   //       .subscribe((resp) => {
-   //          console.log("добавлено поле emailVerified = false")
-   //          this.popupService.emailVerifyPopup = true
-   //       })
-   //    } else if (this.myData.emailVerified === false) {
-   //       console.log("myData.emailVerified: false");
-   //       this.popupService.emailVerifyPopup = true
-   //    } else if (this.myData.emailVerified === true) {
-   //       console.log("myData.emailVerified: true");
-   //       this.popupService.emailVerifyPopup = false
-   //    }
-   // }
+   getFutureOrdersIds(orders) {
+      let ordersFuture = null
+      let date = new Date()
+      let currDate = new Date(this.myData.currentTime)
+      // [date.getFullYear(), date.getMonth() + 1, date.getDate()]
+      
+      ordersFuture = orders.filter((el) => {
+         return this.checkIsFutureOrder(el, currDate) 
+         // const orderSplit = el.split("_")
+      })
+      // console.log("ordersFuture: ", ordersFuture)
+      let ordersFutureSortedObj = []
+      ordersFuture.forEach( (orderId, i) => {
+         // console.log(orderId)
+         const orderSplit = orderId.split("_")
+         const currentDate = new Date(orderSplit[0], orderSplit[1], orderSplit[2], orderSplit[3])
+         ordersFutureSortedObj[i] = [orderId, currentDate.getTime()]
+      });
+      ordersFutureSortedObj.sort((a, b) => {return a[1] - b[1]})
+      const result = ordersFutureSortedObj.map((el) => el[0] )
+      // console.log("result: ", result)
+      return result
+   }
+
+   async updateFutureOrders(ordersFutureIds) {
+      this.myData.ordersFuture = {}
+      for (let orderId of ordersFutureIds) {
+         let order = await (await this.firebase.getLesson(orderId)).val()
+         
+         order.daysLeft = this.countDaysLeft(order)
+         order.hoursLeft = this.countTimeLeft(order)
+         // order.hoursLeft = this.countHoursLeft(order)
+         this.myData.ordersFuture[orderId] = order
+      }
+      console.log(this.myData.ordersFuture)
+   }
+
+   countDaysLeft(orderData) {
+      // currentYear, currentMonth, currentDay, 
+      const date = new Date()
+      const currDate = [date.getFullYear(), date.getMonth() + 1, date.getDate()]
+
+      const currentDate = new Date(`${currDate[1]}/${currDate[2]}/${currDate[0]}/`)
+      const lessonDate = new Date(`${orderData.date.month}/${orderData.date.day}/${orderData.date.year}/`)
+      const differenceInTime = lessonDate.getTime() - currentDate.getTime()
+      const differenseInDays = differenceInTime / (1000 * 3600 * 24)
+      return Math.floor(differenseInDays) 
+   }
+
+   countTimeLeft(order) {
+      const orderDate = new Date(order.date.year, order.date.month - 1, order.date.day, order.date.time) 
+      const currentDate = new Date(this.myData.currentTime)
+      const diffTime = orderDate.getTime() - currentDate.getTime()
+      const diffHours = diffTime / (1000 * 3600)
+      return Math.floor(diffHours) 
+   }
+   
+   countHoursLeft(order) {
+      const orderTime = new Date(order.date.year, order.date.month, order.date.day, order.date.time).getTime() 
+      const currentTime = new Date(this.myData.currentTime).getTime() 
+      const orderTime1 = new Date(order.date.year, order.date.month, order.date.day, order.date.time)
+      const currentTime1 = new Date(this.myData.currentTime)
+      console.log(orderTime1, currentTime1)
+      const result = (orderTime - currentTime) / (1000 * 3600 * 24)
+      if (orderTime === 1657278000000) {
+         console.log("orderTime1:", orderTime1)
+         console.log("currentTime1:", currentTime1)
+      }
+      return result
+   }
+   
 
    sendMyDataChanges(newUserData) {
       // let firebaseUserType
@@ -323,6 +402,23 @@ export class UserData {
 
    sendTestDataChanges(newTestData) {
       return this.http.patch(`${environment.FbDbUrl}/users/${localStorage.getItem("user-Id")}/events.json`, newTestData)
+   }
+
+   checkIsFutureOrder(orderId, currDate) {
+      let checkPassed = false
+      const orderSplit = orderId.split("_")
+
+      
+      const orderDate = new Date(orderSplit[0], orderSplit[1] - 1, orderSplit[2])
+      
+      // console.log("orderDate: ", orderDate)
+      
+      if (orderDate > currDate) {
+         checkPassed = true
+      }
+      
+      return checkPassed
+
    }
 
 

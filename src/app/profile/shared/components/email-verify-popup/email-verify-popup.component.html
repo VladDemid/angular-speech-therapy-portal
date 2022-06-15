@@ -10,9 +10,9 @@
                <span class="orange" *ngIf="emailSendSuccess == 0">(ошибка отправления письма)</span>
                <span *ngIf="emailSendSuccess == 0">  попробуйте через 10 секунд</span>
             </div>
-            <p>Если вы уже перешли по ссылке из письма и это окно не убирается, перезагрузите страницу (F5) </p>
+            <p>Если письмо не отправилось или вы уже подтвердили, нажмите кнопку "обновить" </p>
          </div>
-         <button class="emailVerificationButton" (click)="pageReload()">я уже подтвердил</button>
+         <button class="emailVerificationButton" (click)="pageReload()">обновить</button>
          <button class="emailVerificationButton" (click)="logOut()">выйти из аккаунта</button>
          <!-- <button (click)="manuallyCheck()">test</button> -->
       </div>

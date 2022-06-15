@@ -3,7 +3,7 @@ export const environment = { //*DEV
   adminId: "XUuNLsPankPqmDKLBb8ZS4X1dq12",
   apiKey: "AIzaSyACtKsTQZUkp9Xp3zv7E3BNoiyK8AAWXas",
   FbDbUrl: "https://inclusive-test.firebaseio.com/",
-  defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault%2Fdefault-user-avatar.png?alt=media&token=5ae4b7c5-c579-4050-910d-942bbb3c7bba"
+  defaultAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/inclusive-test.appspot.com/o/users%2Fdefault-user-avatar.png?alt=media&token=59fe0397-e8df-467e-82cf-e7dc3aa3b60b"
 }
 
 export const firebaseConfig = { //*DEV
@@ -13,7 +13,9 @@ export const firebaseConfig = { //*DEV
   projectId: "inclusive-test",
   storageBucket: "inclusive-test.appspot.com",
   messagingSenderId: "441293072662",
-  appId: "1:441293072662:web:679ec4fe7378d9b9c04837"
+  appId: "1:441293072662:web:679ec4fe7378d9b9c04837",
+  BASE_FUNCTIONS_URL: "https://us-central1-inclusive-test.cloudfunctions.net"
+  
 }
 
 
@@ -31,7 +33,7 @@ export const environmentOther = {
 }
 
 export const emailConfig = {
-  fromEmailAdress: "admin@logogo.online",
+  fromEmailAdress: "info@logogo.online",
   EMAIL_TEMPLATES: {
     FIRST: "d-0214f1135b054334abbdcfad5446a077",
     MAIN_PAGE_FEEDBACK: "d-12e143596ebc45238b23660164a13ca4",
