@@ -333,11 +333,16 @@
             text-align: center
             padding-bottom: 5px 
             font-weight: bold
-         .time-selection
-            border-radius: 20px
-            padding: 20px 3px
-            border: 1px solid rgba(78, 70, 62, 0.3)
-            margin-bottom: 15px
+         .gaps
+            .gap
+               cursor: pointer
+               text-align: center
+               padding: 5px 0
+               border-radius: 5px
+               @include box-shadow($nav_shadow)
+               font-weight: bold
+               &.selected
+                  background-color: $orange_common
       // .time-row
       //    // border-bottom: 1px dashed #000
       //    color: #ccc

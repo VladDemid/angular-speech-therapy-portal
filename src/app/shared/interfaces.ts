@@ -48,7 +48,7 @@ export interface UserDbInfo {
    childDiagnosis?: string //будет писаться в тикете к занятию
    //doctor keys
    weeklySchedule?: []
-   schedule?: []
+   schedule?: {}
    educationsCount?: number
    university?: string
    faculty?: string
@@ -99,6 +99,7 @@ export interface UserDoctor {
    patronymic: string
    userType: "doctor"
    weeklySchedule?: []
+   schedule?: {}
    description: string
    university: string
    faculty: string

@@ -2,7 +2,7 @@
    <app-appointment-details-popup (voted)="makeLessonFromPopup($event)"></app-appointment-details-popup>
 </div>
 
-<div class="debug-block" *ngIf="true && !production">
+<div class="debug-block" *ngIf="false && !production">
    <button (click)="TESTlogDoctorsLessons()">doctorsLessons</button>
    <button (click)="TESTdoctorEventsYearMonthDayHour()">EventsYearMonthDayHour</button>
    <p>selectedDay: {{selectedDay}}</p>
@@ -10,6 +10,11 @@
    <p>selectedDayOfWeek: {{selectedDayOfWeek}}</p>
    <p>daysOfWeekShedule: {{daysOfWeekShedule | json}}</p>
    <p>selectedHourForLesson: {{selectedHourForLesson}}</p>
+   <!-- ----------------------- -->
+   <!-- <p>workStart: {{workStart}}</p>
+   <p>workEnd: {{workEnd}}</p>   
+   <p>currWorkStart: {{currWorkStart}} </p>   
+   <p>currWorkEnd: {{currWorkEnd}}</p>    -->
    <!-- <p>weeklySchedule: {{inputDoctorInfo.weeklySchedule | json}}</p> -->
 </div>
 
@@ -28,11 +33,12 @@
             </div>
          </div>
          <div class="days">
-            <div class="day" *ngFor="let dayIndex of daysArr; index as i">
+            <div class="day" *ngFor="let dayIndex of daysArr; index as i" [id]="'day'+dayIndex">
                <app-calendar-day [dayIndex] = "i+1" [currentFirstDay]="currentFirstDay" 
                [todayDay]="day" [currentMonth]="currentMonth" [month]="month" [year]="year" 
                [currentYear]="currentYear" [selectedDay]="selectedDay" 
-               [doctorShedule]="doctorShedule" [daysOfWeekShedule]="inputDoctorInfo.weeklySchedule" 
+               [doctorShedule]="doctorShedule" [daysOfWeekShedule]="inputDoctorInfo.weeklySchedule"
+               [daysShedule]="inputDoctorInfo.schedule" 
                [doctorsLessons]="doctorsLessons" [isCalendarPage]="isCalendarPage"  
                (outDay)="onOutDay($event)" (click)="onDayClick(i+1)"></app-calendar-day>
             </div>
@@ -73,7 +79,46 @@
          <!-- рабочий день выбран -->
       <div class="day-chosen" *ngIf="selectedDay != -1 && inputDoctorInfo.weeklySchedule[selectedDayOfWeek]">
          <span class="time-note">Выберите время (По Минску)</span> 
-         <div class="time-selection time-selection-dctr-crd">
+         <div class="time-selection time-selection-dctr-crd" *ngIf="inputDoctorInfo.schedule && currFreeGaps.length">
+            <div class="gaps">
+               <div class="gap" *ngFor="let gap of currFreeGaps; index as i" [ngClass]="{selected: activeGap === i}" (click)="selectTimeGap(i)">
+                  от: {{gap[0]}}
+                  до: {{gap[1]}}
+               </div>
+            </div>
+            <br>
+            -----------------------
+            <br>
+            Выбор времени на занятие:
+            <!-- row-settings -->
+            <div class="clientTimeChoice">
+               <!-- row-setting -->
+               <div class="time-choice from">
+                  {{currFreeGaps[0][0]}}
+                  <!-- <span>{{newDaysOfWeekShedule[0]}}</span> -->
+                  <div class="increase time-setting-button" (click)="selectOrderTime()"></div>
+                  <div class="decrease time-setting-button" (click)="selectOrderTime()"></div>
+               </div>
+               <div class="time-choice to">
+                  {{10}}
+                  <!-- <span>{{newDaysOfWeekShedule[1]}}</span> -->
+                  <div class="increase time-setting-button" (click)="selectOrderTime()"></div>
+                  <div class="decrease time-setting-button" (click)="selectOrderTime()"></div>
+               </div>
+                 _
+               <div class="time-choice time-choice-end">
+                  {{currFreeGaps[0][0]}}
+                  <!-- <span>{{newDaysOfWeekShedule[1]}}</span> -->
+               </div>
+               <div class="time-choice time-choice-end">
+                  {{50}}
+                  <!-- <span>{{newDaysOfWeekShedule[1]}}</span> -->
+               </div>
+
+            </div>
+
+            
+
             <!-- <div class="time-row" [ngClass]="{'work-hour': inputDoctorInfo.weeklySchedule && inputDoctorInfo.weeklySchedule[selectedDayOfWeek] && time >= inputDoctorInfo.weeklySchedule[selectedDayOfWeek][0] && inputDoctorInfo.weeklySchedule[selectedDayOfWeek][1] >= time, 'selected-hour': selectedHourForLesson == time}" *ngFor="let time of workHoursArray; index as i" >
                <div class="time-row-inner" (click)="onClickTimeRow(time)">
                   <div class="period">
@@ -158,28 +203,36 @@
                </li>
             </ul>
          </div>
+
+   
          <!-- календарь доктора -->
             <!-- рабочий день выбран -->
          <div class="time-of-day-chosen" *ngIf="selectedDay != -1">
             <!-- Мои часы работы (по Минску): -->
             <div class="time-selection time-selection-dctr-clndr-pg">
-               Выбор расписания на этот день:
-
-               <div class="time-row"> 
-                  <div class="row-settings" *ngIf="newDaysOfWeekShedule">
+               Выбор расписания на этот день: <br>
+               <div class="time-row" [ngClass]="{active: currDayActive}">
+                  <div class="row-settings">
                      <div class="row-setting from">
-                        <span>{{newDaysOfWeekShedule[0]}}</span>
-                        <div class="increase time-setting-button" (click)="changeWorkHour(1, 666, 0)"></div>
-                        <div class="decrease time-setting-button" (click)="changeWorkHour(-1, 666, 0)"></div>
+                        {{currWorkStart}}
+                        <!-- <span>{{newDaysOfWeekShedule[0]}}</span> -->
+                        <div class="increase time-setting-button" (click)="changeDayWorkHour(0, 1)"></div>
+                        <div class="decrease time-setting-button" (click)="changeDayWorkHour(0, -1)"></div>
                      </div>
                      <div class="row-setting to">
-                        <span>{{newDaysOfWeekShedule[1]}}</span>
-                        <div class="increase time-setting-button" (click)="changeWorkHour(1, 666, 1)"></div>
-                        <div class="decrease time-setting-button" (click)="changeWorkHour(-1, 666, 1)"></div>
-                     </div> 
+                        {{currWorkEnd}}
+                        <!-- <span>{{newDaysOfWeekShedule[1]}}</span> -->
+                        <div class="increase time-setting-button" (click)="changeDayWorkHour(1, 1)"></div>
+                        <div class="decrease time-setting-button" (click)="changeDayWorkHour(1, -1)"></div>
+                     </div>
                   </div>
                   <div class="disabled-row row-settings" *ngIf="!newDaysOfWeekShedule">не рабочий день</div>
+                  <div class="toggle-wrap" [ngClass]="{active: currDayActive}" (click)="toggleDayActive()">
+                     <div class="bg"></div>
+                     <div class="point"></div>
+                  </div>
                </div>
+               <button class="update" (click)="newScheduleUpdate()" [ngClass]="{updating2: updatingdWorkHourData}" [disabled]="updatingdWorkHourData" type="submit"><span data-text="сохранить">применить</span> </button>
 
                <!-- <div class="time-row" [ngClass]="{'work-hour': daysOfWeekShedule && daysOfWeekShedule[selectedDayOfWeek] && time >= daysOfWeekShedule[selectedDayOfWeek][0] && daysOfWeekShedule[selectedDayOfWeek][1] >= time, 'lesson-appointed': userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][selectedDay+1] && userData.myData.eventsDates[year][month][selectedDay+1][time]}" *ngFor="let time of workHoursArray; index as i" >
                   <div class="time-row-inner" >

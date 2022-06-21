@@ -19,6 +19,7 @@ export class CalendarDayComponent implements OnInit {
   @Input() selectedDay: number;
   @Input() doctorShedule: object;
   @Input() daysOfWeekShedule: object;
+  @Input() daysShedule: object;
   @Input() doctorsLessons: object;
   @Input() isCalendarPage: object;
   @Output() outDay = new EventEmitter<any>();

@@ -5,11 +5,12 @@
       align-items: center
       max-width: 370px
       font-size: 22px
-      color: $grey_E6
+      // color: $grey_E6
       border-bottom: 1px solid #000
       height: 54px
+      color: #ccc
       &.active
-         color: #000
+         color: #454A5A
       &>span
          display: inline-block
          width: 10%
@@ -72,7 +73,7 @@
                top: 12px
                
                font-size: 20px
-               color: #454A5A
+               // color: #454A5A
 
                width: 30px
                height: 20px
@@ -87,6 +88,12 @@
             &.to
                &::before
                   content: 'По'
+   button
+      &.update
+         display: block
+         width: 220px
+         margin: 15px auto 15px
+         height: 30px
 
 
 .change-shedule-block
@@ -141,7 +148,7 @@
             align-items: center
             max-width: 370px
             font-size: 22px
-            color: $grey_E6
+            // color: $grey_E6
             border-bottom: 1px solid #000
             height: 54px
             &.active
@@ -255,3 +262,80 @@
                // width: 100%
                transition: 2s
 
+
+.day-chosen
+   .clientTimeChoice
+      display: inline-block
+      width: 100%
+      display: flex
+      justify-content: flex-start
+      padding: 30px 0px
+      .time-choice
+         display: inline-block
+         position: relative
+         padding: 10px
+         height: 44px
+         width: 64px
+         border-radius: 10px
+         background-color: $_4E463E02
+         border: 1px solid $_4E463E15
+         .time-setting-button
+            position: absolute
+            right: 4px
+            top: 55%
+            transform: translateY(-50%)
+            cursor: pointer
+            height: 16px
+            width: 16px
+            background-color: #fb8601a1
+            border-radius: 3px
+            // border: 1px solid #000
+            // border-style: solid
+            // border-width: 0 5px 11px 5px
+            // border-color: transparent transparent #007bff transparent
+            &::before
+               content: ""
+               position: absolute
+               width: 10px
+               height: 2px
+               background-color: #FB8501
+               top: 50%
+               left: 50%
+               transform: translate3d(-50%, -50%, 0)
+            &.increase
+               margin-top: -12px
+               &::after
+                  content: ""
+                  position: absolute
+                  width: 2px
+                  height: 10px
+                  background-color: #FB8501
+                  top: 50%
+                  left: 50%
+                  transform: translate3d(-50%, -50%, 0)
+            &.decrease
+               margin-top: 7px
+         &::before
+            // content: 'С'
+            position: absolute
+            left: 50%
+            top: -20px
+            
+            font-size: 14px
+            color: #454A5A
+
+            width: 30px
+            height: 20px
+            display: flex
+            justify-content: flex-end
+            align-items: center
+            // border: 1px solid #000
+            
+         &.from
+            &::before
+               content: 'часы'
+               // font-size: 14px
+         &.to
+            &::before
+               content: 'минуты'
+            
