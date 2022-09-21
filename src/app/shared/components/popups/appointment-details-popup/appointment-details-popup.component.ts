@@ -10,9 +10,16 @@ import { PopupService } from '../../../services/popup.service';
 })
 export class AppointmentDetailsPopupComponent implements OnInit {
   
+  @Input() selectedDay: number;
+  @Input() selectedTimeForLesson: any;
+  @Input() month: number;
+  @Input() year: number;
+  @Input() monthsNamesWhomCase: number;
+  @Input() inputDoctorInfo: any;
   @Input() testVar = ''
   @Output() voted = new EventEmitter()
-
+  
+  
   problem = ""
   testLesson = { "year": 2000, "month": 0, "day": 0, "hour": 0 }
   withChild = "0"
@@ -39,7 +46,7 @@ export class AppointmentDetailsPopupComponent implements OnInit {
       problem: this.problem,
     }
 
-    this.popupService.toggleappointmentDeatailsPopup()
+    this.popupService.toggleAppointmentDeatailsPopup()
     this.voted.emit(emitLessonDetailsObject)
     // this.successStatus = "Вы записаны. На также на почту отправлено подтверждение заказа" //тут не писать коменты
     // this.isUpdating = false

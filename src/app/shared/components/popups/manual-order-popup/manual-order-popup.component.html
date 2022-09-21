@@ -1,0 +1,59 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleManualOrderPopup()"></div>
+   <div class="popup">
+
+      
+      <div class="popup-container">
+         <div class="appointment-deatails">
+            <!-- {{popupService.appointmentDetails | json}} -->
+            <!-- {{testLesson | json}} -->
+            <div class="date">
+               <span class="date-of-lesson">Дата занятия: </span>
+               {{popupService.manualOrderDetails | json}}
+               <!-- {{popupService.manualOrderDetails.day}} {{popupService.monthsNamesWhomCase[popupService.appointmentDetails.month - 1]}} {{popupService.appointmentDetails.year}} - {{popupService.appointmentDetails.hour}} часов (Минск) -->
+            </div>
+            <form (ngSubmit)="makeAnAppointment()">
+               <div class="inputs-wrapper">
+                  <label><span  class="narrow">Имя пациента</span><input [(ngModel)]="patientName" name="patientName"  type="text" ></label>
+                  <label><span  class="narrow">Email пациента</span><input [(ngModel)]="patientEmail" name="patientEmail"  type="text"></label>
+                  <label><span  class="narrow">Тема занятия</span><input [(ngModel)]="problem" name="problem" type="text"></label>
+                  <!-- <label><span class="narrow">Опишите вашу проблему</span><textarea name="problem" rows="10" [(ngModel)]="problem" ></textarea></label> -->
+                  <!-- <div class="with-child radio-wrapper">
+                     <label class="radio-label" [ngClass]="{active: withChild == '0'}">
+                        <input [(ngModel)]="withChild" type="radio" name="withChild" value=0 >
+                        <span>без ребенка</span>
+                     </label>
+                     <label class="radio-label" [ngClass]="{active: withChild == '1'}">
+                        <input [(ngModel)]="withChild" type="radio" name="withChild" value=1>
+                        <span>с ребенком</span>
+                     </label>
+                  </div>
+                  <div class="with-child2 radio-wrapper">
+                  </div> -->
+                  <div class="rules">
+                     <div class="terms-of-use">
+                        <label>
+                           <input name="termsOfUse"  type="checkbox" [(ngModel)]="termsOfUseAccepted" >
+                           <span>Принимаю условия <a class="termsOfUse" target="_blank" routerLink="/terms-of-use">пользовательского соглашения</a></span>
+                        </label>
+                        <!-- <div class="validation-errors" *ngIf="clientRegistrationForm.get('termsOfUse').invalid && (clientRegistrationForm.get('termsOfUse').touched || showRulesRequired)">
+                           <small class="error" *ngIf="clientRegistrationForm.get('termsOfUse').errors.required">
+                                 Необходимо подтвердить согласие с <span>правилами</span> сервиса</small>
+                        </div> -->
+                     </div>
+                  </div>
+               </div>
+               <div class="updating-status">
+                  <div class="success" *ngIf="successStatus">{{successStatus}}</div>
+                  <div class="error" *ngIf="errorStatus">{{errorStatus}}</div>
+               </div>
+               <button class="login" [ngClass]="{updating2: isUpdating}"  type="submit" [disabled]="isUpdating"><span data-text="записаться">создать занятие</span></button>
+               <div class="describing">
+                  *Клиенту будет отправлено письмо для оплаты на почту
+               </div>
+            </form>
+         </div>
+      </div>
+
+   </div>
+</div>

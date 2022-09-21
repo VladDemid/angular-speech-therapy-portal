@@ -1,11 +1,15 @@
 <div class="day-inner" 
 [ngClass]="{'today': (todayDay == dayIndex && month == currentMonth && year == currentYear), 
-            'work-day': (isCalendarPage && userData.myData.userType == 'client') || (daysShedule && daysShedule[year] && daysShedule[year][month] &&  daysShedule[year][month][dayIndex]), 
-            'day-choosen': selectedDay == dayIndex - 1, 
-            'lesson': (isCalendarPage && userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][dayIndex]), 
-            'lesson-old': (isCalendarPage && userData.myData.eventsDates && userData.myData.eventsDates[year] && userData.myData.eventsDates[year][month] && userData.myData.eventsDates[year][month][dayIndex] && todayDay > dayIndex )
+            'work-day': (isCalendarPage && userData.myData.userType == 'client') 
+         || (scheduleHoursInput && scheduleHoursInput[year] && scheduleHoursInput[year][month] && scheduleHoursInput[year][month][dayIndex]), 
+            'day-choosen': selectedDay == dayIndex, 
+            'lesson': (isCalendarPage && userData.myData.ordersFutureDates && userData.myData.ordersFutureDates[year] && userData.myData.ordersFutureDates[year][month] && userData.myData.ordersFutureDates[year][month][dayIndex]), 
+            'lesson-old': (isCalendarPage && userData.myData.ordersFutureDates && userData.myData.ordersFutureDates[year] && userData.myData.ordersFutureDates[year][month] && userData.myData.ordersFutureDates[year][month][dayIndex] && todayDay > dayIndex )
             }" >
+            <!--  && scheduleHoursInput && scheduleHoursInput[year] && scheduleHoursInput[year][month] && scheduleHoursInput[year][month][dayIndex] -->
    <span>{{dayIndex}}</span>
+   <!-- <button (click)="testDay()">tst</button> -->
+   <!-- {{scheduleHoursInput[year] | json}} -->
    <!-- <div class="help">
       <span>{{dayIndex}}-{{month}}-{{year}}</span>
    </div> -->

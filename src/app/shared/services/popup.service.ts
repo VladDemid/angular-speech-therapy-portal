@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ManualOrderDetails } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ export class PopupService {
   imgName = ""
   imgUrl = "https://storiavoce.com/wp-content/plugins/lightbox/images/No-image-found.jpg"
   appointmentDetails = { "year": 2000, "month": 0, "day": 0, "hour": 0 }
+  manualOrderDetails: ManualOrderDetails = {} //для самозаписи доктором
   imgPopup = false
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
@@ -18,6 +20,7 @@ export class PopupService {
   emailVerifyPopup = false
   eventDetailsPopup = false
   appointmentDeatailsPopup = false
+  manualOrderPopup = false
   requisitesPopup = false
   eventDetails = { 
     date: { 
@@ -41,6 +44,8 @@ export class PopupService {
     daysLeft: 0, 
     zoomLink: "",
     hoursLeft: 0,
+    paymentFormUrl: null,
+    state: ""
   }
   
 
@@ -70,6 +75,10 @@ export class PopupService {
   
   toggleImgPopup() {
     this.imgPopup = !this.imgPopup
+  }
+
+  openLoginPopup() {
+    this.homePageLoginPopup = true
   }
 
   toggleLoginPopup() {
@@ -104,12 +113,16 @@ export class PopupService {
     this.eventDetailsPopup = !this.eventDetailsPopup
   }
 
-  toggleappointmentDeatailsPopup() {
+  toggleAppointmentDeatailsPopup() {
     this.appointmentDeatailsPopup = !this.appointmentDeatailsPopup
   }
 
   toggleRequisitesPopup() {
     this.requisitesPopup = !this.requisitesPopup
+  }
+
+  toggleManualOrderPopup() {
+    this.manualOrderPopup = !this.manualOrderPopup
   }
 
   toggleLoginAndPass() {

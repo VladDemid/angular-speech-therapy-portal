@@ -19,7 +19,8 @@ export class CalendarDayComponent implements OnInit {
   @Input() selectedDay: number;
   @Input() doctorShedule: object;
   @Input() daysOfWeekShedule: object;
-  @Input() daysShedule: object;
+  @Input() scheduleHours: object;
+  @Input() scheduleHoursInput: object;
   @Input() doctorsLessons: object;
   @Input() isCalendarPage: object;
   @Output() outDay = new EventEmitter<any>();
@@ -39,6 +40,10 @@ export class CalendarDayComponent implements OnInit {
     }
     this.launchListenersForAllDays() //обработчики при переключении месяцев
     this.setThisDayOfWeek()
+  }
+
+  testDay() {
+    console.log(this.isCalendarPage, this.userData.myData.userType == 'client', this.scheduleHoursInput[this.year][this.month][this.dayIndex], )
   }
 
 

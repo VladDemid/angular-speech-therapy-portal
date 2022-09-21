@@ -29,6 +29,8 @@ import { CookiePopupComponent } from './shared/components/popups/cookie-popup/co
 import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
 import { TermsOfUsePageComponent } from './terms-of-use-page/terms-of-use-page.component';
 import { LoginPopupComponent } from './shared/components/popups/login-popup/login-popup.component';
+import { PaymentCheckPageComponent } from './payment-check-page/payment-check-page.component';
+import { RequisitesComponent } from './requisites/requisites.component';
 
 // const INTERCEPTOR_PROVIDER: Provider = {
 //   provide: HTTP_INTERCEPTORS,
@@ -62,6 +64,8 @@ import { LoginPopupComponent } from './shared/components/popups/login-popup/logi
     JobInvitationComponent,
     AdminLoginPageComponent,
     TermsOfUsePageComponent,
+    PaymentCheckPageComponent,
+    RequisitesComponent,
     
   ],
   imports: [

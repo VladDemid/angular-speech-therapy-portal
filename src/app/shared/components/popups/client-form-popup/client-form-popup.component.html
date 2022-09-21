@@ -7,8 +7,8 @@
          <h2>Вопросы по записи</h2>
          <form [formGroup]="form" class="feedback" (ngSubmit)="submit()">
             <div class="inputs-wrapper">
-               <label><span>Имя</span><input name="email" type="text" placeholder="Ваше имя" formControlName="name"></label>
                <label><span>Фамилия</span><input name="surname"  type="text" placeholder="Фамилия" formControlName="surname"></label>
+               <label><span>Имя</span><input name="email" type="text" placeholder="Ваше имя" formControlName="name"></label>
                <label><span class="narrow">Дата рождения ребенка</span><input name="dob"  type="date" formControlName="dob"></label>
                <label><span>Email</span><input name="email" type="text" placeholder="email@email.com" formControlName="email"></label>
                <label><span>Телефон</span><input name="phone"  type="text" placeholder="" formControlName="phone"></label>
@@ -16,13 +16,13 @@
             </div>
             <div class="rules">
                <div class="terms-of-use">
-                  <!-- <label>
+                  <label>
                      <input name="termsOfUse"   type="checkbox" formControlName="termsOfUse">
-                     <span>Подтверждаю согласие на <a class="show-rules" (click)="popupService.goToTerms()">обработку персональных данных</a></span>
-                  </label> -->
-                  <div class="agreement">Нажимая "отправить", вы соглашаетесь с 
+                     <span>Принимаю условия <a class="show-rules" (click)="popupService.goToTerms()">пользовательского соглашения</a></span>
+                  </label>
+                  <!-- <div class="agreement">Нажимая "отправить", вы соглашаетесь с 
                      <a class="show-rules" (click)="popupService.goToTerms()">пользовательским соглашением и обработкой персональных данных</a>
-                  </div>
+                  </div> -->
                </div>
             </div>
             <div class="serverErrorMessage" *ngIf="ErrMessage" >{{ErrMessage}}</div>

@@ -48,7 +48,8 @@ export class SpecialistPageComponent implements OnInit {
         console.log("данные доктора загружены");
         console.log(doctorInfo);
         this.getSertificates()
-        this.sortDoctorLessons(doctorInfo)
+        // this.sortDoctorLessons(doctorInfo)
+        this.getDoctorsEventsDates(doctorInfo)
       })
     })
   }
@@ -68,44 +69,94 @@ export class SpecialistPageComponent implements OnInit {
       })
   }
 
-  
 
-  sortDoctorLessons(doctorInfo) { 
-    if (doctorInfo.events) {
-      const allDoctorLessonsArray = Object.entries(doctorInfo.events)
-    } else return
-    let lessonsDates = {} //год->месяц->день->час
-    for(let lessonObj in this.doctorInfo.events) {
-      const thisDate = this.doctorInfo.events[lessonObj].date
-      const thistime = this.doctorInfo.events[lessonObj].time
-      const newLessonTime = {
-         [thisDate.year]: { //= создание объекта year-month-day-time
-            [thisDate.month]: {
-               [thisDate.day]: {
-                  [thistime]: {}
-               }
-            }
-         }
-      }
-
-      //= слияние нового объекта m(newLessonTime) и основного (lessonsDates)  (хз зачем это тут)
-      if (!lessonsDates[thisDate.year]) lessonsDates[thisDate.year] = {}
-      if (!lessonsDates[thisDate.year][thisDate.month]) lessonsDates[thisDate.year][thisDate.month] = {}
-      if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day]) lessonsDates[thisDate.year][thisDate.month][thisDate.day] = {}
-      if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime]) 
-         lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime] = 
-         {
-            patientName: this.doctorInfo.events[lessonObj].patientName,
-            doctorName: this.doctorInfo.events[lessonObj].doctorName,
-            problemDescription: this.doctorInfo.events[lessonObj].problemDescription
-         }
-    }
-    console.log("lessonsDates: ",lessonsDates)
-    this.doctorEventsYearMonthDayHour = lessonsDates
-    // console.log(lessonsDates)
-
-
+  getDoctorsEventsDates(doctorInfo) {
+    doctorInfo.ordersFutureIds = this.getFutureOrdersIds(doctorInfo)
+    // this.updateFutureOrders(this.myData.ordersFutureIds)
   }
+
+  getFutureOrdersIds(doctorInfo) {
+    let result = null
+    let ordersFuture = null
+    let date = new Date()
+    let currDate = new Date()
+    if (doctorInfo.orders) {
+      console.log("doctorInfo.orders: ", doctorInfo.orders, ordersFuture)
+      ordersFuture = Object.keys(doctorInfo.orders).filter((el) => {
+          return this.userData.checkIsFutureOrder(el, currDate) 
+      })
+      let ordersFutureSortedObj = []
+      ordersFuture.forEach( (orderId, i) => {
+          // console.log(orderId)
+          const orderSplit = orderId.split("_")
+          this.setOrdersFutureDates(orderSplit, doctorInfo, orderId)
+          const currentDate = new Date(orderSplit[0], orderSplit[1], orderSplit[2], orderSplit[3])
+          ordersFutureSortedObj[i] = [orderId, currentDate.getTime()]
+      });
+      ordersFutureSortedObj.sort((a, b) => {return a[1] - b[1]})
+      result = ordersFutureSortedObj.map((el) => el[0] )
+    } 
+
+    // console.log("result: ", result)
+    return result
+  }
+
+  setOrdersFutureDates(orderSplit, doctorInfo, orderId) {
+    const orderData = doctorInfo.orders[orderId]
+    if (!doctorInfo.ordersFutureDates) {
+      doctorInfo.ordersFutureDates = {}
+    }
+    if (!doctorInfo.ordersFutureDates[orderSplit[0]]) {
+      doctorInfo.ordersFutureDates[orderSplit[0]] = {}
+    }
+    if (!doctorInfo.ordersFutureDates[orderSplit[0]][orderSplit[1]]) {
+      doctorInfo.ordersFutureDates[orderSplit[0]][orderSplit[1]] = {}
+    }
+    if (!doctorInfo.ordersFutureDates[orderSplit[0]][orderSplit[1]][orderSplit[2]]) {
+      doctorInfo.ordersFutureDates[orderSplit[0]][orderSplit[1]][orderSplit[2]] = {}
+    }
+    if (!doctorInfo.ordersFutureDates[orderSplit[0]][orderSplit[1]][orderSplit[2]][orderSplit[3]]) {
+      doctorInfo.ordersFutureDates[orderSplit[0]][orderSplit[1]][orderSplit[2]][orderSplit[3]] = orderData
+    }
+    
+ }
+
+  // sortDoctorLessons(doctorInfo) { 
+  //   if (doctorInfo.events) {
+  //     const allDoctorLessonsArray = Object.entries(doctorInfo.events)
+  //   } else return
+  //   let lessonsDates = {} //год->месяц->день->час
+  //   for(let lessonObj in this.doctorInfo.events) {
+  //     const thisDate = this.doctorInfo.events[lessonObj].date
+  //     const thistime = this.doctorInfo.events[lessonObj].time
+  //     const newLessonTime = {
+  //        [thisDate.year]: { //= создание объекта year-month-day-time
+  //           [thisDate.month]: {
+  //              [thisDate.day]: {
+  //                 [thistime]: {}
+  //              }
+  //           }
+  //        }
+  //     }
+
+  //     //= слияние нового объекта m(newLessonTime) и основного (lessonsDates)  (хз зачем это тут)
+  //     if (!lessonsDates[thisDate.year]) lessonsDates[thisDate.year] = {}
+  //     if (!lessonsDates[thisDate.year][thisDate.month]) lessonsDates[thisDate.year][thisDate.month] = {}
+  //     if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day]) lessonsDates[thisDate.year][thisDate.month][thisDate.day] = {}
+  //     if (!lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime]) 
+  //        lessonsDates[thisDate.year][thisDate.month][thisDate.day][thistime] = 
+  //        {
+  //           patientName: this.doctorInfo.events[lessonObj].patientName,
+  //           doctorName: this.doctorInfo.events[lessonObj].doctorName,
+  //           problemDescription: this.doctorInfo.events[lessonObj].problemDescription
+  //        }
+  //   }
+  //   console.log("lessonsDates: ",lessonsDates)
+  //   this.doctorEventsYearMonthDayHour = lessonsDates
+  //   // console.log(lessonsDates)
+
+
+  // }
 
 
   checkUserData() { //скачивает данные пользователя если F5

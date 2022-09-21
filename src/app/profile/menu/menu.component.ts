@@ -110,11 +110,12 @@ export class MenuComponent implements OnInit {
   }
   
   TESTpatchUserData() {
-    const data = {
-      test:1,
-      test2: "123"
-    }
-    this.firebase.patchUserData(data)
+    console.log("deactivated")
+    // const data = {
+    //   test:1,
+    //   test2: "123"
+    // }
+    // this.firebase.patchUserData(data)
   }
 
   TESTmanualRESTpatchUserData() {

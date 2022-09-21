@@ -4,15 +4,16 @@
       <div class="popup-container">
          <div class="title">Подтверждение почты</div>
          <div class="description">
-            <p>Для подтверждения почты мы выслали на неё письмо. Пожалуйста найдите наше письмо.</p>
+            <p>Для подтверждения почты мы выслали на неё письмо</p>
             <div class="email-sign-wrapper">
                <span class="blue" *ngIf="emailSendSuccess == 1">(письмо успешно отправлено)</span>
                <span class="orange" *ngIf="emailSendSuccess == 0">(ошибка отправления письма)</span>
                <span *ngIf="emailSendSuccess == 0">  попробуйте через 10 секунд</span>
             </div>
-            <p>Если письмо не отправилось или вы уже подтвердили, нажмите кнопку "обновить" </p>
+            <!-- <p>Если письмо не отправилось или вы уже подтвердили, нажмите кнопку "обновить" </p> -->
          </div>
-         <button class="emailVerificationButton" (click)="pageReload()">обновить</button>
+         <button class="emailVerificationButton" (click)="testEmail()">отправить вручную</button>
+         <button class="emailVerificationButton" (click)="pageReload()">уже подтвердил</button>
          <button class="emailVerificationButton" (click)="logOut()">выйти из аккаунта</button>
          <!-- <button (click)="manuallyCheck()">test</button> -->
       </div>

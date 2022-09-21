@@ -1,10 +1,7 @@
 <div class="specialists" id="specialists">
    <div class="container">
       <h2 class="specialists__header">Наши специалисты</h2>
-      <div class="specialists__filters">
-         <!-- <div class="filters_title">Фильтры</div> -->
-         <!-- selectedSpecialisation = "{{selectedSpecialisation}}"<br>
-         {{specialist_selector | json}} -->
+      <!-- <div class="specialists__filters">
          <div class="custom_selector" (click)="toggleSpecialistSelector()" (mouseleave)="closeLists()">
             <div class="custom_selector_title" [ngClass]="{active: specialist_selector.active}">
                <span>{{specialist_selector.selected}}</span>
@@ -30,27 +27,7 @@
          <div class="name_input" *ngIf="isProfileModule">
             <input class="name" placeholder="ФИО специалиста" type="text">
          </div>
-
-         <!-- <form class="specialists__form ">
-            <select class="form__selector form__selector_specialization" 
-            name="specialization" #specializationSelector (change)="onSpecializationChange(specializationSelector)">
-               <option value="">Специализация</option>
-               <option *ngFor="let item of diagnose; index as i" value="" >
-                  {{item.title}}
-               </option>
-            </select>
-
-            <select class="form__selector form__selector_diagnosis" name="diagnosis">
-               
-               <option value="">Диагноз</option>
-               <option value="light">Легкая форма</option>
-               <option value="middle">Средняя форма</option>
-               <option value="hard">Тяжелая форма</option>
-               <option value="notKnown">Не установлено</option>
-            </select>
-         </form> -->
-         
-      </div>
+      </div> -->
       <!-- | specialistFilter:specialist_selector.selected -->
       <div class="specialists__catalog">
          <app-specialist-card

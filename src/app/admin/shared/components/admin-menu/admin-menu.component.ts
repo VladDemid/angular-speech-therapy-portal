@@ -24,6 +24,10 @@ export class AdminMenuComponent implements OnInit {
       name: "редактирование данных",
       link: "edit-spec",
     },
+    {
+      name: "удаление акков",
+      link: "delete-users",
+    },
 
   ]
 

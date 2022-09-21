@@ -9,26 +9,33 @@
       text-align: center
       line-height: 67px
       // width: 10%
-      border: 2px solid #fff
+      // border: 2px solid #fff
       height: 70px
       cursor: pointer
       font-size: 22px
       font-weight: 500
       transition: all 0.15s
-      border-radius: 20px
+      border: 2px solid transparent
+      
       &:nth-child(1)
-         width: 70%
+         width: 45%
       &:nth-child(2)
-         width: 29%
+         width: 55%
+         background-color: #eee
+         color: #666
          
       &:hover
          border: 2px solid $yellow_common
          background-color: rgba(255, 183, 1, 0.5)
       &:active
          border: 2px solid $orange_common
+         color: #000
       &.active
          // background-color: $orange_common
-         border: 2px solid $_34302D15
+         // border: 2px solid $_34302D15
+         &:hover
+            border: 2px solid transparent
+            background-color: #fff
 
 .registration-type
    display: flex
@@ -133,7 +140,6 @@ form
             
          textarea
                height: 100%
-               resize: none
                
          .select
             position: relative
@@ -510,14 +516,18 @@ form.feedback
       color: red
       // text-decoration: underline
       font-size: 1.2em
-.serverErrorMessage
+.serverErrorMessage, .serverScsMessage
    display: block
    margin: 10px auto
    text-align: center
    // width: 300px
    font-size: 22px
-   color: red
    text-decoration: underline
+.serverErrorMessage
+   color: red
+.serverScsMessage
+   color: green
+
 .rules
    margin: 0 auto
    width: 71%
@@ -526,7 +536,6 @@ form.feedback
    justify-content: flex-start
    font-size: 16px
    user-select: none
-
    label
       display: block
       margin-top: 0

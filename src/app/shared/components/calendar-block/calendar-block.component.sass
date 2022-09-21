@@ -101,589 +101,289 @@
       background-color: rgba(251, 133, 1, 0.1)
       border-radius: 20px
       padding-bottom: 20px
-      border-bottom: 50px solid $orange_common
+      // border-bottom: 50px solid $orange_common
       min-width: 300px
+      padding: 20px
+      max-width: 330px
       // max-height: 500px
       // overflow-y: scroll
       // cursor: pointer
-      &.expanded
-         .my-lessons
-            max-height: 800px !important
-         .bottom-expand
-            &::after
-               transform: rotate(180deg) translateY(50%)
-      .my-lessons
-         margin-top: 20px
-         padding-right: 5px
-         overflow-y: scroll
-         max-height: 450px
-
-         &::-webkit-scrollbar
-            width: 10px
-         &::-webkit-scrollbar-track
-            background-color: #ccc
-            border-radius: 4px
-         &::-webkit-scrollbar-thumb
-            background-color: #fb8601b6
-            border-radius: 12px
-            border: 2px solid #ccccccc5
-         .lessons-title
-            font-size: 24px
-            font-weight: 500
-            padding-top: 20px
-         .lesson-card
-            position: relative
-            border-left: 10px solid $orange_new
-            background-color: #fff
-            border-radius: 9px
-            margin: 10px auto
-            padding: 24px 15px 
-            min-height: 130px
-            width: 100%
-            user-select: none
-            font-size: 16px
-            font-weight: 400
-            color: $grey_45
-            &.selected
-               border: 3px solid $orange_common
-            .subtitle 
-               font-size: 18px
-               font-weight: 600
-               margin: 16px 0 4px
-               &.no-margin
-                  margin: 0 0 4px
-               
-            button
-               width: 95%
-               max-width: 250px
-               height: 30px
-               font-size: 13px
-               margin: 15px auto 0
-               display: block
-            .status
-               position: absolute
-               width: 32px
-               height: 12px
-               border-radius: 3px
-               margin-bottom: 0px
-               cursor: help
-               right: 6px
-               // padding: 4px
-               top: 20px
-               // padding: 2px
-               background-color: #fff
-               border: 2px dashed #ccc
-               overflow: visible
-               &::after
-                  // content: 'fghfhtgdfgh'
-                  // border: 2px solid #ccc
-                  position: absolute
-                  display: block
-                  opacity: 0
-                  font-weight: 500
-                  max-width: 0px
-                  max-height: 0px
-                  // width: 0px
-                  // height: 0px
-                  top: -26px
-                  left: -100%
-                  background-color: rgba(200, 200, 200, 0.1)
-                  // top: -10px
-                  transition: 0.5s all
-                  // rigth: 50px
-                  // top: 0px
-                  transform: translate(-50%, -50%)
-                  line-height: 13px
-                  font-size: 14px
-                  text-align: center
-                  padding: 0px
-                  border-radius: 5px
-                  color: #000
-                  backdrop-filter: blur(2px)
-                  // width: 60px
-                  // height: 15px
-                  white-space: normal
-                  max-width: 130px
-                  overflow: hidden
-                  
-                  // background-color: #000
-               &:hover
-                  &::after
-                     opacity: 1
-                     // width: 110px
-                     // height: 50px
-                     max-width: 140px
-                     max-height: 60px
-                     padding: 6px
-                     z-index: 10
-
-               &.unconfirmed
-                  border: none
-                  background-color: #a84d4d
-                  &::after
-                     content: 'ожидаем вашего подтверждения'
-               &.confirmed
-                  border: none
-                  background-color: #7bad60
-                  &::after
-                     content: 'специалист подтвердил занятие'
-               
-            &.unconfirmed
-               border: 2px dashed $grey_E6
-               position: relative
-               &::after
-                  content: 'ожидаем подтверждения специалиста'
-                  position: absolute
-                  top: 20px
-                  right: 40px
-                  width: 100px
-            .details
-               position: absolute
-               filter: invert(62%) sepia(73%) saturate(3572%) hue-rotate(3deg) brightness(99%) contrast(104%)
-               top: 6px
-               right: 6px
-               width: 32px
-               height: 32px
-               border-radius: 8px
-               background-color: rgba(251, 133, 1, 0.1)
-               background-image: url('/assets/icons/interface/question-mark.svg')
-               background-size: 20px 20px
-               background-repeat: no-repeat
-               background-position: 50% 50%
-               cursor: pointer
-      .bottom-expand
-         // border: 1px solid #000
-         position: absolute
-         bottom: -25px
-         transform: translate3d(-50%, 50%, 0)
-         left: 50%
-         width: 100%
-         height: 50px
-         border-radius: 0 0 20px 20px
-         cursor: pointer
-         text-align: center
-         padding-top: 13px
-         font-size: 20px
-         font-weight: 600
-         color: #FCFCFC
-
-         &::after
-            content: ''
-            position: absolute
-            background-image: url('/assets/icons/functions/arrow-white.svg')
-            background-size: contain
-            background-repeat: no-repeat
-            background-position: 100% 0
-            // padding-right: 30px
-            height: 15px
-            width: 20px
-            top: 50%
-            right: 24%
-            transform: translateY(-50%)
-            // left: 50%
-      // .expand
-      //    position: absolute
-      //    display: flex
-      //    justify-content: center
-      //    align-items: center
-      //    top: 100%
-      //    left: 50%
-      //    z-index: 20 
-      //    border: 10px solid #000
-      //    font-weight: 600
-      //    font-size: 20px
-      //    // color: #fcfcfc
-      //    color: #999
-      //    cursor: pointer
-      //    transform: translateX(-50%)
-      //    width: 100%
-      //    height: 50px
-      //    border-radius:  0 0 20px 20px
-      //    border: 1px solid #000
-         
-      .makeAppointment, .chooseHour
-         display: block
-         margin: 0 auto
-      .go-to-account-sign
-         .link
-            color: $blue_common
-            font-weight: bold
-            cursor: pointer
-      &-sign
-         text-align: center
-      &-doctor
-         position: relative
-         &::after
-            position: absolute
-            content: ''
-            bottom: 0px
-            height: 4px
-            background-color: $orange_common
-            // background: repeating-linear-gradient(-45deg,$orange_common,$orange_common 10px,transparent 10px,transparent 20px)
-            border-radius: 2px
-            width: 0%
-            // border-bottom: 0px solid #000
-         &.downloading
-            &:after
-               width: 100%
-               transition: 2s width
-      .day-chosen
-         .time-note
-            display: block
-            text-align: center
-            padding-bottom: 5px 
-            font-weight: bold
-         .gaps
-            .gap
-               cursor: pointer
-               text-align: center
-               padding: 5px 0
-               border-radius: 5px
-               @include box-shadow($nav_shadow)
-               font-weight: bold
-               &.selected
-                  background-color: $orange_common
-      // .time-row
-      //    // border-bottom: 1px dashed #000
-      //    color: #ccc
-      //    // background-color: rgba(52, 48, 45, 0.15)
-      //    &:hover
-      //       background-color: $grey_CA 
-      //    &:nth-child(1)
-      //       // border-radius: 20px 20px 0 0
-      //       // border-top: 1px dashed #000
-      //    &:nth-child(2n)
-      //       // background-color: $grey_E6
-      //    &.work-hour
-      //       // background-color: $orange_common
-      //       color: #000
-      //       background-color: #fff
-      //    &.lesson-appointed
-      //       background-color: $blue_light
-      //    &.selected-hour
-      //       background-color: $button_active
-      //       // border: 2px solid #000
-      //       &:hover
-      //          background-color: $yellow_common
-      //    &:hover
-      //       background-color: rgba(251, 133, 1, 0.4)
-      // .time-row-inner
-      //    position: relative
-      //    cursor: pointer
-      //    user-select: none
-      //    padding: 3px 10px 2px
-      //    &>div
-      //       display: inline-block
-      //    .patient
-      //       position: absolute
-      //       height: 100%
-      //       // margin-left: 15px
-      //       left: 110px
-      //       top: 50%
-      //       transform: translateY(-50%)
-      //       // border: 1px solid #000
-      //       .busy-myself-sign, .busy-sign
-      //          display: flex
-      //          justify-content: center
-      //          flex-direction: column
-      //          padding-left: 5px
-      //          height: 100%
-      //          overflow: hidden
-      //          font-weight: bold
-      //          // text-overflow: hidden
-      //       .busy-sign
-      //          color: $grey_45
-
-      .time-blocker
-         position: relative
-         padding: 15px
-         // border: 1px solid rgba(78, 70, 62, 0.3)
-         border-radius: 9px
-         background-color: #fff
-         .example
-            margin: 2px 6px
-            p
-               padding-left: 20px
-            .color-example 
-              position: absolute
-              width: 16px
-              height: 16px
-              border: 1px solid rgba(78, 70, 62, 0.3)
-              border-radius: 6px
-            .not-working-color
-               background-color: $grey
-            .working-color
-               background-color: #fff
-            .choosen-day-color
-               background-color: $orange_common
-            .today-day-color
-               border: 2px solid $orange_common
-      //?💊--CLIENT--💊?
-      .time-aside-client
-         .no-lessons-sign
-            padding: 15px
-         .my-lessons
-            .lessons-sign
-               margin-top: 10px
-               &>span
-                  display: block
-                  text-align: center
-                  font-weight: 600
-                  // font-weight: bold
-         .lesson-card
+      .time-gaps
+         .time-row
             position: relative
             // border: 1px solid #000
-            border-radius: 9px
-            margin: 10px auto
-            padding: 5px 15px
-            width: 90%
-            // cursor: pointer
+            padding: 7px
+            // height: 32px
+            // min-height: 32px
+            border-radius: 5px
+            cursor: pointer
+            background-color: #fff
+            border-left: 10px solid $grey_9c
+            margin-bottom: 5px
+            left: 0px
             user-select: none
-            &.selected
-               // background-color: $orange_common
-               border: 3px solid $orange_common
-            .status
+            @include box-shadow($nav_shadow)
+            transition: 0.2s all
+            .time
                position: absolute
-               width: 32px
-               height: 32px
-               border-radius: 3px
-               margin-bottom: 0px
-               cursor: pointer
-               right: 6px
-               top: 50px
-               background-color: #fff
-               border: 2px dashed #ccc
-               overflow: visible
-               &:hover
-                  &::after
-                     top: -30px
-                     opacity: 1
-               &::after
-                  // content: 'fghfhtgdfgh'
-                  position: absolute
+               left: 40%
+               top: 8px
+               font-weight: 400
+            .status
+               // margin-left: 8px
+               span
+                  max-width: 200px
+                  &:not(.deactivated)
+                     display: none
+                  &.deactivated
+                     display: inline-block
+            .lesson-properties
+               &>*
                   display: block
-                  opacity: 0
-                  // top: -10px
-                  transition: 0.5s all
-                  left: -100%
-                  top: 0px
-                  transform: translate(-50%, -50%)
-                  line-height: 13px
-                  font-size: 14px
-                  text-align: center
-                  padding: 3px
+                  margin-top: 4px
+               textarea
+                  padding: 6px
+                  // border: 3px solid #000
+               button
+                  height: 30px
+            .buy-button
+               position: absolute
+               right: 0px
+               height: 100%
+               top: 0px
+               width: 40px
+               // width: 200px
+               // border: 1px solid #000
+               border-radius: 0px 5px 5px 0px
+               @include box-shadow($nav_shadow)
+               background-color: rgba(251, 133, 1, 0.6)
+               transition: 0.3s all
+               backdrop-filter: blur(3px)
+               overflow: hidden
+               &:hover
+                  width: 200px
+                  background-color: rgba(251, 133, 1, 0.9)
                   border-radius: 5px
-                  color: #000
-                  // width: 60px
-                  // height: 15px
-                  white-space: normal
-                  max-width: 130px
-                  // background-color: #000
-
-               &.unconfirmed
-                  border: none
-                  // background-color: #a84d4d
-                  background-color: transparent
-                  background-image: url('/assets/icons/interface/credit-card.png')
-                  background-size: cover
-                  box-shadow: inset 0 0 5px 1px #a84d4d
                   &::after
-                     border: 2px solid #a84d4d
-                     content: 'отменено'
-               &.waiting
-                  background-color: #fde769
-                  &::after
-                     border: 2px solid #f5f591
-                     content: 'ожидание оплаты'
-               &.confirmed
-                  border: none
-                  // background-color: #7bad60
-                  background-color: transparent
-                  background-image: url('/assets/icons/functions/check-mark-3.svg')
-                  background-size: cover
-                  // box-shadow: inset 0 0 5px 1px #a84d4d
-                  &::after
-                     border: 2px solid #7bad60
-                     content: 'оплачено'
-            
-            &.unconfirmed
-               border: 2px dashed $grey_E6
-      //?💉--DOCTOR--💉
-      .time-aside-doctor
-         padding: 20px 30px 0
-         .day-not-chosen-sign  //*день не выбран
-            margin-top: 10px
-            &>span
-               display: block
-               text-align: center
-               font-weight: 500
-            .time-blocker
-               margin-top: 10px
-               padding: 10px
-               // border: 1px solid rgba(78, 70, 62, 0.3)
-            .my-lessons
-               margin-top: 20px
-               padding-right: 5px
-               overflow-y: scroll
-               max-height: 450px
-
-               // &::-webkit-scrollbar
-               //    width: 10px
-               // &::-webkit-scrollbar-track
-               //    background-color: #ccc
-               //    border-radius: 4px
-               // &::-webkit-scrollbar-thumb
-               //    background-color: #fb8601b6
-               //    border-radius: 12px
-               //    border: 2px solid #ccccccc5
-               // .lessons-title
-               //    font-size: 24px
-               //    font-weight: 500
-               //    padding-top: 20px
-               // .lesson-card
-               //    position: relative
-               //    border-left: 10px solid $orange_new
-               //    background-color: #fff
-               //    border-radius: 9px
-               //    margin: 10px auto
-               //    padding: 24px 15px 
-               //    min-height: 130px
-               //    width: 100%
-               //    user-select: none
-               //    font-size: 16px
-               //    font-weight: 400
-               //    color: $grey_45
-               //    &.selected
-               //       border: 3px solid $orange_common
-               //    .subtitle 
-               //       font-size: 18px
-               //       font-weight: 600
-               //       margin: 16px 0 4px
-               //       &.no-margin
-               //          margin: 0 0 4px
-                     
-               //    button
-               //       width: 95%
-               //       max-width: 250px
-               //       height: 30px
-               //       font-size: 13px
-               //       margin: 15px auto 0
-               //       display: block
-               //    .status
-               //       position: absolute
-               //       width: 32px
-               //       height: 6px
-               //       border-radius: 3px
-               //       margin-bottom: 0px
-               //       cursor: help
-               //       right: 6px
-               //       // padding: 4px
-               //       top: 6px
-               //       // padding: 2px
-               //       background-color: #fff
-               //       border: 2px dashed #ccc
-               //       overflow: visible
-               //       &::after
-               //          // content: 'fghfhtgdfgh'
-               //          // border: 2px solid #ccc
-               //          position: absolute
-               //          display: block
-               //          opacity: 0
-               //          font-weight: 500
-               //          max-width: 0px
-               //          max-height: 0px
-               //          // width: 0px
-               //          // height: 0px
-               //          top: -26px
-               //          left: -100%
-               //          background-color: rgba(211, 86, 86, 0.102)
-               //          // top: -10px
-               //          transition: 0.5s all
-               //          // rigth: 50px
-               //          // top: 0px
-               //          transform: translate(-50%, -50%)
-               //          line-height: 13px
-               //          font-size: 14px
-               //          text-align: center
-               //          padding: 0px
-               //          border-radius: 5px
-               //          color: #000
-               //          backdrop-filter: blur(2px)
-               //          // width: 60px
-               //          // height: 15px
-               //          white-space: normal
-               //          max-width: 130px
-               //          overflow: hidden
-                        
-               //          // background-color: #000
-               //       &:hover
-               //          &::after
-               //             opacity: 1
-               //             // width: 110px
-               //             // height: 50px
-               //             max-width: 140px
-               //             max-height: 60px
-               //             padding: 6px
-               //             z-index: 10
-
-               //       &.unconfirmed
-               //          border: none
-               //          background-color: #a84d4d
-               //          &::after
-               //             content: 'ожидаем вашего подтверждения'
-               //       &.confirmed
-               //          border: none
-               //          background-color: #7bad60
-               //          &::after
-               //             content: 'специалист подтвердил занятие'
-                     
-               //    &.unconfirmed
-               //       border: 2px dashed $grey_E6
-               //       position: relative
-               //       &::after
-               //          content: 'ожидаем подтверждения специалиста'
-               //          position: absolute
-               //          top: 20px
-               //          right: 40px
-               //          width: 100px
-               //    .details
-               //       position: absolute
-               //       top: 19px
-               //       right: 7px
-               //       width: 32px
-               //       height: 32px
-               //       border-radius: 8px
-               //       background-color: rgba(251, 133, 1, 0.1)
-               //       background-image: url('/assets/icons/interface/edit.svg')
-               //       background-repeat: no-repeat
-               //       background-position: 50% 50%
-               //       cursor: pointer
-
-         .time-of-day-chosen
-            position: relative
-            .time-selection
-               margin-top: 50px
+                     content: ''
+                     transition: 0.3s
+                     // width: 100%
+                     // overflow: hidden
+                  .pay-sign
+                     opacity: 100%
+               &::after
+                  content: ''
+                  position: absolute
+                  width: 20px
+                  height: 4px
+                  background-color: #000
+                  // background-color: $orange_common
+                  @include box-shadow($nav_shadow)
+                  border-radius: 3px
+                  top: 50%
+                  right: 10px
+                  transform: translateY(-50%)
+               &::before
+                  content: ''
+                  position: absolute
+                  width: 4px
+                  height: 20px
+                  background-color: #000
+                  // background-color: $orange_common
+                  @include box-shadow($nav_shadow)
+                  border-radius: 3px
+                  top: 50%
+                  right: 18px
+                  transform: translateY(-50%)
+               .pay-sign
+                  font-size: 16px
+                  position: absolute
+                  // top: 50%
+                  transform: translateY(50%)
+                  right: 55px
+                  font-weight: 500
+                  opacity: 0%
+                  transition: 0.3s all
                
-            .go-back
-               text-align: center
-               font-size: 16px
-               font-weight: 500
+            .payment-state
+               display: inline-block
+               margin-top: 5px
+               color: #ccc
+
+            .manual-add
+               display: none
                content: ''
                position: absolute
-               width: 100px
-               height: 50px
-               padding: 6px
-               border: 2px solid $orange_common
-               border-radius: 9px
-               right: 20px
-               top: 10px
+               right: -26px
+               top: 7px
+               width: 21px
+               height: 21px
+               font-size: 27px
+               font-weight: bold
+               line-height: 18px
+               padding: 2px
+               color: $orange_common
+               border-radius: 3px
+               background-color: #fff
+               // border: 2px solid #000
                cursor: pointer
-               transition: all 0.3s
-               user-select: none
-               &:hover
+               @include box-shadow($nav_shadow)
+
+            .switch
+               position: absolute
+               cursor: pointer
+               right: 5px
+               top: calc(50% - 8px)
+               // border: 1px solid #000
+               height: 16px
+               width: 36px
+               border-radius: 8px
+               background-color: $grey_9c
+               &::after
+                  content: ''
+                  position: absolute
+                  height: 10px
+                  width: 10px
+                  // border: 1px solid #000
+                  border-radius: 50%
+                  top: calc(50% - 5px)
+                  left: 3px
+                  background-color: #fff
+                  transition: 0.2s all
+            &.active
+               // cursor: pointer
+               border-left: 10px solid $orange_501_60
+               .manual-add
+                  display: block
+               .switch
                   background-color: $orange_common
-      button
-         min-width: 220px
+                  &::after
+                     left: calc(100% - 13px)
+               .deactivated
+                  display: none
+               &:active
+                  // left: 10px
+                  // background-color: $orange_501_60
+                  &:hover
+                     // left: 10px
+               .status
+                  :not(.active)
+                     display: none
+                  .active
+                     display: inline-block
+               &.selected
+                  left: 5px
+            // &.waiting 
+            &.waiting
+               border-left: 10px solid $orange_148
+               .status
+                  font-size: 14px
+                  :not(.waiting)
+                     display: none
+                  .waiting
+                     display: inline-block
+               .switch
+                  background-color: $orange_148
+                  &::after
+                     left: calc(50% - 5px)
+            &.booked
+               cursor: default
+               .manual-add
+                  display: none
+               .status
+                  :not(.booked)
+                     display: none
+                  .booked
+                     display: inline-block
+            &.canceled
+               .status
+                  :not(.canceled)
+                     display: none
+                  .canceled
+                     display: inline-block
+            &.waiting-payment
+               .status
+                  :not(.waiting-payment)
+                     display: none
+                  .waiting-payment
+                     display: inline-block
+      .manual-add-order
+         background-color: #fff
+         border-radius: 5px
+         margin: 10px 0 10px
+         padding: 4px
+         cursor: pointer
+         user-select: none
+         &.disabled
+            border: 2px solid $grey_9c
+         &.enabled
+            border: 2px solid $orange_common
+      .doctor-card
+         .time-row
+            &:not(.active)
+               opacity: 0.3
+            &.active:hover
+               cursor: pointer
+               // border: 2px solid  $orange_501_60
+               // height: 36px
+               // left: 5px
+               // background-color: $orange_148
+               box-shadow: $nav_shadow_hover
+               transition: 0.2s all
+               &.selected
+                  // cursor: default
+      .time-aside-client, .time-aside-doctor
+         .time-row
+            &.booked, &.waiting-payment, &.canceled
+               .status
+                  span
+                     font-weight: 600
+                     font-size: 18px
+               min-height: 100px
+               .data-ready
+                  margin-top: 10px
+                  .lesson-row
+                     margin-top: 5px
+                     display: block
+                     h4
+                        display: inline-block
+                        font-weight: bold
+                        padding-right: 5px
+                  .details
+                     position: absolute
+                     top: 8px
+                     right: 8px
+                     cursor: pointer
+                     height: 26px
+                     width: 26px
+                     // border: 1px solid #000
+                     background-image: url('/assets/icons/interface/notepad.svg')
+                     background-size: 100%
+                     background-repeat: no-repeat
+                     &:hover
+                        @include box-shadow($nav_shadow)
+                        transition: 0.2s all
+               .time, .switch
+                  display: none
+      .time-aside-client
+         .time-gaps
+            .time-row
+               height: 0
+               min-height: 0
+               padding: 0
+               &.active
+                  height: 100%
+                  padding: 7px
+      &.time-aside-edit
+         padding-right: 40px
+      .doctor-card
+         .time-gaps
+            .time-row
+               &.booked
+                  border-left: 10px solid red
+                  cursor: default
+
+      
    .time-aside-view
       padding: 20px
       overflow: visible
@@ -693,8 +393,10 @@
 .doctor-alert
    text-align: center
    font-size: 16px
-   border-bottom: none
-   text-decoration: underline
+   border-bottom: 1px dotted green
+   // text-decoration: 
+   .success
+      cursor: pointer
 
 @keyframes updating
    0%
@@ -712,6 +414,7 @@
 
 .debug-block
    margin: 30px
+   font-size: 14px
    p 
       max-width: 200px
       margin-top: 5px

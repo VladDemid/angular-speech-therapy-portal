@@ -154,7 +154,28 @@ exports.fireHttpEmail = functions.https.onCall((data, context) => {
    //       name: 'кастомноеИмя'
    //    }
    // }
+   
+   // responce.send(number.toString());
+   sgMail.send(msg)
+      .then((resp) => {
+         console.log("письмо отправлено")
+      })
+      .catch((err) => {
+         console.log("Ошибка отправки письма: ", err)
+      })
 
+   // return request
+});
+
+exports.testEmail = functions.https.onCall((data, context) => {
+   // console.log("data: ",data, "context: ", context)
+   const msg = { //может можно просто data отправлять хз
+      to: data.to,
+      from: data.from,
+      templateId: "d-46991a5b503b4f578b6f770eeac9c711",
+      dynamicTemplateData: data.dynamicTemplateData,
+   }
+   
    
    // responce.send(number.toString());
    sgMail.send(msg)

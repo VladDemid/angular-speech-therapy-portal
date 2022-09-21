@@ -7,6 +7,8 @@ footer
    border-top: 1px solid #34302d38
    // background-color: #454A4A
    .container
+      display: flex
+      justify-content: space-between
       padding-top: 12px
       font-size: 20px
       font-weight: 500
@@ -14,37 +16,64 @@ footer
          display: flex
          justify-content: space-between
          color: $headings100
+         padding-left: 24px
          a
             color: $headings100
-         &>div
+         li 
             position: relative
-            padding-left: 30px
+            padding: 2px
+            margin-top: 0px
             &::before
-               position: absolute
                content: ''
-               left: 0px
-               top: 2px
-               height: 20px
-               width: 20px
-               background-image: url('/assets/icons/interface/email.svg')
+               position: absolute
+               // border: 1px solid #000
+               width: 22px
+               height: 22px
+               left: -24px
                background-repeat: no-repeat
                background-size: contain
-         .adress
-            &::before
-               background-image: url('/assets/icons/interface/map.svg')
-         .tel
-            &::before
-               background-image: url('/assets/icons/interface/phone.svg')
+            &.adress
+               &::before
+                  // background-image: url('/assets/icons/interface/map.svg')
+            &.tel
+               &::before
+                  // background-image: url('/assets/icons/interface/phone.svg')
                
       .legal-info
          margin-top: 10px
          ul
             display: flex
             justify-content: flex-end
+            flex-direction: column
             li
                cursor: pointer
                margin-right: 40px
                text-decoration: underline
                &:last-child
                   margin-right: 0
+      .payment-icons
+         display: flex
+         justify-content: space-between
+         align-items: center
+         &>div
+            margin-left: 10px
+            width: 52px
+            height: 36px
+            background-position: 0px 0px
+            background-size: 100%
+            border-radius: 3px
+            // border: 1px solid #000
+            background-repeat: no-repeat
+            background-position: 50% 50%
+            // opacity: 
+            &.mir   
+               background-image: url('/assets/icons/interface/logo_mir.jpg')
+               width: 56px
+            &.visa   
+               background-image: url('/assets/icons/interface/Visa_Brandmark_Blue_RGB.png')
+            &.master-card   
+               background-image: url('/assets/icons/interface/Mastercard-logo.svg.png')
+               width: 42px
+
+         // background-image: url('/assets/icons/interface/phone.svg')
                

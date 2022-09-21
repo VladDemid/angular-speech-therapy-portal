@@ -23,6 +23,7 @@ export class CalendarPageComponent implements OnInit {
   userTimeEnd = 20
   myDuration: number
   myId: string //для инжект в календарь
+  myEmail = ""
 
   // signatureEndpoint = 'https://logogo.herokuapp.com/'
   // apiKey = 'sSYzyR3TSBWM_EGy7z3qcw'
@@ -45,6 +46,7 @@ export class CalendarPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.myId = localStorage.getItem('user-Id')
+    this.myEmail = "myEmail"
   }
 
 

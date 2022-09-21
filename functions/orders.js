@@ -37,6 +37,39 @@ exports.alfaTest = functions
     })
 })
 
+exports.prodTest = functions
+  .runWith({memory: "128MB"})
+  .https.onRequest((req, res) => {
+
+    // const prod = req.body.prod
+    // // const path = prod ? ".env.prod" : ".env.dev"
+    // const path2 = ".env"
+    // const env = require("dotenv").config({ path: path2 })
+    
+    cors(req, res, ()  => {
+       
+
+      const data = {
+        PRODUCTION: process.env.PRODUCTION,
+        needProd: true,
+        BASE_LOGOGO_URL: process.env.BASE_LOGOGO_URL,
+        // returnUrl: `${process.env.BASE_LOGOGO_URL}/profile/payment?token=${token}&paySuccess=true`,
+        // failUrl: `${process.env.BASE_LOGOGO_URL}/profile/payment?token=${token}&paySuccess=true`,
+        // dynamicCallbackUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-callback?token=${token}`,
+      }
+
+       
+       res.status(200).send(data)
+    })
+ })
+
+
+
+
+
+
+
+
 
 
 
@@ -107,11 +140,12 @@ exports.pay = functions.https.onRequest(async (request, response) => {
   const prod = request.body.prod
   const path = prod ? ".env.prod" : ".env.dev"
   const env = require("dotenv").config({ path: path })
-
+  
   cors(request, response, async () => {
     if (request.method !== "POST") {
       response.status(405).end();
     }
+    functions.logger.info("--------- pay func START ---------")
     
     functions.logger.debug(
       "request.body",
@@ -119,12 +153,12 @@ exports.pay = functions.https.onRequest(async (request, response) => {
       );
       const orderId = request.body.id;
       functions.logger.debug("request body:", request.body);
-      functions.logger.debug("orderId:", orderId);
+      // functions.logger.debug("orderId:", orderId);
       
       
-      functions.logger.info("pay createPayment START")
+      // functions.logger.info("pay createPayment START")
       const payment = await createPayment(orderId, prod);
-      functions.logger.info("pay createPayment END", payment)
+      // functions.logger.info("pay createPayment END", payment)
   
     
   
@@ -150,7 +184,8 @@ exports.pay = functions.https.onRequest(async (request, response) => {
           externalPaymentId: alfaResponse.data.orderId,
           orderCreationTime: Date.now(),
         });
-  
+        await sendEmailsFromOrder(orderId)
+
         response.send({ formUrl: alfaResponse.data.formUrl });
       }
     } catch (e) {
@@ -191,7 +226,7 @@ exports.callback = functions.https.onRequest(async (request, response) => {
       case "deposited":
         if (status) {
           orderRef.update({ state: "PaymentConfirmed" });
-          sendEmailsFromOrder(orderId);
+          setTimeout(() => sendEmailsFromOrder(orderId), 10000) //ждать пока обновится
           // sendEmail("mr.zgot@yandex.ru", "d-006ae47f70c74c949e486cf9f63b694e", {})
         } else {
           orderRef.update({ state: "PaymentRejected" });
@@ -257,51 +292,6 @@ exports.getEmailsDev = functions
   })
 })
 
-
-
-// exports.getEmails = functions
-// .runWith({memory: "128MB"})
-// .https.onRequest((req, res) => {
-  
-//   cors(req, res, async () => {
-//     const configurationRef = db.ref("orders/2022_5_10_10_E9IKBLSbkTfzEJPXzFimuXeXs1b2");
-//     const snapshot = await configurationRef.once("value");
-//     const orderVal = snapshot.val();
-//     const patientId = orderVal.patientId
-//     const doctorId = orderVal.doctorId
-    
-//     const patientRef = db.ref(`users/${patientId}`);
-//     const patientSnap = await patientRef.once("value");
-//     const patientVal = patientSnap.val();
-    
-//     const doctorRef = db.ref(`users/${doctorId}`);
-//     const doctorSnap = await doctorRef.once("value");
-//     const doctorVal = doctorSnap.val();
-
-
-//     sendEmail(patientVal.email, process.env.EMAIL_ID_PATIENT_NEW_ORDER, {})
-//       .then((resp) => {
-//         res.status(200).send({emailStatus: "письмо пациенту отправлено"})
-//       })
-//       .catch((err) => {
-//         res.status(500).send(err)
-//       })
-
-//     sendEmail(doctorVal.email, process.env.EMAIL_ID_SPEC_NEW_ORDER, {})
-//       .then((resp) => {
-//         res.status(200).send({emailStatus: "письмо спецу отправлено"})
-//       })
-//       .catch((err) => {
-//         res.status(500).send(err)
-//       })
-    
-      
-        
-//         // res.status(200).send(answer)
-    
-//   })
-// })
-    
 exports.rejectPayment = functions.https.onRequest(async (request, response) => {
   functions.logger.info(
     "Alfa Bank API payment rejection: ",
@@ -340,67 +330,40 @@ async function createPayment(orderId, prod) {
     dynamicCallbackUrl: `${process.env.BASE_FUNCTIONS_URL}/orders-callback?token=${token}`,
   };
 }
-      
-async function sendEmailsFromOrder(orderId) { 
 
+async function sendEmailsFromOrder(orderId, emailType) { //
+  
   const configurationRef = db.ref(`orders/${orderId}`);
   const snapshot = await configurationRef.once("value");
   const orderVal = snapshot.val();
   
+  
   const patientId = orderVal.patientId
   const doctorId = orderVal.doctorId
+  
   
   const patientRef = db.ref(`users/${patientId}`);
   const patientSnap = await patientRef.once("value");
   const patientVal = patientSnap.val();
+  let patientEmail = orderVal.manualOrder ? orderVal.patientEmail : patientVal.email
   
   const doctorRef = db.ref(`users/${doctorId}`);
   const doctorSnap = await doctorRef.once("value");
   const doctorVal = doctorSnap.val();
+  let doctorEmail = doctorVal.email
+  
 
-  // return {patient: patientVal.email, doctor: doctorVal.email}
+  
+  functions.logger.info( "======== test: ", patientEmail, doctorEmail, "orderVal: ", orderVal, "emailType:", emailType)
+  return sendEmails(patientEmail, doctorEmail, orderVal, emailType)
 
-    // const patientData = {
-    //   // subject: "Logogo - новая запись ",
-    //   date: `${orderVal.date.time} часов (МСК) ${orderVal.date.day}-${orderVal.date.month}-${orderVal.date.year}`,
-    //   doctorName: orderVal.doctorName,
-    //   token: orderVal.paymentToken
-    // }
-    // // sendEmail(patientVal.email, process.env.EMAIL_ID_PATIENT_NEW_ORDER, patientData)
-    
-    // const specData = {
-    //   date: "TEST-DATE",
-    //   patientName: "TEST_name",
-    //   to: "vlatidos@gmail.com",
-    //   from: emailConfig.fromEmailAdress,
-    //   // from: "info@logogo.online",
-    //   templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
-    //   dynamicTemplateData: {
-    //     text: "тут текст",
-    //     subject: "Тема письма",
-    //     name: 'кастомноеИмя'
-    //   }
-    // }
-    
-    const orderData = {
-      date: `${orderVal.date.time} часов (МСК) ${orderVal.date.day}-${orderVal.date.month}-${orderVal.date.year}`,
-      doctorName: orderVal.doctorName,
-      patientName: orderVal.patientName,
-      token: orderVal.paymentToken
-    }
-
-    // return {patientVal: patientVal.email, doctorVal: doctorVal.email, orderData: orderData}
-    
-
-    return sendEmails(patientVal.email, doctorVal.email, orderData)
-
-    // const specData = {
-    //   // subject: "Новая запись Logogo",
-    //   date: `${orderVal.date.time} часов (МСК) ${orderVal.date.day}-${orderVal.date.month}-${orderVal.date.year}`,
-    //   patientName: orderVal.patientName,
-    //   token: orderVal.paymentToken
-    // }
-    // sendEmail(doctorVal.email, process.env.EMAIL_ID_SPEC_NEW_ORDER, specData)
+  // const specData = {
+  //   // subject: "Новая запись Logogo",
+  //   date: `${orderVal.date.time} часов (МСК) ${orderVal.date.day}-${orderVal.date.month}-${orderVal.date.year}`,
+  //   patientName: orderVal.patientName,
+  //   token: orderVal.paymentToken
+  // }
+  // sendEmail(doctorVal.email, process.env.EMAIL_ID_SPEC_NEW_ORDER, specData)
     
 }
 
@@ -409,58 +372,62 @@ function sendEmails(patientEmail, doctorEmail, orderData) {
     const fromEmail = process.env.LOGOGO_EMAIL
     // const fromEmail = "info@logogo.online"
 
+    let emailType = "order_booking"
+    let patientTemplateId = ""
+    let specialistTemplateId = ""
+    
+    switch(emailType) {
+      case "order_booking": 
+        patientTemplateId = process.env.EMAIL_ID_BOOKING_UNIVERSAL
+        specialistTemplateId = process.env.EMAIL_ID_BOOKING_UNIVERSAL
+        break;
+      case "order_paid": 
+        patientTemplateId = process.env.EMAIL_ID_BOOKING_UNIVERSAL
+        specialistTemplateId = process.env.EMAIL_ID_BOOKING_UNIVERSAL
+        break;
+      default:
+        patientTemplateId = process.env.EMAIL_ID_TEST
+        specialistTemplateId = process.env.EMAIL_ID_TEST
+        
+    }
+
+    generalData = {
+      patientName: orderData.patientName,
+      doctorName: orderData.doctorName,
+      date: `${orderData.date.day}-${orderData.date.month}-${orderData.date.year} в ${orderData.date.time} по минскому времени`,
+      problem: orderData.problem,
+      orderId: orderData.orderId,
+      paymentStatus: orderData.state === "PaymentConfirmed" ? "Оплата прошла успешно!" : "Бронирование нового занятия (не оплачено)",
+      bookingType: !!orderData.manualOrder ? "Специалист записал клиента" : "Клиент записался к специалисту",
+      paymentLink: orderData.paymentFormUrl,
+    }
+
+    
+
     const patientData = {
-      to: patientEmail, 
-      templateId: process.env.EMAIL_ID_PATIENT_NEW_ORDER,
+      to: patientEmail,
+      templateId: patientTemplateId,
       from: fromEmail,
       dynamicTemplateData: {
-        date: orderData.date,
-        doctorName: orderData.doctorName,
-        token: orderData.token,
-      },
+        ...generalData
+      }
     }
 
-    const specData = {
+    const doctorData = {
       to: doctorEmail, 
-      templateId: process.env.EMAIL_ID_SPEC_NEW_ORDER,
+      templateId: specialistTemplateId,
       from: fromEmail,
       dynamicTemplateData: {
-        date: orderData.date,
-        patientName: orderData.patientName,
-        token: orderData.token,
-      },
+        ...generalData
+      }
     }
 
-    // const specData = {
-    //   to: "vlatidos@gmail.com", 
-    //   templateId: process.env.EMAIL_ID_TEST,
-    //   from: fromEmail,
-    //   dynamicTemplateData: {
-    //     date: orderData.date,
-    //     doctorName: orderData.doctorName,
-    //     token: orderData.token,
-    //   },
-    // }
+    const messages = [patientData, doctorData]
     
-    // const messages = [patientData,specData]
-    const messages = [patientData, specData]
-    
-    // return {specData: specData}
 
     return sgMail.send(messages)
 
-    // const prod = req.body.prod
-    // const path = prod ? ".env.prod" : ".env.dev"
-    // const env = require("dotenv").config({ path: path })
     
-    // const msg = { 
-    //     to: email,
-    //     from: fromEmail,
-    //     templateId: templateId,
-    //     dynamicTemplateData: dynamicTemplateData,
-    // }
-
-    // return sgMail.send(msg)
 }
 
 async function getDefaultPayment() {

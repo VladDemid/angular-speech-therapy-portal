@@ -49,6 +49,7 @@ export interface UserDbInfo {
    //doctor keys
    weeklySchedule?: []
    schedule?: {}
+   scheduleTime?: {}
    educationsCount?: number
    university?: string
    faculty?: string
@@ -74,6 +75,7 @@ export interface UserDbInfo {
    ordersArr?: Array<string>
    ordersFuture?: Object
    ordersFutureIds?: Array<string>
+   ordersFutureDates?: Object
    lessons?: any
    emailVerified?: boolean
    specializations?: string[]
@@ -81,6 +83,7 @@ export interface UserDbInfo {
    aboutMe?: string,
    zoomLink?: string,
    currentTime?: string,
+   paymentFormUrl?: string
 
 }
 
@@ -94,11 +97,17 @@ export interface UserClient {
 }
 
 export interface UserDoctor {
+   currentTime: string | number | Date
+   orders(orders: any): any
+   ordersFutureDates: any
+   ordersFutureIds: any
    name: string
    surname: string
    patronymic: string
    userType: "doctor"
    weeklySchedule?: []
+   scheduleHours?: any
+   scheduleTime?: any
    schedule?: {}
    description: string
    university: string
@@ -141,6 +150,15 @@ export interface Event {
    },
    time?: number,
    doctorsConfirmation?: boolean
+}
+
+export interface ManualOrderDetails {
+   date? : {
+      year: number,
+      month: number,
+      day: number,
+      time: string,
+   }
 }
 
 export interface Signature {

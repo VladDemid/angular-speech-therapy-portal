@@ -49,37 +49,21 @@ export class ProfileLayoutComponent implements OnInit {
         // })
 
         // this.UserTypeUpdate(user)
-        //если юзер не подтвердил почту и в 
-        if (user.emailVerified === false && this.userData.myData.emailVerified == false) {
-          this.popupService.emailVerifyPopup = true
-          // this.activatedRoute.queryParams.subscribe((params: Params) => {
-          //   if (params["oobCode"] ) {
-          //     this.firebase.actionCode = params["oobCode"]
-          //     this.firebase.applyActionCode()
-          //       .then(() => {
-          //         console.log("email verified successfully")
-          //         this.popupService.emailVerifyPopup = false
-          //         const newUserData = this.userData.myData
-          //         newUserData.emailVerified = true
-          //         this.userData.changeMyLocalData(newUserData) //обновление локальных данных 
-          //         this.userData.sendMyDataChanges(newUserData) //обновление данных на серваке
-          //           .subscribe(() => console.log("база даных обновлена для пользователя"))
-          //       })
-          //       .catch((err) => {console.log("code send error: ", err)})
-          //   } else if (!params["oobCode"] ) {
-          //     console.log("отправка письма заблокирована");
-          this.firebase.sendVerificationEmail()
-            .then(() => {
-              this.emailSendSuccess = 1
-              console.log("письмо отправлено", this.emailSendSuccess)
-            })
-            .catch((err) => {
-              this.emailSendSuccess = 0
-              console.log("ошибка отправления письма: ", err, this.emailSendSuccess)
-
-          })
-          //   }
+        //если юзер не подтвердил почту и в
+        if (user.emailVerified === false) {
+          // this.popupService.emailVerifyPopup = true
+          
+          // console.log("необходима отправка email")
+          // this.firebase.sendVerificationEmail()
+          //   .then((resp) => {
+          //     this.emailSendSuccess = 1
+          //     console.log("письмо отправлено: ", resp)
+          //   })
+          //   .catch((err) => {
+          //     this.emailSendSuccess = 0
+          //     console.log("ошибка отправления письма: ", err)
           // })
+
         } else if (user.emailVerified == true) { //после подтверждения
           this.popupService.emailVerifyPopup = false
           if(!this.userData.myData.emailVerified) {

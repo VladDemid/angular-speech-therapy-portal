@@ -34,7 +34,7 @@ export class LoginPopupComponent implements OnInit {
       
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params["needLogin"]) {
-        this.accessErrMessage = "Время сессии вышло. Для доступа в личный кабинет необходимо заново войти в аккаунт"
+        this.accessErrMessage = "Для доступа в личный кабинет необходимо заново войти в аккаунт либо время сессии вышло и необходимо залогиниться заново "
       } else if (params["needLoginToMakeAnAppointment"]) {
         this.accessErrMessage = "Чтобы записаться к доктору нужно, нужно сначала зайти в профиль"
       }
@@ -62,48 +62,6 @@ export class LoginPopupComponent implements OnInit {
       password: this.form.value.password.trim(),
     }
     this.loggingIn = true
-    // ---Obsolete--->
-    // this.firebase.signInWithPass(user) //вход юзера
-    //   .then((result) => {
-    //     console.log("user:", result);
-    //     this.loggingIn = false
-    //   })
-    //   .catch((err) => {
-    //     this.loggingIn = false
-    //     console.log("ошибка входа чз firebase: ", err);
-    //   })
-    
-    // this.authServise.login(user).subscribe((response) => { 
-    //   this.form.reset()
-    //   this.loggingIn = false
-    //   this.popupService.toggleLoginPopup()
-    //   this.helper.toConsole("При логине был получен ответ: ",response)
-    //   this.router.navigate(['/profile'])
-
-    // },
-    // (err)=> {
-    //   console.log("ERROR:", err);
-    //   this.loginErrorHandler(err)
-    //   this.loggingIn = false
-    // })
-    // <---Obsolete---
-
-    // --test1-->
-    // this.firebase.signInWithPassNew(user)
-    // .then((result) => {
-      //   console.log("firebase.signInWithPass: ", result);
-      //   this.form.reset()
-      //   this.loggingIn = false
-      //   // this.popupService.toggleLoginPopup()
-      //   // this.router.navigate(['/profile'])
-      //   // this.loggingIn = false
-      // })
-      // .catch((err) => {
-      //   console.log("ошибка входа чз firebase: ", err);
-      //   this.loggingIn = false
-      // })
-      // <--test1--
-      
 
       this.firebase.setPersistence()
       .then(() => {
@@ -114,8 +72,24 @@ export class LoginPopupComponent implements OnInit {
           localStorage.setItem("user-Id",  userCredentials.user.uid)
           this.form.reset()
           this.loggingIn = false
-          this.popupService.toggleLoginPopup()
-          this.router.navigate(['/profile'])
+          const user = this.firebase.getUser()
+          console.log(user)
+          if (user && user.emailVerified) {
+            this.popupService.toggleLoginPopup()
+            this.router.navigate(['/profile'])
+          } else if (user && !user.emailVerified) {
+            this.accessErrMessage = "Ваша почта не верифицирована, мы отправили на неё письмо. Пожалуста перейдите по ссылке в письме."
+            this.firebase.sendVerificationEmail()
+              .then((resp) => {
+                console.log("письмо отправлено: ", resp)
+                this.accessErrMessage = "Ваша почта не верифицирована, мы отправили на неё письмо. Пожалуста перейдите по ссылке в письме. (письмо отправлено повторно)"
+              })
+              .catch((err) => {
+                this.accessErrMessage = `Ваша почта не верифицирована, мы отправили на неё письмо. Пожалуста перейдите по ссылке в письме. ОШИБКА отправления письма: ${err}`
+                console.log("ошибка отправления письма: ", err)
+            })
+          }
+
           // this.currentUser = userCredentials.user
         })
         .catch((err) => {

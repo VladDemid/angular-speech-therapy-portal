@@ -18,8 +18,8 @@
       >
          <div class="inputs-wrapper">
             <label><span>Фото</span><input required class="upload_documents" name="photo" type="file" id="clientPhoto" (change)="changeMyImage()"></label>
-            <label><span>Имя</span><input required name="name" type="text" formControlName="name" [placeholder]="userData.myData.name"></label>
             <label><span>Фамилия</span><input required name="surname" type="text" formControlName="surname" [placeholder]="userData.myData.surname"></label>
+            <label><span>Имя</span><input required name="name" type="text" formControlName="name" [placeholder]="userData.myData.name"></label>
             <label><span>Отчество</span><input required name="patronymic" type="text" formControlName="patronymic" [placeholder]="userData.myData.patronymic"></label>
             <label><span class="narrow">Диагноз ребенка</span><input required name="childDiagnosis" type="text" formControlName="childDiagnosis" [placeholder]="userData.myData.childDiagnosis"></label>
             <button class="submit" [ngClass]="{updating2: isLoading}" [disabled]="isLoading" type="submit"><span data-text="сохранить">сохранить</span> </button>
@@ -51,8 +51,8 @@
             </div>
          </div>
          <div class="inputs-wrapper">
-            <label><span>Имя</span><input required name="name" type="text"  [placeholder]="userData.myData.name" formControlName="name"></label>
             <label><span>Фамилия</span><input required name="surname" type="text"  [placeholder]="userData.myData.surname" formControlName="surname"></label>
+            <label><span>Имя</span><input required name="name" type="text"  [placeholder]="userData.myData.name" formControlName="name"></label>
             <label><span>Отчество</span><input required name="patronymic" type="text"  [placeholder]="userData.myData.patronymic" formControlName="patronymic"></label>
             <div class="educations">
                <div class="education">

@@ -198,21 +198,26 @@ export class SpecialistRegComponent implements OnInit {
   generateUniqueUserId() {
     const checkUser = setInterval(() => {
       // console.log(this.firebase.currentUser) 
-      if (this.firebase.shortIds) {
+      if (this.firebase.shortIds || true) { //! костыль на случай отсутствия shortIds
         // console.log(this.generateUID()) 
-        let uniqueIdCreated = false
-        let counter = 0
-        while(!uniqueIdCreated && counter < 10) {
-          const newId = this.generateUID()
-          console.log(newId)
-          if (this.checkNewId(newId)) {
-            console.log("shortId: ", newId)
-            uniqueIdCreated = true
-            this.newUniqId = newId
+        if (!this.firebase.shortIds) {
+          this.newUniqId = this.generateUID()
+          clearInterval(checkUser)
+        } else {
+          let uniqueIdCreated = false
+          let counter = 0
+          while(!uniqueIdCreated && counter < 10) {
+            const newId = this.generateUID()
+            console.log(newId)
+            if (this.checkNewId(newId)) {
+              console.log("shortId: ", newId)
+              uniqueIdCreated = true
+              this.newUniqId = newId
+            }
+            counter++
           }
-          counter++
+          clearInterval(checkUser)
         }
-        clearInterval(checkUser)
       } else {console.log("no FB _shortIds")}
     }, 200)
   }

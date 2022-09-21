@@ -21,7 +21,7 @@
 
 <app-nav-home></app-nav-home>
 <div class="home-page">
-   <!-- <div class="container"> -->
+   <div class="container">
       <!-- <button (click)="testSignIn()">test sign in</button> -->
       <!-- PROD: --{{production}}-- -->
      
@@ -30,17 +30,13 @@
          <div class="container">
             <div class="dev-test" *ngIf="!production">
                <button (click)="emailTest()">@emailManual</button>
-               <!-- <button (click)="emailTest2()">@email2</button> -->
                <button (click)="FBnumber()">number</button>
                <button (click)="getEmails()">=getEmails=</button>
 
-               <!-- <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd", returnToProfileModule: true}'>доктор</button>
-               <button [routerLink]="['/doctor']" [queryParams]='{id: "U2FsdGVkX19iZHdqRFMAlhKo9n0Ctj%2BaXopr2WcCM9kGT%2FSj0us7K%2FxEVdkBqXd"}'>доктор2</button> -->
                <button [routerLink]="['/profile']" >в профиль</button>
                <button [routerLink]="['/admin-login']" >админка</button>
                <button  >logIn</button>
                <button  (click)="FBLogout()">logOut</button>
-               <!-- --{{FBUser | json}}-- -->
                <button  (click)="FBdisplayUser()">FB-User</button>
                <button  (click)="FBdIsAuth()">isAuth</button>
                <button  (click)="FBAuthToken()">authToken</button>
@@ -56,6 +52,7 @@
                   <button  (click)="queryTest()">testQuery</button>
                   <button  (click)="alfaReq()">alfaReq</button>
                   <button  (click)="alfaTest()">alfaTest</button>
+                  <button  (click)="prodTest()">prodTest</button>
                </div>
 
             </div>
@@ -73,14 +70,6 @@
                   </div>
                </ng-template>
              </swiper>
-            <!-- <div class="promo-descr">
-               <p class="describe">
-                  <span>Логого</span> - онлайн занятия с детьми по коррекции поведения, слуха и речи
-               </p>
-               <button class="sign-up">Записаться</button>
-            </div> -->
-            
-
          </div>
       </div>
    
@@ -95,5 +84,5 @@
    
       <app-faq-new></app-faq-new>
       <app-footer-home></app-footer-home>
-   <!-- </div> -->
+   </div>
 </div>

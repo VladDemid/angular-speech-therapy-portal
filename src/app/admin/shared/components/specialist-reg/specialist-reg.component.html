@@ -1,14 +1,14 @@
 <div class="specialist-reg">
    <div class="container">
-
       <button [routerLink]="['/admin/menu']" >назад</button>
+      <!-- newUniqId: "{{newUniqId}}" -->
       <form class="doctor-form"
          [formGroup]="doctorRegistrationForm"
          (ngSubmit) = "sendDoctorForm()"
       >
          <div class="inputs-wrapper">
-            <label><span>Имя</span><input required name="name" type="text" formControlName="name"></label>
             <label><span>Фамилия</span><input required name="surname"  type="text" formControlName="surname"></label>
+            <label><span>Имя</span><input required name="name" type="text" formControlName="name"></label>
             <label><span>Отчество</span><input required name="patronymic"  type="text" formControlName="patronymic"></label>
             <label><span>Email</span><input required name="email"  type="text" formControlName="email"></label>
             <label><span>Пароль</span><input required name="password"  type="password" formControlName="password"></label>

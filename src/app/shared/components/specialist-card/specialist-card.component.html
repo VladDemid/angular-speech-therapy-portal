@@ -1,5 +1,7 @@
 <div class="specialist-card" #cardEl 
-[ngClass]="{'card_active': active}">
+[ngClass]="{'card_active': active}"
+[routerLink]="['/doctor']" [queryParams]='{id: encryptedId, returnToProfileModule: isProfileModule}'
+>
    <div class="specialist-card__image_wrapper">
       <img *ngIf="card.avatarUrl" class="specialist-card__photo" [src]="card.avatarUrl" alt="person photo">
       <img *ngIf="!card.avatarUrl" class="specialist-card__photo" [src]="defaultAvatarUrl" alt="person photo">
@@ -11,6 +13,6 @@
 
    <!-- <div class="specialist-card__experience">Стаж (лет): {{card.experience}}</div> -->
    <div class="specialist-card__details">
-      <a [routerLink]="['/doctor']" [queryParams]='{id: encryptedId, returnToProfileModule: isProfileModule}' >Узнать больше</a>
+      <a>Узнать больше</a>
    </div>
 </div>

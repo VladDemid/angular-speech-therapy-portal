@@ -2,10 +2,10 @@
 <app-nav-home></app-nav-home>
 
 <div class="registration-block">
-   <div class="login-registration_tabs">
-      <div class="registration-tab active">Регистрация для пациентов</div>
+   <!-- <div class="login-registration_tabs">
+      <div class="registration-tab active">Регистрация для клиентов</div>
       <div class="login-tab" [routerLink]="['/']" (click)="popupService.homePageLoginPopup = true">Вход</div>
-   </div>
+   </div> -->
    <div class="container">
       <div class="registration-type" *ngIf="false">
          <label>
@@ -17,23 +17,26 @@
             <span class="type-text" (click)="showDoctorForm()" [ngClass]="{active: doctorFormDisplay}">Присоединиться как специалист</span>
          </label>
       </div>
-
+      <div class="dev-test">
+         <button (click)="testSendEmail()">send email</button>
+      </div>
       <form class="client-form"
          *ngIf="clientFormDisplay"
          [formGroup]="clientRegistrationForm"
          (ngSubmit) = "sendClientForm()"
       >
+         <h2 class="title">Зарегистрироваться как клиент</h2>
          <div class="inputs-wrapper">
             <label><span>Имя</span><input required name="name" type="text" formControlName="name" ></label>
+            <div class="validation-errors" *ngIf="clientRegistrationForm.get('surname').invalid && clientRegistrationForm.get('surname').touched || showRulesRequired">
+               <small class="error" *ngIf="clientRegistrationForm.get('surname').errors && clientRegistrationForm.get('surname').errors.required">
+                     Необходимо ввести <span>фамилию</span></small>
+            </div>
             <div class="validation-errors" *ngIf="clientRegistrationForm.get('name').invalid && clientRegistrationForm.get('name').touched || showRulesRequired">
                <small class="error" *ngIf="clientRegistrationForm.get('name').errors && clientRegistrationForm.get('name').errors.required">
                      Необходимо ввести <span>имя</span></small>
             </div>   
             <label><span>Фамилия</span><input required name="surname" type="text" formControlName="surname"></label>
-            <div class="validation-errors" *ngIf="clientRegistrationForm.get('surname').invalid && clientRegistrationForm.get('surname').touched || showRulesRequired">
-               <small class="error" *ngIf="clientRegistrationForm.get('surname').errors && clientRegistrationForm.get('surname').errors.required">
-                     Необходимо ввести <span>фамилию</span></small>
-            </div> 
             <label><span>Отчество</span><input required name="patronymic" type="text" formControlName="patronymic"></label>
             <div class="validation-errors" *ngIf="clientRegistrationForm.get('patronymic').invalid && clientRegistrationForm.get('patronymic').touched || showRulesRequired">
                <small class="error" *ngIf="clientRegistrationForm.get('patronymic').errors && clientRegistrationForm.get('patronymic').errors.required">
@@ -69,17 +72,21 @@
          </div>
          <div class="rules">
             <div class="terms-of-use">
-               <div class="agreement">Нажимая "отправить", вы соглашаетесь с 
+               <!-- <div class="agreement">, вы соглашаетесь с 
                   <a class="show-rules" (click)="popupService.goToTerms()">пользовательским соглашением и обработкой персональных данных</a>
-               </div>
+               </div> -->
+               <label>
+                  <input name="termsOfUse"  type="checkbox" formControlName="termsOfUse">
+                  <span>Принимаю условия <a class="termsOfUse" target="_blank" routerLink="/terms-of-use">пользовательского соглашения</a></span>
+               </label>
                <!-- <label>
                   <input name="termsOfUse"  type="checkbox" formControlName="termsOfUse">
                   <span>Я подтверждаю, что ознакомлен и согласен с условиями <a class="show-rules" (click)="popupService.toggleTermsOfUsePopup()">Пользовательского соглашения</a></span>
-               </label>
+               </label> -->
                <div class="validation-errors" *ngIf="clientRegistrationForm.get('termsOfUse').invalid && (clientRegistrationForm.get('termsOfUse').touched || showRulesRequired)">
                   <small class="error" *ngIf="clientRegistrationForm.get('termsOfUse').errors.required">
                         Необходимо подтвердить согласие с <span>правилами</span> сервиса</small>
-               </div> -->
+               </div>
             </div>
             <div class="news-subscription">
                <label>
@@ -88,9 +95,11 @@
                </label>
             </div>
          </div>
+         <div class="serverScsMessage" *ngIf="serverScsMessage" >{{serverScsMessage}}</div>
          <div class="serverErrorMessage" *ngIf="serverErrMessage" >{{serverErrMessage}}</div>
          <button class="submit" [disabled]="isSendingData" type="submit">Зарегистрироваться</button>
       </form>
+      
       
       
 

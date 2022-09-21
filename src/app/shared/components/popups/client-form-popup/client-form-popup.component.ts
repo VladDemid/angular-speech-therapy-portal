@@ -44,10 +44,10 @@ export class ClientFormPopupComponent implements OnInit {
         Validators.required
       ]),
       question: new FormControl(environmentOther.question, []),
-      // termsOfUse: new FormControl(true, [
-      //   Validators.required,
-      //   Validators.requiredTrue
-      // ]),
+      termsOfUse: new FormControl(null, [
+        Validators.required,
+        Validators.requiredTrue
+      ]),
     })
   }
 

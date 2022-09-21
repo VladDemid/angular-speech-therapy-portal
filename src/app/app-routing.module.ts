@@ -8,11 +8,15 @@ import { SpecialistPageComponent } from './specialist-page/specialist-page.compo
 import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
 import { AdminModule } from './admin/admin.module';
 import { TermsOfUsePageComponent } from './terms-of-use-page/terms-of-use-page.component';
+import { PaymentCheckPageComponent } from './payment-check-page/payment-check-page.component';
+import { RequisitesComponent } from './requisites/requisites.component';
 
 const routes: Routes = [
   {path:"", component: HomePageComponent},
   {path:"registration", component: RegistrationPageComponent},
   {path:"terms-of-use", component: TermsOfUsePageComponent},
+  {path:"requisites", component: RequisitesComponent},
+  {path:"payment-check", component: PaymentCheckPageComponent},
   {path:"doctor", component: SpecialistPageComponent},
   {path:"admin-login", component: AdminLoginPageComponent},
   {

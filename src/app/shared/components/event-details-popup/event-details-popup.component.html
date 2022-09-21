@@ -23,7 +23,14 @@
          </div>
          <div class="subtitle">Проблема:</div>
          {{popupService.eventDetails.problemDescription}}
-
+         <div class="pay" *ngIf="popupService.eventDetails.state === 'AwaitingPayment'">
+            <div class="subtitle">Ссылка на оплату:</div>
+            {{popupService.eventDetails.paymentFormUrl }}
+            <div class="copy">
+               
+            </div>
+            <!-- {{popupService.eventDetails | json}} -->
+         </div>
          <div class="zoom">
             <div class="subtitle"><span class="blue zoom-icon">Zoom</span> ссылка:</div>
             

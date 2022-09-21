@@ -57,7 +57,18 @@ export class EmailVerifyPopupComponent implements OnInit {
     console.log("changeEmailVerifyBoolean changeEmailVerifyBoolean");
   }
 
-
+  testEmail() {
+    console.log("test email")
+    this.firebase.sendVerificationEmail()
+      .then((resp) => {
+        this.emailSendSuccess = 1
+        console.log("письмо отправлено: ", resp)
+      })
+      .catch((err) => {
+        this.emailSendSuccess = 0
+        console.log("ошибка отправления письма: ", err)
+    })
+  }
   // sendEmailVerification() {
   //   const email = this.userData.myData.email
   //   console.log(`отправка письма для подтверждения на почту ${email}`);

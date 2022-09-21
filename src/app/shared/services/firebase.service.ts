@@ -30,7 +30,7 @@ export class FirebaseService implements OnInit {
     private helper: DevelopHelp,
     private http: HttpClient,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    // private activatedRoute: ActivatedRoute,
     // private userData: UserData
     ) {
       firebase.initializeApp(firebaseConfig)
@@ -146,6 +146,12 @@ export class FirebaseService implements OnInit {
     return this.http.post(url, data)
   }
 
+  testSendEmailFunction(msg: EmailData) {
+    const fireHttpEmail = firebase.functions().httpsCallable('testEmail');
+    return fireHttpEmail(msg)
+
+  }
+
   sendEmailFunction(msg: EmailData) {
     const fireHttpEmail = firebase.functions().httpsCallable('fireHttpEmail');
     return fireHttpEmail(msg)
@@ -220,10 +226,10 @@ export class FirebaseService implements OnInit {
     });
   }
   
-  patchUserData(newData) {
+  patchUserData(newData, key) {
     const user = this.getUser()
     const userId = user.uid
-    const path = 'users/' + userId + "/newTest"
+    const path = 'users/' + userId + `/${key}`
     // var userRef = firebase.database().ref('users/' + userId );
     return firebase.database().ref(path).update(newData);
   }
@@ -291,16 +297,17 @@ export class FirebaseService implements OnInit {
 
   sendVerificationEmail() {
     const user = firebase.auth().currentUser
+    
     console.log(`отправка письма для подтверждения на почту (новое) ${user.email}`)
     var actionCodeSettings = {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be whitelisted in the Firebase Console.
-      url: 'http://localhost:4200/profile/menu',
-      // This must be true.
+      url:  window.location.href.replace("registration", " "),
       handleCodeInApp: true,
       
       // dynamicLinkDomain: 'http://localhost:4200/profile/menu'
     }
+    console.log("email: ", user.email)
 
     return firebase.auth().currentUser.sendEmailVerification(actionCodeSettings)
   }

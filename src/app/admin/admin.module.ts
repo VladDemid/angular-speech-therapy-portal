@@ -10,6 +10,7 @@ import { SpecialistRegComponent } from './shared/components/specialist-reg/speci
 import { AdminMenuComponent } from './shared/components/admin-menu/admin-menu.component';
 import { EditSpecDataComponent } from './shared/components/edit-spec-data/edit-spec-data.component';
 import { EditSoloSpecComponent } from './shared/components/edit-solo-spec/edit-solo-spec.component';
+import { DeleteUsersComponent } from './shared/components/delete-users/delete-users.component';
 
 
 
@@ -20,7 +21,8 @@ import { EditSoloSpecComponent } from './shared/components/edit-solo-spec/edit-s
     SpecialistRegComponent,
     AdminMenuComponent,
     EditSpecDataComponent,
-    EditSoloSpecComponent
+    EditSoloSpecComponent,
+    DeleteUsersComponent,
   ],
   imports: [
     FormsModule,
@@ -32,6 +34,7 @@ import { EditSoloSpecComponent } from './shared/components/edit-solo-spec/edit-s
          {path: "menu", component: AdminMenuComponent, canActivate: [AdminGuard] },
          {path: "reg-spec", component: SpecialistRegComponent, canActivate: [AdminGuard] },
          {path: "edit-spec", component: EditSpecDataComponent, canActivate: [AdminGuard] },
+         {path: "delete-users", component: DeleteUsersComponent, canActivate: [AdminGuard] },
          {path:"**", redirectTo: "menu"}
       ]},
     ]),

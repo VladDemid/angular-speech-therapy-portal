@@ -19,6 +19,11 @@
          </div>
          <div class="mode" *ngIf="verifyEmailMode">
             <div class="title">Подтверждение Email</div>
+            <div class="lds-ellipsis" *ngIf="!emailVerify"><div></div><div></div><div></div><div></div></div>
+            <div class="signs">
+               <div class="message green" *ngIf="emailVerify" >почта подтверждена</div>
+               <div class="message red" *ngIf="errMessage" >{{errMessage}}</div>
+            </div>
          </div>
          <div class="mode" *ngIf="recoverEmailMode">
             <div class="title">Восстановление почты</div>

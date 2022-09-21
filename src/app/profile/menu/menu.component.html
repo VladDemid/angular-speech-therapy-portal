@@ -3,8 +3,8 @@
       <h3>Личный кабинет</h3>
       <div class="user-type-dev user-type-icon" *ngIf="!production">
          Вы вошли как 
-         <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥 {{myId | slice:0:5}}</span>
-         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}}</span>
+         <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
+         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
          <!-- <button (click)="emailSend()">email</button> -->
       </div>
       <div class="dev-test" *ngIf="!production">

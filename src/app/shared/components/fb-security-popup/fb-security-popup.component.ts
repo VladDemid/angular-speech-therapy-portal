@@ -13,6 +13,9 @@ export class FbSecurityPopupComponent implements OnInit {
   resetPasswordMode = false
   verifyEmailMode = false
   recoverEmailMode = false
+  
+  emailVerify = false
+
   newPassword = ""
   oobCode = ""
   errMessage = ""
@@ -43,7 +46,6 @@ export class FbSecurityPopupComponent implements OnInit {
   passwordRecovery() {
     this.firebase.resetPassword(this.oobCode, this.newPassword)
       .then(() => {
-        console.log("password changed!");
         this.message = "Ваш пароль изменен"
         setTimeout(() => {
           this.popupService.toggleFbSecurityPopup()
@@ -67,13 +69,11 @@ export class FbSecurityPopupComponent implements OnInit {
         this.verifyEmailMode = true
         this.firebase.applyActionCode(oobCode)
           .then((resp) => {
-            console.log("подтверждение почты успешно");
-            // setTimeout(() => {location.reload()}, 1500)
-            this.popupService.toggleFbSecurityPopup()
-            this.router.navigate(['/profile'])
+            this.updateEmailVerifyStatus()
           })
           .catch((err) => {
             console.log("Ошибка отправки кода подтверждения почты: ", err);
+            this.errMessage = `Ошибка отправки кода подтверждения почты: ${err}`
           })
         break;
       }
@@ -100,6 +100,23 @@ export class FbSecurityPopupComponent implements OnInit {
       }
       
     }
+  }
+
+  updateEmailVerifyStatus() {
+    const emailVerifyUpdate = {emailVerified: true}
+            
+    this.firebase.sendMyDataChanges(emailVerifyUpdate).subscribe((resp) => {
+      console.log('верификация почты обновлена!', resp)
+      console.log("подтверждение почты успешно");
+      this.emailVerify = true
+      this.popupService.toggleFbSecurityPopup()
+      this.router.navigate(['/profile'])
+      // setTimeout(() => {
+      // }, 1500)
+    },
+    (err) => {
+      console.log('ошибка обновления верификации почты')
+    })
   }
 
 }

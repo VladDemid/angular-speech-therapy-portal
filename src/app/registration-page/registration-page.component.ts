@@ -6,6 +6,7 @@ import { DevelopHelp } from '../shared/services/develop-help.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { UserData } from '../profile/shared/services/user-data.service';
 
 @Component({
   selector: 'app-registration-page',
@@ -20,6 +21,7 @@ export class RegistrationPageComponent implements OnInit {
   showRulesRequired = false
   showSuccessReg = false
   serverErrMessage = ""
+  serverScsMessage = ""
   isSendingData = false
 
   experienceStages = [
@@ -40,8 +42,10 @@ export class RegistrationPageComponent implements OnInit {
     private auth: AuthService,
     private helper: DevelopHelp,
     public popupService: PopupService,
+    private userData: UserData,
     private firebase: FirebaseService,
-    private router: Router
+    private router: Router,
+    // private activatedRoute: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
@@ -70,10 +74,10 @@ export class RegistrationPageComponent implements OnInit {
       //   Validators.required,
       //   Validators.minLength(this.passwordMinLength)
       // ]),
-      // termsOfUse: new FormControl(true, [
-      //   Validators.required,
-      //   Validators.requiredTrue
-      // ]),
+      termsOfUse: new FormControl(null, [
+        Validators.required,
+        Validators.requiredTrue
+      ]),
       newsSubscription: new FormControl(false),
     })
 
@@ -114,9 +118,6 @@ export class RegistrationPageComponent implements OnInit {
 
   sendClientForm() {
     
-    // const pass1 = this.clientRegistrationForm.value.password 
-    // const pass2 = this.clientRegistrationForm.value.passwordRepeat 
-
     this.isSendingData = true
 
     if (this.clientRegistrationForm.invalid) {
@@ -130,7 +131,6 @@ export class RegistrationPageComponent implements OnInit {
       name: this.clientRegistrationForm.value.name,
       surname: this.clientRegistrationForm.value.surname,
       patronymic: this.clientRegistrationForm.value.patronymic,
-      // childDiagnosis: this.clientRegistrationForm.value.childDiagnosis,
       email: this.clientRegistrationForm.value.email.trim(),
       newsSubscription: this.doctorRegistrationForm.value.newsSubscription,
       userType: "client",
@@ -153,8 +153,8 @@ export class RegistrationPageComponent implements OnInit {
             this.isSendingData = false
             this.helper.toConsole("объект пользователя создан")
             this.clientRegistrationForm.reset()
-            this.successfulRegistrationAlert() //может не нада
-            this.router.navigate(['/profile'])
+            this.sendVerificationEmail()
+            // this.router.navigate(['/profile'])
           }, (err) => {
             this.isSendingData = false
             console.log("Ошибка создания ячейки данных: ", err);
@@ -168,6 +168,45 @@ export class RegistrationPageComponent implements OnInit {
     })
     
   }
+
+  sendVerificationEmail() {
+    const user = this.firebase.getUser()
+    console.log("user: ", user)
+    // let backUrl = window.location.href.replace("registration", " ")
+    if (user && user.emailVerified === false) {
+      console.log("start sending email..")
+      this.firebase.sendVerificationEmail()
+        .then((resp) => {
+          // this.emailSendSuccess = 1
+          this.serverScsMessage = "Мы выслали вам письмо на почту для верификации"
+          console.log("письмо отправлено: ", resp)
+        })
+        .catch((err) => {
+          // this.emailSendSuccess = 0
+          console.log("ошибка отправления письма: ", err)
+      })
+    }
+  }
+
+
+  testSendEmail() {
+    const user = this.firebase.getUser()
+    console.log("user: ", user)
+    // let backUrl = window.location.href.replace("registration", " ")
+    if (user && user.emailVerified === false) {
+      console.log("start sending email..")
+      this.firebase.sendVerificationEmail()
+        .then((resp) => {
+          console.log("письмо отправлено: ", resp)
+        })
+        .catch((err) => {
+          console.log("ошибка отправления письма: ", err)
+      })
+
+    }
+  }
+
+  
 
   sendDoctorForm() {
     // const pass1 = this.doctorRegistrationForm.value.password 
@@ -216,7 +255,6 @@ export class RegistrationPageComponent implements OnInit {
             this.isSendingData = false
             this.helper.toConsole("объект доктора создан")
             this.doctorRegistrationForm.reset()
-            // this.successfulRegistrationAlert() 
             this.router.navigate(['/profile'])
           }, (err) => {
             this.isSendingData = false
@@ -251,6 +289,7 @@ export class RegistrationPageComponent implements OnInit {
     }
   }
 
+  
   async uploadSertificates() {
     const files = (<HTMLInputElement>document.querySelector('#sertificates')).files
     console.log("файлы для отправки: ", files);
@@ -281,13 +320,6 @@ export class RegistrationPageComponent implements OnInit {
     }
   }
 
-  successfulRegistrationAlert() {
-    this.showSuccessReg = true
-    setTimeout(() => {
-      this.showSuccessReg = false
-      // this.router.navigate(['/profile'])
-    }, 3000)
-  }
 
   showClientForm() {
     this.clientFormDisplay = true

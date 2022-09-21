@@ -22,6 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequisitesPopupComponent } from './components/requisites-popup/requisites-popup.component';
 import { ImgPopupComponent } from './components/popups/img-popup/img-popup.component';
 import { AppointmentDetailsPopupComponent } from './components/popups/appointment-details-popup/appointment-details-popup.component';
+import { TimeCheckPipe } from './pipes/time-check.pipe';
+import { ManualOrderPopupComponent } from './components/popups/manual-order-popup/manual-order-popup.component';
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
 // import { AngularFireFunctionsModule } from '@angular/fire/functions';
@@ -70,6 +72,8 @@ import { AppointmentDetailsPopupComponent } from './components/popups/appointmen
       TextCutterPipe,
       EventDetailsPopupComponent,
       AppointmentDetailsPopupComponent,
+      TimeCheckPipe,
+      ManualOrderPopupComponent,
       
       
       

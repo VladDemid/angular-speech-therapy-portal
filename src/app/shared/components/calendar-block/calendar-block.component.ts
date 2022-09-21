@@ -29,9 +29,9 @@ export class CalendarBlockComponent implements OnInit {
   production = environment.production
 
   currentHour = new Date().getHours()
-  selectedDay = -1 // номер дня (-1\ 0-30) 
-  selectedDayOfWeek = -1 
-  day = new Date().getDate()
+  selectedDay = 23 // номер дня (-1\ 1-31) 
+  selectedDayOfWeek = -1
+  day = new Date().getDate() //текущий день
   month = new Date().getMonth() + 1 //меняется при листании календаря
   currentMonth = new Date().getMonth() + 1 //1 = январь, 12 = декабрь (не меняется)
   year = new Date().getFullYear() //меняется при листании календаря
@@ -44,20 +44,22 @@ export class CalendarBlockComponent implements OnInit {
   daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пн", "Сб", "Вс"]
   currentFirstDay: number //день недели 1-го числа месяца месяца (1-7)
   selectedHourForLesson = -1 //выбранное клиентом время записи (8-22 часа workStart-workEnd)
+  selectedTimeForLesson: any = '9:50'  //выбранное клиентом время записи (workGapsCln[n])
   updatingdWorkHourData = false //чтобы при каждом клике подряд не скачивать инфу
   workStart = 8
   workEnd = 22
-  currWorkStart = this.workStart
-  currWorkEnd = this.workEnd
-  currDayActive = false
-  currFreeGaps = []
-  activeGap = -1
-
+  orderDetails = {}
+  workGapsCln = ["9:00", "9:50", "10:40", "11:30", "12:20", "13:10", "14:00", "14:50", "15:40", "16:30", "17:20", "18:10", "19:00", "19:50", "20:40", "21:30"]
+  scheduleHours = {}
+  newScheduleHours = {} //для визуализации загрузки этих часов
+  manualAddOrder = true
+  
+  workTEST = false
   workHoursArray = []
   doctorShedule = {}
   doctorsLessons = {}
   doctorAlertSign: string
-  patientProblem = "проблема..."
+  patientProblem = ""
   // withChild = "0" //проблема у ребенка или нет 0/1
   errorMakingLesson = ""
   successMakingLesson = ""
@@ -69,6 +71,7 @@ export class CalendarBlockComponent implements OnInit {
   daysOfWeekShedule = {}
   newDaysOfWeekShedule = {}
   environment: any;
+
   
   constructor(
     private firebase: FirebaseService,
@@ -77,13 +80,13 @@ export class CalendarBlockComponent implements OnInit {
     private auth: AuthService,
     public userData: UserData,
     public helper: DevelopHelp,
-    private telegram: TelegramBotService
+    private telegram: TelegramBotService,
   ) {}
     
   ngOnInit(): void {
     this.setMonthName()
     this.showDays()
-    this.makeHoursArray()
+    // this.makeHoursArray()
     // if (this.userData.myData.userType == "doctor") {
       
     this.waitForInfo() //после подгрузки инфы грузить все
@@ -91,29 +94,8 @@ export class CalendarBlockComponent implements OnInit {
   // }
   }
 
-  
-
-  triggerFalseClick() {
-    setTimeout(() => {
-      document.getElementById('day23').click()
-      console.log("click")
-    }, 4000)
-  }
 
 
-
-  TESTlogDoctorsLessons() {
-    console.log(this.doctorsLessons)
-  }
-
-  TESTdoctorEventsYearMonthDayHour() {
-    console.log(this.doctorEventsYearMonthDayHour)
-  }
-
-  invertExpand() {
-    this.asideIsExpanded = !this.asideIsExpanded
-    this.expandSign = this.expandSign == "Развернуть" ? "Свернуть" : "Развернуть"
-  }
 
   waitForInfo() { //ждать подгрузки инфы себя (в профиле) (в случае F5 на странице календаря например)
     if (this.isInProfileModule == true && this.userData.myData.name == "") {
@@ -126,29 +108,16 @@ export class CalendarBlockComponent implements OnInit {
       }, 100)
     } else this.checkShedule()
     
-
   }
 
   checkShedule() {
-    if (!this.userData.myData.weeklySchedule) { //если нет расписания заполняем нуллами
-      this.daysOfWeekShedule = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null}
-      this.newDaysOfWeekShedule = {0:null, 1:null, 2:null, 3:null, 4:null, 5:null, 6:null}
-    } else { //заполняем расписание если есть
-      this.daysOfWeekShedule = JSON.parse(JSON.stringify(this.userData.myData.weeklySchedule))
-      for(let i = 0; i<=6; i++) { //для работы Object.assign(). заполнить пустые ключи 
-        if(!this.daysOfWeekShedule[i]) {this.daysOfWeekShedule[i] = null}
-      }
-      // Object.assign(this.newDaysOfWeekShedule, this.daysOfWeekShedule)
-      this.newDaysOfWeekShedule = JSON.parse(JSON.stringify(this.daysOfWeekShedule))
+    if (this.userData.myData.scheduleTime) {
+      this.scheduleHours = this.userData.myData.scheduleTime
     }
-
-    if (!this.userData.myData.schedule) {
-      this.userData.myData.schedule = {}
-    }
-
+    // console.log("scheduleHours:", this.scheduleHours)
   }
 
-  downloadSheduleInfo() { //скан рабочих часов + занятых уроков 
+  downloadSheduleInfo() { //! (хз устарело или нет)скан рабочих часов + занятых уроков 
     if ((this.userData.myData.userType == 'doctor' && this.isCalendarPage) || !this.isCalendarPage) {
       this.firebase.getDoctorShedule(this.calendarUserId) 
       .subscribe((resp) => {
@@ -183,35 +152,41 @@ export class CalendarBlockComponent implements OnInit {
     } 
   } 
 
-  makeHoursArray() {
-    for (let i = this.workStart; i <= this.workEnd; i++) { 
-      this.workHoursArray.push(i) //массив всех часов для html ngFor
-      // this.selectedDayHoursSettings[i] = {"workTime": false}
-    }
-  }
+  // makeHoursArray() {
+  //   for (let i = this.workStart; i <= this.workEnd; i++) { 
+  //     this.workHoursArray.push(i) //массив всех часов для html ngFor
+  //     // this.selectedDayHoursSettings[i] = {"workTime": false}
+  //   }
+  // }
 
 
   increaseMonth() {
-    this.selectedDay = -1 //сброс дня
-    this.selectedHourForLesson = -1 //сброс часа
     this.month++
     if (this.month == 13) {
       this.month = 1
       this.year++
     }
+    this.resetDayTime()
     this.setMonthName()
     this.showDays()
   }
+
   decreaseMonth() {
-    this.selectedDay = -1 //сброс дня
-    this.selectedHourForLesson = -1 //сброс часа
+    
     this.month--
     if (this.month == 0) {
       this.month = 12
       this.year--
     }
+    this.resetDayTime()
     this.setMonthName()
     this.showDays()
+  }
+
+  resetDayTime() {
+    this.selectedDay = -1 //сброс дня
+    this.selectedHourForLesson = -1 //сброс часа
+    this.selectedTimeForLesson = -1 //сброс часа
   }
 
   setMonthName() {
@@ -226,10 +201,8 @@ export class CalendarBlockComponent implements OnInit {
     this.currentDays = days 
     this.daysArr = [] //массив дней от 0 до 30 например
     for(let i = 1; i <= days; i++) this.daysArr.push(i);
-    // console.log(this.daysArr);
     
     this.getFirstDayOfWeek();
-    // (<HTMLElement>document.querySelector(".day")).style.marginLeft = "30px"
   }
 
   getFirstDayOfWeek () { //возвращает 1-7 (Пн-Вс)
@@ -245,26 +218,117 @@ export class CalendarBlockComponent implements OnInit {
 
   onDayClick(dayIndex) { //номер дня (1-31)
     // console.log(this.year, this.month, dayIndex);
-    this.selectedDay = dayIndex - 1
+    this.selectedDay = dayIndex
+    this.selectedTimeForLesson = -1
     this.selectedDayOfWeek = (this.currentFirstDay + this.selectedDay - 1)%7
 
-    this.calculateFreeGaps()
-    // this.thisDayOfWeek = (this.currentFirstDay + this.dayIndex - 1)%7 //номер первого дня недели (1-7) + номер дня (1-31) -1 %7
-    // if (this.thisDayOfWeek == 0) {
-    //   this.thisDayOfWeek = 7
-    // }
-    // --this.thisDayOfWeek //чтобы Пн=0 Вс=6
   }
 
-  calculateFreeGaps() {
+  switchHour(time) { //
+    console.log(this.scheduleHours)
+    this.workTEST = !this.workTEST
 
-    this.currFreeGaps = this.inputDoctorInfo.schedule[this.year][this.month][this.selectedDay + 1]
+    const selectedDay = this.selectedDay
+    const month = this.month
+    const year = this.year
+    // console.log(time)
+    time += ""
+    let timeStr = time.replace(/[\.\/]/g,'_');
+    if ( timeStr.indexOf("_") === -1 ) {
+      timeStr += ":00"
+    } else {
+      timeStr += "0"
+    }
+    // console.log(timeStr)
 
-    const from = this.inputDoctorInfo.schedule[this.year][this.month][this.selectedDay + 1].from
-    const to = this.inputDoctorInfo.schedule[this.year][this.month][this.selectedDay + 1].to
-    this.currFreeGaps = [[from, to]]
+    // console.log(selectedDay, month, year)
+    if (!this.scheduleHours[year]) {
+      this.scheduleHours[year] = {}
+    }
+    if (!this.scheduleHours[year][month]) {
+      this.scheduleHours[year][month] = {}
+    }
+    if (!this.scheduleHours[year][month][selectedDay]) {
+      this.scheduleHours[year][month][selectedDay] = {}
+    }
 
-    console.log(this.inputDoctorInfo.schedule[this.year][this.month][this.selectedDay + 1] )
+    
+
+    if (!this.scheduleHours[year][month][selectedDay][time]) {
+
+
+      this.scheduleHours[year][month][selectedDay][time] = {active: true}
+      this.newScheduleHours[time] = "adding"
+    } else {
+      delete this.scheduleHours[year][month][selectedDay][time]
+      this.newScheduleHours[time] = "deleting"
+    }
+
+    // const scheduleTime = this.scheduleHours
+    
+    this.uploadScheduleQueue()
+    
+    
+  }
+
+
+  uploadScheduleQueue() {
+    if (!this.updatingdWorkHourData) {
+      this.updatingdWorkHourData = true
+      setTimeout((function() {
+        this.uploadSchedule()
+      }).bind(this), 1500) //интервал = 1.5 сек, после которого начинается обновление
+    }
+  }
+  
+  uploadSchedule() {
+    this.firebase.patchUserData(this.scheduleHours, "scheduleTime")
+    .then((resp) => {
+      console.log("расписание изменено:", resp)
+      this.updateLocalSchedule()
+    })
+    .catch((err) => {
+      console.log("ошибка изменения расписания: ", err)
+    })
+  }
+  
+  updateLocalSchedule() { 
+    this.updatingdWorkHourData = false
+
+    const selectedDay = this.selectedDay
+    const month = this.month
+    const year = this.year
+
+    for (let key in this.newScheduleHours) {
+      key += ""
+      let timeStr = key.replace(/[\.\/]/g,'_');
+      if ( timeStr.indexOf("_") === -1 ) {
+        timeStr += "_00"
+      } else {
+          timeStr += "0"
+      }
+
+      console.log(this.userData.myData.scheduleTime)
+      // console.log(timeStr, this.newScheduleHours[key])
+      if (this.newScheduleHours[key] === "adding") {
+        // console.log("adding")
+        
+        if (!this.userData.myData.scheduleTime) {this.userData.myData.scheduleTime = {}}
+        if (!this.userData.myData.scheduleTime[year]) {this.userData.myData.scheduleTime[year] = {}}
+        if (!this.userData.myData.scheduleTime[year][month]) {this.userData.myData.scheduleTime[year][month] = {}}
+        if (!this.userData.myData.scheduleTime[year][month][selectedDay]) {this.userData.myData.scheduleTime[year][month][selectedDay] = {}}
+
+        this.userData.myData.scheduleTime[year][month][selectedDay][key] = {active: true}
+      } else if (this.newScheduleHours[key] === "deleting") {
+        // console.log("deleting")
+        // delete this.userData.myData.scheduleTime[this.year][this.month][this.selectedDay][key]
+        delete this.userData.myData.scheduleTime[this.year][this.month][this.selectedDay][key]
+      }
+      console.log("расписание изменено: ", this.userData.myData.scheduleTime)
+
+    }
+
+    this.newScheduleHours = {}
   }
 
 
@@ -272,73 +336,81 @@ export class CalendarBlockComponent implements OnInit {
     console.log("выбран ", dayOfWeekChoosen);
   }
 
-  onClickTimeRow(lessonTime) { //(устарело) почасовоее изменение расписания
-    // console.log(lessonTime)
-    if (this.isCalendarPage) {         //для страницы редактирования своего календаря
-      let hourSettings = {workTime: true, isEngaged: false}
-      //если час уже настроен (включен), то выключить его
-      if (this.doctorShedule && 
-          this.doctorShedule[this.year] &&
-          this.doctorShedule[this.year][this.month] && 
-          this.doctorShedule[this.year][this.month][this.selectedDay+1] && 
-          this.doctorShedule[this.year][this.month][this.selectedDay+1][lessonTime]) {
-          // hourSettings["workTime"] = !this.doctorShedule[this.year][this.month][this.selectedDay+1][lessonTime]["workTime"]
-          delete hourSettings["workTime"]
-          delete hourSettings["isEngaged"]
+  onClickTimeRow(lessonTime) { //! (переделать под новое расписание)
+    if (!this.isCalendarPage) {  //клиент записывается к спецу
+      if (this.inputDoctorInfo.scheduleTime && this.inputDoctorInfo.scheduleTime[this.year] && this.inputDoctorInfo.scheduleTime[this.year][this.month] && this.inputDoctorInfo.scheduleTime[this.year][this.month][this.selectedDay] && this.inputDoctorInfo.scheduleTime[this.year][this.month][this.selectedDay][lessonTime]) {
+        if (!this.inputDoctorInfo.ordersFutureDates?.[this.year]?.[this.month]?.[this.selectedDay]?.[lessonTime]) {
+          // console.log("Занято")
+          this.selectedTimeForLesson = lessonTime
+          // console.log(lessonTime, typeof lessonTime)
+        }
+        if (this.isInProfileModule === "true") { // если зареган
+          // this.appointmentDetails()
+        }
+
       }
-      this.firebase.changeWorkHourBoolean(this.calendarUserId ,this.year, this.month, this.selectedDay+1, lessonTime, hourSettings)
-      .subscribe((resp) => {
-        // console.log("все пользователи: ", resp);
-        console.log("этот час теперь рабочий");
-        this.updateLocalsheduleData()
-      },
-      (err) => {
-        console.log("ошибка при изменении рабочего часа ", err);
-      })
-      //для страницы просмотра и записи к доктору
-    } else if (!this.isCalendarPage) {       
-      if (this.inputDoctorInfo.weeklySchedule[this.selectedDayOfWeek]) 
-      this.selectedHourForLesson = lessonTime
     }
   }
 
 
 
-  updateLocalsheduleData() { //обновление инфы по часам (отправка по клику, а скачивание не чаще заданного интервала)
-    if (!this.updatingdWorkHourData) {
-      this.updatingdWorkHourData = true
-      setTimeout((function() { 
-        this.downloadSheduleInfo()
-        this.updatingdWorkHourData = false
-      }).bind(this), 1500) //интервал = 1.5 сек, после которого начинается скачка
-    }
-  }
+  // updateLocalsheduleData() { //! устарело надо удалить. обновление инфы по часам (отправка по клику, а скачивание не чаще заданного интервала)
+  //   if (!this.updatingdWorkHourData) {
+  //     this.updatingdWorkHourData = true
+  //     setTimeout((function() { 
+  //       this.downloadSheduleInfo()
+  //       this.updatingdWorkHourData = false
+  //     }).bind(this), 1500) //интервал = 1.5 сек, после которого начинается скачка
+  //   }
+  // }
 
-  changeActiveDaysOfWeek(index) {
-    if (this.newDaysOfWeekShedule[index]) { // если день записан, то удалить
-      delete this.newDaysOfWeekShedule[index]
-    } else {
-      if (this.daysOfWeekShedule[index]) {
-        this.newDaysOfWeekShedule[index] = this.daysOfWeekShedule[index]
-      } else {
-        this.newDaysOfWeekShedule[index] = [this.workStart, this.workEnd]
-      }
-    }
+  // changeActiveDaysOfWeek(index) {
+  //   if (this.newDaysOfWeekShedule[index]) { // если день записан, то удалить
+  //     delete this.newDaysOfWeekShedule[index]
+  //   } else {
+  //     if (this.daysOfWeekShedule[index]) {
+  //       this.newDaysOfWeekShedule[index] = this.daysOfWeekShedule[index]
+  //     } else {
+  //       this.newDaysOfWeekShedule[index] = [this.workStart, this.workEnd]
+  //     }
+  //   }
 
-    // this.newDaysOfWeekShedule[index] = [Math.floor(Math.random()*10)+10,21]
+  //   // this.newDaysOfWeekShedule[index] = [Math.floor(Math.random()*10)+10,21]
     
+  // }
+  makeLessonFromTimeRow() {
+    // console.log(this.patientProblem)
+    this.makeAnAppointment()
   }
 
-  selectTimeGap(index) {
-    this.activeGap = index
+
+  openManualOrderPopup(time) {
+    
+    this.popupService.manualOrderDetails = {
+      date: {
+        day: this.selectedDay, 
+        month: this.month, 
+        year: this.year, 
+        time: time 
+      },
+    }
+    this.popupService.toggleManualOrderPopup()
   }
 
   makeLessonFromPopup(details) {
-    this.patientProblem = details.problem
-    // this.withChild = details.withChild
-    // console.log("PARENT TEST SUCCESS", details)
-    this.makeAnAppointment(this.year, this.month, this.selectedDay + 1, this.selectedHourForLesson)
+    console.log("создание заказа вручную:...")
+    console.log("детали: ", details) //problem, patientEmail, patientName
+    console.log(this.popupService.manualOrderDetails)
+    const manualDetails = {
+      date: this.popupService.manualOrderDetails.date,
+      ...details,
+    }
+    this.selectedTimeForLesson = manualDetails.date.time
+
+    console.log("manualDetails: ", manualDetails)
+    this.makeAnAppointment(true, manualDetails)
   }
+
 
   checkIsDayFuture(year, month, day, hour) { //проверка прошел ли день уже?
     let timeAccess = true
@@ -372,16 +444,24 @@ export class CalendarBlockComponent implements OnInit {
 
 
   //TODO____________СОЗДАНИЕ_ЗАКАЗА____________________
-  async makeAnAppointment(year, month, day, hour) {
+  async makeAnAppointment(manualOrder = false, manualDetails = null) {
+    const year = this.year
+    const month = this.month
+    const day = this.selectedDay
+    const hour = this.selectedTimeForLesson
 
     this.isLoading = true
     this.errorMakingLesson = "" //сброс надписи об ошибках
     this.successMakingLesson = "" //сброс надписи об успехе
-    const orderId = `${year}_${month}_${day}_${hour}_${this.calendarUserId}`
+    let orderId = null
+    if (!manualOrder) {
+      orderId = `${year}_${month}_${day}_${hour}_${this.calendarUserId}`
+    } else {
+      orderId = `${year}_${month}_${day}_${hour}_${localStorage.getItem("user-Id")}`
+    }
 
-    // console.log(`год ${year}, ${this.currentYear},| месяц: ${month}, ${this.currentMonth},| день ${day}, ${this.day}`)
     
-    if ( !this.checkIsDayFuture(year, month, day, hour) ) {
+    if (!manualOrder && !this.checkIsDayFuture(year, month, day, hour) ) {
       this.errorMakingLesson = "Выбранный день уже прошел"
       this.isLoading = false
       return
@@ -401,7 +481,7 @@ export class CalendarBlockComponent implements OnInit {
         console.log("объект урока: ", snapshot.val()) //объект урока
       })
     //* проверка-был ли такой заказ уже
-    if (orderThisHour) { 
+    if (!manualOrder && orderThisHour) { 
       if (orderThisHour.patientId === localStorage.getItem("user-Id")) {
         this.errorMakingLesson = `Вы уже записаны на этот час, но не оплатили. Пожалуйста оплатите этот заказ через Личный кабинет -> Календарь`
       } else {
@@ -412,32 +492,58 @@ export class CalendarBlockComponent implements OnInit {
       return
     }
     
-    if (this.firebase.isAuthenticated() && this.userData.myData.userType == 'client') {
+    if ( (this.firebase.isAuthenticated() && (this.userData.myData.userType == 'client')) || manualOrder) {
       //*была проверка на занятость по doctorsLessons
       //! потом опять возвратить, когда у доктора будут записываться чисто id заказа
       // && (!this.doctorsLessons || !this.doctorsLessons[year] || !this.doctorsLessons[year][month] 
       //   || !this.doctorsLessons[year][month][day] || !this.doctorsLessons[year][month][day][hour] )
 
-      const orderData = {
-        date: {
-          year: year,
-          month: month,
-          day: day,
-          time: hour,
-        },
-        patientId: localStorage.getItem("user-Id"),
-        patientName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
-        problemDescription: this.patientProblem,
-        doctorId: this.calendarUserId,
-        doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
-        doctorsConfirmation: false,
-        zoomLink: this.inputDoctorInfo.zoomLink ? this.inputDoctorInfo.zoomLink : undefined,
-        state: ""
+      let orderData = null
+      if (!manualOrder) { 
+        orderData = {
+          orderId: orderId,
+          date: {
+            year: year,
+            month: month,
+            day: day,
+            time: hour,
+          },
+          patientId: localStorage.getItem("user-Id"),
+          patientName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
+          problemDescription: this.patientProblem,
+          doctorId: this.calendarUserId,
+          doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
+          doctorsConfirmation: false,
+          zoomLink: this.inputDoctorInfo.zoomLink ? this.inputDoctorInfo.zoomLink : undefined,
+          state: "",
+        }
+      } else if (manualDetails) { //вручную
+        orderData = {
+          orderId: orderId,
+          date: {
+            year: year,
+            month: month,
+            day: day,
+            time: hour,
+          },
+          patientId: null,
+          manualOrder: true,
+          patientEmail: manualDetails.patientEmail,
+          patientName: manualDetails.patientName,
+          problemDescription: manualDetails.problem,
+          doctorId: localStorage.getItem("user-Id"),
+          doctorName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
+          doctorsConfirmation: false,
+          zoomLink: this.userData.myData.zoomLink ? this.userData.myData.zoomLink : "null",
+          state: "",
+        }
+      } else {
+        console.log("Error making lesson..")
+        return
       }
 
-      //* создание заказа в БД (firebase)
-      
-      let dbSaveArray = this.createOrderInDB(orderId, orderData)
+        //* создание заказа в БД (firebase)
+      let dbSaveArray = this.createOrderInDB(orderId, orderData, manualOrder, manualDetails)
       await Promise.all([dbSaveArray])
         .then((resp) => {
           console.log("создание заказа в БД - удачно")
@@ -451,7 +557,7 @@ export class CalendarBlockComponent implements OnInit {
         })
       if (!this.isMakingAppointment) { return }
         
-      //* вызов функции для создания заказа в банке
+        //* вызов функции для создания заказа в банке
       const funcData = {
         id: orderId,
         prod: this.production
@@ -459,10 +565,17 @@ export class CalendarBlockComponent implements OnInit {
       await this.firebase.reqFunc("orders-pay", funcData).subscribe(
         (resp: alfaRegistrationResp) => {
           console.log("orders-pay url: ", resp.formUrl)
-          window.open(resp.formUrl, '_blank')
           // this.router.navigate(['/profile/calendar'])
-          this.successMakingLesson = "Вы записались! Ваше занятие лежит в разделе 'календарь'"
           this.isLoading = false
+          // window.open(resp.formUrl, '_blank')
+          if (!manualOrder) {
+            this.successMakingLesson = "Ваше занятие лежит в разделе 'календарь'. Проверьте состояние оплаты заказа"
+            window.location.href = resp.formUrl
+          } else {
+            this.successMakingLesson = "Вы записали клиента, теперь он должен оплатить заказ в течении 20 минут. Письмо на почту может идти минуту."
+            orderData.paymentLink = resp.formUrl
+            // this.sendEmailManual(orderData)
+          }
         },
         (err) => {
           console.log("ERROR orders-pay: ", err)
@@ -504,21 +617,22 @@ export class CalendarBlockComponent implements OnInit {
       //   }
       // )
 
-      let clientsEmailConfirmation = {
-        to: this.userData.myData.email,
-        from: emailConfig.fromEmailAdress,
-        templateId: emailConfig.EMAIL_TEMPLATES.CLIENT_MADE_AN_APPOINTMENT,
-        dynamicTemplateData: {
-          subject: "Logogo запись на прием",
-          date: `${day}-${month}-${year}`,
-          clientName: this.userData.myData.name,
-          doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
-          time: "",
+      
+      //* отправка почты  //(отправка на FB functions)
+      // let clientsEmailConfirmation = {
+      //   to: this.userData.myData.email,
+      //   from: emailConfig.fromEmailAdress,
+      //   templateId: emailConfig.EMAIL_TEMPLATES.CLIENT_MADE_AN_APPOINTMENT,
+      //   dynamicTemplateData: {
+      //     subject: "Logogo запись на прием",
+      //     date: `${day}-${month}-${year}`,
+      //     clientName: this.userData.myData.name,
+      //     doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
+      //     time: "",
           
-        }
-      }
+      //   }
+      // }
 
-      //* отправка почты 
       // this.firebase.sendEmailFunction(clientsEmailConfirmation)
       // .then((res) => {
       //   console.log("email отправлен: ", res)
@@ -551,23 +665,69 @@ export class CalendarBlockComponent implements OnInit {
     }
   }
 
-  createOrderInDB(orderId, orderData) {
-    const dbOrderPath = `orders/${orderId}`
+  sendEmailManual(orderData) {
 
-    const dbPatientOrdersPath = `users/${localStorage.getItem("user-Id")}/orders/${orderId}`
-    const patientData = { orderId: orderId }
+    console.log("временно выключено....")
+    return
 
-    const dbDoctorOrdersPath = `users/${this.calendarUserId}/orders/${orderId}`
-    const doctorData = { orderId: orderId }
-
-    return Promise.all([
-      this.firebase.setData(dbOrderPath, orderData),
-      this.firebase.updateData(dbPatientOrdersPath, patientData),
-      this.firebase.updateData(dbDoctorOrdersPath, doctorData)
-    ])
+    const clientsEmailConfirmation = {
+      to: "vlatidos@gmail.com",
+      from: emailConfig.fromEmailAdress,
+      // templateId: emailConfig.EMAIL_TEMPLATES.CLIENT_MADE_AN_APPOINTMENT,
+      templateId: "d-46991a5b503b4f578b6f770eeac9c711",
+      dynamicTemplateData: {
+        subject: "Logogo запись на прием",
+        // date: `${day}-${month}-${year}`,
+        orderId: orderData.orderId,
+        // orderId: "orderId-2435842590",
+        date: `${orderData.date.time}(по Минску) ${orderData.date.day} ${this.monthsNamesWhomCase[orderData.date.month]} ${orderData.date.year}`,
+        paymentLink: orderData.paymentLink,
+        clientName: this.userData.myData.name,
+        doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
+        time: "",
+      }
+    }
+    this.firebase.testSendEmailFunction(clientsEmailConfirmation)
+      .then((res) => {
+        console.log("email отправлен: ", res)
+        })
+      .catch((err) => {
+          console.log("Ошибка FBtest: ", err)
+          // this.isSendingData = false
+        })
   }
 
-  payOrder(paymentUrl) {
+  createOrderInDB(orderId, orderData, manualOrder = false, manualDetails = null) {
+    const dbOrderPath = `orders/${orderId}`
+
+    let dbPatientOrdersPath= null 
+    let dbDoctorOrdersPath = null
+
+    if (!manualOrder) {
+      dbPatientOrdersPath = `users/${localStorage.getItem("user-Id")}/orders/${orderId}`
+      dbDoctorOrdersPath = `users/${this.calendarUserId}/orders/${orderId}`
+    } else {
+      dbDoctorOrdersPath = `users/${localStorage.getItem("user-Id")}/orders/${orderId}`
+    }
+    
+    const patientData = { orderId: orderId }
+    const doctorData = { orderId: orderId }
+    
+    if (!manualOrder) {
+      return Promise.all([
+        this.firebase.setData(dbOrderPath, orderData),
+        this.firebase.updateData(dbPatientOrdersPath, patientData),
+        this.firebase.updateData(dbDoctorOrdersPath, doctorData)
+      ])
+    } else {
+      return Promise.all([
+        this.firebase.setData(dbOrderPath, orderData),
+        this.firebase.updateData(dbDoctorOrdersPath, doctorData)
+      ])
+    }
+  }
+
+  payForOrder(paymentUrl) {
     window.open(paymentUrl)
   }
 
@@ -588,7 +748,11 @@ export class CalendarBlockComponent implements OnInit {
     
   }
 
-  appointmentDetails(year, month , day, hour) {
+  appointmentDetails() {
+    const year = this.year
+    const month = this.month
+    const day = this.selectedDay
+    const hour = this.selectedTimeForLesson
     if (this.userData.myData.userType === "doctor") {
       this.isLoading = false
       this.errorMakingLesson = "Вы, как доктор, не можете записаться к другому доктору. Пожалуйста сделайте аккаунт как клиент."
@@ -601,7 +765,7 @@ export class CalendarBlockComponent implements OnInit {
       hour,
 
     }
-    this.popupService.toggleappointmentDeatailsPopup()
+    this.popupService.toggleAppointmentDeatailsPopup()
     
   }
 
@@ -623,49 +787,21 @@ export class CalendarBlockComponent implements OnInit {
       })
   }
 
-  changeWorkHour(value, day, side) { // куда, какой день, from или to  
-    const x = this.newDaysOfWeekShedule[day][side]
-    let workPeriodCheck = true
-    if (side == 0 && value == 1 && this.newDaysOfWeekShedule[day][0] + 1 >= this.newDaysOfWeekShedule[day][1]) {
-      workPeriodCheck = false
-    } else if (side == 1 && value == -1 && this.newDaysOfWeekShedule[day][1] - 1 <= this.newDaysOfWeekShedule[day][0]) {
-      workPeriodCheck = false
-    }
-    // this.newDaysOfWeekShedule[day][0] < this.newDaysOfWeekShedule[day][1]
-    if (workPeriodCheck && x && x + value >= this.workStart && x + value <= this.workEnd) {
-      this.newDaysOfWeekShedule[day][side] += value;
-      // console.log(this.daysOfWeekShedule[day][side], this.newDaysOfWeekShedule[day][side])
-    } else {console.log(x, x + value >= this.workStart, x + value <= this.workEnd)} 
-    // console.log(x + value >= this.workEnd);
-  }
-
-  changeDayWorkHour(var1, val) { // from/to +1/-1
-    console.log(var1, val)
-    if (!this.currDayActive) {return}
-
-    const limit1 = var1 === 0 && val === -1 && this.currWorkStart === this.workStart 
-                || var1 === 1 && val === 1  && this.currWorkEnd === this.workEnd
-
-    const limit2 = var1 === 0 && val === 1 && this.currWorkStart >= this.currWorkEnd - 1
-                || var1 === 1 && val === -1 && this.currWorkEnd <= this.currWorkStart + 1
-                    
-    if (limit1 || limit2) {
-      return
-    }
-    
-    if (!var1) {
-      this.currWorkStart += val
-    } else {
-      this.currWorkEnd += val
-    }
-
-  }
-
-  selectOrderTime() {
-
-  }
-
-  
+  // changeWorkHour(value, day, side) { // куда, какой день, from или to  
+  //   const x = this.newDaysOfWeekShedule[day][side]
+  //   let workPeriodCheck = true
+  //   if (side == 0 && value == 1 && this.newDaysOfWeekShedule[day][0] + 1 >= this.newDaysOfWeekShedule[day][1]) {
+  //     workPeriodCheck = false
+  //   } else if (side == 1 && value == -1 && this.newDaysOfWeekShedule[day][1] - 1 <= this.newDaysOfWeekShedule[day][0]) {
+  //     workPeriodCheck = false
+  //   }
+  //   // this.newDaysOfWeekShedule[day][0] < this.newDaysOfWeekShedule[day][1]
+  //   if (workPeriodCheck && x && x + value >= this.workStart && x + value <= this.workEnd) {
+  //     this.newDaysOfWeekShedule[day][side] += value;
+  //     // console.log(this.daysOfWeekShedule[day][side], this.newDaysOfWeekShedule[day][side])
+  //   } else {console.log(x, x + value >= this.workStart, x + value <= this.workEnd)} 
+  //   // console.log(x + value >= this.workEnd);
+  // }
 
   cancelNewShedule() {
     console.log('123')
@@ -674,6 +810,10 @@ export class CalendarBlockComponent implements OnInit {
 
   unselectDay() {
     this.selectedDay = -1
+  }
+
+  toggleManualAddOrder() {
+    this.manualAddOrder = !this.manualAddOrder
   }
 
   // confirmEvent(eventName) { //!все фигня, надо удалять
@@ -714,33 +854,10 @@ export class CalendarBlockComponent implements OnInit {
       })
   }
 
-  newScheduleUpdate() {
-    console.log(this.currWorkStart, this.currWorkEnd)
-    console.log(this.selectedDay + 1, this.month, this.year)
-
-    const schedule = this.userData.myData.schedule
-    if (!schedule[this.year]) {
-      schedule[this.year] = {}
-    }
-    if (!schedule[this.year][this.month]) {
-      schedule[this.year][this.month] = {}
-    }
-    if (!schedule[this.year][this.month][this.selectedDay + 1]) {
-      schedule[this.year][this.month][this.selectedDay + 1] = {}
-    }
-
-    if (this.currDayActive) {
-      schedule[this.year][this.month][this.selectedDay + 1] = {
-        from: this.currWorkStart,
-        to: this.currWorkEnd
-      }
-    } else {
-      delete schedule[this.year][this.month][this.selectedDay + 1]
-    }
-    
-    this.sendNewShedule()
-
-    // console.log(this.userData.myData.schedule)
+  testEmail() {
+    console.log("email sending...")
+    const data = {}
+    this.sendEmailManual(data)
   }
 
   redirectToSignIn() {
@@ -755,10 +872,6 @@ export class CalendarBlockComponent implements OnInit {
     this.router.navigate(["/"])
   }
 
-  toggleDayActive() {
-    this.currDayActive = !this.currDayActive
-    // this.currDayActive = true
-  }
 
 
 }

@@ -251,6 +251,14 @@ export class HomePageComponent implements OnInit {
       (err) => {console.log("pay error: ", err)})
   }
 
+  prodTest() { 
+    
+    this.firebase.reqFunc("orders-prodTest", {prod: false})
+    .subscribe(
+      (resp) => {console.log("prodTest: ", resp)},
+      (err) => {console.log("prodTest error: ", err)})
+  }
+
   ACQtest() {
     // console.log(this.firebase.testAlfa())
     this.firebase.testAlfaREST()
@@ -335,7 +343,7 @@ export class HomePageComponent implements OnInit {
     // let doctors = []
     for (const property in users) {
       // console.log("проверка пользователя:" ,users[property]);
-      if (users[property].userType === "doctor" && users[property].zoomLink && users[property].weeklySchedule) { 
+      if (users[property].userType === "doctor" && users[property].zoomLink && users[property].scheduleTime) { 
         users[property].id = property;
         this.doctors.push(users[property])
       }
