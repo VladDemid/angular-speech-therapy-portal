@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "dev": "inclusive-test",
+    "prod": "inclusive-test",
+    "local": "inclusive-test"
+  },
+  "targets": {}
+}

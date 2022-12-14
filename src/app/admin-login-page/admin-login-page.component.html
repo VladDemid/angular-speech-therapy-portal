@@ -1,0 +1,32 @@
+
+<div class="admin-login-form">
+   <div class="container">
+      <form class="new-form" [formGroup]="adminLoginForm" (ngSubmit)="adminLogIn()">
+         <button class="back" [routerLink]="['/']">назад</button>
+         <div class="line">
+            <label>
+               <input name="email" [ngClass]="{filled: email.value}" type="text" formControlName="email">
+               <span class="title">email</span>
+               <div class="validation-errors" *ngIf="email.invalid && (email.dirty || email.touched) || requiredErr">
+                  <span class="note err" *ngIf="email.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         <div class="line">
+            <label>
+               <input name="password" [ngClass]="{filled: password.value}" [type]="popupService.passwordsHidden ? 'password' : 'text'" formControlName="password">
+               <span class="title">password</span>
+               <div class="reveal-eye" (mousedown)="popupService.revealPass()" (mouseleave)="popupService.hidePass()" (mouseup)="popupService.hidePass()"></div>
+               <div class="validation-errors" *ngIf="password.invalid && (password.dirty || password.touched) || requiredErr">
+                  <span class="note err" *ngIf="password.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         <!-- <div class="inputs-wrapper">
+            <label><span>Email</span><input name="emailAdm" type="text" formControlName="emailAdm"></label>
+            <label><span>Пароль</span><input name="passwordAdm"  type="password" formControlName="passwordAdm"></label>
+         </div> -->
+         <button [disabled]="loggingIn" class="login" type="submit">Войти</button>
+      </form>
+   </div>
+</div>

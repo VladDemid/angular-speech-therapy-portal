@@ -1,0 +1,77 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleAppointmentDeatailsPopup()"></div>
+   <div class="popup">
+
+      
+      <div class="popup-container">
+         <div class="appointment-deatails">
+            <!-- {{popupService.appointmentDetails | json}} -->
+            <!-- {{testLesson | json}} -->
+            <h2>Запись на занятие к специалисту</h2>
+            <div class="details-container">
+               <div class="date">
+                  <span class="date-of-lesson">Дата занятия: </span>
+                  {{selectedDay}} {{monthsNamesWhomCase[month-1]}} {{year}}
+               </div>
+               <div class="spec-time">
+                  <span class="date-of-lesson">Время: </span>
+                  {{selectedTimeForLesson | timeRow}}
+               </div>
+               <div class="spec-name">
+                  Специлист: {{inputDoctorInfo.name}} {{inputDoctorInfo.surname}}
+               </div>
+            </div>
+            <form class="new-form" [formGroup]="appointmentDetailsForm" (ngSubmit)="onSubmit()">
+
+               <div class="line">
+                  <label>
+                     <input name="childName" [ngClass]="{filled: childName.value}" type="text"  formControlName="childName">
+                     <span class="title">Имя фамилия ребенка</span>
+                     <div class="validation-errors" *ngIf="childName.invalid && (childName.dirty || childName.touched) || requiredErr">
+                        <span class="note err" *ngIf="childName.errors?.['required']">*необходимо заполнить</span>
+                     </div>
+                  </label>
+                  <label>
+                     <input name="childDate" [ngClass]="{filled: childDate.value}" type="date" formControlName="childDate">
+                     <span class="title">дата рождения ребенка</span>
+                     <div class="validation-errors" *ngIf="childDate.invalid && (childDate.dirty || childDate.touched) || requiredErr">
+                        <span class="note err" *ngIf="childDate.errors?.['required']">*необходимо заполнить</span>
+                     </div>
+                  </label>
+               </div>
+               <div class="line">
+                  <label>
+                     <textarea name="comment" [ngClass]="{filled: comment.value}" formControlName="comment" placeholder=""></textarea>
+                     <span class="title">Комментарий</span>
+                     <div class="validation-errors" *ngIf="comment.invalid && (comment.dirty || comment.touched)">
+                        <span class="note err" *ngIf="comment.errors?.['required']">*необходимо заполнить</span>
+                     </div>
+                  </label>
+               </div>
+               
+               <button class="login" [ngClass]="{updating2: isUpdating}"  type="submit" [disabled]="isUpdating"><span data-text="записаться">оплатить</span></button>
+               <!-- <div class="inputs-wrapper">
+                  <label><span>Имя и фамилия ребенка</span><input required name="name" type="text" formControlName="name" ></label>
+                  <label><span>Дата рождения ребенка</span><input required name="name" type="date" formControlName="name" ></label>
+                  <label><span>Ваш телефон</span><input required name="name" type="text" formControlName="name" ></label>
+                  <label><span class="narrow">Опишите вашу проблему</span><textarea name="problem" rows="3" [(ngModel)]="problem" ></textarea></label>
+               </div>
+               <div class="rules">
+                  <div class="terms-of-use">
+                     <span class="price">*cтоимость занятия 38 BYN</span>
+                     <label>
+                        <input name="termsOfUse"  type="checkbox" formControlName="termsOfUse">
+                        <span>Принимаю условия <a class="termsOfUse" target="_blank" routerLink="/terms-of-use">пользовательского соглашения</a></span>
+                     </label>
+                  </div>
+               </div> -->
+            </form>
+
+            <div class="updating-status">
+               <div class="success" *ngIf="successStatus">{{successStatus}}</div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+</div>

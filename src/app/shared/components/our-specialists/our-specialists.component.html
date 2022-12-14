@@ -1,0 +1,47 @@
+<div class="specialists" id="specialists">
+   <div class="container">
+      <h2 class="specialists__header">Наши специалисты</h2>
+      <!-- <div class="specialists__filters">
+         <div class="custom_selector" (click)="toggleSpecialistSelector()" (mouseleave)="closeLists()">
+            <div class="custom_selector_title" [ngClass]="{active: specialist_selector.active}">
+               <span>{{specialist_selector.selected}}</span>
+            </div>
+            <div class="custom_selector_list" *ngIf="specialist_selector.active">
+               <div class="custom_selector_item" [ngClass]="{active: i == specialist_selector.selectedIndex}" (click)="chooseSpecialisation(item.title, i)" *ngFor="let item of diagnose; index as i">
+                     {{item.title}}
+               </div>
+            </div>
+         </div>
+
+         <div class="custom_selector" (click)="toggleProblemSelector()" (mouseleave)="closeLists()">
+            <div class="custom_selector_title" [ngClass]="{active: problem_selector.active}">
+               <span>{{problem_selector.selected}}</span>
+            </div>
+            <div class="custom_selector_list" *ngIf="problem_selector.active">
+               <div class="custom_selector_item" [ngClass]="{active: i == problem_selector.selectedIndex}" (click)="chooseProblem(item.title, i)" *ngFor="let item of problems; index as i">
+                     {{item.title}}
+               </div> 
+            </div>
+         </div>
+
+         <div class="name_input" *ngIf="isProfileModule">
+            <input class="name" placeholder="ФИО специалиста" type="text">
+         </div>
+      </div> -->
+      <!-- | specialistFilter:specialist_selector.selected -->
+      <div class="specialists__catalog">
+         <app-specialist-card
+         *ngFor="let card of firebaseDoctors "
+         [card]="card"
+         [isProfileModule]="isProfileModule"
+         ></app-specialist-card>
+      </div>
+      <!-- <div class="new__catalog">
+         <div class="doctor"
+         *ngFor="let doctor of firebaseDoctors"
+         >
+            {{doctor.name}}
+         </div>
+      </div> -->
+   </div>
+</div>

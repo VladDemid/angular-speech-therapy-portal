@@ -1,0 +1,152 @@
+@import '../../../../../assets/styles/_variables'
+
+.navigation
+   position: sticky
+   top: 0px
+   z-index: 10
+   // width: 100%
+   // border-bottom: 1px solid #000
+   @include box-shadow($nav_shadow)
+   height: 93px
+   background-color: $fcfcfc
+
+   .container
+      height: 100%
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      // border: 1px solid #000
+
+.logo
+   position: relative
+   display: inline-block
+   width: 119px
+   margin-left: 150px
+   // height: 88px
+   // border: 1px solid #000
+   a
+      position: absolute
+      top: 50%
+      left: 0px
+      transform: translateY(-50%)
+      // display: inline-block
+      img
+         display: block
+         width: 66px
+         height: 54px
+         // max-height: 100%
+
+.person
+   // border: 1px solid #000
+   display: flex
+   justify-content: flex-start
+   align-items: center
+   user-select: none
+   cursor: pointer
+   &>div
+      // border: 1px solid #000
+      margin-right: 12px
+   .name
+      font-size: 20px
+      font-weight: 600
+      color: $orange_new
+   .notifications
+      margin-top: 3px
+      // cursor: not-allowed
+   .portrait
+      max-width: 64px
+      max-height: 64px
+      overflow: hidden
+      border-radius: 50%
+      // overflow: hidden
+      img
+         display: block
+         // border-radius: 50%
+         max-height: 100%
+         max-width: 100%
+
+         
+
+.exit
+   margin-left: auto 
+
+
+
+.profile-menu 
+   display: flex
+   justify-content: center
+
+
+   .dropdown
+      margin-top: 65px
+      position: relative
+      display: inline-block
+      &:hover span::after
+         transform: rotate(180deg)
+      span.user-name
+         font-size: 22px
+         font-weight: 500
+         padding: 5px 25px
+         position: relative
+         cursor: default
+         color: $orange_501
+         &::after
+            content: ""
+            position: absolute
+            top: 16px
+            right: 12px
+            border-style: solid
+            border-width: 8px 4px 0px 4px
+            border-color: $blue_common transparent transparent transparent
+            transition: 0.3s
+        
+
+   .dropdown-content
+      display: none
+      position: absolute
+      right: -20px
+      min-width: 160px
+      padding-top: 15px
+      // box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2)
+      // box-shadow: 0 7px 10px -5px
+      // border: 1px solid #000
+      background-color: rgba(255,255,255,0.8)
+      z-index: 10
+      li
+         position: relative
+         text-align: center
+         font-size: 18px
+         font-weight: 400
+         width: 250px
+         height: 37px
+         padding: 5px 
+         border-radius: 10px
+         cursor: pointer
+         background-color: #fff
+         // height: 37px
+         border: 1px solid #000
+         margin-bottom: 5px
+         span.inner
+            position: absolute
+            top: 50%
+            right: 50%
+            transform: translate(50%, -50%)
+            
+            width: 100%
+         &:focus
+            outline: none
+         &.link-active
+            background-color: $orange_common
+         &:hover
+            background-color: #ddd
+         &:nth-last-child(1)
+            // padding: 10px 0
+         //    margin-top: 10px
+   .dropdown:hover .dropdown-content
+      display: block
+   .profile-notifications
+      width: 10px
+      height: 10px
+      // background-color: #999
+      // background-image: url(./bell.png)
+      border-radius: 50%

@@ -1,0 +1,96 @@
+.fixed-overlay
+   position: fixed
+   overflow: auto
+   z-index: 20
+   left: 0
+   top: 0
+   width: 100%
+   height: 100%
+   background-color: rgba(0,0,0,0.5)
+   backdrop-filter: blur(2px)
+      
+      
+.close-popup
+   cursor: pointer
+   height: 100%
+   transition: 0.3s
+   &:hover
+      background-color: rgba(255,255,255,0.15)
+   
+
+.popup
+   position: absolute
+   z-index: 3
+   left: 50%
+   top: 50%
+   // width: 800px
+   width: 800px
+   max-width: 90vw
+   min-height: 350px
+   max-height: 85%
+   box-shadow: 0 7px 10px -5px
+   border-radius: 20px
+   transform: translate(-50%, -50%)
+   background-color: #fff
+   cursor: default
+   padding: 20px
+   // overflow: hidden
+   overflow-y: auto
+   mat-progress-bar
+      position: absolute
+      bottom: 0px
+      left: 0px
+      border: 1px solid #000
+      height: 5px
+
+.popup-container 
+   // width: 80%
+   margin: 0 auto
+   // height: 500px
+   background-color: #fff
+   // border: 1px solid #000
+   color: #000
+   // h2
+   //    margin-bottom: 20px
+
+.client-form-popup, .doctor-form-popup
+   .popup
+      // max-width: 870px
+      width: 570px
+      max-width: 95vw
+      padding: 40px
+      padding-bottom: 20px
+      // width: 870px
+      .popup-container 
+         h2
+            font-size: 24px
+            margin-bottom: 32px
+            color: $orange_common
+            text-align: center
+      button[type=submit]
+         &:after
+            opacity: .0
+         &.submitted
+            position: relative
+            &::after
+               content: 'вопрос отправлен'
+               position: absolute
+               right: -250px
+               opacity: .8
+               color: $orange_common
+               // width: 100px
+               height: 20px
+               // border: 1px solid #000
+               // background-color: #000
+
+// app-profile-layout
+   // .popup 
+      // margin-top: 100px
+// @media screen and (max-width: 900px) 
+//    .client-form-popup, .doctor-form-popup
+//       .popup
+//          width: 500px
+
+// @media screen and (max-width: 650px) 
+//    .popup 
+//       width: 95%

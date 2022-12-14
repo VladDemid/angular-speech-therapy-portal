@@ -1,0 +1,134 @@
+@import "../../assets/styles/_variables"
+
+.doctor-card
+   padding-top: 30px
+   &.in-profile
+      padding-top: 30px
+   .user-data, .about-me
+      font-size: 21px
+      display: flex
+      justify-content: flex-start
+      &>div
+         // width: 50%
+   h2
+      margin-top: 20px
+      padding-top: 10px
+   .user-data
+      img
+         width: 244px
+         height: 244px
+         border-radius: 20px 
+      span
+         // font-weight: 500
+      .user-image
+         position: relative
+         height: 300px
+         max-width: 300px
+         // background-color: rgba(0,0,0,0.1)
+         img
+            width: 100%
+            height: 100%
+            object-fit: cover
+            object-position: top
+            // position: absolute
+            // top: 50%
+            // left: 50%
+            // transform: translate3d(-50%, -50%, 0)
+            // min-width: 50%
+            // max-width: 100%
+            // max-height: 100%
+   
+      .user-description-short
+         max-width: 400px
+         margin-left: 56px
+         color: $headings100
+         .name
+            font-size: 36px
+            font-weight: 700
+            margin-bottom: 16px
+         .specialization
+            margin-bottom: 24px
+            span
+               font-size: 20px
+               font-weight: 500
+               &.specialization-main
+                  color: $orange_new
+                  text-transform: capitalize
+               &.experience
+                  margin-left: 48px
+         .about-me-short
+            font-size: 16px
+            margin-bottom: 44px
+            color: $textBody80
+
+
+   .education
+      position: relative
+      &::before
+         content: ''
+         position: absolute
+         top: 0
+         left: 50%
+         transform: translate3d(-50%, 0, 0)
+         width: 98vw
+         height: 100%
+         background-color: rgba(251, 133, 1, 0.05)
+         z-index: -1
+      .education-list 
+         color: $textBody80
+         font-size: 16px
+         margin:0 0 0 28px
+         padding-bottom: 44px
+
+         li
+            position: relative
+            margin-bottom: 20px
+            &::before
+               content: ''
+               position: absolute
+               top: -2px
+               left: -25px
+               width: 20px
+               height: 20px
+               background-image: url('/assets/icons/interface/mortarboard.svg')
+               background-repeat: no-repeat
+               background-position: center
+
+         .years
+            margin-bottom: 4px
+      .sertificates-list
+         display: flex
+         justify-content: center
+         align-items: center
+         padding-bottom: 40px
+         flex-wrap: wrap
+         .sertificate-item
+            // width: 200px
+            max-width: 260px
+            max-height: 260px
+            // border: 1px solid #000
+            @include box-shadow($nav_shadow)
+            margin: 15px 10px
+            // padding: 5px
+            cursor: pointer
+            img
+               display: block
+               max-width: 250px
+               max-height: 250px
+               object-fit: cover
+
+   .about
+      .detailed-description
+         width: 90%
+         // max-height: 700px
+         // overflow-y: scroll
+         margin: 40px auto
+         padding-bottom: 20px
+         // border-bottom: 1px solid #bbb
+         white-space: pre-wrap
+         font-size: 16px
+         line-height: 22px
+         color: $textBody80
+               
+
+         

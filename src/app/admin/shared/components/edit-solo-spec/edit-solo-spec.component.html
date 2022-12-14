@@ -1,0 +1,27 @@
+<div class="edit-solo-spec">
+   <h3>Добавить поле</h3>
+   <ul class="specialists-list">
+      <li class="specialist-card" *ngFor="let spec of doctors" 
+      (click)="chooseSpec(spec.id)"
+      [ngClass]="{active: chosenSpec === spec.id}">
+         <span class="name">{{spec.name}} {{spec.name}}</span>
+         <span class="id">{{spec.id}}</span>
+         <div class="notes">
+            <span *ngIf="!spec.weeklySchedule">расписание</span>
+            <span *ngIf="!spec.zoomLink">zoom ссылка</span>
+         </div>
+         </li>
+   </ul>
+   <div class="data">
+      <form action="">
+         <div class="inputs-wrapper">
+            <label><span>ключ</span><input required name="key" type="text" [(ngModel)]="newKey"></label>
+            <label><span>значение</span><input required name="key" type="text" [(ngModel)]="newValue"></label>
+         </div>
+      </form>
+      <span class="fetch-status" *ngIf="fetchStatus">{{fetchStatus}}</span>
+   </div>
+   <div class="fetching">
+      <button (click)="fetchData()">fetch</button>
+   </div>
+</div>

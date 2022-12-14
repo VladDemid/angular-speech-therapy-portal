@@ -1,0 +1,253 @@
+@import '../../../assets/styles/_variables'
+
+
+form 
+   position: relative
+   // display: flex
+   // flex-direction: row
+   // justify-content: start
+   .photo-update
+      
+      display: flex
+      justify-content: center
+      align-items: center
+      flex-direction: column
+      position: absolute
+      right: 0px
+      width: 320px
+      height: 320px
+      min-height: 100px
+      border-radius: 20px
+      margin-bottom: 32px
+      // padding: 32px
+      @include box-shadow($nav_shadow)
+      // border: 1px solid #000
+      .profile-photo
+         display: flex
+         justify-content: center
+         align-items: center
+         height: 264px
+         width: 264px
+         margin: 0
+         // width: 100%
+         // margin: 32px
+         border-radius: 10px
+         img
+            border: 2px solid #4e463e31
+            border-radius: 10px
+            // display: block
+            object-fit: cover
+            object-position: top
+            background-color: #4e463e31
+            width: 100%
+            height: 100%
+            // width: 220px
+            // height: 220px
+            // margin: 10px auto 
+            // padding: 32px
+      .avatar-buttons-wrapper
+         // border: 1px solid #000
+         position: absolute
+         height: 70px
+         right: 35px
+         bottom: 15px
+         user-select: none
+         button.upload
+            position: absolute
+            top: 50%
+            left: 50% 
+            transform: translate(-50%, -50%)
+            width: 54px
+            height: 54px
+            border-radius: 50%
+            padding: 0
+            // border: 1px solid #000
+            background-image: url('/assets/icons/functions/upload.svg')
+            background-repeat: no-repeat
+            background-size: 32px
+            background-position: 50% 35%
+            background-color: #fff
+            @include box-shadow($nav_shadow)
+            &:hover
+               outline: none
+               // border: 2px solid $button_hover
+               background-color: $button_hover
+            &:active
+               // border: 2px solid $button_active
+               background-color: $button_active
+               outline: none
+               transition: all 0.1s
+            &::after
+               content: ''
+            &.loading
+               &::after
+                  // width: 20px
+                  animation: updating 1.5s 1 ease
+               // border: 3px solid #000
+            
+         .input-avatar-label
+            position: absolute
+            display: block
+            top: 50%
+            left: 50% 
+            transform: translate(-50%, -50%)
+            // margin: -40px auto 0
+            border-radius: 50px
+            // border: 2px solid $orange_common
+            display: block
+            margin-bottom: 10px
+            padding: 0px
+            // padding: 10px
+            width: 54px
+            height: 54px
+            text-align: center
+            cursor: pointer
+            transition: all 0.2s
+            background-image: url('/assets/icons/functions/photo.svg')
+            background-repeat: no-repeat
+            background-size: 38px
+            background-position: 50% 50%
+            background-color: #fff
+            @include box-shadow($nav_shadow)
+            &:hover
+               outline: none
+               // border: 2px solid $button_hover
+               background-color: $button_hover
+            &:active
+               // border: 2px solid $button_active
+               background-color: $button_active
+               outline: none
+               transition: all 0.1s
+            &:focus
+               outline: none
+            &.hide
+               visibility: hidden
+               transition: all 0s
+                  
+            span
+               position: absolute
+               display: block
+               text-align: center
+               // width: 175px
+               // left: -2px
+               // top: calc(50% - 10px)
+               // max-height: 100% 
+               // overflow: hidden
+               height: 20px
+               font-weight: 500
+               top: 50%
+               left: 50% 
+               transform: translate(-50%, -50%)
+               &.success
+                  color: $button_active
+
+            .upload-avatar
+               visibility: hidden
+               width: 100%
+               border: 2px solid #CACACA
+               height: 56px
+               border-radius: 9px
+               outline: none
+               padding: 0 20px
+               padding-top: 11px
+               color: #454A4A
+               font-size: 20px
+               overflow: hidden
+
+   .inputs-wrapper
+      position: relative
+      margin: 0
+
+.submit
+   margin-top: 40px
+
+.sertificates
+   margin: 40px 0 100px
+   // border-top: 2px dashed $yellow_common
+   padding: 20px 0px
+   @include box-shadow($nav_shadow)
+   border-radius: 20px
+   .add-sertificates.btn
+      height: 48px
+   .inputs-wrapper
+      box-shadow: none
+
+   .sertif-list
+      display: flex
+      justify-content: space-around
+      align-items: center
+      flex-wrap: wrap
+      width: 100%
+      .sertif-item
+         position: relative            
+         margin: 0 5px
+         cursor: pointer
+         max-width: 200px
+         min-width: 100px
+         margin-top: 30px
+         transition: 0.2s
+         &:hover
+            transform: scale(1.1)
+            transition: 0.2s
+            .sertif-img
+               @include box-shadow($shadows_hover)
+               transition: 0.2s
+         .img-wrapper
+            display: inline-block
+            position: relative
+            .sertif-delete
+               position: absolute
+               content: ''
+               right: -11px
+               top: -11px
+
+
+         .sertif-img
+            @include box-shadow($shadows)
+            display: block
+            // margin-top: 20px
+            // max-height: 300px
+            // padding: 2px
+            // border: 2px solid $yellow_common
+            transition: 0.2s
+         .sertif-name
+            display: block
+            max-width: 100%
+            overflow: hidden
+            text-align: center
+
+   .new-sertificates
+      .inputs-wrapper
+         // margin: 30px 0
+         // border-top: 2px dashed $orange_common
+         label
+            position: relative
+            input
+               visibility: hidden
+            .add-sertificates
+               // border: 2px solid #000
+               position: absolute
+               right: 235px
+               top: 50%
+               transform: translateY(-50%)
+               text-align: center
+               padding-top: 13px
+            .upload-sertrificates
+               position: absolute
+               right: 20px
+               top: 50%
+               transform: translateY(-50%)
+               &::after
+                  animation: updating 1.5s 1 ease
+
+
+// @media screen and (max-width: 1300px) 
+//    form
+//       display: flex
+//       justify-content: flex-start
+//       align-items: flex-start
+//       flex-direction: column
+//       .photo-update
+//          position: relative
+         
+            

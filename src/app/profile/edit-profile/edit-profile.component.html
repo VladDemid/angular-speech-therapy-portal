@@ -1,0 +1,255 @@
+<div class="img-popup" >
+   <app-img-popup *ngIf="popupService.imgPopup"></app-img-popup>
+</div>
+
+<div class="edit-profile">
+   <div class="container">
+      <div class="breadcrumb-arrows arrows">
+         <a [routerLink]="['/profile']">Личный кабинет</a>
+      </div>
+      <h3 class="page-title">Персональные данные</h3>
+      <!-- форма для клиента -->
+      
+      <form 
+      [formGroup]="clientForm"
+      class="user-edit-form new-form"
+      (ngSubmit)="clientChangeData()"
+      *ngIf="userData.myData.userType === 'client' "
+      >
+
+      <div class="line">
+         <label>
+            <input name="clientSurname" [ngClass]="{filled: clientSurname.value}" type="text" formControlName="clientSurname">
+            <span class="title">{{userData.myData.surname}}</span>
+            <div class="validation-errors" *ngIf="clientSurname.invalid && (clientSurname.dirty || clientSurname.touched) || requiredErr">
+               <span class="note err" *ngIf="clientSurname.errors?.['required']">*необходимо заполнить</span>
+            </div>
+         </label>
+      </div>
+         <div class="line">
+            <label>
+               <input name="clientName" [ngClass]="{filled: clientName.value}" type="text"  formControlName="clientName">
+               <span class="title">{{userData.myData.name}}</span>
+               <div class="validation-errors" *ngIf="clientName.invalid && (clientName.dirty || clientName.touched) || requiredErr">
+                  <span class="note err" *ngIf="clientName.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         <div class="line">
+            <label>
+               <input name="clientPatronymic" [ngClass]="{filled: clientPatronymic.value}" type="text" formControlName="clientPatronymic">
+               <span class="title">{{userData.myData.patronymic}}</span>
+               <div class="validation-errors" *ngIf="clientPatronymic.invalid && (clientPatronymic.dirty || clientPatronymic.touched) || requiredErr">
+                  <span class="note err" *ngIf="clientPatronymic.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         <div class="line">
+               <!-- <label><span>Фото</span><input required class="upload_documents" name="photo" type="file" id="clientPhoto" (change)="changeMyImage()"></label>
+               <label><span>Фамилия</span><input required name="surname" type="text" formControlName="surname" [placeholder]="userData.myData.surname"></label>
+               <label><span>Имя</span><input required name="name" type="text" formControlName="name" [placeholder]="userData.myData.name"></label>
+               <label><span>Отчество</span><input required name="patronymic" type="text" formControlName="patronymic" [placeholder]="userData.myData.patronymic"></label>
+               <label><span class="narrow">Диагноз ребенка</span><input required name="childDiagnosis" type="text" formControlName="childDiagnosis" [placeholder]="userData.myData.childDiagnosis"></label> -->
+               <button class="submit" [ngClass]="{updating2: isLoading}" [disabled]="isLoading" type="submit"><span data-text="сохранить">сохранить</span> </button>
+               <div class="update-success" *ngIf="showUpdate">
+                  Информация обновлена!
+               </div>
+         </div>
+      </form>
+
+      <!-- форма для доктора -->
+      <form
+      [formGroup]="specForm"
+      class="doctor-edit-form new-form"
+      *ngIf="userData.myData.userType === 'doctor'"
+      (ngSubmit)="doctorChangeData()"
+      >
+      
+         <!-- <div class="photo-update">
+            <div class="profile-photo">
+               <img src="{{defaultAvatar}}" *ngIf="!userData.myData.avatarUrl" alt="logo">
+               <img src="{{userData.myData.avatarUrl}}" *ngIf="userData.myData.avatarUrl" alt="logo">
+            </div>
+            <div class="avatar-buttons-wrapper">
+               <label class="input-avatar-label btn" [ngClass]="{'hide': avatarPrefireName}" for="avatar-upload-button">
+                  <span *ngIf="!avatarPrefireName" ></span>
+                  <span *ngIf="avatarPrefireName" class="success">файл выбран</span>
+                  <input class="upload-avatar" (click)="scanAvatarName()" name="avatar" type="file" id="avatar-upload-button">
+               </label>
+               <button class="button upload" *ngIf="avatarPrefireName" [ngClass]="{'loading': uploadingAvatar}"  (click)="updateAvatar()"></button>
+            </div>
+         </div> --> 
+         <div class="line">
+            <label>
+               <input name="specSurname" [ngClass]="{filled: specSurname.value}" type="text" formControlName="specSurname">
+               <span class="title">{{userData.myData.surname}}</span>
+               <div class="validation-errors" *ngIf="specSurname.invalid && (specSurname.dirty || specSurname.touched) || requiredErr">
+                  <span class="note err" *ngIf="specSurname.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         <div class="line">
+            <label>
+               <input name="specName" [ngClass]="{filled: specName.value}" type="text" formControlName="specName">
+               <span class="title">{{userData.myData.name}}</span>
+               <div class="validation-errors" *ngIf="specName.invalid && (specName.dirty || specName.touched) || requiredErr">
+                  <span class="note err" *ngIf="specName.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         <div class="line">
+            <label>
+               <input name="specPatronymic" [ngClass]="{filled: specPatronymic.value}" type="text" formControlName="specPatronymic">
+               <span class="title">{{userData.myData.patronymic}}</span>
+               <div class="validation-errors" *ngIf="specPatronymic.invalid && (specPatronymic.dirty || specPatronymic.touched) || requiredErr">
+                  <span class="note err" *ngIf="specPatronymic.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         
+         <div class="line">
+            <label>
+               <input name="university" [ngClass]="{filled: university.value}" type="text" formControlName="university">
+               <span class="title">{{userData.myData.university || 'Университет'}}</span>
+               <div class="validation-errors" *ngIf="university.invalid && (university.dirty || university.touched) || requiredErr">
+                  <span class="note err" *ngIf="university.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+            <label>
+               <input name="faculty" [ngClass]="{filled: faculty.value}" type="text" formControlName="faculty">
+               <span class="title">{{userData.myData.faculty || 'Факультет'}}</span>
+               <div class="validation-errors" *ngIf="faculty.invalid && (faculty.dirty || faculty.touched) || requiredErr">
+                  <span class="note err" *ngIf="faculty.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+            <label>
+               <input name="year" [ngClass]="{filled: year.value}" type="text" formControlName="year">
+               <span class="title">{{userData.myData.year || 'Год выпуска'}}</span>
+               <div class="validation-errors" *ngIf="year.invalid && (year.dirty || year.touched) || requiredErr">
+                  <span class="note err" *ngIf="year.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+
+         </div>
+         <!-- <label><span>Фамилия</span><input required name="specSurname" type="text"  [placeholder]="userData.myData.surname" formControlName="surname"></label> -->
+         <!-- <label><span>Имя</span><input required name="name" type="text"  [placeholder]="userData.myData.name" formControlName="name"></label> -->
+         <!-- <label><span>Отчество</span><input required name="patronymic" type="text"  [placeholder]="userData.myData.patronymic" formControlName="patronymic"></label> -->
+         <!-- <div class="educations">
+            <div class="education">
+               <label><span>Вуз</span><input required name="university" type="text"  [placeholder]="userData.myData.university || ' '" formControlName="university"></label>
+               <div class="double-input-row">
+                  <label><span>Факультет</span><input required name="faculty"  type="text" [placeholder]="userData.myData.faculty || ' '" formControlName="faculty"></label>
+                  <label><span>Год выпуска</span><input required name="year"  type="text" [placeholder]="userData.myData.year || ' '" formControlName="year"></label>
+               </div>
+            </div>
+            <div class="education" *ngIf="educationsCount > 1" >
+               <label><span>Вуз</span><input required name="university2" type="text"  [placeholder]="userData.myData.university2 || ' '" formControlName="university2"></label>
+               <div class="double-input-row">
+                  <label><span>Факультет</span><input required name="faculty2"  type="text" [placeholder]="userData.myData.faculty2 || ' '" formControlName="faculty2"></label>
+                  <label><span>Год выпуска</span><input required name="year2"  type="text" [placeholder]="userData.myData.year2 || ' '" formControlName="year2"></label>
+               </div>
+            </div>
+            <div class="education" *ngIf="educationsCount > 2" >
+               <label><span>Вуз</span><input required name="university3" type="text"  [placeholder]="userData.myData.university3 || ' '" formControlName="university3"></label>
+               <div class="double-input-row">
+                  <label><span>Факультет</span><input required name="faculty3"  type="text" [placeholder]="userData.myData.faculty3 || ' '" formControlName="faculty3"></label>
+                  <label><span>Год выпуска</span><input required name="year3"  type="text" [placeholder]="userData.myData.year3 || ' '" formControlName="year3"></label>
+               </div>
+            </div>
+            <button type="button" class="education_buttons incrEducation" (click)="incrEducation()" *ngIf="educationsCount < 3"></button>
+            <button type="button" class="education_buttons decrEducation" (click)="decrEducation()" *ngIf="educationsCount > 1"></button>
+            
+         </div> -->
+         <div class="specializations">
+            <label><span>Специализации</span></label>
+            <ul class="specializations-list">
+               <li class="specialization-item" *ngFor="let item of specializations" >
+                  <label class="checkbox-label" (click)="selectSpecialization(item)" [ngClass]="{specialization_selected: specializationsData.specializationsSelected && specializationsData.specializationsSelected.indexOf(item) != -1}"><input type="checkbox" >{{item}}</label>
+               </li>
+            </ul>
+         </div>
+         
+         <div class="specialization-main">
+            <label><span class="narrow">Главная специализация</span></label>
+            <ul class="specializations-list">
+               <div class="select-sign" *ngIf="!specializationsData.specializationsSelected || (specializationsData.specializationsSelected && !specializationsData.specializationsSelected[0])">Сначала выберите ваши специализации выше</div>
+               <li class="specialization-item" *ngFor="let item of specializationsData.specializationsSelected; first as isFirst" >
+                  <label class="radio" [ngClass]="{'main_specialization_selected': (item === specializationsData.mainSpecializationSelected) || (specializationsData.mainSpecializationSelected === '' && isFirst)}" (click)="selectMainSpecialization(item)">
+                     <input class="specializaion-radio" type="radio" name="specialization-main" [value]="item">{{item}}
+                  </label>
+               </li>
+            </ul>
+         </div>
+
+            <div class="line">
+               <label>
+                  <input name="experience" [ngClass]="{filled: experience.value}" type="text" formControlName="experience">
+                  <span class="title">{{userData.myData.experience || 'Опыт работы'}}</span>
+                  <div class="validation-errors" *ngIf="experience.invalid && (experience.dirty || experience.touched) || requiredErr">
+                     <span class="note err" *ngIf="experience.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            <div class="line">
+               <label>
+                  <input name="workPlace" [ngClass]="{filled: workPlace.value}" type="text" formControlName="workPlace">
+                  <span class="title">{{userData.myData.workPlace || 'Место работы'}}</span>
+                  <div class="validation-errors" *ngIf="workPlace.invalid && (workPlace.dirty || workPlace.touched) || requiredErr">
+                     <span class="note err" *ngIf="workPlace.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            <div class="line">
+               <label>
+                  <input name="zoomLink" [ngClass]="{filled: zoomLink.value}" type="text" formControlName="zoomLink">
+                  <span class="title">{{userData.myData.zoomLink || 'zoom ссылка'}}</span>
+                  <div class="validation-errors" *ngIf="zoomLink.invalid && (zoomLink.dirty || zoomLink.touched) || requiredErr">
+                     <span class="note err" *ngIf="zoomLink.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            <div class="line">
+               <label>
+                  <textarea name="aboutMe" [ngClass]="{filled: aboutMe.value}" formControlName="aboutMe" placeholder="Опишите проблему, в каких мессенджерах с вами можно связаться и т.д."></textarea>
+                  <span class="title">Комментарий</span>
+                  <div class="validation-errors" *ngIf="aboutMe.invalid && (aboutMe.dirty || aboutMe.touched)">
+                     <span class="note err" *ngIf="aboutMe.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            
+         
+         <!-- <label><span>Стаж (лет)</span><input required name="experience"  type="text" [placeholder]="userData.myData.experience || ' '" formControlName="experience"></label>
+         <label><span class="narrow">Актуальное место работы</span><input required name="workPlace"  type="text" [placeholder]="userData.myData.workPlace || ' '" formControlName="workPlace"></label>
+         <label><span class="">zoom ссылка</span><input required name="zoomLink"  type="text" [placeholder]="userData.myData.zoomLink || ' '" formControlName="zoomLink"></label> -->
+         <!-- <label><span>О себе</span><textarea id="aboutMe" name="aboutMe" rows="10" [(innerHTML)]="userData.myData.aboutMe"  formControlName="aboutMe">4576</textarea></label> -->
+         <div class="update-success" *ngIf="showUpdate">
+            Информация обновлена!
+         </div>
+         <button class="submit" [ngClass]="{updating2: isLoading}" [disabled]="isLoading" type="submit"><span data-text="сохранить">сохранить</span></button>
+      </form>
+      <div class="sertificates" id="" *ngIf="userData.myData.userType === 'doctor'">
+         <form class="new-sertificates" id="newSertificatesForm">
+            <div class="inputs-wrapper">
+               <label>
+                  <span >Cертификаты</span> 
+                  <input class="upload_documents" name="documents" type="file" id="newSertificates" multiple (change)=changeSertificatesCount()>
+                  <div class="add-sertificates btn">выбрать файлы ({{newFilesToUpload}})</div>
+                  <button class="upload-sertrificates" [ngClass]="{updating2: uploadingSertificates}" [disabled]="uploadingSertificates" *ngIf="newFilesToUpload > 0" (click)="addNewSertificates()">
+                     <span data-text="загрузить">загрузить</span>
+                  </button>
+               </label>
+            </div>
+            <div class="sertif-list" *ngIf="userData.myData.sertificatesLinks">
+               <div class="sertif-item" *ngFor="let item of userData.myData.sertificatesLinks; let i = index">
+                  <div class="img-wrapper">
+                     <img class="sertif-img" src={{item}} alt="sertificate" (click)="popupService.showImgPopup(item, userData.myData.sertificatesNames[i])">
+                     <div class="sertif-delete delete-button" (click)="deleteSertificate(i)"></div>
+                  </div>
+                  <!-- <span class="sertif-name">{{userData.myData.sertificatesNames[i]}}</span> -->
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

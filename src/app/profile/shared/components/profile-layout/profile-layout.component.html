@@ -1,0 +1,13 @@
+<div class="emailVerify-popup" 
+*ngIf="userData.myData && userData.myData.name && !userData.myData.emailVerified"
+>
+<!-- *ngIf="popupService.emailVerifyPopup === true" -->
+   <app-email-verify-popup [emailSendSuccess]="emailSendSuccess"></app-email-verify-popup>
+</div>
+
+<app-profile-nav></app-profile-nav>
+<div class="aside-spacer">
+   <app-aside-menu></app-aside-menu>
+   <router-outlet></router-outlet>
+</div>
+<app-footer class="footer"></app-footer>

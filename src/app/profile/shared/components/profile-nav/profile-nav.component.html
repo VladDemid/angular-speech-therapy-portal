@@ -1,0 +1,48 @@
+<div class="navigation">
+   <div class="container">
+      <div class="logo">
+         <!--* [queryParams]='{returnToProfileModule: "true"}'  -->
+         <a [routerLink]="['/']"  > 
+            <img class="logo_img" src="./assets/icons/logo.svg" alt="logo">
+         </a>
+      </div>
+      <div class="person" [routerLink]="['/profile/edit']" >
+         <div class="portrait" *ngIf="userData.myData.userType === 'doctor'">
+            <img [src]="userData.myData.avatarUrl" alt="portrait">
+            <!-- {{userData.myData.avatarUrl}} -->
+         </div>
+         <div class="name">{{userData.myData.name}} {{userData.myData.surname}}</div>
+         <div class="notifications">
+            <img class="logo_img" src="./assets/icons/interface/bell.svg" alt="logo">
+         </div>
+      </div>
+      <!-- <div class="profile-menu">
+         <div class="profile-navigation">
+            <div class="dropdown">
+               <span class="user-name">{{userData.myData.name}} {{userData.myData.surname}}</span>
+               <div class="dropdown-content">
+                  <ul>
+                     <li [routerLink]="['/profile/calendar']" routerLinkActive="link-active">
+                        <span class="inner">Календарь</span></li>
+                     <li [routerLink]="['/profile/menu']" routerLinkActive="link-active">
+                        <span class="inner">Личный кабинет</span></li>
+                     <li [routerLink]="['/profile/security']" routerLinkActive="link-active" >
+                        <span class="inner">Безопасность</span></li>
+                     <li [routerLink]="['/profile/edit']" routerLinkActive="link-active" >
+                        <span class="inner">Личная информация</span></li>
+                     <li [routerLink]="['/profile/help']" routerLinkActive="link-active" >
+                        <span class="inner">Помощь</span></li>
+                     <li (click)="exitProfile()">
+                        <span class="inner">Выход</span></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div class="profile-notifications"></div>
+      </div> -->
+      <button class="exit" (click)="exitProfile()">выход</button>
+      <!-- {{isAuthenticated}}  -->
+      <!-- <button (click)="test()">test auth</button> -->
+   </div>
+   
+</div>

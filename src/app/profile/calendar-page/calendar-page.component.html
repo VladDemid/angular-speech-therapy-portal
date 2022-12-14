@@ -1,0 +1,72 @@
+<div class="event-details-popup" *ngIf="popupService.eventDetailsPopup">
+   <app-event-details-popup></app-event-details-popup>
+</div>
+
+<div class="calendar-page">
+   <div class="container">
+      
+      <div class="breadcrumb-arrows arrows">
+         <a [routerLink]="['/profile']">Меню</a>
+      </div>
+      <h3 class="page-title">Календарь</h3>
+
+      <!-- <ol class="arrows">
+         <li><a href="#">Home</a></li>
+         <li><a href="#">About</a></li>
+         <li><a href="#">Clients</a></li>
+         <li><a href="#">Contact Us</a></li>
+      </ol> -->
+      <!-- <h2>Календарь</h2> -->
+
+
+      <div class="user-type-icon">
+         Вы вошли как 
+         <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥  {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
+         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
+         <!-- <button (click)="testMessage()">telegram</button>
+         <button (click)="testZoom()">Zoom</button> -->
+         
+      </div>
+      
+      <div class="calendar-wrap">
+         <app-calendar-block [inputDoctorInfo]="userData.myData" [isCalendarPage]="true" [calendarUserId]="myId" [isInProfileModule]="true"></app-calendar-block>
+      </div>
+
+
+      <!-- <div class="change-shedule-block">
+         <h3>Настройка моего графика</h3>
+         <div class="days-selection-wrapper">
+            <div class="days-of-week-selection">
+               <div class="days-sign">Выберите удобные для вас дни</div>
+               <div class="days-of-week-checkboxes">
+                  <div class="day-of-week">
+                     <span>Пн</span>
+                  </div>
+                  <div class="day-of-week">
+                     <span>Вт</span>
+                  </div>
+                  <div class="day-of-week">
+                     <span>Ср</span>
+                  </div>
+               </div>
+               <div class="lesson-duration-description">
+                  Стандартная продолжительность занятий - 
+                  <span>40 минут</span>
+               </div>
+            </div>
+            <div class="days-of-week-aside">
+               <div class="days-sign">
+                  Ваше рабочее время
+               </div>
+               <div class="days-of-week-aside-rows">
+                  строка строка
+               </div>
+               <button class="submit-new-shedule">
+                  сохранить новое расписание
+               </button>
+            </div>
+         </div>
+      </div> -->
+   </div>
+</div>
+<!-- *ngIf="userData.myData.userType == 'doctor'" -->

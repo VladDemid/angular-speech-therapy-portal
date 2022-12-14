@@ -1,0 +1,26 @@
+<div class="recomendation" id="recomendation">
+   <div class="container">
+      <h2>Рекомендуем</h2>
+      <!-- <div class="menu-tabs">
+         <ul class="tabs">
+            <li *ngFor="let item of tabs"
+               [ngClass]="{activeTab: activeTab === item}"
+               (click) = "changeActiveTab(item)"
+            >{{item}}</li>
+         </ul>
+      </div> -->
+      <div class="content">
+         <div class="catzu-game" *ngIf="activeTab === 'Игры'">
+            <div class="catzu-preview">
+               <img src="./assets/img/our-game/catzu-preview.jpg" alt="catzu game">
+            </div>
+            <div class="catzu-descr">
+               <div class="category">Игры и приложения</div>
+               <div class="title">CatZu - развивающая мобильная игры </div>
+               <div class="description">CatZu - это детская мобильная игра, содержащая базовый комплекс упражнений для развития артикуляционной моторики и советы для родителей от профессионалов.</div>
+               <a href="#" class="more">Узнать больше</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

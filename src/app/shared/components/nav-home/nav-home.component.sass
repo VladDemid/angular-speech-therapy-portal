@@ -1,0 +1,122 @@
+@import '../../../../assets/styles/_variables' 
+
+header
+   // background-image: linear-gradient(to right, rgba(235, 236, 240, 0.6), rgba(235, 236, 240, 0))
+   background-color: rgba(255,255,255,.85)
+   backdrop-filter: blur(5px)
+   // border-radius:  0 0 25px 25px
+   // position: absolute
+   position: sticky
+   top: 0px
+   z-index: 10
+   width: 100%
+   // box-shadow: 0px 3px 20px 0px rgba(34, 60, 80, 0.6)
+   @include box-shadow($nav_shadow)
+
+   // border: 1px solid #000
+   // border-bottom: 3px solid #fff
+   // &::after
+   //    content: ''
+   //    position: absolute
+   //    bottom: 0px
+   //    width: 100%
+   //    height: 3px
+   //    background-image: linear-gradient(to right, rgba(235, 236, 240, 1), rgba(235, 236, 240, 0.15)) 
+   nav
+      // height: 93px
+      height: 74px
+      display: flex
+      justify-content: space-between
+      // padding: 36px 0 0
+      // &>div
+         // border: 1px solid #000
+   .logo
+      // display: inline-block
+      display: flex
+      justify-content: center
+      align-items: center
+      // margin-left: 20px
+      a
+         // background-color: #fff
+         position: relative
+         display: block
+         width: 106px
+         height: 80px
+         margin-bottom: 2px
+         // border-radius: 50%
+         // border: 1px solid #000
+         // @include box-shadow($shadows_logo)
+         // display: inline-block
+         .logo_img
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            display: block
+            // width: 208px
+            // height: 153px  
+            // max-height: 100%
+   .menu
+      // display: inline-block
+      display: flex
+      justify-content: center
+      align-items: center
+      li
+         display: inline-block
+         margin-right: 33px
+         padding: 0 10px
+         &:last-child
+            margin-right: 0
+            padding: 0
+         a
+            font-size: 20px
+            display: block
+            color: $orange_501
+            transition: 0.2s
+            font-weight: 700
+            &::after
+               content: ''
+               display: block
+               height: 2px
+               background-color:  $orange_501
+               transform: scaleX(0)
+               transition:  0.4s
+            &:hover
+               background-color:  rgba(251, 133, 1, 0.05)
+               @include box-shadow($shadows_button_hover)
+               // color: #eee
+
+            &:hover::after
+               transform: scaleX(1)
+            &:active
+               color: $button_active
+               // background-color: $button_active
+            &:active::after
+               background-color: $orange_501
+               // &:hover
+   &.fixed
+      position: fixed
+      nav
+         height: 70px
+         // transition: 0.5s all
+         animation: nav-animation 0.35s 1
+         .logo a
+            width: 76px
+            height: 50px
+            animation: logo-animation 0.35s 1
+            // transition: 0.5s all
+
+
+@keyframes nav-animation
+   0%
+      height: 0px
+   100%
+      height: 70px
+
+@keyframes logo-animation
+   0%
+      height: 0px
+      width: 0px
+   100%
+      width: 76px
+      height: 50px

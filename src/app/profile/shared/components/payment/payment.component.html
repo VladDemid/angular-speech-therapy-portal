@@ -1,0 +1,33 @@
+<div class="payment">
+
+   <ul class="breadcrumb-arrows arrows">
+      <li><a [routerLink]="['/profile']">Личный кабинет</a></li>
+   </ul>
+
+   <div class="container">
+      <div class="payment-success" *ngIf="paySuccess == 'true'">
+         <div class="waiting" *ngIf="dbPaymentConfirmed == false">
+            <h1>Ожидаем подтверждения оплаты</h1>
+            <span class="important-note">пожалуйста подождите</span>
+            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+         </div>
+         <div class="notes-block" *ngIf="dbPaymentConfirmed == true">
+            <h1 >Оплата прошла <span class="success-note">успешно</span></h1>
+            <h2>Пожалуйста убедитесь, что вам пришло сообщение на @почту и занятие появилось в <span class="link" [routerLink]="['/profile/calendar']">календаре</span>!</h2>
+            <h3>Если произошла какая-либо ошибка или у вас есть любые вопросы, раздел  <span class="link" [routerLink]="['/profile/help']">помощь</span></h3>
+         </div>
+      </div>
+
+      <div class="payment-fail" *ngIf="paySuccess == 'false'">
+         <h1 class="error-note">К сожалению оплата не прошла по какой-то причине</h1>
+      </div>
+   </div>
+   <div class="dev-test" *ngIf="!production">
+      paySuccess: {{paySuccess}} <br>
+      dbPaymentConfirmed: {{dbPaymentConfirmed}} <br>
+      token: {{token}}
+      <!-- <button (click)="testQuery()">test success payment</button> -->
+      <button (click)="testToken()">test token</button>
+   </div>
+
+</div>

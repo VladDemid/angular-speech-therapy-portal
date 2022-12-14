@@ -1,0 +1,51 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleEventDetailsPopup()"></div>
+   <div class="popup">
+
+      <div class="popup-container">
+         <div class="subtitle">Дата и время</div>
+         <div class="date">
+            <span class="bold">{{popupService.eventDetails.date.day}}</span>
+            {{monthsNamesWhomCase[popupService.eventDetails.date.month]}} 
+            {{popupService.eventDetails.date.year}} 
+            {{popupService.eventDetails.date.time}}:00 
+            <!-- {{popupService.eventDetails.date.time}}:00 (МСК)  -->
+            <span class="days-left" *ngIf="popupService.eventDetails.daysLeft > 0">
+               (через {{popupService.eventDetails.daysLeft}} дней)
+            </span>
+            <span *ngIf="popupService.eventDetails.daysLeft == 0">
+               (сегодня)
+            </span>
+            <!-- {{popupService.eventDetails.date.day}} {{monthsNamesWhomCase[popupService.eventDetails.date.month]}}</div> -->
+            <!-- <div class="time">Время: {{popupService.eventDetails.time | timeRow}} (мск)</div> -->
+            <!-- <div class="doctor-name">Специалист: {{popupService.eventDetails.doctorName}}</div> -->
+            <!-- <div class="client-name">Специалист: {{popupService.eventDetails.patientName}}</div> -->
+         </div>
+         <div class="subtitle">Проблема:</div>
+         {{popupService.eventDetails.problemDescription}}
+         <div class="pay" *ngIf="popupService.eventDetails.state === 'AwaitingPayment'">
+            <div class="subtitle">Ссылка на оплату:</div>
+            {{popupService.eventDetails.paymentFormUrl }}
+            <div class="copy">
+               
+            </div>
+            <!-- {{popupService.eventDetails | json}} -->
+         </div>
+         <div class="zoom">
+            <div class="subtitle"><span class="blue zoom-icon">Zoom</span> ссылка:</div>
+            
+            <div class="not-ready" *ngIf="popupService.eventDetails.hoursLeft > 2">
+               <h3>Ссылка на zoom конференцию будет доступна за 2 часа до звонка</h3>
+               <span class="note">*Если ссылка не появилась напишите нам по кнопке снизу</span>
+            </div>
+            <div class="ready" *ngIf="popupService.eventDetails.hoursLeft <= 2">
+               <h3>{{popupService.eventDetails.zoomLink}}</h3>
+            </div>
+
+            <div class="help">
+               <button [routerLink]="['/profile/help']">у вас вопросы?</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

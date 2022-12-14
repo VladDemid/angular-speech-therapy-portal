@@ -1,0 +1,88 @@
+<div class="login-popup" *ngIf="popupService.homePageLoginPopup">
+   <app-login-popup></app-login-popup>
+</div>
+<div class="password-recovery" *ngIf="popupService.homePagePassRecoveryPopup">
+   <app-password-recovery></app-password-recovery>
+</div>
+<div class="fb-security-popup" *ngIf="popupService.homePageFbSecurityPopup">
+   <app-fb-security-popup></app-fb-security-popup>
+</div>
+<div class="client-form-popup" *ngIf="popupService.homePageClientPopup">
+   <app-client-form-popup></app-client-form-popup>
+</div>
+<div class="doctor-form-popup" *ngIf="popupService.homePageSpecialistPopup">
+   <app-doctor-form-popup></app-doctor-form-popup>
+</div>
+
+
+
+
+
+
+<app-nav-home></app-nav-home>
+<div class="home-page">
+   <div class="container">
+      <!-- <button (click)="testSignIn()">test sign in</button> -->
+      <!-- PROD: --{{production}}-- -->
+     
+
+      <div class="promo">
+         <div class="container">
+            <div class="dev-test" *ngIf="!production && false">
+               <button (click)="emailTest()">@emailManual</button>
+               <button (click)="FBnumber()">number</button>
+               <button (click)="getEmails()">=getEmails=</button>
+
+               <button [routerLink]="['/profile']" >в профиль</button>
+               <button [routerLink]="['/admin-login']" >админка</button>
+               <button  >logIn</button>
+               <button  (click)="FBLogout()">logOut</button>
+               <button  (click)="FBdisplayUser()">FB-User</button>
+               <button  (click)="FBdIsAuth()">isAuth</button>
+               <button  (click)="FBAuthToken()">authToken</button>
+               <button  (click)="getOrders()">getOrders</button>
+               <div class="customFunc">
+                  <input type="text" [(ngModel)]="customFunc">
+                  <button  (click)="customFbFunc()">customFunc</button>
+               </div>
+               ------------------------------------------------------------------------
+               <div class="alfa">
+                  <button  (click)="ACQtest()">alfaReq</button>
+                  <button  (click)="authTest()">alfaCall</button>
+                  <button  (click)="queryTest()">testQuery</button>
+                  <button  (click)="alfaReq()">alfaReq</button>
+                  <button  (click)="alfaTest()">alfaTest</button>
+                  <button  (click)="prodTest()">prodTest</button>
+               </div>
+
+            </div>
+            <swiper class="swiper-test" [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
+               <ng-template swiperSlide *ngFor="let item of promoSlides; index as i">
+                  <div class="slide-container">
+                     <img [src]="'/assets/img/home-slider-' + i + '.jpg'" alt="promo">
+                     <div class="sign">
+                        <div class="title">Логого</div>
+                        <div class="descr">
+                           {{promoSlides[i].sign}}
+                        </div>
+                        <button (click)="popupService.toggleHoPgClientPopup()">Записаться</button>
+                     </div>
+                  </div>
+               </ng-template>
+             </swiper>
+         </div>
+      </div>
+   
+      <app-our-specialists
+         [firebaseDoctors]="doctors"
+         [isProfileModule]="false"
+      ></app-our-specialists>
+
+      <!-- <app-recomendation></app-recomendation> -->
+      
+      <app-job-invitation></app-job-invitation>
+   
+      <app-faq-new></app-faq-new>
+      <app-footer-home></app-footer-home>
+   </div>
+</div>

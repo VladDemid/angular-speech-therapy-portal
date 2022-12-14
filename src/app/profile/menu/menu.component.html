@@ -1,0 +1,45 @@
+<div class="profile-menu">
+   <div class="container">
+      <h3>Личный кабинет</h3>
+      <div class="user-type-dev user-type-icon" *ngIf="!production">
+         Вы вошли как 
+         <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
+         <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
+         <!-- <button (click)="emailSend()">email</button> -->
+         <div class="test">
+            {{testVar | json}}
+            <button (click)="TESTshowMyData()">show myData</button>
+         </div>
+      </div>
+      <div class="dev-test" *ngIf="!production">
+         <button (click)="TESTsetToken()">setToken</button>
+         <button (click)="TESTgetToken()">getToken</button>
+         <button (click)="TESTgetData()">getData</button>
+         <button (click)="TESTpatchUserData()">patchData</button>
+         <button (click)="TESTmanualRESTpatchUserData()">manualRestPatchData</button>
+         <button [ngClass]="{updating2: testAction}" (click)="testLoading()"  ><span data-text="загрузить">загрузить</span></button>
+         {{testAction}}
+      </div>
+      <!-- <div class="help">
+         Пожалуйста дополните данные о себе в разделе 
+         <span>"Редактировать личные данные"</span> 
+      </div> -->
+      <div class="menu-list">
+         <div class="menu-item" *ngFor="let item of menuItems"  [routerLink]="['/profile', item.link]" [attr.link]='item.link' >
+            
+            <!-- <div class="icon-wrapper">
+               <div class="icon"></div>
+            </div> -->
+            <div class="description">
+               {{item.name}}
+            </div>
+         </div>
+      </div>
+      <div class="exit-block">
+         <!-- <div class="exit-button" (click)="exitProfile()">
+            <img src="./assets/icons/exit.png" alt="exit-button">
+            <span class="blue">Выход</span>
+         </div> -->
+      </div>
+   </div>
+</div>

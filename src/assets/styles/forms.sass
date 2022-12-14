@@ -1,0 +1,886 @@
+
+
+
+.login-registration_tabs
+   display: flex
+   justify-content: space-between
+   color: #000
+   max-width: 860px
+   margin: 0 auto 20px
+   div
+      text-align: center
+      line-height: 67px
+      // width: 10%
+      // border: 2px solid #fff
+      height: 70px
+      cursor: pointer
+      font-size: 22px
+      font-weight: 500
+      transition: all 0.15s
+      border: 2px solid transparent
+      
+      &:nth-child(1)
+         width: 45%
+      &:nth-child(2)
+         width: 55%
+         background-color: #eee
+         color: #666
+         
+      &:hover
+         border: 2px solid $yellow_common
+         background-color: rgba(255, 183, 1, 0.5)
+      &:active
+         border: 2px solid $orange_common
+         color: #000
+      &.active
+         // background-color: $orange_common
+         // border: 2px solid $_34302D15
+         &:hover
+            border: 2px solid transparent
+            background-color: #fff
+
+.registration-type
+   display: flex
+   justify-content: center
+   margin-top: 40px
+   label
+      position: relative
+      color: #000
+      width: 40%
+      margin: 0 10px
+      
+      span
+         position: relative
+         display: block
+         // border: 2px solid rgba(69, 74, 74, 0.2)
+         text-align: center
+         // padding-left: 30px
+         height: 54px
+         line-height: 54px
+         cursor: pointer
+         transition: all 0.15s
+         // background-color: red
+         border: 2px solid $grey_CA
+         border-radius: 9px
+         &.active
+            border: 2px solid $orange_501
+         &:hover
+            border: 2px solid $yellow_common
+         // &::after
+         //    content: ''
+         //    position: absolute
+         //    left: 5px
+         //    top: calc(50% - 10px)
+         //    width: 20px
+         //    height: 20px
+         //    border-radius: 50%
+         //    border: 2px solid  rgba(69, 74, 74, 0.5)
+
+      input
+         position: absolute
+         opacity: 0%
+      input:checked ~ .type-text
+         // border: 2px solid $orange_common
+         &::after
+            border: 2px solid  $orange_common
+         // &::before
+         //    content: ''
+         //    position: absolute
+         //    left: 11px
+         //    top: calc(50% - 4px)
+         //    width: 8px
+         //    height: 8px
+         //    border-radius: 50%
+         //    // border: 2px solid  $orange_common
+         //    background-color: $orange_common
+
+.foggot-pass-link
+   display: inline-block
+   margin-top: -25px
+   font-size: 18px
+   color: #777
+   text-decoration: underline
+   text-align: right
+   font-weight: 200
+
+.show-rules
+   cursor: pointer
+
+
+
+form
+   button
+      display: block
+      // margin: 0 auto
+      height: 48px
+      // &.login
+         // margin: 50px auto 30px
+         // width: 254px
+   .inputs-wrapper
+      max-width: 824px
+      margin: 0 auto
+      padding: 32px
+      border-radius: 20px
+      @include box-shadow($nav_shadow)
+      label
+         display: flex
+         justify-content: space-between
+         margin-top: 34px
+         transition: all 0.15s
+         user-select: none
+      
+         input, textarea
+            width: 540px
+            background-color: #4E463E05
+            border: 2px solid $_34302D15
+            height: 56px
+            border-radius: 9px
+            outline: none
+            padding: 20px
+            transition: all 0.15s
+            &:focus
+               border: 2px solid $yellow_common
+            &.ng-touched.ng-dirty.ng-invalid
+               border: 2px solid #F74342
+            &.ng-touched.ng-invalid
+               border: 2px solid #F74342
+            &.upload_documents
+               padding-top: 11px
+               color: #454A4A
+               font-size: 20px
+            
+         textarea
+               height: 100%
+               
+         .select
+            position: relative
+            &.is-active 
+               .select__body
+                  display: block
+               .select__header
+                  &::after
+                     // transform: rotate(120deg)
+                     transform: translateY(15px)
+
+            .select__header
+               width: 540px
+               border: 2px solid #CACACA
+               height: 56px
+               border-radius: 9px
+               outline: none
+               padding: 0 20px
+               transition: all 0.15s
+               cursor: pointer
+               display: flex
+               position: relative
+               &::after
+                  content: ""
+                  position: absolute
+                  top: calc( 50% - 4px )
+                  right: 20px
+                  border-style: solid
+                  border-width: 8px 4px 0px 4px
+                  border-color: $blue_common transparent transparent transparent
+                  transition: 0.3s
+               span
+                  color: #000
+               .select__current
+                  font-size: 18px
+                  padding: 0px
+                  // line-height: 56px 
+                  // padding: 8px
+
+               // .select__icon
+               //    align-items: center
+               //    display: flex
+               //    flex-shrink: 0
+               //    justify-content: center
+               //    height: 40px
+               //    margin-left: auto
+               //    text-align: center
+               //    width: 40px
+
+            .select__body
+               border: 2px solid #cccccc
+               background-color: #fff
+               border-top: 0
+               border-radius: 0 0 9px 9px
+               display: none
+               left: 0
+               position: absolute
+               right: 0
+               top: 85%
+
+            .select__item
+               cursor: pointer
+               font-size: 16px
+               line-height: 24px
+               padding: 8px
+               border-top: 1px solid #cccccc
+               &:hover
+                  background-color: #f2f2f2
+         
+               
+
+         &>span
+            color: #454A4A
+            font-size: 22px
+            font-weight: 400
+            line-height: 56px
+            max-width: 218px
+            padding-right: 15px
+            transition: all 0.15s
+            &.narrow
+               line-height: 28px 
+               // font-size: 22px
+               padding-right: 0
+               max-width: 166px
+               // background-color: rgba(0,0,0,.1)
+      & > label:nth-child(1)
+         margin-top: 0
+      .educations
+         position: relative
+         .education
+            // &:nth-child(n+2)
+            //    label span
+            //       position: relative
+            //       &::after
+            //          content: '(доп)'
+            //          position: absolute
+            //          top: -20px
+            //          right: 10px
+            //          font-size: 12px
+            //          color: #999
+            //          width: 0px
+            //          height: 0px
+            
+         .education_buttons
+            position: absolute
+            width: 24px
+            height: 24px
+            border-radius: 8px
+            // border: 1px solid #000
+            background-color: #fb8601a1
+            margin: 0
+            padding: 10px
+            color: #000
+            &:hover
+               transform: scale(1.05)
+            &::after, &::before
+               content: ''
+               position: absolute
+               width: 14px
+               height: 2px
+               background-color: $grey_45
+               top: 50%
+               left: 50%
+               transform: translate3d(-50%, -50%, 0)
+            &::after
+               width: 2px
+               height: 14px
+            &.incrEducation
+               bottom: 107px
+               left: 47px
+            &.decrEducation
+               bottom: 132px
+               right: -9px
+               &:after, &::before
+                  transform: translate3d(-50%, -50%, 0) rotate(45deg)
+            
+
+                  
+
+            
+
+      .double-input-row
+         display: flex
+         justify-content: space-between
+         label
+            // display: inline-block
+            display: flex
+            justify-content: space-between
+            &:nth-child(1)
+               width: calc(100% - 300px)
+               span
+                  // margin-right: 154px
+                  // width: calc(100% - 211px)
+               input
+                  width: 240px
+
+            &:nth-child(2)
+               justify-content: flex-end
+               width: 300px
+               span
+                  margin: 0px 20px
+                  padding-right: 0
+               input
+                  width: 121px
+      .specializations, .specialization-main
+         position: relative
+         margin-top: 34px
+         & > label
+            position: absolute
+            top: 50%
+            margin-top: -28px
+            max-width: 200px
+            display: inline-block
+         .specializations-list
+            display: flex
+            justify-content: space-between
+            flex-wrap: wrap
+            margin-left: 34%
+            width: 70%
+            .specialization-item
+               width: 50%
+               height: 24px
+               label
+                  position: relative
+                  display: block
+                  margin-top: 0
+                  padding-left: 30px
+                  cursor: pointer
+                  user-select: none
+                  &::after
+                     content: ''
+                     position: absolute
+                     width: 18px
+                     height: 18px
+                     top: calc(50% - 9px)
+                     left: 5px
+                     border: 2px solid $form_non_selected
+                     border-radius: 3px
+                  &.specialization_selected
+                     &::after
+                        border: 2px solid $orange_501
+                     &::before
+                        content: ''
+                        position: absolute
+                        width: 10px
+                        height: 9px
+                        top: calc(50% - 4px)
+                        left: 9px
+                        background-image: url('/assets/icons/functions/check-mark-3.svg')
+                        background-repeat: no-repeat
+                        background-size: cover
+
+               label.radio
+                  &::after
+                     border-radius: 10px
+                  &.main_specialization_selected
+                     &::after
+                        border: 2px solid $orange_common
+                     &::before
+                        content: ''
+                        position: absolute
+                        width: 10px
+                        height: 10px
+                        top: calc(50% - 5px)
+                        left: 9px
+                        border: 2px solid $orange_common
+                        background-color: $orange_common
+                        border-radius: 10px
+               input 
+                  width: 0px
+                  height: 0px
+                  opacity: 0%
+   .update-success
+      margin: 30px auto 20px
+      text-align: center
+      // width: 250px
+      font-weight: bold
+      color: $orange_common
+      text-decoration: underline
+
+// -------------------------
+form.new-form
+   max-width: 500px
+   
+   margin: 20px auto
+   display: flex
+   justify-content: flex-start
+   flex-direction: column
+   gap: 20px 0px
+   .line
+      // border: 1px solid #000
+      display: flex
+      justify-content: space-between
+      flex-wrap: wrap
+      gap: 15px
+      label
+         position: relative
+         margin-bottom: 10px
+         flex-grow: 1
+         display: block
+         // width: 300px
+         min-width: 200px
+         input, textarea
+            display: inline-block
+            height: 56px
+            border: 2px solid $grey
+            padding: 0 10px
+            border-radius: 5px
+            outline: none
+            width: 100%
+            caret-color: $orange_common
+            background-color: #fdfdfd
+            &:focus
+               border: 2px solid $orange_common
+            &:focus, &[type="date"], textarea, &.ng-dirty, &.filled
+               cursor: text
+               &~span.title
+                  top: 1px
+                  font-size: 0.9em
+                  // color: #fdfdfd
+            &.ng-invalid.ng-touched:not(:focus), &.ng-invalid.ng-dirty:not(:focus)
+               border: 2px solid red
+               &~.note
+                  display: none
+               &.note.err
+                  display: block
+            &:focus.ng-invalid.ng-touched, &:focus.ng-invalid.ng-dirty
+               // background-color: grey
+               // &~.note
+                  // display: block
+               &~.validation-errors span.note.err
+                  display: none
+                  // visibility: hidden
+            &.comment
+               word-wrap: wrap
+         .reveal-eye
+            position: absolute
+            top: 50%
+            right: 12px
+            transform: translateY(-50%)
+            height: 24px
+            width: 24px
+            border-radius: 50%
+            background-image: url('/assets/icons/interface/eye.svg')
+            background-size: contain
+            cursor: pointer
+         textarea
+            padding: 10px
+            min-height: 80px
+            margin-bottom: 10px
+            // &:active
+            //    border: 2px solid $yellow_common
+         span.title, span.note
+            position: absolute
+            display: inline-block
+            padding: 0 5px
+            // border: 1px solid #000
+            max-width: 90%
+            top: 50% 
+            line-height: 3px
+            // top: 0
+            left: 12px
+            transform: translateY(-50%)
+            color: $grey
+            background-color: #fdfdfd
+            transition: 0.2s all
+            cursor: text
+         span.note
+            top:111%
+            left: 7px
+            transform: translateY(0%)
+            background-color: transparent
+            font-size: 0.8em
+            &.err
+               color: red
+               text-decoration: underline
+               // font-weight: bold
+         .validation-errors
+            position: absolute
+            top:96%
+            left: 7px
+            background-color: transparent
+            width: 90%
+            span.note.err
+               position: static
+            // font-size: 0.8em
+         textarea
+            &~span.note
+               top: 92%
+            &~span.title
+               top: 27%
+               // top: 1px
+               // font-size: 0.9em
+               // color: $grey_45
+            &~.validation-errors
+               top: 83% 
+            &:not([placeholder=''])
+               &~span.title
+                  top: 1px
+                  font-size: 0.9em
+                  color: $grey_45
+      .specializations, .specialization-main
+         position: relative
+         margin-top: 34px
+         & > label
+            position: absolute
+            top: 50%
+            margin-top: -28px
+            max-width: 200px
+            display: inline-block
+         .specializations-list
+            display: flex
+            justify-content: space-between
+            flex-wrap: wrap
+            margin-left: 34%
+            width: 70%
+            .specialization-item
+               width: 50%
+               height: 24px
+               label
+                  position: relative
+                  display: block
+                  margin-top: 0
+                  padding-left: 30px
+                  cursor: pointer
+                  user-select: none
+                  &::after
+                     content: ''
+                     position: absolute
+                     width: 18px
+                     height: 18px
+                     top: calc(50% - 9px)
+                     left: 5px
+                     border: 2px solid $form_non_selected
+                     border-radius: 3px
+                  &.specialization_selected
+                     &::after
+                        border: 2px solid $orange_501
+                     &::before
+                        content: ''
+                        position: absolute
+                        width: 10px
+                        height: 9px
+                        top: calc(50% - 4px)
+                        left: 9px
+                        background-image: url('/assets/icons/functions/check-mark-3.svg')
+                        background-repeat: no-repeat
+                        background-size: cover
+
+               label.radio
+                  &::after
+                     border-radius: 10px
+                  &.main_specialization_selected
+                     &::after
+                        border: 2px solid $orange_common
+                     &::before
+                        content: ''
+                        position: absolute
+                        width: 10px
+                        height: 10px
+                        top: calc(50% - 5px)
+                        left: 9px
+                        border: 2px solid $orange_common
+                        background-color: $orange_common
+                        border-radius: 10px
+               input 
+                  width: 0px
+                  height: 0px
+                  opacity: 0%
+   button[type='submit']
+      width: 100%
+
+.rules
+   // margin: 0 auto
+   // margin-top: -30px
+   // width: 71%
+   display: flex
+   flex-direction: column
+   justify-content: flex-start
+   font-size: 16px
+   user-select: none
+   label
+      display: block
+      margin-top: 0
+      padding: 5px 0 5px 30px
+      cursor: pointer
+      span
+         position: relative
+         line-height: 1em
+      input
+         position: absolute
+         margin-right: 20px
+         width: 10px
+         height: 10px
+         opacity: 0%
+         &:checked + span:after
+            position: absolute
+            content: ""
+            z-index: 10
+            width: 15px
+            height: 12px
+            top: 50%
+            transform: translateY(-50%)
+            color: #219EBC
+            font-size: 20px
+            font-weight: bold
+            left: -25px
+            background-image: url('/assets/icons/functions/check-mark.svg')
+            background-repeat: no-repeat
+            background-position: 0px 0px
+            // position: relative
+            // background-size: contain
+            // bottom: 8px
+         &:checked + span::before
+            border: 3px solid #748B91
+         &:hover + span::before
+            border: 3px solid #96AFB8
+         &:active + span::before
+            border: 3px solid #334A52
+
+
+         & + span::before
+            position: absolute
+            content: ''
+            width: 24px
+            height: 24px
+            left: -30px
+            top: calc(50% - 13px)
+            border: 3px solid #C9C9C9
+            
+   a
+      color: #019393
+      text-decoration: underline
+
+
+.popup
+   form
+      .inputs-wrapper
+         box-shadow: none
+
+.radio-wrapper
+   display: flex
+   justify-content: center
+   .radio-label
+      border: 2px solid $grey_CA
+      display: inline-block
+      border-radius: 9px
+      position: relative
+      width: 250px
+      height: 50px
+      user-select: none
+      cursor: pointer
+      margin: 40px 10px
+      // &:nth-child(2)
+      //    margin-left: 20px
+      &.active
+         border: 2px solid $orange_common
+         
+      span
+         position: absolute
+         left: 50%
+         top:50%
+         transform: translate(-50%, -50%)
+         line-height: 22px
+         padding-right: 0
+         // border: 1px solid #000
+         width: 150px
+         text-align: center
+         // width: 0
+         // height: 0
+      &.checked
+         border: 2px solid $orange_common
+      input[type="radio"]
+         visibility: hidden
+         width: 0
+         height: 0
+         // &:checked+span
+            // visibility: visible
+            // position: 
+            // &::after
+            //    content: ''
+            //    position: absolute
+            //    width: 10px
+            //    height: 10px
+            //    left: -10px
+            //    top: calc(50% - 5px)
+            //    background-color: #000
+
+.toggle-wrap
+   position: relative
+   // border: 1px solid #000
+   width: 50px
+   height: 16px
+   cursor: pointer
+   .bg
+      width: 100%
+      height: 100%
+      // border: 1px solid #000
+      background-color: rgba(107, 107, 107, 0.37)
+      border-radius: 8px
+      @include box-shadow($nav_shadow)
+   .point
+      width: 20px
+      height: 20px
+      // border: 1px solid #000
+      border-radius: 50%
+      position: absolute
+      top: calc(50% - 10px)
+      left:-6%
+      background-color: rgba(107, 107, 107, 0.644)
+      transition: 0.2s all
+      @include box-shadow($nav_shadow)
+   &.active
+      .bg
+         background-color: rgba(252, 134, 0, 0.6)
+      .point
+         background-color: rgb(252, 134, 0)
+         left: 63%
+
+
+   
+
+
+// form.feedback
+//    .inputs-wrapper
+//       // border: 1px solid #000
+//       padding: 32px 0 10px
+//       display: flex
+//       justify-content: space-between
+//       flex-wrap: wrap
+//       > label
+//          width: 49%
+//          // border: 1px solid #000
+//          height: 58px
+//          &:nth-child(2)
+//             margin-top: 0
+
+//          input
+//             max-width: 264px
+//          &.textarea-wrap
+//             width: 100%
+//             height: 100px
+//             textarea
+//                width: 686px
+//    .rules
+//       display: block
+//       // flex-direction: row
+//       margin-bottom: 20px
+//       .terms-of-use
+//          margin-top: 10px
+//          .agreement
+//             padding-left: 22px
+         
+
+
+.error
+   font-size: 14px
+   border-bottom: 3px solid red
+   border-radius: 3px
+   span
+      color: red
+      // text-decoration: underline
+      font-size: 1.2em
+.serverErrorMessage, .serverScsMessage
+   display: block
+   margin: 0 auto
+   text-align: center
+   // width: 300px
+   font-size: 22px
+   text-decoration: underline
+.serverErrorMessage
+   color: red
+.serverScsMessage
+   color: green
+
+
+
+
+   
+
+@media screen and (max-width: 790px) 
+   form .inputs-wrapper label span
+      max-width: 180px
+@media screen and (max-width: 900px)
+   .registration-block form
+      .inputs-wrapper
+         label
+            input, .select__header
+               width: 480px
+         .double-input-row
+            label
+               &:nth-child(1)
+                  width: calc(100% - 234px)
+                  input
+                     width: 246px
+               &:nth-child(2)
+                  width: 234px
+                  span
+                     line-height: 28px
+                  input
+                     width: 100px
+@media screen and (max-width: 750px) 
+   form
+      .inputs-wrapper
+         label
+            margin-top: 20px
+            flex-direction: column
+            align-items: left
+            & > input, & > textarea
+               width: 100% 
+               text-align: left
+            span 
+               margin: 0 0 5px 20px
+            .select
+               width: 100%
+               .select__header
+                  width: 100%
+                  justify-content: center
+                  .select__current
+                     line-height: 52px
+               .select__body
+                  .select__item
+                     text-align: center
+            span
+               line-height: 30px
+               max-width: 100%
+               &.narrow
+                  line-height: 40px
+                  max-width: 100% 
+                  
+                  // width: 187px
+         .double-input-row
+            label
+               &:nth-child(1)
+                  width: calc(100% - 180px) !important
+                  input
+                     width: 100% 
+               &:nth-child(2)
+                  width: 180px !important
+                  span
+                     line-height: 28px
+                     font-size: 22px
+                  input
+                     width: 100%
+         .specializations, .specialization-main
+            display: flex
+            flex-direction: column
+            align-items: center
+            margin: 60px 0 30px 
+            
+            label
+               position: relative
+               max-width: 100%
+            .specializations-list
+               position: relative
+               width: 86%
+               margin-top: 20px
+               margin-left: 0px 
+               .specialization-item
+                  // border: 1px solid #000
+                  input
+                     width: 0px !important
+
+   
+   
+@media screen and (max-width: 650px) 
+   .registration-type 
+      label 
+         span
+            padding-top: 3px
+            font-size: 3vw
+            line-height: 22px
+      

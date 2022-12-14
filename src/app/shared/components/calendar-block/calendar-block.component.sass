@@ -1,0 +1,424 @@
+@import "../../../../assets/styles/_variables"
+@import "../../../../assets/styles/schedule"
+
+.calendar
+   // border: 1px solid #000
+   margin: 20px 0 100px
+   display: flex
+   // display: none
+   justify-content: flex-start
+   align-items: flex-start
+   // max-width: 100%
+   .calendar-wrapper
+      // margin-top: 40px
+      width: 780px //55%
+      max-width: 600px
+      @include box-shadow($nav_shadow)
+      border-radius: 20px
+      padding: 32px
+      .calendar-header
+         display: flex
+         justify-content: space-around
+         width: 100%
+         margin-bottom: 12px
+         // border: 1px solid #000
+         .month
+            width: 130px
+            // border: 1px solid #000
+            text-align: center
+            font-weight: bold
+         .arrow
+            position: relative
+            display: inline-block
+            cursor: pointer
+            width: 20px
+            height: 15px
+            // border: 1px solid #000
+            &::after
+               top: -1px
+               width: 20px
+               height: 15px
+               background-image: url('/assets/icons/functions/arrow-blue.svg')
+               background-size: contain
+               background-repeat: no-repeat
+               // background-color: #ccc
+               // border: 1px solid #000
+         .arrow-left
+            &::after
+               content: ''
+               position: absolute
+               left: -1px
+               transform: rotate(90deg)
+               
+         .arrow-right
+            &::after
+               content: ''
+               position: absolute
+               right: -1px
+               transform: rotate(-90deg)
+      .calendar-body
+         text-align: center
+         font-size: 22px
+         color: $textBody80
+         .days-of-week
+            display: flex
+            justify-content: flex-start
+            flex-wrap: wrap
+            .day-of-week
+               width: calc(100% / 7 - 4px)
+               // border: 1px solid #000
+               font-weight: 500
+               margin: 2px
+         .days
+            display: flex
+            justify-content: flex-start
+            flex-wrap: wrap
+            
+            // height: 30vw
+            // height: 380px
+            .day
+               width: calc(100% / 7 - 4px)
+               // height: 74px
+               height: 60px
+               margin: 2px
+               cursor: pointer
+               user-select: none
+               border-radius: 10px
+               transition: 0.2s
+               
+               &:hover
+                  background-color: $orange_common
+                  transform: scale(1.05)
+               // &:nth-child(1)
+               //    margin-left: calc(200% / 7 + 2px)
+   //?--COMMON--
+
+   .time-aside
+      // border: 2px dashed #ccc
+      // width: calc(45vw - 30px)
+      position: relative
+      margin: 0 15px 0
+      background-color: rgba(251, 133, 1, 0.1)
+      border-radius: 20px
+      padding-bottom: 20px
+      // border-bottom: 50px solid $orange_common
+      min-width: 300px
+      padding: 20px
+      max-width: 330px
+      // max-height: 500px
+      // overflow-y: scroll
+      // cursor: pointer
+      .time-gaps
+         .time-row
+            position: relative
+            // border: 1px solid #000
+            padding: 7px
+            // height: 32px
+            // min-height: 32px
+            border-radius: 5px
+            cursor: pointer
+            background-color: #fff
+            border-left: 10px solid $grey_9c
+            margin-bottom: 5px
+            left: 0px
+            user-select: none
+            @include box-shadow($nav_shadow)
+            transition: 0.2s all
+            .time
+               position: absolute
+               left: 40%
+               top: 8px
+               font-weight: 400
+            .status
+               // margin-left: 8px
+               span
+                  max-width: 200px
+                  &:not(.deactivated)
+                     display: none
+                  &.deactivated
+                     display: inline-block
+            .lesson-properties
+               &>*
+                  display: block
+                  margin-top: 4px
+               textarea
+                  padding: 6px
+                  // border: 3px solid #000
+               button
+                  height: 30px
+            .buy-button
+               position: absolute
+               right: 0px
+               height: 100%
+               top: 0px
+               width: 40px
+               // width: 200px
+               // border: 1px solid #000
+               border-radius: 0px 5px 5px 0px
+               @include box-shadow($nav_shadow)
+               background-color: rgba(251, 133, 1, 0.6)
+               transition: 0.3s all
+               backdrop-filter: blur(3px)
+               overflow: hidden
+               &:hover
+                  width: 200px
+                  background-color: rgba(251, 133, 1, 0.9)
+                  border-radius: 5px
+                  &::after
+                     content: ''
+                     transition: 0.3s
+                     // width: 100%
+                     // overflow: hidden
+                  .pay-sign
+                     opacity: 100%
+               &::after
+                  content: ''
+                  position: absolute
+                  width: 20px
+                  height: 4px
+                  background-color: #000
+                  // background-color: $orange_common
+                  @include box-shadow($nav_shadow)
+                  border-radius: 3px
+                  top: 50%
+                  right: 10px
+                  transform: translateY(-50%)
+               &::before
+                  content: ''
+                  position: absolute
+                  width: 4px
+                  height: 20px
+                  background-color: #000
+                  // background-color: $orange_common
+                  @include box-shadow($nav_shadow)
+                  border-radius: 3px
+                  top: 50%
+                  right: 18px
+                  transform: translateY(-50%)
+               .pay-sign
+                  font-size: 16px
+                  position: absolute
+                  // top: 50%
+                  transform: translateY(50%)
+                  right: 55px
+                  font-weight: 500
+                  opacity: 0%
+                  transition: 0.3s all
+               
+            .payment-state
+               display: inline-block
+               margin-top: 5px
+               color: #ccc
+
+            .manual-add
+               display: none
+               content: ''
+               position: absolute
+               right: -26px
+               top: 7px
+               width: 21px
+               height: 21px
+               font-size: 27px
+               font-weight: bold
+               line-height: 18px
+               padding: 2px
+               color: $orange_common
+               border-radius: 3px
+               background-color: #fff
+               // border: 2px solid #000
+               cursor: pointer
+               @include box-shadow($nav_shadow)
+
+            .switch
+               position: absolute
+               cursor: pointer
+               right: 5px
+               top: calc(50% - 8px)
+               // border: 1px solid #000
+               height: 16px
+               width: 36px
+               border-radius: 8px
+               background-color: $grey_9c
+               &::after
+                  content: ''
+                  position: absolute
+                  height: 10px
+                  width: 10px
+                  // border: 1px solid #000
+                  border-radius: 50%
+                  top: calc(50% - 5px)
+                  left: 3px
+                  background-color: #fff
+                  transition: 0.2s all
+            &.active
+               // cursor: pointer
+               border-left: 10px solid $orange_501_60
+               .manual-add
+                  display: block
+               .switch
+                  background-color: $orange_common
+                  &::after
+                     left: calc(100% - 13px)
+               .deactivated
+                  display: none
+               &:active
+                  // left: 10px
+                  // background-color: $orange_501_60
+                  &:hover
+                     // left: 10px
+               .status
+                  :not(.active)
+                     display: none
+                  .active
+                     display: inline-block
+               &.selected
+                  left: 5px
+            // &.waiting 
+            &.waiting
+               border-left: 10px solid $orange_148
+               .status
+                  font-size: 14px
+                  :not(.waiting)
+                     display: none
+                  .waiting
+                     display: inline-block
+               .switch
+                  background-color: $orange_148
+                  &::after
+                     left: calc(50% - 5px)
+            &.booked
+               cursor: default
+               .manual-add
+                  display: none
+               .status
+                  :not(.booked)
+                     display: none
+                  .booked
+                     display: inline-block
+            &.canceled
+               .status
+                  :not(.canceled)
+                     display: none
+                  .canceled
+                     display: inline-block
+            &.waiting-payment
+               .status
+                  :not(.waiting-payment)
+                     display: none
+                  .waiting-payment
+                     display: inline-block
+      .manual-add-order
+         background-color: #fff
+         border-radius: 5px
+         margin: 10px 0 10px
+         padding: 4px
+         cursor: pointer
+         user-select: none
+         &.disabled
+            border: 2px solid $grey_9c
+         &.enabled
+            border: 2px solid $orange_common
+      .doctor-card
+         .time-row
+            &:not(.active)
+               opacity: 0.3
+            &.active:hover
+               cursor: pointer
+               // border: 2px solid  $orange_501_60
+               // height: 36px
+               // left: 5px
+               // background-color: $orange_148
+               box-shadow: $nav_shadow_hover
+               transition: 0.2s all
+               // &.selected
+                  // cursor: default
+      .time-aside-client, .time-aside-doctor
+         .time-row
+            &.booked, &.waiting-payment, &.canceled
+               .status
+                  span
+                     font-weight: 600
+                     font-size: 18px
+               min-height: 100px
+               .data-ready
+                  margin-top: 10px
+                  .lesson-row
+                     margin-top: 5px
+                     display: block
+                     h4
+                        display: inline-block
+                        font-weight: bold
+                        padding-right: 5px
+                  .details
+                     position: absolute
+                     top: 8px
+                     right: 8px
+                     cursor: pointer
+                     height: 26px
+                     width: 26px
+                     // border: 1px solid #000
+                     background-image: url('/assets/icons/interface/notepad.svg')
+                     background-size: 100%
+                     background-repeat: no-repeat
+                     &:hover
+                        @include box-shadow($nav_shadow)
+                        transition: 0.2s all
+               .time, .switch
+                  display: none
+      .time-aside-client
+         .time-gaps
+            .time-row
+               height: 0
+               min-height: 0
+               padding: 0
+               &.active
+                  height: 100%
+                  padding: 7px
+      &.time-aside-edit
+         padding-right: 40px
+         .day-title
+            text-align: center
+            transform: translateY(-30%)
+      .doctor-card
+         .time-gaps
+            .time-row
+               &.booked
+                  border-left: 10px solid red
+                  cursor: default
+
+      
+   .time-aside-view
+      padding: 20px
+      overflow: visible
+      max-height: 700px
+            
+
+.doctor-alert
+   text-align: center
+   font-size: 16px
+   border-bottom: 1px dotted green
+   // text-decoration: 
+   .success
+      cursor: pointer
+
+@keyframes updating
+   0%
+      width: 15%
+      background-color: rgba(251, 133, 1, 0.0)
+   // 30%
+   //    width: 25%
+   //    background-color: rgba(251, 133, 1, 0.5)
+   80%
+      width: 100%
+      background-color: rgba(251, 133, 1, 0.7)
+   100%
+      width: 100%
+      background-color: rgba(251, 133, 1, 0.0)
+
+.debug-block
+   margin: 30px
+   font-size: 14px
+   p 
+      max-width: 200px
+      margin-top: 5px
+      border-bottom: 1px dashed #ccc

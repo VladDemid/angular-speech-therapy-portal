@@ -1,0 +1,65 @@
+<div class="fixed-overlay ">
+   <div class="close-popup" (click)="popupService.toggleHoPgSpecialistPopup()"></div>
+   <div class="popup">
+
+      
+      <div class="popup-container">
+         <h2>Вопросы по сотрудничеству</h2>
+         <form class="new-form" [formGroup]="specForm" (ngSubmit)="submit()">
+            <div class="line">
+               <label>
+                  <input name="name" [ngClass]="{filled: name.value}" type="text"  formControlName="name">
+                  <span class="title">ФИО</span>
+                  <div class="validation-errors" *ngIf="name.invalid && (name.dirty || name.touched) || errMessage">
+                     <span class="note err" *ngIf="name.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+               <label>
+                  <input name="specialization" [ngClass]="{filled: specialization.value}" type="text"  formControlName="specialization">
+                  <span class="title">Профессия</span>
+                  <div class="validation-errors" *ngIf="specialization.invalid && (specialization.dirty || specialization.touched) || errMessage">
+                     <span class="note err" *ngIf="specialization.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            <div class="line">
+               <label>
+                  <input name="email" [ngClass]="{filled: email.value}" type="text" formControlName="email">
+                  <span class="title">@email</span>
+                  <div class="validation-errors" *ngIf="email.invalid && (email.dirty || email.touched) || errMessage">
+                     <span class="note err" *ngIf="email.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+               <label>
+                  <input name="phone" [ngClass]="{filled: phone.value}" type="text" formControlName="phone">
+                  <span class="title">телефон</span>
+                  <div class="validation-errors" *ngIf="phone.invalid && (phone.dirty || phone.touched) || errMessage">
+                     <span class="note err" *ngIf="phone.errors?.['required']">*необходимо заполнить</span>
+                     <span class="note err" *ngIf="phone.errors?.['minlength']">*6+ символов</span>
+                  </div>
+               </label>
+            </div>
+            <div class="line">
+               <label>
+                  <!-- <input name="comment" type="text" formControlName="comment"> -->
+                  <textarea name="comment" [ngClass]="{filled: comment.value}" formControlName="comment" placeholder="Опишите проблему, в каких мессенджерах с вами можно связаться и т.д."></textarea>
+                  <span class="title">Комментарий</span>
+                  <div class="validation-errors" *ngIf="comment.invalid && (comment.dirty || comment.touched) || errMessage">
+                     <span class="note err" *ngIf="comment.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            <div class="rules">
+               <div class="terms-of-use">
+                  <label>
+                     <input name="termsOfUse"   type="checkbox" formControlName="termsOfUse">
+                     <span>Принимаю условия <a class="show-rules" (click)="popupService.goToTerms($event)">пользовательского соглашения</a></span>
+                  </label>
+               </div>
+            </div>
+            <div class="serverErrorMessage" *ngIf="errMessage" >{{errMessage}}</div>
+            <button [disabled]="isSendingData" [ngClass]="{submitted: submitted}" type="submit">Отправить</button>
+         </form>
+      </div>
+   </div>
+</div>

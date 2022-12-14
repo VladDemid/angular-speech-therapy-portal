@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "users": {
+      ".read": "true",
+      "$uid": {
+        ".read": "true",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "doctorsSchedule": {
+      ".read": "true",
+      "$uid": {
+        ".read": "true",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "lessons": {
+      ".read": "true",
+      "$uid": {
+        ".read": "true",
+        ".write": "true"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div class="doctors-page">
+   <div class="container">
+      <ul class="breadcrumb-arrows arrows">
+         <li><a [routerLink]="['/profile']">Меню</a></li>
+         <!-- <li><a>Специалисты</a></li> -->
+      </ul>
+      <div class="doctor-alert" *ngIf="userType == 'doctor'">
+         К сожалению, вы как <span>доктор</span>  не можете записаться к другому доктору. Если это необходимо, создайте аккаунт как <span>пациент</span>!
+      </div>
+   </div>
+</div>
+<app-our-specialists [firebaseDoctors]="doctors" [isProfileModule]="true"></app-our-specialists>
+<div class="footer-spacer"></div>

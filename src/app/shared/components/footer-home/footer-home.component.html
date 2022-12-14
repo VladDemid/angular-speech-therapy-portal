@@ -1,0 +1,38 @@
+<div class="fb-security-popup" *ngIf="popupService.requisitesPopup" >
+   <app-requisites-popup></app-requisites-popup>
+</div>
+
+<footer id="footer">
+   <div class="container">
+      <div class="main-info">
+         <ul>
+            <li class="adress">
+               <a href="https://yandex.ru/maps/157/minsk/house/Zk4YcwVoTkACQFtpfXVwcnxiYA==/?ll=27.528755%2C53.913014&z=17.22" target="_blank">
+                  220035 г. Минск, ул. Грибоедова, 4-47
+               </a>
+            </li>
+            <li class="tel">
+               +375291716833
+            </li>
+            <li class="email">
+               <a href="logogo.online@gmail.com">logogo.online@gmail.com</a>
+            </li>
+         </ul>
+      </div>
+      <div class="payment-icons">
+         <div class="mir"></div>
+         <div class="visa"></div>
+         <div class="master-card"></div>
+      </div>
+      <div class="legal-info">
+         <ul>
+            <li [routerLink]="['/terms-of-use']">пользовательское соглашение</li>
+            <li [routerLink]="['/terms-of-use']" fragment="requisites">реквизиты</li>
+            <!-- <li [routerLink]="['/requisites']">реквизиты</li> -->
+            <!-- <li>данные юр. лица</li> -->
+         </ul>
+      </div>
+      
+   </div>
+   
+</footer>

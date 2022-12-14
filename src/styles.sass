@@ -1,0 +1,697 @@
+// @import "../node_modules/@zoomus/websdk/dist/css/bootstrap.css"
+// @import "../node_modules/@zoomus/websdk/dist/css/react-select.css"
+@import "assets/styles/normlize.min"
+@import "assets/styles/light-reset.min"
+// @import '~swiper/swiper.min.css'
+@import '~swiper/swiper-bundle.min.css'
+// @import "assets/styles/tiny-slider-min.css"
+@import "assets/styles/variables"
+@import "assets/styles/forms"
+@import "assets/styles/forms-material"
+@import "assets/styles/popups"
+
+
+
+
+
+
+
+*
+   font-family: 'Montserrat', sans-serif
+   font-weight: 400
+   // background-color: $bg_t
+
+body 
+   position: relative
+
+html
+   scrollbar-color: red
+   scroll-behavior: smooth
+
+
+a
+   color: $blue219EBC
+   text-decoration: none
+h1
+   font-size: 36px
+   font-weight: 700
+h2 
+   font-size: 36px
+   margin-bottom: 56px
+   font-weight: 700
+   color: $headings100
+   &.profile-in
+      font-size: 24px
+h3
+   font-size: 20px
+   font-weight: 600
+   &.page-title
+      color: $orange_new
+      text-align: center
+      font-size: 34px
+      font-weight: bold
+
+app-profile-layout
+   h3
+      margin-bottom: 56px
+
+
+.green
+   color: #3CB371
+.blue
+   color: $blue_common
+.orange
+   color: $orange_common
+.red
+   color: red
+
+.error, .error-note
+   color: red
+
+.success, .success-note
+   color: $success
+
+.link
+   color: $orange_common
+   cursor: pointer
+   text-decoration: underline
+
+.note
+   line-height: 22px
+   color: $textBody80
+
+
+// .breadcrumb
+//    padding: 6px 0 0 25px
+//    margin-top: 30px
+//    display: inline-block
+//    // border: 1px solid #000
+//    font-size: 12px
+//    height: 26px
+//    position: relative
+//    cursor: pointer
+//    transition: 0.2s
+//    &::before
+//       content: ''
+//       position: absolute
+//       left: 0px
+//       top: 3px
+//       border: 9px solid transparent
+//       border-left: 0px solid transparent
+//       border-right: 14px solid $blue_common
+//    &:hover
+//       transition: 0.2s
+//       color: $blue_common
+//       &::before
+//          animation: test 1s 1 ease-out
+
+.user-type-icon
+   margin-top: 20px
+   span
+      font-weight: 500
+
+.container
+   max-width: 1210px
+   padding: 0 15px
+   margin: 0 auto
+
+span.bold
+   font-weight: bold
+
+.dev-test
+   position: relative
+   display: inline-block
+   border: 2px dashed rgba(255, 0, 0, 1)
+   padding: 5px
+   border-radius: 7px
+   opacity: .7
+   text-shadow: 2px 2px 2px rgba(0, 0, 0, .2)
+   button
+      width: 100px
+      font-size: 16px
+      text-align: center
+      padding: 0
+      margin-right: 5px
+      border: 2px solid red
+   &::after
+      content: '[dev]'
+      position: absolute
+      top: 2px
+      right: 2px
+      opacity: .8
+      font-weight: bold
+      font-family: system-ui
+
+textarea
+   outline: none
+   resize: none
+   background-color: #4E463E05
+   border: 2px solid $_34302D15
+   border-radius: 9px
+   transition: all 0.15s
+
+swiper
+   .swiper-pagination-bullet
+      background-color: rgba(33, 158, 188, 1)
+   .swiper-button-next, .swiper-button-prev
+      // top: -1px
+      // width: 20px
+      // height: 15px
+      box-sizing: border-box
+      background-image: url('/assets/icons/functions/arrow-blue.svg')
+      background-size: contain
+      background-repeat: no-repeat
+      // margin: 20px
+      // padding: 10px
+      // border: 1px solid #000
+      &::after
+         display: none
+   .swiper-button-next
+      transform: rotate(-90deg)
+   .swiper-button-prev
+      transform: rotate(90deg)
+.preloader
+   // border: 3px dashed #000
+   display: flex
+   // display: none
+   justify-content: center
+   align-items: center
+   height: 100vh
+   width: 100vw
+   top: 0px
+   overflow: hidden
+   position: absolute
+   background-color: #fff
+.circle
+   width: 20px
+   height: 20px
+   border-radius: 50%
+   margin: 7px
+   display: flex
+   justify-content: center
+   align-items: center
+   // display: none
+   &:before
+      content: ""
+      width: 20px
+      height: 20px
+      border-radius: 50%
+      opacity: 0.7
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02)
+.circle-1
+  background-color: $preloader_circle-1
+  &:before
+    background-color: $preloader_circle-1
+    animation-delay: 200ms
+.circle-2
+  background-color:$preloader_circle-2
+  &:before
+    background-color:$preloader_circle-2
+    animation-delay: 400ms
+.circle-3
+  background-color: $preloader_circle-3
+  &:before
+    background-color: $preloader_circle-3
+    animation-delay: 600ms
+.circle-4
+  background-color: $preloader_circle-4
+  &:before
+    background-color: $preloader_circle-4
+    animation-delay: 800ms
+.circle-5
+  background-color: $preloader_circle-5
+  &:before
+    background-color: $preloader_circle-5
+    animation-delay: 1000ms
+
+  
+
+
+@keyframes scale
+   0%
+      transform: scale(1)
+
+   50%, 75%
+      transform: scale(2.5)
+
+   78%, 100%
+      opacity: 0
+
+.main
+   position: relative
+   // color: #fff
+   section
+      margin-top: 30px
+      // border-bottom: 2px dashed #777
+      &:nth-child(2)
+         margin-top: 0px
+         
+   .our-specialists
+      ul
+         margin-left: 20px
+         li 
+            margin-top: 20px
+            .name
+               font-size: 18px
+               margin-left: 20px
+               font-weight: bold
+   .faq
+      ul li
+         margin-top: 15px
+         h3
+            font-weight: bold
+            margin-left: 40px
+         .answer
+            margin-left: 10px
+            padding-top: 5px
+
+.loading
+   &::after
+      content: ''
+      position: absolute
+      transition: 2s
+      bottom: 0px
+      background-color: rgba(251, 133, 1, 0.5)
+      left: 0px
+      height: 100%
+      border-radius: 2px
+      width:0%
+      border-radius: 22px
+      // border: 3px solid #000
+      // animation: updating 1.5s 1 ease
+
+button, .btn
+   // background-color: $orange_common
+   // color: transparent
+   // background-clip: text
+   // background-image: linear-gradient(to right, $text_color_purple, $text_color_blue)
+   color: $text_color_mid_purple
+   outline: none  
+   cursor: pointer
+   // padding: 0px 20px
+   // min-width: 140px
+   padding: 0 37px 
+   height: 52px
+   font-size: 20px
+   font-weight: 500
+   transition: all 0.2s
+   background-color: $orange_501
+   border-radius: 5px
+   color: #fff
+   &:hover
+      // border: 2px solid $button_hover
+      background-color: $button_hover
+      outline: none
+      @include box-shadow($shadows_button_hover)
+   &:active
+      // @include box-shadow($shadows_logo_active)
+      // border: 2px solid $button_active
+      background-color: $button_active
+      outline: none
+      transition: all 0.1s
+   &:focus
+      outline: none
+   &:disabled
+      background-color: #fb860167
+      // background-color: $grey_9c
+   &.updating
+      &:hover
+         background-color: #fff
+   &.updating2
+      span
+         position: relative
+         color: transparent
+         &::after
+            content: attr(data-text)
+            position: absolute
+            top: 0%
+            left: 0%
+            // transform: translateY(-50%)
+            width: 100%
+            
+            color: #fff
+            animation: updating2 2s linear infinite
+            overflow: hidden
+            // border: 1px solid #000
+      // &:disabled
+         // background-color: #fb8601ab
+.updating-title
+   background-color: #ccc
+   padding-bottom: 50px
+   overflow: hidden
+   &.updating2
+      span.updating
+         width: 100%
+         position: relative
+         color: transparent
+         &::after
+            content: attr(data-text)
+            position: absolute
+            top: 0%
+            left: 0%
+            // transform: translateY(-50%)
+            width: 100%
+            
+            color: #fff
+            animation: updating2 2s linear infinite
+            overflow: hidden
+   
+@keyframes updating
+   0%
+      width: 15%
+      background-color: rgba(251, 133, 1, 0.0)
+   // 30%
+   //    width: 25%
+   //    background-color: rgba(251, 133, 1, 0.5)
+   80%
+      width: 100%
+      background-color: rgba(251, 133, 1, 0.7)
+   100%
+      width: 100%
+      background-color: rgba(251, 133, 1, 0.0)  
+
+@keyframes updating2
+   0%    
+      opacity: 0% 
+      width: 0 
+   15%   
+      opacity: 100%  
+   85%   
+      opacity: 100%  
+   100%  
+      width: 100% 
+      opacity: 0% 
+
+
+.breadcrumb-arrows
+   padding: 20px 5px
+   white-space: nowrap
+   user-select: none
+   display: inline-block
+
+   a
+      position: relative
+      font-size: 16px
+      padding: 4px 30px
+      // color: $textBody80
+      color: #fff
+      font-size: 20px
+      font-weight: bold
+      background-color: $orange_501
+      border-radius: 5px
+
+      &::before
+         content: ''
+         position: absolute
+         display: block
+         width: 20px
+         height: 20px
+         // border: 1px solid #000
+         left: 5px
+         top: 50%
+         // transform: translateY(-50%)
+         z-index: 1
+         background-image: url('/assets/icons/functions/arrow-white.png')
+         // background-repeat: no-repeat
+         background-position: center
+         background-size: contain
+         transform: rotate(90deg) translateX(-50%)
+         transition: 0.2s all
+      &:hover
+         &::before
+            left: -1px
+   &:active
+      a
+         &::before
+            left: 1px
+   // &~h3
+   //    color: $orange_new
+   //    font-size: 24px
+
+.delete-button
+   position: absolute
+   width: 24px
+   height: 24px
+   border-radius: 8px
+   // border: 1px solid #000
+   background-color: #fb8601a1
+   margin: 0
+   padding: 10px
+   color: #000
+   &:hover
+      transform: scale(1.05)
+   &::after, &::before
+      content: ''
+      position: absolute
+      width: 14px
+      height: 2px
+      background-color: $grey_45
+      top: 50%
+      left: 50%
+      transform: translate3d(-50%, -50%, 0) rotate(45deg)
+   &::after
+      width: 2px
+      height: 14px
+         
+            
+
+
+
+      &:nth-last-of-type(1) a
+         color: rgba(255, 133, 1, 0.9)
+
+      &:nth-last-of-type(2) a
+         color: rgba(255, 133, 1, 0.75)
+
+      &:nth-last-of-type(3) a
+         color: rgba(255, 133, 1, 0.6)
+
+      &:nth-last-of-type(4) a
+         color: rgba(255, 133, 1, 0.6)
+
+.cookie_notice
+   display: block
+   position: fixed
+   z-index: 9999999
+   bottom: 0
+   left: 0
+   right: 0
+   text-align: center
+   font-size: 15px
+   font-family: Verdana, sans-serif
+   color: #FFF
+   background: #337AB7
+   padding: 10px 20px
+   border-top: 4px solid #BFE2FF
+
+   /* Оформление кнопок
+
+.cookie_btn
+   display: inline-block
+   margin: 10px 6px 4px 6px
+   text-decoration: none
+   position: relative
+   font-size: 13px
+   padding: 4px 12px
+   color: #FFF
+   font-weight: bold
+   text-transform: uppercase
+   background: #337AB7
+   border: 2px solid #BFE2FF
+
+   &:hover
+      color: #FFF
+
+   &:after
+      position: absolute
+      height: 2px
+      left: 50%
+      background: #FFF
+      bottom: -6px
+      content: ""
+      transition: all 280ms ease-in-out
+      width: 0
+
+   &:before
+      position: absolute
+      height: 2px
+      left: 50%
+      background: #FFF
+      bottom: -6px
+      content: ""
+      transition: all 280ms ease-in-out
+      width: 0
+      top: -6px
+
+   &:hover
+      &:after, &:before
+         width: 100%
+         left: 0
+
+.footer-spacer
+   height: 150px
+
+
+.profile-menu, .admin-menu
+   padding-top: 50px
+   
+   .help
+      margin-top: 20px
+      span
+         font-weight: 500
+   .menu-list
+      margin-top: 58px
+      display: flex
+      justify-content: flex-start
+      flex-wrap: wrap
+      .menu-item
+         position: relative
+         width: calc(33% - 10px) 
+         height: 200px
+         margin: 10px 5px
+         border-radius: 20px
+         overflow: hidden
+         @include box-shadow($nav_shadow)
+         user-select: none
+         transition: 0.2s all
+         // transition: 0.05s all
+         &:nth-child(2)
+            width: calc(66% - 10px) 
+         //кастомные атрибуты чисто ради css
+         
+         &::after
+            background-repeat: no-repeat
+            background-size: contain
+            content: ''
+            position: absolute
+            bottom: -50px
+            right: -30px
+            width: 100%
+            height: 100%
+            background-position: 100% 100%
+         &[link="calendar"] 
+            background: linear-gradient(113.94deg, rgba(251, 106, 1, 0.7) 0.77%, rgba(255, 255, 255, 0) 184.42%)
+            &:after
+               background-image: url('/assets/icons/menu/calendar.svg')
+         &[link="edit"] 
+            background: linear-gradient(131.91deg, rgba(120, 227, 150, 0.7) 1.25%, rgba(255, 255, 255, 0) 185.1%)
+            &:after
+               // background-image: url('/assets/icons/menu/edit.svg')
+         &[link="security"] 
+            &:after
+               background-image: url('/assets/icons/menu/security.svg')
+         &[link="doctors"] 
+            &:after
+               background-image: url('/assets/icons/menu/specialists.svg')
+         &[link="help"] 
+            &:after
+               background-image: url('/assets/icons/menu/help.svg')
+
+
+            
+         &:hover
+            box-shadow: 0 7px 10px -5px
+            transform: scale(1.02)
+            cursor: pointer
+            // background-color: $yellow_common
+            @include box-shadow($nav_shadow_hover)
+            .icon-wrapper 
+               margin-top: 46px
+               .icon
+                  transition: 0.2s   
+                  width: 86px
+                  height: 86px
+                  background-size: cover
+         &:active
+            background-color: $orange_common
+            outline: none
+            transform: scale(0.97)
+
+         .icon-wrapper
+            // border: 1px solid #000
+            margin: 50px 0 10px
+            .icon
+               // border: 1px solid #000
+               width: 82px
+               height: 82px
+               margin: 0 auto
+               background-image: url(/assets/icons/menu/icons_list.png)
+         &:nth-child(2)
+            .icon-wrapper .icon
+               background-position: 75% 0px 
+         &:nth-child(3)
+            .icon-wrapper .icon
+               background-position: -25% 0px 
+         &:nth-child(4)
+            .icon-wrapper .icon
+               background-position: 25% 0px 
+         &:nth-child(5)
+            .icon-wrapper .icon
+               background-position: 50% 0px 
+
+         
+         .description
+            margin: 24px
+            font-size: 20px
+            max-width: 230px
+            color: $headings100
+            font-weight: 500
+
+.loading-data
+   height: 30px
+
+.lds-ellipsis 
+  display: block
+  position: relative
+  width: 80px
+  height: 80px
+  margin: 0 auto
+
+.lds-ellipsis div 
+  position: absolute
+  top: 33px
+  width: 13px
+  height: 13px
+  border-radius: 50%
+  background: $orange_new
+  animation-timing-function: cubic-bezier(0, 1, 1, 0)
+
+.lds-ellipsis div:nth-child(1) 
+  left: 8px
+  animation: lds-ellipsis1 0.6s infinite
+
+.lds-ellipsis div:nth-child(2) 
+  left: 8px
+  animation: lds-ellipsis2 0.6s infinite
+
+.lds-ellipsis div:nth-child(3) 
+  left: 32px
+  animation: lds-ellipsis2 0.6s infinite
+
+.lds-ellipsis div:nth-child(4) 
+  left: 56px
+  animation: lds-ellipsis3 0.6s infinite
+
+@keyframes lds-ellipsis1 
+  0% 
+    transform: scale(0)
+  
+  100% 
+    transform: scale(1)
+  
+
+@keyframes lds-ellipsis3 
+  0% 
+    transform: scale(1)
+  
+  100% 
+    transform: scale(0)
+  
+
+@keyframes lds-ellipsis2 
+  0% 
+    transform: translate(0, 0)
+  
+  100% 
+    transform: translate(24px, 0)
+  

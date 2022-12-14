@@ -1,0 +1,61 @@
+<div class="security-page">
+   <div class="container">
+      <ul class="breadcrumb-arrows arrows">
+         <li><a [routerLink]="['/profile']">Личный кабинет</a></li>
+         <!-- <li><a>Безопасность</a></li> -->
+      </ul>
+      <h3 class="page-title">Безопасность</h3>
+      <div class="change-password">
+         <h2>Изменение пароля</h2>
+         <form class="new-form" [formGroup]="changePasswordForm">
+            <div class="line">
+               <label>
+                  <input name="emailInput" [ngClass]="{filled: emailInput.value}" type="email" formControlName="emailInput">
+                  <span class="title">Ваш текущий email</span>
+                  <div class="validation-errors" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched) || requiredErr">
+                     <span class="note err" *ngIf="emailInput.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            <!-- <div class="inputs-wrapper">
+               <label><span>Ваш email</span><input [(ngModel)]="email"  name="email"  type="text"></label>
+            </div> -->
+            <button class="" (click)="passwordRecovery()">изменить пароль</button>
+         </form>
+         <div class="signs">
+            <div class="message successful-message" *ngIf="passwordChangeSuccessfulMessage" >{{passwordChangeSuccessfulMessage}}</div>
+            <div class="message error-message" *ngIf="passwordChangeErrMessage" >{{passwordChangeErrMessage}}</div>
+         </div>
+      </div>
+      <div class="change-email">
+         <h2>Изменение почты</h2>
+         
+         <form class="new-form" [formGroup]="changeEmailForm">
+            <div class="line">
+               <label>
+                  <input name="newEmail" [ngClass]="{filled: newEmail.value}" type="email" formControlName="newEmail">
+                  <span class="title">Ваш текущий email</span>
+                  <div class="validation-errors" *ngIf="newEmail.invalid && (newEmail.dirty || newEmail.touched) || requiredErr">
+                     <span class="note err" *ngIf="newEmail.errors?.['required']">*необходимо заполнить</span>
+                  </div>
+               </label>
+            </div>
+            <!-- <div class="inputs-wrapper">
+               <label><span>Новый email*</span><input [(ngModel)]="newEmail"  name="newEmail"  type="text"></label>
+            </div> -->
+            <button class="" (click)="changeEmail()">изменить почту</button>
+         </form>
+         <div class="signs">
+            <div class="message successful-message" *ngIf="emailChangeSuccessfulMessage" >{{emailChangeSuccessfulMessage}}</div>
+            <div class="message error-message" *ngIf="emailChangeErrMessage" >{{emailChangeErrMessage}}</div>
+         </div>
+         <div class="note">
+            <p>*На вашу старую почту будет отправлена ссылка, по которой вы сможете восстановить её в случае ошибки.</p>
+            <p>Если не появилось сообщение об изменении или не отправилась ссылка, попробуйте перезайти в свой аккаунт и попробовать снова. </p>
+         </div>
+      </div>
+      <!-- <button (click)="alert()">test alert</button> -->
+   </div>
+</div>
+
+

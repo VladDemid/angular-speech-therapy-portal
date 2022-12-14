@@ -1,0 +1,68 @@
+@import "../../../../assets/styles/_variables"
+   
+.day-inner
+   position: relative
+   width: 100%
+   height: 100%
+   background-color: $grey_light
+   border: 1px solid $_4E463E30
+   border-radius: 10px
+   color: #fff
+   span
+      font-weight: 400   
+      font-size: 24px
+   &.today
+      border: 4px solid $orange_common
+      span
+         // font-weight: 500
+   &.work-day //рабочий день
+      background-color: #fff
+      color: #454A4A
+   &.day-choosen //рабочий день
+      box-sizing: border-box
+      background-color: $orange_common
+      box-shadow: 0px 3px 5px #000
+      border: 1px solid $orange_common
+      font-weight: 600
+      transform: scale(1.05)
+      span
+         color: #fff
+      &.lesson //назначен урок
+         &::after
+            background-color: #fff
+            // box-shadow: 1px 2px 6px #000
+   &.lesson //назначен урок
+      &::after
+         content: ''
+         position: absolute
+         width: 1vw
+         height: 1vw
+         border-radius: 50%
+         top: 7%
+         right: 7%
+         background-color: $orange_common
+   &.lesson-old //назначен урок
+      &::after
+         background-color: $grey
+   span
+      display: block
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      font-size: 22px
+   .help
+      position: relative
+      // background-color: rgba(0,0,0,0.1)
+      border: 1px solid red
+      width: 100%
+      height: 100%
+      // width: 0px
+      span
+         position: absolute
+         display: inline-block
+         font-size: 1vw
+         color: #666
+         width: 100px
+         bottom: 100px
+         // max-width: s20px

@@ -1,0 +1,18 @@
+<div class="edit-spec">
+   <div class="container">
+      <button [routerLink]="['/admin/menu']" >назад</button>
+      <div class="choose-action">
+         <h3>выберите действие</h3>
+         <ul>
+            <li (click)="changeAction('changeOneSpec')" [ngClass]="{active: activeAction === 'changeOneSpec'}">добавить поле одному спецу (БД-FB)</li>
+            <li (click)="changeAction('')" >...</li>
+            <li (click)="changeAction('')" >...</li>
+         </ul>
+      </div>
+      <div class="active-action">
+         <app-edit-solo-spec
+            *ngIf="activeAction === 'changeOneSpec'"
+         ></app-edit-solo-spec>
+      </div>
+   </div>
+</div>

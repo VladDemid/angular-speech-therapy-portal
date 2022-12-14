@@ -1,0 +1,14 @@
+<div class="delete-users">
+   <div class="container">
+      <h1>Удаление аккаунта</h1>
+      <form class="new-form" [formGroup]="adminDeleteUserForm" (ngSubmit)="onSubmit()">
+         <div class="line">
+            <label>
+               <input name="email"  type="text" formControlName="email">
+               <span class="title">email</span>
+            </label>
+         </div>
+         <button type="submit">получить юзера</button>
+      </form>
+   </div>
+</div>
