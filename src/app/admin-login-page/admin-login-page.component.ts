@@ -67,7 +67,6 @@ export class AdminLoginPageComponent implements OnInit {
     
     
     
-    
       // .then((result) => {
       //   console.log("firebase.signInWithPass: ", result);
       //   // this.loggingIn = false
