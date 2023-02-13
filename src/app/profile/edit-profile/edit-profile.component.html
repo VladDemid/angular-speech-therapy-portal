@@ -65,24 +65,26 @@
       (ngSubmit)="doctorChangeData()"
       >
       
-         <!-- <div class="photo-update">
+         <div class="photo-update">
             <div class="profile-photo">
-               <img src="{{defaultAvatar}}" *ngIf="!userData.myData.avatarUrl" alt="logo">
-               <img src="{{userData.myData.avatarUrl}}" *ngIf="userData.myData.avatarUrl" alt="logo">
+               <img class="img"src="{{defaultAvatar}}" *ngIf="!userData.myData.avatarUrl" alt="logo">
+               <img class="img" src="{{userData.myData.avatarUrl}}" *ngIf="userData.myData.avatarUrl" alt="logo">
             </div>
             <div class="avatar-buttons-wrapper">
                <label class="input-avatar-label btn" [ngClass]="{'hide': avatarPrefireName}" for="avatar-upload-button">
-                  <span *ngIf="!avatarPrefireName" ></span>
-                  <span *ngIf="avatarPrefireName" class="success">файл выбран</span>
+                  <span *ngIf="!avatarPrefireName" >изменить фото</span>
+                  <span *ngIf="avatarPrefireName" class="">файл выбран</span>
                   <input class="upload-avatar" (click)="scanAvatarName()" name="avatar" type="file" id="avatar-upload-button">
                </label>
-               <button class="button upload" *ngIf="avatarPrefireName" [ngClass]="{'loading': uploadingAvatar}"  (click)="updateAvatar()"></button>
+               <button class="button upload" *ngIf="avatarPrefireName" [ngClass]="{'loading': uploadingAvatar}"  (click)="updateAvatar()">загрузить фото</button>
+               <!-- <button (click)="setAvatarUrl()">set url</button> -->
             </div>
-         </div> --> 
+         </div> 
          <div class="line">
             <label>
                <input name="specSurname" [ngClass]="{filled: specSurname.value}" type="text" formControlName="specSurname">
                <span class="title">{{userData.myData.surname}}</span>
+               <span class="note focus">Фамилия</span>
                <div class="validation-errors" *ngIf="specSurname.invalid && (specSurname.dirty || specSurname.touched) || requiredErr">
                   <span class="note err" *ngIf="specSurname.errors?.['required']">*необходимо заполнить</span>
                </div>
@@ -92,6 +94,7 @@
             <label>
                <input name="specName" [ngClass]="{filled: specName.value}" type="text" formControlName="specName">
                <span class="title">{{userData.myData.name}}</span>
+               <span class="note focus">Имя</span>
                <div class="validation-errors" *ngIf="specName.invalid && (specName.dirty || specName.touched) || requiredErr">
                   <span class="note err" *ngIf="specName.errors?.['required']">*необходимо заполнить</span>
                </div>
@@ -101,6 +104,7 @@
             <label>
                <input name="specPatronymic" [ngClass]="{filled: specPatronymic.value}" type="text" formControlName="specPatronymic">
                <span class="title">{{userData.myData.patronymic}}</span>
+               <span class="note focus">Отчество</span>
                <div class="validation-errors" *ngIf="specPatronymic.invalid && (specPatronymic.dirty || specPatronymic.touched) || requiredErr">
                   <span class="note err" *ngIf="specPatronymic.errors?.['required']">*необходимо заполнить</span>
                </div>
@@ -160,25 +164,29 @@
             <button type="button" class="education_buttons decrEducation" (click)="decrEducation()" *ngIf="educationsCount > 1"></button>
             
          </div> -->
-         <div class="specializations">
-            <label><span>Специализации</span></label>
-            <ul class="specializations-list">
-               <li class="specialization-item" *ngFor="let item of specializations" >
-                  <label class="checkbox-label" (click)="selectSpecialization(item)" [ngClass]="{specialization_selected: specializationsData.specializationsSelected && specializationsData.specializationsSelected.indexOf(item) != -1}"><input type="checkbox" >{{item}}</label>
-               </li>
-            </ul>
+         <div class="line">
+            <div class="specializations">
+               <label><span>Специализации</span></label>
+               <ul class="specializations-list">
+                  <li class="specialization-item" *ngFor="let item of specializations" >
+                     <label class="checkbox-label" (click)="selectSpecialization(item)" [ngClass]="{specialization_selected: specializationsData.specializationsSelected && specializationsData.specializationsSelected.indexOf(item) != -1}"><input type="checkbox" >{{item}}</label>
+                  </li>
+               </ul>
+            </div>
          </div>
          
-         <div class="specialization-main">
-            <label><span class="narrow">Главная специализация</span></label>
-            <ul class="specializations-list">
-               <div class="select-sign" *ngIf="!specializationsData.specializationsSelected || (specializationsData.specializationsSelected && !specializationsData.specializationsSelected[0])">Сначала выберите ваши специализации выше</div>
-               <li class="specialization-item" *ngFor="let item of specializationsData.specializationsSelected; first as isFirst" >
-                  <label class="radio" [ngClass]="{'main_specialization_selected': (item === specializationsData.mainSpecializationSelected) || (specializationsData.mainSpecializationSelected === '' && isFirst)}" (click)="selectMainSpecialization(item)">
-                     <input class="specializaion-radio" type="radio" name="specialization-main" [value]="item">{{item}}
-                  </label>
-               </li>
-            </ul>
+         <div class="line">
+            <div class="select-sign" *ngIf="!specializationsData.specializationsSelected || (specializationsData.specializationsSelected && !specializationsData.specializationsSelected[0])">Выберите ваши специализации выше</div>
+            <div class="specialization-main" *ngIf="!(!specializationsData.specializationsSelected || (specializationsData.specializationsSelected && !specializationsData.specializationsSelected[0]))">
+               <label><span class="narrow">Главная специализация</span></label>
+               <ul class="specializations-list">
+                  <li class="specialization-item" *ngFor="let item of specializationsData.specializationsSelected; first as isFirst" >
+                     <label class="radio" [ngClass]="{'main_specialization_selected': (item === specializationsData.mainSpecializationSelected) || (specializationsData.mainSpecializationSelected === '' && isFirst)}" (click)="selectMainSpecialization(item)">
+                        <input class="specializaion-radio" type="radio" name="specialization-main" [value]="item">{{item}}
+                     </label>
+                  </li>
+               </ul>
+            </div>
          </div>
 
             <div class="line">
@@ -210,7 +218,7 @@
             </div>
             <div class="line">
                <label>
-                  <textarea name="aboutMe" [ngClass]="{filled: aboutMe.value}" formControlName="aboutMe" placeholder="Опишите проблему, в каких мессенджерах с вами можно связаться и т.д."></textarea>
+                  <textarea name="aboutMe" [ngClass]="{filled: aboutMe.value}" formControlName="aboutMe" ></textarea>
                   <span class="title">Комментарий</span>
                   <div class="validation-errors" *ngIf="aboutMe.invalid && (aboutMe.dirty || aboutMe.touched)">
                      <span class="note err" *ngIf="aboutMe.errors?.['required']">*необходимо заполнить</span>
@@ -229,14 +237,17 @@
          <button class="submit" [ngClass]="{updating2: isLoading}" [disabled]="isLoading" type="submit"><span data-text="сохранить">сохранить</span></button>
       </form>
       <div class="sertificates" id="" *ngIf="userData.myData.userType === 'doctor'">
-         <form class="new-sertificates" id="newSertificatesForm">
-            <div class="inputs-wrapper">
+         <form class="new-form new-sertificates" id="newSertificatesForm">
+            <div class="line">
                <label>
-                  <span >Cертификаты</span> 
+                  <!-- <span >Cертификаты</span>  -->
                   <input class="upload_documents" name="documents" type="file" id="newSertificates" multiple (change)=changeSertificatesCount()>
-                  <div class="add-sertificates btn">выбрать файлы ({{newFilesToUpload}})</div>
+                  <div class="add-sertificates btn">добавить сертификаты ({{newFilesToUpload}})</div>
                   <button class="upload-sertrificates" [ngClass]="{updating2: uploadingSertificates}" [disabled]="uploadingSertificates" *ngIf="newFilesToUpload > 0" (click)="addNewSertificates()">
                      <span data-text="загрузить">загрузить</span>
+                  </button>
+                  <button class="upload-sertrificates-disabled" disabled=true *ngIf="newFilesToUpload == 0" >
+                     <span data-text="загрузить">-----</span>
                   </button>
                </label>
             </div>

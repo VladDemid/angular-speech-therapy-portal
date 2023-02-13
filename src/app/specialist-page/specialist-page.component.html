@@ -23,7 +23,7 @@
             </div>
             <div class="specialization">
                <span class="specialization-main">{{doctorInfo.mainSpecialization}}</span>
-               <span class="experience" *ngIf="doctorInfo.experience">Опыт {{doctorInfo.experience}} лет</span>
+               <span class="experience" *ngIf="doctorInfo.experience">Опыт {{doctorInfo.experience}} (лет)</span>
                
                <!-- {{doctorInfo.mainSpecialization | specializationsList:doctorInfo.specializations}} -->
                <!-- <ul class="specializations-list">
@@ -68,7 +68,7 @@
          </ul>
          <h2>Сертификаты</h2>
          <ul class="sertificates-list">
-            <li class="sertificate-item" *ngFor="let item of doctorInfo.sertificatesLinks; index as i" (click)="popupService.showImgPopup(item)">
+            <li class="sertificate-item" *ngFor="let item of doctorInfo.sertificatesLinks; index as i" (click)="popupService.showImgPopup(doctorInfo.sertificatesLinks, i)">
                <img [src]="item" alt="sertificate">
             </li>
          </ul>

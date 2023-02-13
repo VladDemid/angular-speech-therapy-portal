@@ -239,7 +239,7 @@ export class UserData {
             .then((links) => {
                console.log("полученные ссылки на скачку: ", links)
                this.myData.sertificatesLinks = links
-               // this.updateSertifUrls() //! раскоментировать и проверить
+               this.updateSertifUrls() //! раскоментировать и проверить
             })
             
             

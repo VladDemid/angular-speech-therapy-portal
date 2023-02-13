@@ -7,152 +7,69 @@ form
    // flex-direction: row
    // justify-content: start
    .photo-update
-      
+      position: relative
       display: flex
-      justify-content: center
+      justify-content: space-around
       align-items: center
-      flex-direction: column
-      position: absolute
-      right: 0px
-      width: 320px
-      height: 320px
+      // position: absolute
+      // right: 0px
+      width: 100%
+      // height: 220px
       min-height: 100px
       border-radius: 20px
       margin-bottom: 32px
+      padding: 10px 0
       // padding: 32px
       @include box-shadow($nav_shadow)
-      // border: 1px solid #000
+      // // border: 1px solid #000
       .profile-photo
-         display: flex
-         justify-content: center
-         align-items: center
-         height: 264px
-         width: 264px
-         margin: 0
-         // width: 100%
-         // margin: 32px
-         border-radius: 10px
+         max-width: 40%
+         // max-height: 100%  
          img
-            border: 2px solid #4e463e31
-            border-radius: 10px
-            // display: block
-            object-fit: cover
-            object-position: top
-            background-color: #4e463e31
-            width: 100%
-            height: 100%
-            // width: 220px
-            // height: 220px
-            // margin: 10px auto 
-            // padding: 32px
+            // border: 3px solid #000
+            // max-width: 100%
+            // max-height: 100%  
+            border-radius: 20px
+            object-fit: contain
       .avatar-buttons-wrapper
          // border: 1px solid #000
-         position: absolute
-         height: 70px
-         right: 35px
-         bottom: 15px
-         user-select: none
-         button.upload
-            position: absolute
-            top: 50%
-            left: 50% 
-            transform: translate(-50%, -50%)
-            width: 54px
-            height: 54px
-            border-radius: 50%
-            padding: 0
-            // border: 1px solid #000
-            background-image: url('/assets/icons/functions/upload.svg')
-            background-repeat: no-repeat
-            background-size: 32px
-            background-position: 50% 35%
-            background-color: #fff
-            @include box-shadow($nav_shadow)
-            &:hover
-               outline: none
-               // border: 2px solid $button_hover
-               background-color: $button_hover
-            &:active
-               // border: 2px solid $button_active
-               background-color: $button_active
-               outline: none
-               transition: all 0.1s
-            &::after
-               content: ''
-            &.loading
-               &::after
-                  // width: 20px
-                  animation: updating 1.5s 1 ease
-               // border: 3px solid #000
-            
+         width: 50%
+         position: relative
+         // &::after
+         //    content: 'добавить фото'
+            // position: absolute
+            // pointer-events: none
+            // cursor: pointer
+            // font-size: 20px
+            // width: 100%
+            // text-align: center
+            // top: 50%
+            // left: 50%
+            // transform: translate3d(-50%, -50%, 0)
          .input-avatar-label
-            position: absolute
-            display: block
-            top: 50%
-            left: 50% 
-            transform: translate(-50%, -50%)
-            // margin: -40px auto 0
-            border-radius: 50px
-            // border: 2px solid $orange_common
-            display: block
-            margin-bottom: 10px
-            padding: 0px
-            // padding: 10px
-            width: 54px
-            height: 54px
-            text-align: center
+            position: relative
+            width: 100%
+            display: inline-block
             cursor: pointer
-            transition: all 0.2s
-            background-image: url('/assets/icons/functions/photo.svg')
-            background-repeat: no-repeat
-            background-size: 38px
-            background-position: 50% 50%
-            background-color: #fff
-            @include box-shadow($nav_shadow)
-            &:hover
-               outline: none
-               // border: 2px solid $button_hover
-               background-color: $button_hover
-            &:active
-               // border: 2px solid $button_active
-               background-color: $button_active
-               outline: none
-               transition: all 0.1s
-            &:focus
-               outline: none
-            &.hide
-               visibility: hidden
-               transition: all 0s
-                  
-            span
-               position: absolute
-               display: block
-               text-align: center
-               // width: 175px
-               // left: -2px
-               // top: calc(50% - 10px)
-               // max-height: 100% 
-               // overflow: hidden
-               height: 20px
-               font-weight: 500
-               top: 50%
-               left: 50% 
-               transform: translate(-50%, -50%)
-               &.success
-                  color: $button_active
-
             .upload-avatar
                visibility: hidden
-               width: 100%
-               border: 2px solid #CACACA
-               height: 56px
-               border-radius: 9px
-               outline: none
-               padding: 0 20px
-               padding-top: 11px
-               color: #454A4A
+            span
+               position: absolute
+               pointer-events: none
+               cursor: pointer
                font-size: 20px
-               overflow: hidden
+               width: 100%
+               text-align: center
+               top: 50%
+               left: 50%
+               transform: translate3d(-50%, -50%, 0)
+         .button.upload
+            width: 100%
+            margin-top: 20px
+   textarea[name="aboutMe"]
+      min-height: 130px 
+
+
 
    .inputs-wrapper
       position: relative
@@ -161,10 +78,17 @@ form
 .submit
    margin-top: 40px
 
+.select-sign
+   color: red
+   font-size: 120%
+
+
+
 .sertificates
-   margin: 40px 0 100px
+   margin: 40px auto 100px
    // border-top: 2px dashed $yellow_common
    padding: 20px 0px
+   width: 100%
    @include box-shadow($nav_shadow)
    border-radius: 20px
    .add-sertificates.btn
@@ -215,32 +139,11 @@ form
             max-width: 100%
             overflow: hidden
             text-align: center
-
    .new-sertificates
-      .inputs-wrapper
-         // margin: 30px 0
-         // border-top: 2px dashed $orange_common
-         label
-            position: relative
-            input
-               visibility: hidden
-            .add-sertificates
-               // border: 2px solid #000
-               position: absolute
-               right: 235px
-               top: 50%
-               transform: translateY(-50%)
-               text-align: center
-               padding-top: 13px
-            .upload-sertrificates
-               position: absolute
-               right: 20px
-               top: 50%
-               transform: translateY(-50%)
-               &::after
-                  animation: updating 1.5s 1 ease
-
-
+      button.upload-sertrificates, .add-sertificates, .upload-sertrificates-disabled
+         display: inline-block
+      .upload-sertrificates-disabled, .upload-sertrificates
+         margin-left: 10px
 // @media screen and (max-width: 1300px) 
 //    form
 //       display: flex

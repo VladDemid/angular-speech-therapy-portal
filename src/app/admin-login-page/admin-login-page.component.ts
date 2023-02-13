@@ -17,8 +17,8 @@ export class AdminLoginPageComponent implements OnInit {
 
   
   adminLoginForm = new FormGroup({
-    email: new FormControl('jfghj.dfvcfghf@gmail.com'),
-    password: new FormControl('xhIe#!l^%kA*')
+    email: new FormControl(''),
+    password: new FormControl('')
   })
 
   get email() {return this.adminLoginForm.get('email')}

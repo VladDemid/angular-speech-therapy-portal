@@ -2,7 +2,7 @@
 <div class="admin-login-form">
    <div class="container">
       <form class="new-form" [formGroup]="adminLoginForm" (ngSubmit)="adminLogIn()">
-         <button class="back" [routerLink]="['/']">назад</button>
+         <button class="back" type="button" [routerLink]="['/']">назад</button>
          <div class="line">
             <label>
                <input name="email" [ngClass]="{filled: email.value}" type="text" formControlName="email">

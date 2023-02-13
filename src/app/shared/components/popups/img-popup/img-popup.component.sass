@@ -7,6 +7,32 @@
    flex-direction: column
    // max-height: 100%
 
+   .arrows
+      width: 100%
+      // border: 1px solid #000
+      display: flex
+      justify-content: space-between
+      top: 46%
+      position: absolute
+
+      span
+         width: 40px
+         height: 40px
+         // border: 2px solid #000
+         background-color: $orange_common
+         border-radius: 50%   
+         cursor: pointer
+         background-image: url('/assets/icons/functions/arrow-white.png')
+         // background-repeat: no-repeat
+         background-position: 50% 70%
+         background-repeat: no-repeat
+         background-size: 60%
+         transform: rotate(90deg) 
+         &:nth-child(2)
+            transform: rotate(-90deg) 
+            
+            
+
    img
       display: block
       max-height: 700px
@@ -30,6 +56,6 @@
          top: 50%
          left: 50%
          transform: translate3d(-50%, -50%, 0)
-         width: 70%
-         height: 70%
+         width: 50%
+         height: 50%
    

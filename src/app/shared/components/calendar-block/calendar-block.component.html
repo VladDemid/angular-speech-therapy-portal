@@ -62,7 +62,7 @@
    <!--aside для страницы карточки специалиста (не календарь) -->
    <div class="time-aside time-aside-view" *ngIf="!isCalendarPage">
       <!-- запись к спецу -->
-      <span class="go-to-account-sign" *ngIf='isInProfileModule == "false"'>Для записи к специалисту необходимо войти в <span class="link" (click)="redirectToSignIn()">личный кабинет</span> или <span class="link" (click)="redirectToQuestionForm()">запишитесь на консультацию через форму обратной связи</span></span> 
+      <span class="go-to-account-sign" *ngIf='isInProfileModule == "false"'>Для записи к специалисту необходимо войти в <span class="link" (click)="redirectToSignIn()">личный кабинет</span> или <span class="link" (click)="redirectToQuestionForm()">записаться на консультацию через форму обратной связи</span></span> 
       <div class="day-not-chosen-sign" *ngIf="selectedDay == -1 || !(inputDoctorInfo.scheduleTime && inputDoctorInfo.scheduleTime[year] && inputDoctorInfo.scheduleTime[year][month] && inputDoctorInfo.scheduleTime[year][month][selectedDay])">
 
          <!-- день не выбран -->

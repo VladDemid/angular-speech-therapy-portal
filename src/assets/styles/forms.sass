@@ -116,273 +116,274 @@ form
       // &.login
          // margin: 50px auto 30px
          // width: 254px
-   .inputs-wrapper
-      max-width: 824px
-      margin: 0 auto
-      padding: 32px
-      border-radius: 20px
-      @include box-shadow($nav_shadow)
-      label
-         display: flex
-         justify-content: space-between
-         margin-top: 34px
-         transition: all 0.15s
-         user-select: none
+   // .inputs-wrapper
+   //    max-width: 824px
+   //    margin: 0 auto
+   //    padding: 32px
+   //    border-radius: 20px
+   //    @include box-shadow($nav_shadow)
+      // label
+      //    display: flex
+      //    justify-content: space-between
+      //    margin-top: 34px
+      //    transition: all 0.15s
+      //    user-select: none
       
-         input, textarea
-            width: 540px
-            background-color: #4E463E05
-            border: 2px solid $_34302D15
-            height: 56px
-            border-radius: 9px
-            outline: none
-            padding: 20px
-            transition: all 0.15s
-            &:focus
-               border: 2px solid $yellow_common
-            &.ng-touched.ng-dirty.ng-invalid
-               border: 2px solid #F74342
-            &.ng-touched.ng-invalid
-               border: 2px solid #F74342
-            &.upload_documents
-               padding-top: 11px
-               color: #454A4A
-               font-size: 20px
+         // input, textarea
+         //    width: 540px
+         //    background-color: #4E463E05
+         //    border: 2px solid $_34302D15
+         //    height: 56px
+         //    border-radius: 9px
+         //    outline: none
+         //    padding: 20px
+         //    transition: all 0.15s
+            // &:focus
+            //    border: 2px solid $yellow_common
+            // &.ng-touched.ng-dirty.ng-invalid
+            //    border: 2px solid #F74342
+            // &.ng-touched.ng-invalid
+            //    border: 2px solid #F74342
+            // &.upload_documents
+            //    padding-top: 11px
+            //    color: #454A4A
+            //    font-size: 20px
             
-         textarea
-               height: 100%
+         // textarea
+         //       height: 100%
                
-         .select
-            position: relative
-            &.is-active 
-               .select__body
-                  display: block
-               .select__header
-                  &::after
-                     // transform: rotate(120deg)
-                     transform: translateY(15px)
+         // .select
+         //    position: relative
+         //    &.is-active 
+         //       .select__body
+         //          display: block
+         //       .select__header
+         //          &::after
+         //             // transform: rotate(120deg)
+         //             transform: translateY(15px)
 
-            .select__header
-               width: 540px
-               border: 2px solid #CACACA
-               height: 56px
-               border-radius: 9px
-               outline: none
-               padding: 0 20px
-               transition: all 0.15s
-               cursor: pointer
-               display: flex
-               position: relative
-               &::after
-                  content: ""
-                  position: absolute
-                  top: calc( 50% - 4px )
-                  right: 20px
-                  border-style: solid
-                  border-width: 8px 4px 0px 4px
-                  border-color: $blue_common transparent transparent transparent
-                  transition: 0.3s
-               span
-                  color: #000
-               .select__current
-                  font-size: 18px
-                  padding: 0px
-                  // line-height: 56px 
-                  // padding: 8px
+         //    .select__header
+         //       width: 540px
+         //       border: 2px solid #CACACA
+         //       height: 56px
+         //       border-radius: 9px
+         //       outline: none
+         //       padding: 0 20px
+         //       transition: all 0.15s
+         //       cursor: pointer
+         //       display: flex
+         //       position: relative
+         //       &::after
+         //          content: ""
+         //          position: absolute
+         //          top: calc( 50% - 4px )
+         //          right: 20px
+         //          border-style: solid
+         //          border-width: 8px 4px 0px 4px
+         //          border-color: $blue_common transparent transparent transparent
+         //          transition: 0.3s
+         //       span
+         //          color: #000
+         //       .select__current
+         //          font-size: 18px
+         //          padding: 0px
+         //          // line-height: 56px 
+         //          // padding: 8px
 
-               // .select__icon
-               //    align-items: center
-               //    display: flex
-               //    flex-shrink: 0
-               //    justify-content: center
-               //    height: 40px
-               //    margin-left: auto
-               //    text-align: center
-               //    width: 40px
+         //       // .select__icon
+         //       //    align-items: center
+         //       //    display: flex
+         //       //    flex-shrink: 0
+         //       //    justify-content: center
+         //       //    height: 40px
+         //       //    margin-left: auto
+         //       //    text-align: center
+         //       //    width: 40px
 
-            .select__body
-               border: 2px solid #cccccc
-               background-color: #fff
-               border-top: 0
-               border-radius: 0 0 9px 9px
-               display: none
-               left: 0
-               position: absolute
-               right: 0
-               top: 85%
+         //    .select__body
+         //       border: 2px solid #cccccc
+         //       background-color: #fff
+         //       border-top: 0
+         //       border-radius: 0 0 9px 9px
+         //       display: none
+         //       left: 0
+         //       position: absolute
+         //       right: 0
+         //       top: 85%
 
-            .select__item
-               cursor: pointer
-               font-size: 16px
-               line-height: 24px
-               padding: 8px
-               border-top: 1px solid #cccccc
-               &:hover
-                  background-color: #f2f2f2
+         //    .select__item
+         //       cursor: pointer
+         //       font-size: 16px
+         //       line-height: 24px
+         //       padding: 8px
+         //       border-top: 1px solid #cccccc
+         //       &:hover
+         //          background-color: #f2f2f2
          
                
 
-         &>span
-            color: #454A4A
-            font-size: 22px
-            font-weight: 400
-            line-height: 56px
-            max-width: 218px
-            padding-right: 15px
-            transition: all 0.15s
-            &.narrow
-               line-height: 28px 
-               // font-size: 22px
-               padding-right: 0
-               max-width: 166px
+         // &>span
+         //    color: #454A4A
+         //    font-size: 22px
+         //    font-weight: 400
+         //    line-height: 56px
+         //    max-width: 218px
+         //    padding-right: 15px
+         //    transition: all 0.15s
+         //    &.narrow
+         //       line-height: 28px 
+         //       // font-size: 22px
+         //       padding-right: 0
+         //       max-width: 166px
                // background-color: rgba(0,0,0,.1)
-      & > label:nth-child(1)
-         margin-top: 0
-      .educations
-         position: relative
-         .education
-            // &:nth-child(n+2)
-            //    label span
-            //       position: relative
-            //       &::after
-            //          content: '(доп)'
-            //          position: absolute
-            //          top: -20px
-            //          right: 10px
-            //          font-size: 12px
-            //          color: #999
-            //          width: 0px
-            //          height: 0px
+      // & > label:nth-child(1)
+      //    margin-top: 0
+      // .educations
+      //    position: relative
+      //    .education
+      //       // &:nth-child(n+2)
+      //       //    label span
+      //       //       position: relative
+      //       //       &::after
+      //       //          content: '(доп)'
+      //       //          position: absolute
+      //       //          top: -20px
+      //       //          right: 10px
+      //       //          font-size: 12px
+      //       //          color: #999
+      //       //          width: 0px
+      //       //          height: 0px
             
-         .education_buttons
-            position: absolute
-            width: 24px
-            height: 24px
-            border-radius: 8px
-            // border: 1px solid #000
-            background-color: #fb8601a1
-            margin: 0
-            padding: 10px
-            color: #000
-            &:hover
-               transform: scale(1.05)
-            &::after, &::before
-               content: ''
-               position: absolute
-               width: 14px
-               height: 2px
-               background-color: $grey_45
-               top: 50%
-               left: 50%
-               transform: translate3d(-50%, -50%, 0)
-            &::after
-               width: 2px
-               height: 14px
-            &.incrEducation
-               bottom: 107px
-               left: 47px
-            &.decrEducation
-               bottom: 132px
-               right: -9px
-               &:after, &::before
-                  transform: translate3d(-50%, -50%, 0) rotate(45deg)
+      //    .education_buttons
+      //       position: absolute
+      //       width: 24px
+      //       height: 24px
+      //       border-radius: 8px
+      //       // border: 1px solid #000
+      //       background-color: #fb8601a1
+      //       margin: 0
+      //       padding: 10px
+      //       color: #000
+      //       &:hover
+      //          transform: scale(1.05)
+      //       &::after, &::before
+      //          content: ''
+      //          position: absolute
+      //          width: 14px
+      //          height: 2px
+      //          background-color: $grey_45
+      //          top: 50%
+      //          left: 50%
+      //          transform: translate3d(-50%, -50%, 0)
+      //       &::after
+      //          width: 2px
+      //          height: 14px
+      //       &.incrEducation
+      //          bottom: 107px
+      //          left: 47px
+      //       &.decrEducation
+      //          bottom: 132px
+      //          right: -9px
+      //          &:after, &::before
+      //             transform: translate3d(-50%, -50%, 0) rotate(45deg)
             
 
                   
 
             
 
-      .double-input-row
-         display: flex
-         justify-content: space-between
-         label
-            // display: inline-block
-            display: flex
-            justify-content: space-between
-            &:nth-child(1)
-               width: calc(100% - 300px)
-               span
-                  // margin-right: 154px
-                  // width: calc(100% - 211px)
-               input
-                  width: 240px
+      // .double-input-row
+      //    display: flex
+      //    justify-content: space-between
+      //    label
+      //       // display: inline-block
+      //       display: flex
+      //       justify-content: space-between
+      //       &:nth-child(1)
+      //          width: calc(100% - 300px)
+      //          span
+      //             // margin-right: 154px
+      //             // width: calc(100% - 211px)
+      //          input
+      //             width: 240px
 
-            &:nth-child(2)
-               justify-content: flex-end
-               width: 300px
-               span
-                  margin: 0px 20px
-                  padding-right: 0
-               input
-                  width: 121px
-      .specializations, .specialization-main
-         position: relative
-         margin-top: 34px
-         & > label
-            position: absolute
-            top: 50%
-            margin-top: -28px
-            max-width: 200px
-            display: inline-block
-         .specializations-list
-            display: flex
-            justify-content: space-between
-            flex-wrap: wrap
-            margin-left: 34%
-            width: 70%
-            .specialization-item
-               width: 50%
-               height: 24px
-               label
-                  position: relative
-                  display: block
-                  margin-top: 0
-                  padding-left: 30px
-                  cursor: pointer
-                  user-select: none
-                  &::after
-                     content: ''
-                     position: absolute
-                     width: 18px
-                     height: 18px
-                     top: calc(50% - 9px)
-                     left: 5px
-                     border: 2px solid $form_non_selected
-                     border-radius: 3px
-                  &.specialization_selected
-                     &::after
-                        border: 2px solid $orange_501
-                     &::before
-                        content: ''
-                        position: absolute
-                        width: 10px
-                        height: 9px
-                        top: calc(50% - 4px)
-                        left: 9px
-                        background-image: url('/assets/icons/functions/check-mark-3.svg')
-                        background-repeat: no-repeat
-                        background-size: cover
+      //       &:nth-child(2)
+      //          justify-content: flex-end
+      //          width: 300px
+      //          span
+      //             margin: 0px 20px
+      //             padding-right: 0
+      //          input
+      //             width: 121px
+      // .specializations, .specialization-main
+      //    position: relative
+      //    margin-top: 34px
+      //    & > label
+      //       position: absolute
+      //       top: 50%
+      //       margin-top: -28px
+      //       max-width: 200px
+      //       display: inline-block
+      //    .specializations-list
+      //       display: flex
+      //       justify-content: space-between
+      //       flex-wrap: wrap
+      //       margin-left: 34%
+      //       width: 70%
+      //       .specialization-item
+      //          width: 50%
+      //          height: 24px
+               
+      //          label
+      //             position: relative
+      //             display: block
+      //             margin-top: 0
+      //             padding-left: 30px
+      //             cursor: pointer
+      //             user-select: none
+      //             &::after
+      //                content: ''
+      //                position: absolute
+      //                width: 18px
+      //                height: 18px
+      //                top: calc(50% - 9px)
+      //                left: 5px
+      //                border: 2px solid $form_non_selected
+      //                border-radius: 3px
+      //             &.specialization_selected
+      //                &::after
+      //                   border: 2px solid $orange_501
+      //                &::before
+      //                   content: ''
+      //                   position: absolute
+      //                   width: 10px
+      //                   height: 9px
+      //                   top: calc(50% - 4px)
+      //                   left: 9px
+      //                   background-image: url('/assets/icons/functions/check-mark-3.svg')
+      //                   background-repeat: no-repeat
+      //                   background-size: cover
 
-               label.radio
-                  &::after
-                     border-radius: 10px
-                  &.main_specialization_selected
-                     &::after
-                        border: 2px solid $orange_common
-                     &::before
-                        content: ''
-                        position: absolute
-                        width: 10px
-                        height: 10px
-                        top: calc(50% - 5px)
-                        left: 9px
-                        border: 2px solid $orange_common
-                        background-color: $orange_common
-                        border-radius: 10px
-               input 
-                  width: 0px
-                  height: 0px
-                  opacity: 0%
+      //          label.radio
+      //             &::after
+      //                border-radius: 10px
+      //             &.main_specialization_selected
+      //                &::after
+      //                   border: 2px solid $orange_common
+      //                &::before
+      //                   content: ''
+      //                   position: absolute
+      //                   width: 10px
+      //                   height: 10px
+      //                   top: calc(50% - 5px)
+      //                   left: 9px
+      //                   border: 2px solid $orange_common
+      //                   background-color: $orange_common
+      //                   border-radius: 10px
+      //          input 
+      //             width: 0px
+      //             height: 0px
+      //             opacity: 0%
    .update-success
       margin: 30px auto 20px
       text-align: center
@@ -425,12 +426,19 @@ form.new-form
             background-color: #fdfdfd
             &:focus
                border: 2px solid $orange_common
+               &~.note.focus
+                  display: block
             &:focus, &[type="date"], textarea, &.ng-dirty, &.filled
                cursor: text
                &~span.title
                   top: 1px
                   font-size: 0.9em
                   // color: #fdfdfd
+            &[type="file"]
+               position: absolute
+               z-index: -10
+               opacity: 0
+               // border: 2px solid #000
             &.ng-invalid.ng-touched:not(:focus), &.ng-invalid.ng-dirty:not(:focus)
                border: 2px solid red
                &~.note
@@ -487,6 +495,8 @@ form.new-form
             &.err
                color: red
                text-decoration: underline
+            &.focus
+               display: none
                // font-weight: bold
          .validation-errors
             position: absolute
@@ -515,21 +525,28 @@ form.new-form
       .specializations, .specialization-main
          position: relative
          margin-top: 34px
+         width: 100%
          & > label
             position: absolute
-            top: 50%
-            margin-top: -28px
-            max-width: 200px
+            top: -30px
+            font-size: 120%
+            left: 50%
+            text-align: center
+            transform: translateX(-50%)
+            width: 100%
+            // margin-top: -28px
+            // max-width: 200px
             display: inline-block
          .specializations-list
             display: flex
             justify-content: space-between
             flex-wrap: wrap
-            margin-left: 34%
-            width: 70%
+            // margin-left: 34%
+            // width: 70%
             .specialization-item
                width: 50%
                height: 24px
+               overflow: hidden
                label
                   position: relative
                   display: block
@@ -787,6 +804,10 @@ form.new-form
    color: green
 
 
+.sertificates
+   .add-sertificates
+      text-align: center
+      line-height: 48px
 
 
    

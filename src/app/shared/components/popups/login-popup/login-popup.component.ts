@@ -22,7 +22,7 @@ export class LoginPopupComponent implements OnInit {
   requiredErr = false
 
   form = new FormGroup({
-    email: new FormControl(environmentOther.emailDefault, [
+    email: new FormControl(environmentOther.emailDefault.trim(), [
       Validators.required,Validators.email
     ]),
     password: new FormControl(environmentOther.passwordDefault, [
@@ -75,7 +75,7 @@ export class LoginPopupComponent implements OnInit {
           this.loggingIn = false
           const user = this.firebase.getUser()
           console.log(user)
-          if (user && user.emailVerified) {
+          if (user?.emailVerified) {
             this.popupService.toggleLoginPopup()
             this.router.navigate(['/profile'])
           } else if (user && !user.emailVerified) {
@@ -83,7 +83,7 @@ export class LoginPopupComponent implements OnInit {
             this.firebase.sendVerificationEmail()
               .then((resp) => {
                 console.log("письмо отправлено: ", resp)
-                this.accessErrMessage = "Ваша почта не верифицирована, мы отправили на неё письмо. Пожалуста перейдите по ссылке в письме. (письмо отправлено повторно)"
+                this.accessErrMessage = "Ваша почта не верифицирована, мы отправили на неё письмо. Пожалуста перейдите по ссылке в письме. (письмо доставлено)"
               })
               .catch((err) => {
                 this.accessErrMessage = `Ваша почта не верифицирована, мы отправили на неё письмо. Пожалуста перейдите по ссылке в письме. ОШИБКА отправления письма: ${err}`

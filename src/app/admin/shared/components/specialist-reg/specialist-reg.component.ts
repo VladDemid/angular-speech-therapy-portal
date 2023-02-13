@@ -37,10 +37,10 @@ export class SpecialistRegComponent implements OnInit {
   }
 
   doctorRegistrationForm = new FormGroup({
-    surname: new FormControl('ЕгоИмя', [Validators.required]),
-    name: new FormControl('Фамилиев', [Validators.required]),
-    patronymic: new FormControl('Отчествович', [Validators.required]),
-    email: new FormControl('zgot2@rambler.ru', [Validators.required]),
+    surname: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required]),
+    patronymic: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl('123456', [Validators.required]),
     termsOfUse: new FormControl(true, [Validators.required]),
     newsSubscription: new FormControl(null),

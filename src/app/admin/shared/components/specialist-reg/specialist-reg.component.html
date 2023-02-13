@@ -6,7 +6,7 @@
       [formGroup]="doctorRegistrationForm"
       (ngSubmit) = "sendDoctorForm()"
       >
-         <button [routerLink]="['/admin/menu']" >назад</button>
+         <button type="button" [routerLink]="['/admin/menu']" >назад</button>
          <div class="line">
             <label>
                <input name="surname" [ngClass]="{filled: surname.value}" type="email" formControlName="surname">

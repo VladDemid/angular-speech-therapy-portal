@@ -11,6 +11,8 @@ export class PopupService {
   appointmentDetails = { "year": 2000, "month": 0, "day": 0, "hour": 0 }
   manualOrderDetails: ManualOrderDetails
   imgPopup = false
+  sertifLinks = []
+  activeSertIndex = 0
   homePageLoginPopup = false
   homePagePassRecoveryPopup = false
   homePageFbSecurityPopup = false
@@ -54,12 +56,37 @@ export class PopupService {
 
   constructor() { }
 
-  showImgPopup(link, name?) {
-    if (link) {
-      this.imgUrl = link
+  showImgPopup(links, i?, name?) {
+    console.log(links, i, name )
+    if (links[i]) {
+      this.activeSertIndex = i
+      this.sertifLinks = links
+      this.imgUrl = links[this.activeSertIndex]
     }
     this.imgName = name
     this.toggleImgPopup()
+  }
+
+  incActiveSertIndex() {
+    const maxLength = this.sertifLinks.length
+    if (this.activeSertIndex < maxLength - 1) {
+      this.activeSertIndex++
+    } else {
+      this.activeSertIndex = 0
+    }
+    this.imgUrl = this.sertifLinks[this.activeSertIndex]
+    console.log("++")
+  }
+
+  decrActiveSertIndex() {
+    const maxLength = this.sertifLinks.length
+    if (this.activeSertIndex !== 0) {
+      this.activeSertIndex--
+    } else {
+      this.activeSertIndex = maxLength - 1
+    }
+    this.imgUrl = this.sertifLinks[this.activeSertIndex]
+    console.log("--")
   }
 
   hideAllPopups() {

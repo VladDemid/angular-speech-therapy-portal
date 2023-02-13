@@ -6,6 +6,11 @@
          <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
          <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
          <!-- <button (click)="emailSend()">email</button> -->
+         <div class="info-block" *ngIf="userData.myData?.scheduleTime && userData.myData?.zoomLink">
+            <!-- scheduleTime: {{!!userData.myData?.scheduleTime}}
+            zoomLink: {{!!userData.myData?.zoomLink}} -->
+            Для отображения на главной странице вам надо заполнить календарь и заполнить персональные данные (ваш zoom, специализация и т.д.)
+         </div>
          <div class="test">
             {{testVar | json}}
             <button (click)="TESTshowMyData()">show myData</button>

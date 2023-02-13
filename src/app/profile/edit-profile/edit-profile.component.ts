@@ -249,9 +249,9 @@ export class EditProfileComponent implements OnInit {
     this.sendSpecializationData()
     
     const doctorData = {
-      name: this.specForm.value.name,
-      surname: this.specForm.value.surname,
-      patronymic: this.specForm.value.patronymic,
+      name: this.specForm.value.specName,
+      surname: this.specForm.value.specSurname,
+      patronymic: this.specForm.value.specPatronymic,
       university: this.specForm.value.university,
       faculty: this.specForm.value.faculty,
       year: this.specForm.value.year,
@@ -270,12 +270,12 @@ export class EditProfileComponent implements OnInit {
     const newUserData = this.dataTrimmer(doctorData)
     console.log("NEW USER DATA: ", newUserData);
     
-    for (let key in newUserData) {
-      if (this.specForm.controls[key].invalid) {
-        this.isLoading = false
-        return
-      }
-    }
+    // for (let key in newUserData) {
+    //   if (this.specForm.controls[key].invalid) {
+    //     this.isLoading = false
+    //     return
+    //   }
+    // }
     
     newUserData['educationsCount'] = this.educationsCount //добавить в конце кол-во образований (криво, надо будет получше вставить)
     
@@ -404,13 +404,23 @@ export class EditProfileComponent implements OnInit {
       const newData = {
         avatarUrl: resp
       }
+      console.log("newData: ", newData)
 
-      this.userData.sendMyDataChanges(newData)
-      .subscribe((resp) => {
+      // this.userData.sendMyDataChanges(newData)
+      // .subscribe((resp) => {
+      //   console.log("url аватара записан");
+      //   this.avatarPrefireName = ""
+      // },
+      // (err) => {
+      //   console.log("ошибка записи url аватара ", err);
+      // })
+
+      this.firebase.sendMyDataChanges(newData)
+      .subscribe(() => {
         console.log("url аватара записан");
         this.avatarPrefireName = ""
-      },
-      (err) => {
+        // this.specForm.reset()
+      },(err) => {
         console.log("ошибка записи url аватара ", err);
       })
       
