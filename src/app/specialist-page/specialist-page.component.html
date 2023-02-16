@@ -35,6 +35,16 @@
             <!-- <div class="about-me-short">
                {{doctorInfo.aboutMe | textCutter:80}}
             </div> -->
+            <div class="prices">
+               <!-- <span *ngIf="priceConfiguration">{{priceConfiguration|json}}</span> -->
+               <h3>Стоимость услуг:</h3>
+               Разовое занятие/консультация - 45 BYN
+               <!-- <span *ngIf="priceConfiguration$ | async as priceConfiguration">
+                  {{ priceConfiguration.oneTimeLesson }} BYN
+               </span> -->
+
+               
+            </div>
             <button *ngIf="isInProfileModule == 'false'">записаться на прием</button>
             <!-- <div class="error-msg" *ngIf="helper.DEBUG && isInProfileModule && !userData?.myData?.name" style="font-weight: bold;">
                ---------------ERROR MSG----------------<br>

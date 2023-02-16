@@ -22,8 +22,8 @@ export class AppointmentDetailsPopupComponent implements OnInit {
 
   appointmentDetailsForm = new FormGroup({
     childName: new FormControl('Имя ребенка', [Validators.required,]),
-    childDate: new FormControl('1995-12-23', [Validators.required,]),
-    comment: new FormControl('комментарий тест', [Validators.required,]),
+    childDate: new FormControl('2020-10-10', [Validators.required,]),
+    comment: new FormControl('', [Validators.required,]),
   });
 
   get childName() {return this.appointmentDetailsForm.get('childName')}
@@ -58,7 +58,10 @@ export class AppointmentDetailsPopupComponent implements OnInit {
       childName: this.childName.value,
       childDate: this.childDate.value,
       comment: this.comment.value,
+      isManualCreation: false,
     }
+    // console.log(this.appointmentDetailsForm.controls)
+    this.popupService.popupOrderDetails = emitLessonDetailsObject
 
     this.popupService.toggleAppointmentDeatailsPopup()
     this.voted.emit(emitLessonDetailsObject)

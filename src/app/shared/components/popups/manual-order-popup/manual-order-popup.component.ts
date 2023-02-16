@@ -49,12 +49,16 @@ export class ManualOrderPopupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  makeAnAppointment() {
+  makeManualAppointment() {
     // this.isUpdating = true
     const emitLessonDetailsObject = {
-      problem: this.problem,
-      patientEmail: this.patientEmail,
-      patientName: this.patientName,
+      childName: this.childName,
+      childDate: this.childDate,
+      parentName: this.parentName,
+      parentEmail: this.parentEmail,
+      phone: this.phone,
+      comment: this.comment,
+      isManualCreation: true,
     }
 
     if (this.termsOfUseAccepted) {

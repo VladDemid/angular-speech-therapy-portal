@@ -18,7 +18,7 @@ import { UserData } from 'src/app/profile/shared/services/user-data.service';
 })
 export class FirebaseService implements OnInit {
 
-
+  priceConfiguration$ = new Subject();
   shortIds = null
   signedIn = false
   actionCode: string
@@ -36,6 +36,7 @@ export class FirebaseService implements OnInit {
       firebase.initializeApp(firebaseConfig)
       firebase.auth().onAuthStateChanged((user) => this.onAuthStateChanged(user))
       // this.userObserver()
+      this.getConfuguration()
       this.functions = firebase.functions()
       // this.timerLogger()
     }
@@ -588,6 +589,18 @@ export class FirebaseService implements OnInit {
     const lessonRef = firebase.database().ref(`orders/${lesson_id}`);
     return lessonRef.once("value")
   }
+
+  getConfuguration() { //получить цены на разные улуги из DB
+    const confugurationRef = firebase.database().ref("configuration/");
+    confugurationRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      this.priceConfiguration$.subscribe(data => console.log("данные обновлены", data))
+      this.priceConfiguration$.next(data)
+      // console.log("priceConfiguration", this.priceConfiguration$)
+    });
+    
+  }
+
 
   getUserEvents() {
     const userEvents = firebase.database().ref(`users/${localStorage.getItem("user-Id")}/events`);

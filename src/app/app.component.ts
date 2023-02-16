@@ -17,6 +17,6 @@ export class AppComponent {
   }
     
     ngOnInit() {
-      this.helper.preventLog()
+      // this.helper.preventLog()
   }
 }

@@ -31,7 +31,7 @@ export class DevelopHelp {
 
    preventLog() {
       if (environment.production) {
-         // window.console.log = function () { };   // disable any console.log debugging statements in production mode
+         window.console.log = function () { };   // disable any console.log debugging statements in production mode
        
       }
    }

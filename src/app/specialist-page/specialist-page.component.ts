@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { UserDoctor } from '../shared/interfaces';
 import { CrypterService } from '../shared/services/crypter.service';
@@ -21,8 +21,8 @@ export class SpecialistPageComponent implements OnInit {
   doctorEventsYearMonthDayHour: object
   doctorId: string
   isInProfileModule = "false" //может быть строкой т.к. params возвращает строку
+  priceConfiguration$ = this.firebase.priceConfiguration$
   
-
   constructor(
     private firebase: FirebaseService,
     private route: ActivatedRoute,
@@ -30,11 +30,11 @@ export class SpecialistPageComponent implements OnInit {
     public helper: DevelopHelp,
     public userData: UserData,
     public popupService: PopupService
-  ) { }
-
-  ngOnInit(): void {
-    this.getDoctor() //скачивает данные доктора
-    this.checkUserData() //проверяет данные пользователя (клиента), если F5
+    ) { }
+    
+    ngOnInit(): void {
+      this.getDoctor() //скачивает данные доктора
+      this.checkUserData() //проверяет данные пользователя (клиента), если F5
   }
 
   getDoctor() {

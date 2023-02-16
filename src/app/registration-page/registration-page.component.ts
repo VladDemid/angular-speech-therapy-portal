@@ -41,17 +41,17 @@ export class RegistrationPageComponent implements OnInit {
   requiredErr = false
 
   clientRegistrationForm = new FormGroup({
-    surname: new FormControl('Клиентов',
+    surname: new FormControl('',
       Validators.required),
-    name: new FormControl('Клиент',
+    name: new FormControl('',
       Validators.required),
-    patronymic: new FormControl('Клиентович',
+    patronymic: new FormControl('',
       Validators.required),
-    email: new FormControl('zgot2@rambler.ru', [
+    email: new FormControl('', [
       Validators.required,
       Validators.email
     ]),
-    password: new FormControl('123456', [
+    password: new FormControl('', [
       Validators.required,
       Validators.minLength(this.passwordMinLength)
     ]),

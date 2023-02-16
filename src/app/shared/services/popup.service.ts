@@ -1,5 +1,5 @@
 import { HostListener, Injectable } from '@angular/core';
-import { ManualOrderDetails } from '../interfaces';
+import { ManualOrderDetails, PopupOrderDetails } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class PopupService {
   imgUrl = "https://storiavoce.com/wp-content/plugins/lightbox/images/No-image-found.jpg"
   appointmentDetails = { "year": 2000, "month": 0, "day": 0, "hour": 0 }
   manualOrderDetails: ManualOrderDetails
+  popupOrderDetails: PopupOrderDetails
   imgPopup = false
   sertifLinks = []
   activeSertIndex = 0

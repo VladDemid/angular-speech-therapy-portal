@@ -13,7 +13,7 @@
                {{popupService.manualOrderDetails | json}}
                <!-- {{popupService.manualOrderDetails.day}} {{popupService.monthsNamesWhomCase[popupService.appointmentDetails.month - 1]}} {{popupService.appointmentDetails.year}} - {{popupService.appointmentDetails.hour}} часов (Минск) -->
             </div>
-            <form (ngSubmit)="makeAnAppointment()" class="new-form" [formGroup]="manualOrderForm">
+            <form (ngSubmit)="makeManualAppointment()" class="new-form" [formGroup]="manualOrderForm">
                <div class="line">
                   <label>
                      <input name="childName" [ngClass]="{filled: childName.value}" type="text"  formControlName="childName">

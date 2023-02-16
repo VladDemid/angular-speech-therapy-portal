@@ -385,7 +385,7 @@ export class CalendarBlockComponent implements OnInit {
   //   // this.newDaysOfWeekShedule[index] = [Math.floor(Math.random()*10)+10,21]
     
   // }
-  makeLessonFromTimeRow() {
+  makeLessonFromTimeRow() { //!хз зачем ваще
     // console.log(this.patientProblem)
     this.makeAnAppointment()
   }
@@ -404,20 +404,28 @@ export class CalendarBlockComponent implements OnInit {
     this.popupService.toggleManualOrderPopup()
   }
 
-  makeLessonFromPopup(details) {
-    console.log("создание заказа вручную (или не вручную хз):...")
-    console.log("детали: ", details) //problem, patientEmail, patientName
-    console.log(this.popupService.manualOrderDetails)
+  makeLessonFromPopup(details) { //из manual или обычного popup
+    console.log("создание заказа из попапа:...")
+    console.log("детали клиента (popup): ", details) //childName, childDate, comment...
+    // console.log(this.popupService.manualOrderDetails)
+    console.log("manualOrderDetails: ", this.popupService.manualOrderDetails)
+    console.log("popupOrderDetails: ", this.popupService.popupOrderDetails)
+    let isManualOrder
+    if (this.popupService.manualOrderDetails && !this.popupService.popupOrderDetails) {
+      isManualOrder = true
+    } else if (!this.popupService.manualOrderDetails && this.popupService.popupOrderDetails) {
+      isManualOrder = false
+    }
     let manualDetails = {
-      date: this.popupService.manualOrderDetails.date,
+      date: this.popupService.manualOrderDetails?.date,
       ...details,
     }
     console.log("manualDetails: ", manualDetails)
     // manualDetails.date.time = this.selectedTimeForLesson
     // this.selectedTimeForLesson = manualDetails.date.time
 
-    console.log("manualDetails: ", manualDetails)
-    this.makeAnAppointment(true, manualDetails)
+    // console.log("manualDetails: ", manualDetails)
+    this.makeAnAppointment(isManualOrder, manualDetails)
   }
 
 
@@ -477,7 +485,7 @@ export class CalendarBlockComponent implements OnInit {
     }
     
     console.log('тест записи...', manualDetails)
-    return
+    // return
     
     //! добавить проверку
     //*сигнализация о занятом часе 

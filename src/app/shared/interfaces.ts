@@ -158,7 +158,22 @@ export interface ManualOrderDetails {
       month: number,
       day: number,
       time: string,
-   }
+   },
+   childName?: string,
+   childDate?: string,
+   comment?: string,
+}
+
+export interface PopupOrderDetails {
+   date? : {
+      year: number,
+      month: number,
+      day: number,
+      time: string,
+   },
+   childName?: string,
+   childDate?: string,
+   comment?: string,
 }
 
 export interface Signature {
