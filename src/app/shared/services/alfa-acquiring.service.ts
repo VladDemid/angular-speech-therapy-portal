@@ -10,8 +10,8 @@ export class AlfaAcquiringService {
   data = {
     userName: "logogo.online-api",
     password: "HnnlT8Et",
-    orderNumber: "2021_6_16_18_dawRBLNTpDV5gep3mG9TyGAACrE3",
-    amount: "1000", //10рублей?
+    orderNumber: "2023_2_18_10_testIdManual",
+    amount: "45", //10рублей?
     returnUrl: "https://logogo.online"
   }
 

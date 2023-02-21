@@ -115,6 +115,7 @@
             <label>
                <input name="university" [ngClass]="{filled: university.value}" type="text" formControlName="university">
                <span class="title">{{userData.myData.university || 'Университет'}}</span>
+               <span class="note focus">Университет</span>
                <div class="validation-errors" *ngIf="university.invalid && (university.dirty || university.touched) || requiredErr">
                   <span class="note err" *ngIf="university.errors?.['required']">*необходимо заполнить</span>
                </div>
@@ -122,6 +123,7 @@
             <label>
                <input name="faculty" [ngClass]="{filled: faculty.value}" type="text" formControlName="faculty">
                <span class="title">{{userData.myData.faculty || 'Факультет'}}</span>
+               <span class="note focus">Факультет</span>
                <div class="validation-errors" *ngIf="faculty.invalid && (faculty.dirty || faculty.touched) || requiredErr">
                   <span class="note err" *ngIf="faculty.errors?.['required']">*необходимо заполнить</span>
                </div>
@@ -129,6 +131,7 @@
             <label>
                <input name="year" [ngClass]="{filled: year.value}" type="text" formControlName="year">
                <span class="title">{{userData.myData.year || 'Год выпуска'}}</span>
+               <span class="note focus">Год выпуска</span>
                <div class="validation-errors" *ngIf="year.invalid && (year.dirty || year.touched) || requiredErr">
                   <span class="note err" *ngIf="year.errors?.['required']">*необходимо заполнить</span>
                </div>
@@ -193,6 +196,7 @@
                <label>
                   <input name="experience" [ngClass]="{filled: experience.value}" type="text" formControlName="experience">
                   <span class="title">{{userData.myData.experience || 'Опыт работы'}}</span>
+                  <span class="note focus">Опыт работы</span>
                   <div class="validation-errors" *ngIf="experience.invalid && (experience.dirty || experience.touched) || requiredErr">
                      <span class="note err" *ngIf="experience.errors?.['required']">*необходимо заполнить</span>
                   </div>
@@ -202,6 +206,7 @@
                <label>
                   <input name="workPlace" [ngClass]="{filled: workPlace.value}" type="text" formControlName="workPlace">
                   <span class="title">{{userData.myData.workPlace || 'Место работы'}}</span>
+                  <span class="note focus">Место работы</span>
                   <div class="validation-errors" *ngIf="workPlace.invalid && (workPlace.dirty || workPlace.touched) || requiredErr">
                      <span class="note err" *ngIf="workPlace.errors?.['required']">*необходимо заполнить</span>
                   </div>
@@ -209,11 +214,13 @@
             </div>
             <div class="line">
                <label>
-                  <input name="zoomLink" [ngClass]="{filled: zoomLink.value}" type="text" formControlName="zoomLink">
+                  <input name="zoomLink" [ngClass]="{filled: zoomLink.value}" type="text" formControlName="zoomLink" id="zoomLink">
                   <span class="title">{{userData.myData.zoomLink || 'zoom ссылка'}}</span>
+                  <span class="note focus">Zoom ссылка</span>
                   <div class="validation-errors" *ngIf="zoomLink.invalid && (zoomLink.dirty || zoomLink.touched) || requiredErr">
                      <span class="note err" *ngIf="zoomLink.errors?.['required']">*необходимо заполнить</span>
                   </div>
+                  <div class="delete-field-button"  (click)="deleteField('zoomLink')" ></div>
                </label>
             </div>
             <div class="line">
@@ -231,8 +238,13 @@
          <label><span class="narrow">Актуальное место работы</span><input required name="workPlace"  type="text" [placeholder]="userData.myData.workPlace || ' '" formControlName="workPlace"></label>
          <label><span class="">zoom ссылка</span><input required name="zoomLink"  type="text" [placeholder]="userData.myData.zoomLink || ' '" formControlName="zoomLink"></label> -->
          <!-- <label><span>О себе</span><textarea id="aboutMe" name="aboutMe" rows="10" [(innerHTML)]="userData.myData.aboutMe"  formControlName="aboutMe">4576</textarea></label> -->
-         <div class="update-success" *ngIf="showUpdate">
-            Информация обновлена!
+         <div class="update-status">
+            <div class="update-success" *ngIf="showUpdate">
+               Информация обновлена!
+            </div>
+            <div class="red error" *ngIf="updateError">
+               Ошибка обновления данных. Попробуйте перезайти в личный кабинет и попробовать снова
+            </div>
          </div>
          <button class="submit" [ngClass]="{updating2: isLoading}" [disabled]="isLoading" type="submit"><span data-text="сохранить">сохранить</span></button>
       </form>

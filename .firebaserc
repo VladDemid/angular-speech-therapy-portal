@@ -2,7 +2,9 @@
   "projects": {
     "dev": "inclusive-test",
     "prod": "inclusive-test",
-    "local": "inclusive-test"
+    "local": "inclusive-test",
+    "rls": "verbaland"
   },
-  "targets": {}
+  "targets": {},
+  "etags": {}
 }

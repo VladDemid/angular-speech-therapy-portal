@@ -3,7 +3,7 @@
    <div class="popup">
 
       <div class="popup-container">
-         <div class="subtitle">Дата и время</div>
+         <div class="subtitle">Дата и время (МСК)</div>
          <div class="date">
             <span class="bold">{{popupService.eventDetails.date.day}}</span>
             {{monthsNamesWhomCase[popupService.eventDetails.date.month]}} 
@@ -21,6 +21,13 @@
             <!-- <div class="doctor-name">Специалист: {{popupService.eventDetails.doctorName}}</div> -->
             <!-- <div class="client-name">Специалист: {{popupService.eventDetails.patientName}}</div> -->
          </div>
+         <!-- {{popupService.eventDetails | json}} -->
+         <div class="subtitle">Специалист:</div>
+         {{popupService.eventDetails.doctorName}}
+         <div class="subtitle">Имя ребенка:</div>
+         {{popupService.eventDetails.childName}}
+         <div class="subtitle">День рождения ребенка:</div>
+         {{popupService.eventDetails.childDate}}
          <div class="subtitle">Проблема:</div>
          {{popupService.eventDetails.problemDescription}}
          <div class="pay" *ngIf="popupService.eventDetails.state === 'AwaitingPayment'">
@@ -33,19 +40,22 @@
          </div>
          <div class="zoom">
             <div class="subtitle"><span class="blue zoom-icon">Zoom</span> ссылка:</div>
-            
-            <div class="not-ready" *ngIf="popupService.eventDetails.hoursLeft > 2">
+            {{popupService.eventDetails.zoomLink}}
+            <!-- <div class="not-ready" *ngIf="popupService.eventDetails.hoursLeft > 2">
                <h3>Ссылка на zoom конференцию будет доступна за 2 часа до звонка</h3>
                <span class="note">*Если ссылка не появилась напишите нам по кнопке снизу</span>
             </div>
             <div class="ready" *ngIf="popupService.eventDetails.hoursLeft <= 2">
                <h3>{{popupService.eventDetails.zoomLink}}</h3>
-            </div>
+            </div> -->
 
             <div class="help">
                <button [routerLink]="['/profile/help']">у вас вопросы?</button>
             </div>
          </div>
+         <div class="subtitle">ID заказа:</div>
+         {{popupService.eventDetails.orderId}}
+         
       </div>
    </div>
 </div>

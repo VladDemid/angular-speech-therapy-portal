@@ -20,7 +20,7 @@ exports.alfaTest = functions
       userName: "logogo.online-api",
       password: "HnnlT8Et",
       orderNumber: 820,
-      price: 10,
+      price: 888,
       returnUrl: "http://localhost:4200/profile/payment?token=1234&paySuccess=true",
       failUrl: "http://localhost:4200/profile/payment?token=1234&paySuccess=false"
     }
@@ -150,17 +150,15 @@ exports.pay = functions.https.onRequest(async (request, response) => {
     functions.logger.debug(
       "request.body",
       JSON.stringify(request.body, null, "  ")
-      );
-      const orderId = request.body.id;
-      functions.logger.debug("request body:", request.body);
-      // functions.logger.debug("orderId:", orderId);
-      
-      
-      // functions.logger.info("pay createPayment START")
-      const payment = await createPayment(orderId, prod);
-      // functions.logger.info("pay createPayment END", payment)
-  
+    );
+
+    const orderId = request.body.id;
+    functions.logger.debug("request body:", request.body);
+    // functions.logger.debug("orderId:", orderId);
     
+    // functions.logger.info("pay createPayment START")
+    const payment = await createPayment(orderId, prod);
+    // functions.logger.info("pay createPayment END", payment)
   
     try {
       const alfaResponse = await axios.post(getPaymentUrl(payment), undefined, {
@@ -304,7 +302,7 @@ exports.rejectPayment = functions.https.onRequest(async (request, response) => {
   
 async function createPayment(orderId, prod) {
   const token = uuidv4();
-  const orderRef = db.ref(`orders/${orderId}`); //! поменять на orders/
+  const orderRef = db.ref(`orders/${orderId}`); 
   const paymentsRef = db.ref(`payments/${token}`);
   
   //!start delete

@@ -492,6 +492,7 @@ form.new-form
             transform: translateY(0%)
             background-color: transparent
             font-size: 0.8em
+            color: $orange_common
             &.err
                color: red
                text-decoration: underline
@@ -522,6 +523,36 @@ form.new-form
                   top: 1px
                   font-size: 0.9em
                   color: $grey_45
+      .delete-field-button
+         position: absolute
+         width: 17px
+         height: 56px
+         background-color: #ff0000
+         opacity: 0.7
+         // width: 16px
+         // height: 16px
+         // background-color: red
+         top: calc( 50% - 28px)
+         right: 0px
+         border-radius: 0px 5px 5px 0px
+         // border: 2px solid rgba(0, 0, 0, 0)
+         border: 2px solid #9C9C9C
+         background-image: url('/assets/icons/interface/delete.png')
+         background-size: 20px
+         background-repeat: no-repeat
+         background-position: calc(100% - 10px) 50%
+         transition: 0.3s all
+         cursor: pointer
+         
+         &:hover
+            // width: 150px
+            // background-color: #ff0000e5
+            opacity: 0.9
+            width: 46px
+            // background-position: calc(100% - 10px) 50%
+            // &:after
+            //    content: ''
+            //    display: block
       .specializations, .specialization-main
          position: relative
          margin-top: 34px

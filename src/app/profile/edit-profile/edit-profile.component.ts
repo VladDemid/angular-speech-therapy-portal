@@ -25,6 +25,7 @@ export class EditProfileComponent implements OnInit {
   defaultAvatar = environment.defaultAvatarUrl
   doubleClickPrevent = false
   showUpdate = false
+  updateError = false
   specializations = specializationsList
   specializationsData = {
     specializationsSelected: [],
@@ -115,7 +116,7 @@ export class EditProfileComponent implements OnInit {
         clearInterval(waitForUserData) 
         //подгрузить данные со скачанного объекта юзера
         if (this.userData.myData.userType == "doctor") {
-          if (this.userData.myData.specializations != []) {
+          if (this.userData.myData.specializations.length) {
             this.specializationsData.specializationsSelected = this.userData.myData.specializations
           }
           if (this.userData.myData.aboutMe) {
@@ -177,7 +178,7 @@ export class EditProfileComponent implements OnInit {
       // const mainSpecialization = <HTMLInputElement>document.querySelector(".main_specialization_selected input")
       // if (mainSpecialization) {
       //   console.log("отменен:" , specializationNameRus, mainSpecialization.value);
-      if (this.specializationsData.specializationsSelected != []) {
+      if (this.specializationsData.specializationsSelected.length) {
         this.specializationsData.mainSpecializationSelected = this.specializationsData.specializationsSelected[0]
       }
       // }
@@ -239,6 +240,22 @@ export class EditProfileComponent implements OnInit {
         console.log("ERROR:", err);
       })
     
+  }
+
+  deleteField(fieldName) {
+    console.log(fieldName);
+    const newData = {
+      [fieldName]: null
+    };
+    console.log(newData)
+    // (<HTMLInputElement>document.getElementById(fieldName)).value = "";
+    this.firebase.patchUserData(newData, '')
+    .then((resp) => {
+      console.log(resp)
+    })
+    .catch((err) => {
+      console.log("deletion error: ", err)
+    })
   }
 
   doctorChangeData() {
@@ -320,6 +337,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   dataTrimmer(userData: Object) {
+    console.log("userData: ", userData)
     for (let key in userData) {
       if (userData[key] == null || !userData[key].trim()) {
         delete userData[key]
@@ -330,6 +348,13 @@ export class EditProfileComponent implements OnInit {
 
   successfulDataUpdate() {
     this.showUpdate = true
+    setTimeout(() => {
+      this.showUpdate = false
+    }, 5000)
+  }
+
+  failedDataUpdate() {
+    this.updateError = true
     setTimeout(() => {
       this.showUpdate = false
     }, 5000)

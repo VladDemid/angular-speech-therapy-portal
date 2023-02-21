@@ -416,7 +416,7 @@ export class CalendarBlockComponent implements OnInit {
     } else if (!this.popupService.manualOrderDetails && this.popupService.popupOrderDetails) {
       isManualOrder = false
     }
-    let manualDetails = {
+    let manualDetails = { //детали занятия из любого попапа
       date: this.popupService.manualOrderDetails?.date,
       ...details,
     }
@@ -530,7 +530,9 @@ export class CalendarBlockComponent implements OnInit {
           },
           patientId: localStorage.getItem("user-Id"),
           patientName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
-          problemDescription: this.patientProblem,
+          problemDescription: manualDetails.comment,
+          childName: manualDetails.childName,
+          childDate: manualDetails.childDate,
           doctorId: this.calendarUserId,
           doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
           doctorsConfirmation: false,

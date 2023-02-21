@@ -39,6 +39,8 @@ export class PopupService {
     doctorName: "0", 
     doctorsConfirmation: false, 
     patientId: "", 
+    childDate: "",
+    childName: "",
     patientName: "", 
     problemDescription: "описание проблемы...", 
     time: 0, 
@@ -51,7 +53,8 @@ export class PopupService {
     zoomLink: "",
     hoursLeft: 0,
     paymentFormUrl: null,
-    state: ""
+    state: "",
+    orderId: ""
   }
   
 

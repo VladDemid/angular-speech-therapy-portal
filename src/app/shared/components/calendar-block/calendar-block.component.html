@@ -119,9 +119,10 @@
                      </div> -->
                      <!-- <button class="submit" [disabled]="isLoading" type="submit">записаться</button> -->
                   </form>
+                  <!--!на эту надпись сразу активировалась запись без попапа (click)="makeLessonFromTimeRow()"  -->
                   <div class="buy-button" 
-                     *ngIf="selectedTimeForLesson === time"
-                     (click)="makeLessonFromTimeRow()">
+                  *ngIf="selectedTimeForLesson === time"
+                  >
                      <span class="pay-sign">ЗАПИСАТЬСЯ</span>
                   </div>
                   <!-- <div class="switch" (click)="switchHour(time)" ></div> -->
