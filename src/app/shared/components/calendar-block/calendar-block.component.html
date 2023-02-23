@@ -247,10 +247,11 @@
                   
                   <!-- (click)="switchHour(time)" -->
                   <div class="switch"  ></div>
-                  <div class="manual-add"
+                  <!-- |manual-add решили пока удалить| -->
+                  <!-- <div class="manual-add"
                      *ngIf="manualAddOrder"
-                     (click)="openManualOrderPopup(time)"
-                  >+</div>
+                     (click)="openManualOrderPopup($event,time)"
+                  >+</div>  -->
                   <!-- <div class="switch"
                      [ngClass]="{active: time | timeCheck:scheduleHours:year:month:selectedDay, 
                                  waiting: updatingdWorkHourData && newScheduleHours[time] }"

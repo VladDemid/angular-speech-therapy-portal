@@ -81,7 +81,10 @@ export class CalendarBlockComponent implements OnInit {
     public userData: UserData,
     public helper: DevelopHelp,
     private telegram: TelegramBotService,
-  ) {}
+  ) {
+    // this.preventBubbling()
+
+  }
     
   ngOnInit(): void {
     this.setMonthName()
@@ -95,7 +98,17 @@ export class CalendarBlockComponent implements OnInit {
   }
 
 
+  // preventBubbling() {
 
+  //   console.log("prevent Bubbling")
+  //   var elements = document.getElementsByClassName("manual-add");
+
+  //   for (var i = 0; i < elements.length; i++) {
+  //       elements[i].addEventListener('click', el => {
+  //         el.stopPropagation()
+  //       });
+  //   }
+  // }
 
   waitForInfo() { //ждать подгрузки инфы себя (в профиле) (в случае F5 на странице календаря например)
     if (this.isInProfileModule == true && this.userData.myData.name == "") {
@@ -391,8 +404,8 @@ export class CalendarBlockComponent implements OnInit {
   }
 
 
-  openManualOrderPopup(time) {
-    
+  openManualOrderPopup(event, time) {
+    event.stopPropagation();
     this.popupService.manualOrderDetails = {
       date: {
         day: this.selectedDay, 
@@ -411,12 +424,13 @@ export class CalendarBlockComponent implements OnInit {
     console.log("manualOrderDetails: ", this.popupService.manualOrderDetails)
     console.log("popupOrderDetails: ", this.popupService.popupOrderDetails)
     let isManualOrder
+    let manualDetails
     if (this.popupService.manualOrderDetails && !this.popupService.popupOrderDetails) {
       isManualOrder = true
     } else if (!this.popupService.manualOrderDetails && this.popupService.popupOrderDetails) {
       isManualOrder = false
     }
-    let manualDetails = { //детали занятия из любого попапа
+    manualDetails = { //детали занятия из любого попапа
       date: this.popupService.manualOrderDetails?.date,
       ...details,
     }
@@ -552,7 +566,8 @@ export class CalendarBlockComponent implements OnInit {
           manualOrder: true,
           patientEmail: manualDetails.patientEmail,
           patientName: manualDetails.patientName,
-          problemDescription: manualDetails.problem,
+          problemDescription: manualDetails.comment,
+          patientPhone: manualDetails.phone,
           doctorId: localStorage.getItem("user-Id"),
           doctorName: `${this.userData.myData.surname} ${this.userData.myData.name} ${this.userData.myData.patronymic}`,
           doctorsConfirmation: false,

@@ -12,22 +12,27 @@ h2
 .faq-item
    cursor: pointer
    user-select: none
-   margin-top: -1px
+   // margin-top: -1px
+   backdrop-filter: blur(4px)
+   background-color: rgba(255, 255, 255, .5)
+   // background-color: rgba(255, 0,0,.5)
    // border: 1px solid #000
+   border-radius: 10px
    
    .faq-item-header
       position: relative
       min-height: 90px
-      margin: 10px 0
+      margin: 16px 0 0
       border-radius: 10px
       display: flex
       justify-content: center
       align-items: center
+      // background-color: blue
       @include box-shadow($nav_shadow)
       h4
          width: 80%
          display: block
-         font-size: 20px
+         font-size: 22px
          font-weight: 500
          line-height: 1.2em
          margin-right: 15px
@@ -48,7 +53,8 @@ h2
       max-height: 0px
       opacity: 0
       border-bottom: 1px solid #000
-      background-color: $orange_new05
+      background-color: #ff951c46
+      padding: 0px 100px
       border-radius: 10px
       // margin: 50px 100px
       &:last-child
@@ -70,6 +76,8 @@ h2
          max-height: 600px
          opacity: 1
          padding: 50px 100px
+         margin-top: 15px
+         
       .arrow
          transform: rotate(180deg)
       .faq-item-header

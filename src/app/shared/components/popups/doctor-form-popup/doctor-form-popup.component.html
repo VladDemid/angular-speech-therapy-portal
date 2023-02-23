@@ -42,7 +42,7 @@
             <div class="line">
                <label>
                   <!-- <input name="comment" type="text" formControlName="comment"> -->
-                  <textarea name="comment" [ngClass]="{filled: comment.value}" formControlName="comment" placeholder="Опишите проблему, в каких мессенджерах с вами можно связаться и т.д."></textarea>
+                  <textarea name="comment" [ngClass]="{filled: comment.value}" formControlName="comment" placeholder="Можете добавить в каких мессенджерах с вами можно связаться и т.д."></textarea>
                   <span class="title">Комментарий</span>
                   <div class="validation-errors" *ngIf="comment.invalid && (comment.dirty || comment.touched) || errMessage">
                      <span class="note err" *ngIf="comment.errors?.['required']">*необходимо заполнить</span>

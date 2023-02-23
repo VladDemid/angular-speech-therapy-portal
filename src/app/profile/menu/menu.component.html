@@ -25,6 +25,10 @@
          <button [ngClass]="{updating2: testAction}" (click)="testLoading()"  ><span data-text="загрузить">загрузить</span></button>
          {{testAction}}
       </div>
+      <div class="new-user-note" *ngIf="(userData.myData.userType == 'doctor' && (!userData.myData.zoomLink || !userData.myData.scheduleTime) ) || (userData.myData.userType == 'client' && !userData.myData.clientPhone)">
+         <span *ngIf="userData.myData.userType == 'doctor'">Перед приемом клиентов вам необходимо заполнить свои данные в разделе "Редактировать личные данные" и добавить рабочие часы в разделе "Календарь"</span>
+         <span *ngIf="userData.myData.userType == 'client'">Перед записью к специалисту, пожалуйста заполните все необходимы данные в разделе "Редактировать личные данные"</span>
+      </div>
       <!-- <div class="help">
          Пожалуйста дополните данные о себе в разделе 
          <span>"Редактировать личные данные"</span> 

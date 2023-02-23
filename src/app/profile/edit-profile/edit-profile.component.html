@@ -21,6 +21,7 @@
          <label>
             <input name="clientSurname" [ngClass]="{filled: clientSurname.value}" type="text" formControlName="clientSurname">
             <span class="title">{{userData.myData.surname}}</span>
+            <span class="note focus">Фамилия</span>
             <div class="validation-errors" *ngIf="clientSurname.invalid && (clientSurname.dirty || clientSurname.touched) || requiredErr">
                <span class="note err" *ngIf="clientSurname.errors?.['required']">*необходимо заполнить</span>
             </div>
@@ -30,6 +31,7 @@
             <label>
                <input name="clientName" [ngClass]="{filled: clientName.value}" type="text"  formControlName="clientName">
                <span class="title">{{userData.myData.name}}</span>
+               <span class="note focus">Имя</span>
                <div class="validation-errors" *ngIf="clientName.invalid && (clientName.dirty || clientName.touched) || requiredErr">
                   <span class="note err" *ngIf="clientName.errors?.['required']">*необходимо заполнить</span>
                </div>
@@ -39,8 +41,19 @@
             <label>
                <input name="clientPatronymic" [ngClass]="{filled: clientPatronymic.value}" type="text" formControlName="clientPatronymic">
                <span class="title">{{userData.myData.patronymic}}</span>
+               <span class="note focus">Отчество</span>
                <div class="validation-errors" *ngIf="clientPatronymic.invalid && (clientPatronymic.dirty || clientPatronymic.touched) || requiredErr">
                   <span class="note err" *ngIf="clientPatronymic.errors?.['required']">*необходимо заполнить</span>
+               </div>
+            </label>
+         </div>
+         <div class="line">
+            <label>
+               <input name="clientPhone" [ngClass]="{filled: clientPhone.value}" type="text" formControlName="clientPhone">
+               <span class="title">{{userData.myData.clientPhone}}</span>
+               <div class="validation-errors" *ngIf="clientPhone.invalid && (clientPhone.dirty || clientPhone.touched) || requiredErr">
+                  <span class="note err" *ngIf="clientPhone.errors?.['required']">*необходимо заполнить</span>
+                  <span class="note err" *ngIf="clientPhone.errors?.['minlength']">*6+ символов</span>
                </div>
             </label>
          </div>
@@ -169,7 +182,7 @@
          </div> -->
          <div class="line">
             <div class="specializations">
-               <label><span>Специализации</span></label>
+               <label><span>Специализации*</span></label>
                <ul class="specializations-list">
                   <li class="specialization-item" *ngFor="let item of specializations" >
                      <label class="checkbox-label" (click)="selectSpecialization(item)" [ngClass]="{specialization_selected: specializationsData.specializationsSelected && specializationsData.specializationsSelected.indexOf(item) != -1}"><input type="checkbox" >{{item}}</label>
@@ -181,7 +194,7 @@
          <div class="line">
             <div class="select-sign" *ngIf="!specializationsData.specializationsSelected || (specializationsData.specializationsSelected && !specializationsData.specializationsSelected[0])">Выберите ваши специализации выше</div>
             <div class="specialization-main" *ngIf="!(!specializationsData.specializationsSelected || (specializationsData.specializationsSelected && !specializationsData.specializationsSelected[0]))">
-               <label><span class="narrow">Главная специализация</span></label>
+               <label><span class="narrow">Главная специализация*</span></label>
                <ul class="specializations-list">
                   <li class="specialization-item" *ngFor="let item of specializationsData.specializationsSelected; first as isFirst" >
                      <label class="radio" [ngClass]="{'main_specialization_selected': (item === specializationsData.mainSpecializationSelected) || (specializationsData.mainSpecializationSelected === '' && isFirst)}" (click)="selectMainSpecialization(item)">
@@ -196,7 +209,7 @@
                <label>
                   <input name="experience" [ngClass]="{filled: experience.value}" type="text" formControlName="experience">
                   <span class="title">{{userData.myData.experience || 'Опыт работы'}}</span>
-                  <span class="note focus">Опыт работы</span>
+                  <span class="note focus">Опыт работы*</span>
                   <div class="validation-errors" *ngIf="experience.invalid && (experience.dirty || experience.touched) || requiredErr">
                      <span class="note err" *ngIf="experience.errors?.['required']">*необходимо заполнить</span>
                   </div>
@@ -216,11 +229,11 @@
                <label>
                   <input name="zoomLink" [ngClass]="{filled: zoomLink.value}" type="text" formControlName="zoomLink" id="zoomLink">
                   <span class="title">{{userData.myData.zoomLink || 'zoom ссылка'}}</span>
-                  <span class="note focus">Zoom ссылка</span>
+                  <span class="note focus">Zoom ссылка*</span>
                   <div class="validation-errors" *ngIf="zoomLink.invalid && (zoomLink.dirty || zoomLink.touched) || requiredErr">
                      <span class="note err" *ngIf="zoomLink.errors?.['required']">*необходимо заполнить</span>
                   </div>
-                  <div class="delete-field-button"  (click)="deleteField('zoomLink')" ></div>
+                  <div class="delete-field-button" id="zoomLink-delete-field-button"  (click)="deleteField('zoomLink')" ></div>
                </label>
             </div>
             <div class="line">

@@ -72,7 +72,8 @@
                <div class="rules">
                   <div class="terms-of-use">
                      <label>
-                        <input name="termsOfUse"  type="checkbox" [(ngModel)]="termsOfUseAccepted" >
+                        <!-- [(ngModel)]="termsOfUseAccepted" -->
+                        <input name="termsOfUse"  type="checkbox"  >
                         <span>Принимаю условия <a class="termsOfUse" target="_blank" routerLink="/terms-of-use">пользовательского соглашения</a></span>
                      </label>
                      <!-- <div class="validation-errors" *ngIf="clientRegistrationForm.get('termsOfUse').invalid && (clientRegistrationForm.get('termsOfUse').touched || showRulesRequired)">

@@ -83,7 +83,8 @@ export interface UserDbInfo {
    aboutMe?: string,
    zoomLink?: string,
    currentTime?: string,
-   paymentFormUrl?: string
+   paymentFormUrl?: string,
+   clientPhone?: string
 
 }
 
@@ -162,6 +163,10 @@ export interface ManualOrderDetails {
    childName?: string,
    childDate?: string,
    comment?: string,
+   parentName?: string,
+   parentEmail?: string,
+   phone?: string,
+   isManualCreation?: boolean
 }
 
 export interface PopupOrderDetails {

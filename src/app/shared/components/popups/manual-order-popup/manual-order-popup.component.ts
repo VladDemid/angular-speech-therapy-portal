@@ -51,15 +51,18 @@ export class ManualOrderPopupComponent implements OnInit {
 
   makeManualAppointment() {
     // this.isUpdating = true
+    console.log("childDate: ", this.childDate)
     const emitLessonDetailsObject = {
-      childName: this.childName,
-      childDate: this.childDate,
-      parentName: this.parentName,
-      parentEmail: this.parentEmail,
-      phone: this.phone,
-      comment: this.comment,
+      childName: this.childName.value,
+      childDate: this.childDate.value,
+      patientName: this.parentName.value,
+      patientEmail: this.parentEmail.value,
+      phone: this.phone.value,
+      comment: this.comment.value,
       isManualCreation: true,
     }
+
+    this.popupService.manualOrderDetails = emitLessonDetailsObject
 
     if (this.termsOfUseAccepted) {
       this.popupService.toggleManualOrderPopup()

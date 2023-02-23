@@ -43,11 +43,13 @@ export class EditProfileComponent implements OnInit {
     clientName: new FormControl(null),
     clientSurname: new FormControl(null),
     clientPatronymic: new FormControl(null),
+    clientPhone: new FormControl(null),
   })
 
   get clientName() {return this.clientForm.get('clientName')}
   get clientSurname() {return this.clientForm.get('clientSurname')}
   get clientPatronymic() {return this.clientForm.get('clientPatronymic')}
+  get clientPhone() {return this.clientForm.get('clientPhone')}
 
   specForm = new FormGroup({
     specSurname: new FormControl(null),
@@ -222,6 +224,7 @@ export class EditProfileComponent implements OnInit {
       name: this.clientForm.value.clientName,
       surname: this.clientForm.value.clientSurname,
       patronymic: this.clientForm.value.clientPatronymic,
+      clientPhone: this.clientForm.value.clientPhone,
     }
 
     const newUserData = this.dataTrimmer(clientData)
@@ -243,6 +246,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   deleteField(fieldName) {
+    const elId = `${fieldName}-delete-field-button`
+    const el = document.getElementById(elId)
+    el.classList.add("loading-circle")
     console.log(fieldName);
     const newData = {
       [fieldName]: null
@@ -251,11 +257,13 @@ export class EditProfileComponent implements OnInit {
     // (<HTMLInputElement>document.getElementById(fieldName)).value = "";
     this.firebase.patchUserData(newData, '')
     .then((resp) => {
-      console.log(resp)
+      console.log(resp);
+      this.userData.myData.zoomLink = ''
     })
     .catch((err) => {
       console.log("deletion error: ", err)
     })
+    .finally(() => el.classList.remove("loading-circle"))
   }
 
   doctorChangeData() {
