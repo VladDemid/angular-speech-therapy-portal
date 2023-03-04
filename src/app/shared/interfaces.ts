@@ -203,12 +203,14 @@ export interface ZoomInfo {
 }
 
 export interface ClientFeedbackObj {
-   name: string,
-   surname: string,
-   dob: string,
+   parentName: string,
+   childName: string,
+   childDate: string,
    email: string,
    phone: string,
-   question: string,
+   question?: string,
+   comment?: string,
+
 }
 
 export interface SpecialistFeedbackObj {
@@ -216,7 +218,8 @@ export interface SpecialistFeedbackObj {
    specialization: string,
    email: string,
    phone: string,
-   description: string,
+   description?: string,
+   comment?: string,
 }
 
 export interface EmailData {

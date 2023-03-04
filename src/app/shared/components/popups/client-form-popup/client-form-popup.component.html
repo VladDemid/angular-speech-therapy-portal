@@ -67,7 +67,8 @@
                </label>
             </div>
          </div>
-         <button type="submit">отправить</button>
+         <div class="serverErrorMessage" *ngIf="errMessage" >{{errMessage}}</div>
+         <button type="submit" [disabled]="isSendingData" [ngClass]="{submitted: submitted}">отправить</button>
       </form>
          
       </div>

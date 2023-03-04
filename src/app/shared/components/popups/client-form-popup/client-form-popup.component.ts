@@ -17,10 +17,10 @@ export class ClientFormPopupComponent implements OnInit {
 
   // form: FormGroup
   // passwordMinLength = 6
-  // ErrMessage = ""
-  // isSendingData = false
-  // submitted = false
+  isSendingData = false
+  submitted = false
   requiredErr = false
+  errMessage = ""
   
 
   clientForm = new FormGroup({
@@ -56,53 +56,48 @@ export class ClientFormPopupComponent implements OnInit {
 
   onSubmit() {
     console.log(this.clientForm.value)
-
+    this.errMessage = ""
     this.requiredErr = false
     
     if (this.clientForm.invalid) {
       this.requiredErr = true
+      this.errMessage = "форма заполнена не полностью"
+      return
     }
-    // this.isSendingData = true
-    // this.ErrMessage = ""
+    this.isSendingData = true
+    this.errMessage = ""
     
-    // let feedbackForm = {
-    //   to: this.form.value.email,
-    //   from: emailConfig.fromEmailAdress,
-    //   templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
-    //   dynamicTemplateData: {
-    //     subject: "Logogo",
-    //   }
-    // }
+    let feedbackForm = {
+      to: this.clientForm.value.email,
+      from: emailConfig.fromEmailAdress,
+      templateId: emailConfig.EMAIL_TEMPLATES.MAIN_PAGE_FEEDBACK,
+      dynamicTemplateData: {
+        subject: "Logogo",
+      }
+    }
     
     
     
-    // if (this.form.invalid) {
-    //   console.log(this.form)
-    //   this.ErrMessage = "форма заполнена не полностью"
-    //   // this.showRulesRequired = true
-    //   this.isSendingData = false
-    //   return
-    // }
 
-    // let sendingData = this.form.value
-    // sendingData.dob = this.reformatDate(sendingData.dob) // 2010-12-30 -> 30.12.2010
-    // console.log(sendingData)
+    let sendingData = this.clientForm.value
+    sendingData.childDate = this.reformatDate(sendingData.childDate) // 2010-12-30 -> 30.12.2010
+    console.log(sendingData)
     
-    // Promise.resolve(this.telegram.sendClientFeedback(sendingData))
-    // .then((resp) => {
-    //   this.firebase.sendEmailFunction(feedbackForm)
-    //     .then((res) => {
-    //       console.log("email отправлен: ", res)
-    //       this.form.reset()
-    //       this.isSendingData = false
-    //       this.submitted = true
-    //       setTimeout(() => this.submitted = false, 5000)
-    //     })
-    //     .catch((err) => {
-    //       console.log("Ошибка FBtest: ", err)
-    //       this.isSendingData = false
-    //     })
-    // })
+    Promise.resolve(this.telegram.sendClientFeedback(sendingData))
+    .then((resp) => {
+      this.firebase.sendEmailFunction(feedbackForm)
+        .then((res) => {
+          console.log("email отправлен: ", res)
+          this.clientForm.reset()
+          this.isSendingData = false
+          this.submitted = true
+          setTimeout(() => this.submitted = false, 5000)
+        })
+        .catch((err) => {
+          console.log("Ошибка FBtest: ", err)
+          this.isSendingData = false
+        })
+    })
   }
 
   reformatDate(dateStr) {

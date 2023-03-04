@@ -12,6 +12,9 @@
          <a [routerLink]="['/profile']" *ngIf="isInProfileModule == 'true'">Меню</a>
          <a [routerLink]="['/']" *ngIf="isInProfileModule == 'false'">Назад</a>
       </div>
+      <div class="new-user-note" *ngIf="(isInProfileModule + '' == 'true') && (userData.myData.userType == 'doctor' && (!userData.myData.zoomLink || !userData.myData.scheduleTime) ) || (userData.myData.userType == 'client' && !userData.myData.clientPhone)">
+         <span *ngIf="userData.myData.userType == 'client'">Перед записью к специалисту, пожалуйста заполните все необходимы данные в разделе "Редактировать личные данные"</span>
+      </div>
       <div class="user-data">
          <div class="user-image">
             <img *ngIf="doctorInfo.avatarUrl" [src]="doctorInfo.avatarUrl" alt="person photo">

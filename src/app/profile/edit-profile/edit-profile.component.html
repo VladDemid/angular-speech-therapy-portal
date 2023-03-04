@@ -50,11 +50,12 @@
          <div class="line">
             <label>
                <input name="clientPhone" [ngClass]="{filled: clientPhone.value}" type="text" formControlName="clientPhone">
-               <span class="title">{{userData.myData.clientPhone}}</span>
+               <span class="title">{{userData.myData.clientPhone || 'телефон'}}</span>
                <div class="validation-errors" *ngIf="clientPhone.invalid && (clientPhone.dirty || clientPhone.touched) || requiredErr">
                   <span class="note err" *ngIf="clientPhone.errors?.['required']">*необходимо заполнить</span>
                   <span class="note err" *ngIf="clientPhone.errors?.['minlength']">*6+ символов</span>
                </div>
+               <div class="delete-field-button" id="clientPhone-delete-field-button"  (click)="deleteField('clientPhone')" ></div>
             </label>
          </div>
          <div class="line">
@@ -182,7 +183,7 @@
          </div> -->
          <div class="line">
             <div class="specializations">
-               <label><span>Специализации*</span></label>
+               <label><span>Специализации</span></label>
                <ul class="specializations-list">
                   <li class="specialization-item" *ngFor="let item of specializations" >
                      <label class="checkbox-label" (click)="selectSpecialization(item)" [ngClass]="{specialization_selected: specializationsData.specializationsSelected && specializationsData.specializationsSelected.indexOf(item) != -1}"><input type="checkbox" >{{item}}</label>

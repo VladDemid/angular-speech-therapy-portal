@@ -73,7 +73,7 @@ header
             display: block
             color: $orange_501
             transition: 0.2s
-            font-weight: 700
+            font-weight: 500
             &::after
                content: ''
                display: block
@@ -105,6 +105,8 @@ header
             height: 50px
             animation: logo-animation 0.35s 1
             // transition: 0.5s all
+   .menu-mobile
+      display: none
 
 
 @keyframes nav-animation
@@ -120,3 +122,91 @@ header
    100%
       width: 76px
       height: 50px
+
+@media screen and ( max-width: 760px )
+   header
+      // .logo
+
+      .menu
+         display: none
+      .menu-mobile
+         position: fixed
+         top: 0px
+         right: 5px
+         display: block
+         z-index: 10
+         .burger-button
+            height: 64px
+            width: 64px
+            margin: 5px
+            // border: 1px solid #000
+            .burger-button
+               position: relative
+               top: 0px
+               right: 30px
+               &-inner
+                  position: relative
+                  background-color: $orange_501
+                  width: 80%
+                  height: 6px
+                  top: calc(50% - 3px)
+                  left: 10%
+                  border-radius: 3px
+                  opacity: 1
+                  transition: 0.2s all
+                  &:after, &::before
+                     content: ''
+                     position: absolute
+                     width: 90%
+                     height: 6px
+                     background-color: $orange_501
+                     left: 5%
+                     top: 15px
+                     border-radius: 3px
+                     transition: 0.2s all
+                  &:after
+                     top: -15px
+                  &.active
+                     // opacity: 0
+                     background-color: rgba(255, 255, 255, 0)
+                     &::before
+                        transform: rotate(45deg)
+                        top: calc(50% - 3px)
+                     &::after
+                        transform: rotate(-45deg)
+                        top: calc(50% - 3px)
+                     
+                  
+                  
+
+         .menu-list
+            position: absolute
+            width: 100vw
+            top: -140px
+            right: 0%
+            background-color: rgba(255, 255, 255, 0.95)
+            backdrop-filter: blur(5px)
+            // transition: 0.3s ease-out
+            transition: 0.3s all
+            z-index: -100
+            box-shadow: -1px 4px 4px rgba(156, 156, 156, 0.25)
+            // opacity: 0
+            a
+               display: inline-block
+               padding: 10px 110px
+               width: 100%
+            &.active
+               top: 74px
+               // opacity: 1
+               z-index: 9
+            ul
+               li
+                  text-align: center
+                  // padding: 10px 0
+                  font-size: 20px
+                  // border-top: 1px solid #ccc
+                  a
+                     color: $orange_501
+            // display: none
+
+   

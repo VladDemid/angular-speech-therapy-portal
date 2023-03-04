@@ -37,8 +37,9 @@ h1
    font-weight: 700
 h2 
    font-size: 36px
+   text-align: center
    margin-bottom: 56px
-   font-weight: 700
+   font-weight: 500
    color: $headings100
    &.profile-in
       font-size: 24px
@@ -250,6 +251,13 @@ swiper
     background-color: $preloader_circle-5
     animation-delay: 1000ms
 
+@media screen and ( max-width: 1000px )
+   swiper
+      .swiper-pagination
+         display: none
+      .swiper-button-prev, .swiper-button-next
+         display: none
+
   
 
 
@@ -305,6 +313,40 @@ swiper
       border-radius: 22px
       // border: 3px solid #000
       // animation: updating 1.5s 1 ease
+
+.new-user-note
+   position: relative
+   display: flex
+   justify-content: center
+   align-items: center
+   min-height: 56px  
+   // border: 2px solid $orange_common
+   @include box-shadow($nav_shadow)
+   border-radius: 10px
+   // background-color: #
+   background: linear-gradient(113.94deg, rgba(251, 105, 1, 0.356) 0.77%, rgba(255, 255, 255, 0) 184.42%)
+   // line-height: 56px
+   padding: 10px 40px
+   font-size: 20px
+   font-weight: bold
+   margin-bottom: 20px
+   
+   &:after, &:before
+      content: ''
+      position: absolute
+      // left: 22px
+      top: calc(50% - 13px)
+      background-image: url('/assets/icons/interface/exclamation-mark.svg')
+      background-size: cover
+      background-repeat: no-repeat
+      background-position: 50% 50%
+      width: 11px
+      height: 26px
+   &:after
+      right: 22px
+   &::before
+      left: 22px
+
 
 button, .btn
    // background-color: $orange_common
@@ -422,7 +464,7 @@ button, .btn
       // color: $textBody80
       color: #fff
       font-size: 20px
-      font-weight: bold
+      // font-weight: bold
       background-color: $orange_501
       border-radius: 5px
 
@@ -725,3 +767,14 @@ button, .btn
   100% 
     transform: translate(24px, 0)
   
+@media screen and (max-width: 1600px) 
+   .dev-test
+      display: none
+   .cookie-popup
+      display: none
+
+
+@media screen and (max-width: 1600px) 
+
+
+   

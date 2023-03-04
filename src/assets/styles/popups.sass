@@ -68,18 +68,22 @@
             color: $orange_common
             text-align: center
       button[type=submit]
+         position: relative
          &:after
             opacity: .0
          &.submitted
-            position: relative
             &::after
-               content: 'вопрос отправлен'
+               content: 'заявка отправлена'
                position: absolute
                right: -250px
                opacity: .8
                color: $orange_common
                // width: 100px
                height: 20px
+               top: 50px
+               left: 0%
+               width: 100%
+               text-align: center
                // border: 1px solid #000
                // background-color: #000
 

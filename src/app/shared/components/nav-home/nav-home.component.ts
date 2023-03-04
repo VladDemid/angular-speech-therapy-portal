@@ -12,6 +12,7 @@ import { FirebaseService } from '../../services/firebase.service';
 export class NavHomeComponent implements OnInit {
 
   isAuthenticated = localStorage.getItem("user-Id")
+  menuListActive = false
 
   constructor(
     public popupService: PopupService,
@@ -38,6 +39,10 @@ export class NavHomeComponent implements OnInit {
     //   } 
     // })
 
+  }
+
+  toggleMenuList() {
+    this.menuListActive = !this.menuListActive
   }
 
   scrollcheck() {

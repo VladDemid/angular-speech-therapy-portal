@@ -90,7 +90,8 @@
          <!-- рабочий день выбран -->
       <div class="day-chosen" *ngIf="selectedDay != -1 && inputDoctorInfo.scheduleTime && inputDoctorInfo.scheduleTime[year] && inputDoctorInfo.scheduleTime[year][month] && inputDoctorInfo.scheduleTime[year][month][selectedDay]">
          <span class="time-note">Выберите время (По Минску)</span> 
-         {{inputDoctorInfo.schedule | json}}
+         <div class="error-note" *ngIf="errPermission">{{errPermission}}</div>
+         <!-- {{inputDoctorInfo.schedule | json}} -->
          <div class="time-selection doctor-card" *ngIf="inputDoctorInfo.scheduleTime">
             <!-- <div class="day-title">
                <span class="title">Занятия </span>

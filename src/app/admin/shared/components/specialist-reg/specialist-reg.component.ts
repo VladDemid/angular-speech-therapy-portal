@@ -116,7 +116,7 @@ export class SpecialistRegComponent implements OnInit {
         this.isSendingData = false
         this.helper.toConsole("объект доктора создан")
         this.createDBStatus = "✔️ячейка базы данных создана, пользователь полностью готов"
-        this.reloginErrorMessage = "❌✔️ Готово. Но чтобы продолжить работать в админке надо перелогиниться опять. (это норма)"
+        this.reloginErrorMessage = "✔️ Готово. Теперь попросите пользователя войти на главной странице. Ему должно прийти письмо для подтверждения на почту. Чтобы продолжить работать в админке надо перелогиниться опять. (это норма)"
         this.relogin = true
         this.doctorRegistrationForm.reset()
         // this.router.navigate(['/profile'])

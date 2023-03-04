@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TelegramBotService } from 'src/app/shared/services/telegram-bot.service';
+import { environment } from 'src/environments/environment';
 // import { ZoomService } from 'src/app/shared/services/zoom.service';
 import { UserData } from '../shared/services/user-data.service';
 
@@ -13,6 +14,7 @@ import { UserData } from '../shared/services/user-data.service';
 })
 export class CalendarPageComponent implements OnInit {
   
+  production = environment.production
   daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
   daysOfWeekFlagged = {0: false, 1: false, 2: false, 3: false, 4: false, 5: false, 6: false }
   testVar = false

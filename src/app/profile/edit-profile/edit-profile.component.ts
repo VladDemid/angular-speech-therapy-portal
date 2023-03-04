@@ -22,7 +22,8 @@ export class EditProfileComponent implements OnInit {
   requiredErr = false
   newFilesToUpload = 0
   uploadingAvatar = false
-  defaultAvatar = environment.defaultAvatarUrl
+  // defaultAvatar = environment.defaultAvatarUrl
+  defaultAvatar = "../../../assets/icons/default-user-avatar.png"
   doubleClickPrevent = false
   showUpdate = false
   updateError = false
@@ -118,7 +119,7 @@ export class EditProfileComponent implements OnInit {
         clearInterval(waitForUserData) 
         //подгрузить данные со скачанного объекта юзера
         if (this.userData.myData.userType == "doctor") {
-          if (this.userData.myData.specializations.length) {
+          if (this.userData.myData.specializations?.length) {
             this.specializationsData.specializationsSelected = this.userData.myData.specializations
           }
           if (this.userData.myData.aboutMe) {
@@ -258,7 +259,7 @@ export class EditProfileComponent implements OnInit {
     this.firebase.patchUserData(newData, '')
     .then((resp) => {
       console.log(resp);
-      this.userData.myData.zoomLink = ''
+      this.userData.myData[fieldName] = ''
     })
     .catch((err) => {
       console.log("deletion error: ", err)

@@ -19,7 +19,7 @@
       <!-- <h2>Календарь</h2> -->
 
 
-      <div class="user-type-icon">
+      <div class="user-type-icon" *ngIf="!production">
          Вы вошли как 
          <span *ngIf="userData.myData.userType == 'doctor'">специалист 🏥  {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>
          <span *ngIf="userData.myData.userType == 'client'">клиент 🏠 {{myId | slice:0:5}} @{{userData.myData.email | slice:0:5}}..</span>

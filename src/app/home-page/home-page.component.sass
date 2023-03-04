@@ -4,11 +4,12 @@
 .home-page
    background: url('../../assets/img/promo_bg.jpg') no-repeat center center fixed
    background-size: cover
+   
    swiper .swiper-slide
       text-align: center
       border: 1px dashed #000
    .promo
-      height: 808px
+      // height: 808px
       // padding: 250px 0 74px
       // padding: 0 300px
       // margin: 0 -300px
@@ -61,6 +62,32 @@
       //    .sign-up
       //       width: 238px
 
-      
 
-   
+@media screen and ( max-width: 1000px )
+   .home-page .promo 
+      swiper
+         img
+            width: 100%
+         // .swiper-pagination-bullet
+         //    display: none
+         // .swiper-button-prev
+         .sign
+            padding: 20px
+            bottom: 0px
+            left: 0px
+            width: calc(100vw - 70px)
+            display: flex
+            justify-content: space-evenly
+            align-items: center
+            .title
+               font-size: 5vw
+               margin-bottom: 5px
+               display: none
+            .descr
+               margin-bottom: 0px
+               text-align: center
+               // padding: 10px 0
+               font-size: 3vw
+            button
+               margin-right: 15px
+

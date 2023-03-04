@@ -7,6 +7,8 @@ import { ClientFeedbackObj, SpecialistFeedbackObj } from '../interfaces';
 })
 export class TelegramBotService implements OnInit{
 
+  testEmails = ["mr.zgot@yandex.ru", "vlatidos@gmail.com"]
+
   constructor() { }
 
   ngOnInit() {
@@ -49,21 +51,25 @@ export class TelegramBotService implements OnInit{
     xhttp.send()
   }
 
+  checkTestMessage(values) {
+    return this.testEmails.includes(values.email) ? "--⚙️Это ТЕСТОВОЕ сообщение🗑️--" : ""
+  }
+
   sendClientFeedback(values: ClientFeedbackObj) {
     console.log(values)
-
-    const message = `*обратная связь КЛИЕНТ*:%0A - ${values.name} ${values.surname}:%0A ДР ребенка - ${values.dob} %0A - ${values.email} %0A - ${values.phone} %0A ${values.question}`
+    const isTestEmail = this.checkTestMessage(values)
+    const message = `${isTestEmail}%0A  *обратная связь КЛИЕНТ (домашняя страница)* %0A 🧑- ${values.parentName}:%0A 👶- ${values.childName} (${values.childDate}) :%0A ✉️- ${values.email} %0A 📞- ${values.phone} %0A 💬- ${values.comment} %0A ${isTestEmail}`
     const chatId = telegramConfig.logobotChatId
     let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=markdown`
     let xhttp = new XMLHttpRequest()
     xhttp.open("GET", url, true)
     xhttp.send()
   }
-
+  
   sendSpecialistFeedback(values: SpecialistFeedbackObj) {
     console.log(values)
-
-    const message = `*обратная связь СПЕЦИАЛИСТ*:%0A - ${values.name} %0A - ${values.specialization} %0A - ${values.email} %0A - ${values.phone} %0A ${values.description}`
+    const isTestEmail = this.checkTestMessage(values)
+    const message = `${isTestEmail} %0A *обратная связь СПЕЦИАЛИСТ*:%0A 🧑‍⚕️- ${values.name} %0A - ${values.specialization} %0A ✉️- ${values.email} %0A 📞- ${values.phone} %0A 💬- ${values.comment} %0A ${isTestEmail}`
     const chatId = telegramConfig.logobotChatId
     let url = `https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=markdown`
     let xhttp = new XMLHttpRequest()

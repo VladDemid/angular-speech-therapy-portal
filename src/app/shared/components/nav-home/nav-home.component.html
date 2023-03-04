@@ -17,6 +17,23 @@
                </li>
             </ul>
          </div>
+         <div class="menu-mobile">
+            <div class="burger-button" (click)="toggleMenuList()"  >
+               <div class="burger-button-inner" [ngClass]="{active: menuListActive}"></div>
+            </div>
+            <div class="menu-list" [ngClass]="{active: menuListActive}">
+               <ul>
+                  <li><a [routerLink]="['/']" [fragment]="'specialists'" (click)="toggleMenuList()">Специалисты</a></li>
+                  <li><a [routerLink]="['/']" [fragment]="'faq'" (click)="toggleMenuList()">Вопросы</a></li>
+                  <li><a [routerLink]="['/']" [fragment]="'footer'" (click)="toggleMenuList()">Контакты</a></li>
+                  <!-- <li>
+                     <button class="login" *ngIf="!isAuthenticated" id="login" [routerLink]="['/']" (click)="popupService.openLoginPopup()">Войти</button>
+                     <button class="login" *ngIf="isAuthenticated" [routerLink]="['/profile']" >в кабинет</button>
+                  </li> -->
+               </ul>
+
+            </div>
+         </div>
       </nav>
    </div>
 </header>

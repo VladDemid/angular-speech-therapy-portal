@@ -67,6 +67,7 @@ export class CalendarBlockComponent implements OnInit {
   expandSign = "Развернуть"
   isLoading = false
   isMakingAppointment = true //костыль
+  errPermission = ""
   
   daysOfWeekShedule = {}
   newDaysOfWeekShedule = {}
@@ -363,11 +364,15 @@ export class CalendarBlockComponent implements OnInit {
 
   onClickTimeRow(lessonTime) { //! (переделать под новое расписание)
     if (!this.isCalendarPage) {  //клиент записывается к спецу
-      if (this.inputDoctorInfo.scheduleTime && this.inputDoctorInfo.scheduleTime[this.year] && this.inputDoctorInfo.scheduleTime[this.year][this.month] && this.inputDoctorInfo.scheduleTime[this.year][this.month][this.selectedDay] && this.inputDoctorInfo.scheduleTime[this.year][this.month][this.selectedDay][lessonTime]) {
-        if (this.isInProfileModule === "true") { // если зареган
-          this.appointmentDetails()
+      if (this.userData.myData.clientPhone) {
+        if (this.inputDoctorInfo.scheduleTime && this.inputDoctorInfo.scheduleTime[this.year] && this.inputDoctorInfo.scheduleTime[this.year][this.month] && this.inputDoctorInfo.scheduleTime[this.year][this.month][this.selectedDay] && this.inputDoctorInfo.scheduleTime[this.year][this.month][this.selectedDay][lessonTime]) {
+          if (this.isInProfileModule === "true") { // если зареган
+            this.appointmentDetails()
+          }
+          
         }
-
+      } else {
+        this.errPermission = "Кажется вы не дозаполнили свои личные данные. Вернитесь в раздел 'Редактировать личные данные'"
       }
     }
   }
@@ -656,19 +661,19 @@ export class CalendarBlockComponent implements OnInit {
 
       
       //* отправка почты  //(отправка на FB functions)
-      // let clientsEmailConfirmation = {
-      //   to: this.userData.myData.email,
-      //   from: emailConfig.fromEmailAdress,
-      //   templateId: emailConfig.EMAIL_TEMPLATES.CLIENT_MADE_AN_APPOINTMENT,
-      //   dynamicTemplateData: {
-      //     subject: "Logogo запись на прием",
-      //     date: `${day}-${month}-${year}`,
-      //     clientName: this.userData.myData.name,
-      //     doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
-      //     time: "",
+      let clientsEmailConfirmation = {
+        to: this.userData.myData.email,
+        from: emailConfig.fromEmailAdress,
+        templateId: emailConfig.EMAIL_TEMPLATES.CLIENT_MADE_AN_APPOINTMENT,
+        dynamicTemplateData: {
+          subject: "Logogo запись на прием",
+          date: `${day}-${month}-${year}`,
+          clientName: this.userData.myData.name,
+          doctorName: `${this.inputDoctorInfo.surname} ${this.inputDoctorInfo.name} ${this.inputDoctorInfo.patronymic}`,
+          time: "",
           
-      //   }
-      // }
+        }
+      }
 
       // this.firebase.sendEmailFunction(clientsEmailConfirmation)
       // .then((res) => {

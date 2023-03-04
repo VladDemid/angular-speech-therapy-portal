@@ -51,8 +51,8 @@ export class DoctorFormPopupComponent implements OnInit {
   get comment() {return this.specForm.get('comment')}
 
   submit() {
-    console.log("return")
-    return
+    // console.log("return")
+    // return
     this.isSendingData = true
     this.errMessage = ""
     
